@@ -2,12 +2,14 @@ local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local mathUtils = require("utils.math")
 
-local PlayerControl = Concord.system({
-    pool = {"velocity", "character", "moveDirection", "playerControlled"},
+local CharacterRotation = Concord.system({
+    pool = {"velocity", "character", "rotationSpeed", "alive"},
 })
 
-function PlayerControl:update(deltaTime)
+function CharacterRotation:update(deltaTime)
     for _, e in ipairs(self.pool) do
+        local acceleration = 15
+        local friction = 7
         local speed = 10
         local direction = maf.vec3(0, 0, 0)
         if love.keyboard.isDown("left") then
@@ -27,7 +29,13 @@ function PlayerControl:update(deltaTime)
         end
 
         e.moveDirection.value = direction
+        direction = mathUtils.rotateVector2D(direction, e.rotation.value)
+        local velocityZ = e.velocity.value.z
+        e.velocity.value = e.velocity.value + direction * acceleration * deltaTime
+        e.velocity.value = e.velocity.value - e.velocity.value * friction * deltaTime
+        e.velocity.value.z = velocityZ
+        e.rotation.value = e.rotation.value + deltaTime * 0.1
     end
 end
 
-return PlayerControl
+return CharacterRotation

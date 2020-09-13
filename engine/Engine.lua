@@ -10,7 +10,10 @@ local Engine = class("Engine")
 function Engine:initialize()
     self.world = Concord.world()
 
+    self.world:addSystem(require("engine.systems.ObstacleCollision"))
     self.world:addSystem(require("engine.systems.PlayerControl"))
+    self.world:addSystem(require("engine.systems.CharacterMovement"))
+    self.world:addSystem(require("engine.systems.CharacterRotation"))
     self.world:addSystem(require("engine.systems.Movement"))
     self.world:addSystem(require("engine.systems.LimbPoses"))
     self.world:addSystem(require("engine.systems.LimbAttach"))
@@ -36,13 +39,14 @@ function Engine:initialize()
             :give("texture", Assets.texture("level1/decorative"..math.random(1, 3)))
     end
 
-    self:createPlayer()
+    local player = self:createPlayer()
 
     -- Camera
     Concord.entity(self.world)
         :give("position", maf.vec3(0, 0, 0))
         :give("rotation", 0)
         :give("camera")
+        :give("target", player)
 
     -- Obstacle spawner
     Concord.entity(self.world)
@@ -56,7 +60,10 @@ function Engine:createPlayer()
         :give("position", maf.vec3(0, 0, -10))
         :give("size", maf.vec3(2.5, 2.5))
         :give("rotation", 0)
+        :give("rotationSpeed", 0)
         :give("drawable")
+        :give("character")
+        :give("alive")
         :give("playerControlled")
         :give("velocity", maf.vec3(0, 0, -25))
         :give("moveDirection")
@@ -110,6 +117,8 @@ function Engine:createPlayer()
         :give("limbRotationPoses", -0.2, 0.2, -0.2, 0.25)
         :give("texture", Assets.texture("player/leg"))
         :give("offset", maf.vec3(-0.08, 0, 0))
+
+    return player
 end
 
 function Engine:update(deltaTime)

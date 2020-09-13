@@ -28,7 +28,9 @@ function LimbPoses:update(deltaTime)
         end
 
         local animAngle = math.sin(love.timer.getTime() * 2) * e.limbRotationPoses.down * 0.002
-        e.limbRotation.value = e.limbRotation.value + (targetRotation - e.limbRotation.value) * 5 * deltaTime + animAngle
+        if e.limbParent.value.alive then
+            e.limbRotation.value = e.limbRotation.value + (targetRotation - e.limbRotation.value) * 5 * deltaTime + animAngle
+        end
     end
 end
 

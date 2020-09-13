@@ -35,16 +35,16 @@ local function render(e, camera)
     love.graphics.rotate(e.rotation.value)
 
     local depth = 1 - mathUtils.clamp01((e.position.value.z - camera.position.value.z) / -100)
-    depth = depth * depth
+    local depthFade = depth * depth
 
     local size = e.size.value * scale
     if e.decorativePlane and e.texture then
         local imageData = Assets.textureImageData(e.texture.value)
         local r, g, b = imageData:getPixel(0, 0)
         love.graphics.setColor(
-            r * depth,
-            g * depth,
-            b * depth,
+            r * depthFade,
+            g * depthFade,
+            b * depthFade,
             1
         )
 
@@ -54,9 +54,9 @@ local function render(e, camera)
 
     if e.color then
         love.graphics.setColor(
-            e.color.r * depth,
-            e.color.g * depth,
-            e.color.b * depth,
+            e.color.r * depthFade,
+            e.color.g * depthFade,
+            e.color.b * depthFade,
             e.color.a
         )
     end

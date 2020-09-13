@@ -13,6 +13,10 @@ Concord.component("rotation", function(component, rotation)
     component.value = rotation or 0
 end)
 
+Concord.component("rotationSpeed", function(component, value)
+    component.value = value or 0
+end)
+
 Concord.component("fillMode", function(component, mode)
     component.value = mode or "line"
 end)
@@ -69,6 +73,6 @@ Concord.component("lastObstacleDistance", function(component, value)
     component.value = value or 0
 end)
 
-Concord.component("fallSpeed", function(component, value)
-    component.value = value or 0
+Concord.component("target", function(component, entity)
+    component.value = entity
 end)
