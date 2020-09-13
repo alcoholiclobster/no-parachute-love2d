@@ -41,3 +41,26 @@ end)
 Concord.component("velocity", function(component, velocity)
     component.value = velocity or maf.vec3(0, 0, 0)
 end)
+
+Concord.component("moveDirection", function(component, value)
+    component.value = value or maf.vec3(0, 0, 0)
+end)
+
+Concord.component("limbParent", function(component, entity)
+    component.value = entity
+end)
+
+Concord.component("limbRotation", function(component, value)
+    component.value = value
+end)
+
+Concord.component("limbRotationPoses", function(component, left, right, up, down)
+    component.left = left or 0
+    component.right = right or 0
+    component.up = up or 0
+    component.down = down or 0
+end)
+
+Concord.component("offset", function(component, offset)
+    component.value = offset
+end)

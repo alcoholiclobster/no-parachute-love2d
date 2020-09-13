@@ -12,11 +12,14 @@ function Engine:initialize()
 
     self.world:addSystem(require("engine.systems.PlayerControl"))
     self.world:addSystem(require("engine.systems.Movement"))
+    self.world:addSystem(require("engine.systems.LimbPoses"))
+    self.world:addSystem(require("engine.systems.LimbAttach"))
     self.world:addSystem(require("engine.systems.CameraFollowPlayer"))
     self.world:addSystem(require("engine.systems.BoundaryLimit"))
     self.world:addSystem(require("engine.systems.DecorativePlaneCycling"))
     self.world:addSystem(require("engine.systems.PlaneRendering"))
 
+    -- Side wall planes
     local count = 50
     for i = 0, count - 1 do
         local z = -100 + i * 100 / count
@@ -31,20 +34,75 @@ function Engine:initialize()
             :give("texture", Assets.texture("level1/decorative"..math.random(1, 3)))
     end
 
+    self:createPlayer()
+
+    -- Camera
     Concord.entity(self.world)
-        :give("position", maf.vec3(0, 0, -10))
+        :give("position", maf.vec3(0, 0, 0))
+        :give("rotation", 0)
+        :give("camera")
+end
+
+function Engine:createPlayer()
+    -- Player
+    local player = Concord.entity(self.world)
+        :give("position", maf.vec3(0, 0, -9.9))
         :give("size", maf.vec3(2.5, 2.5))
         :give("rotation", 0)
         :give("drawable")
         :give("playerControlled")
-        :give("velocity", maf.vec3(0, 0, 0))
-        :give("color", 1, 1, 1, 1)
-        :give("texture", Assets.texture("player"))
+        :give("velocity")
+        :give("moveDirection")
+        :give("texture", Assets.texture("player/torso"))
 
-    self.camera = Concord.entity(self.world)
-        :give("position", maf.vec3(0, 0, 0))
+    -- Limbs
+    -- Right Hand
+    Concord.entity(self.world)
+        :give("position")
+        :give("size", maf.vec3(2.5, 2.5))
         :give("rotation", 0)
-        :give("camera")
+        :give("drawable")
+        :give("limbParent", player)
+        :give("limbRotation", 0)
+        :give("limbRotationPoses", -0.2, 0.2, 0.1, -0.3)
+        :give("texture", Assets.texture("player/hand"))
+        :give("offset", maf.vec3(0, 0, 0))
+
+    -- Left Hand
+    Concord.entity(self.world)
+        :give("position")
+        :give("size", maf.vec3(-2.5, 2.5))
+        :give("rotation", 0)
+        :give("drawable")
+        :give("limbParent", player)
+        :give("limbRotation", 0)
+        :give("limbRotationPoses", -0.2, 0.2, -0.1, 0.3)
+        :give("texture", Assets.texture("player/hand"))
+        :give("offset", maf.vec3(-0.08, 0, 0))
+
+    -- Right Leg
+    Concord.entity(self.world)
+        :give("position")
+        :give("size", maf.vec3(2.5, 2.5))
+        :give("rotation", 0)
+        :give("drawable")
+        :give("limbParent", player)
+        :give("limbRotation", 0)
+        :give("limbRotationPoses", -0.2, 0.2, 0.2, -0.25)
+        :give("texture", Assets.texture("player/leg"))
+        :give("offset", maf.vec3(0, 0, 0))
+
+    -- Left Leg
+    Concord.entity(self.world)
+        :give("position")
+        :give("size", maf.vec3(-2.5, 2.5))
+        :give("rotation", 0)
+        :give("drawable")
+        :give("limbParent", player)
+        :give("limbRotation", 0)
+        :give("limbRotationPoses", -0.2, 0.2, -0.2, 0.25)
+        :give("texture", Assets.texture("player/leg"))
+        :give("offset", maf.vec3(-0.08, 0, 0))
 end
 
 function Engine:update(deltaTime)
