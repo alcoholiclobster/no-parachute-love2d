@@ -41,6 +41,7 @@ function Engine:initialize()
 
     local player = self:createCharacter()
         :give("playerControlled")
+        :give("rotationSpeed", 0.1)
 
     -- Camera
     Concord.entity(self.world)

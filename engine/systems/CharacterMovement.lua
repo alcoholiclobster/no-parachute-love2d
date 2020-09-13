@@ -15,7 +15,6 @@ function CharacterMovement:update(deltaTime)
         e.velocity.value = e.velocity.value + direction * acceleration * deltaTime
         e.velocity.value = e.velocity.value - e.velocity.value * friction * deltaTime
         e.velocity.value.z = velocityZ
-        e.rotation.value = e.rotation.value + deltaTime * 0.1
     end
 end
 
