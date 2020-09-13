@@ -30,9 +30,10 @@ function PlayerControl:update(deltaTime)
 
         e.moveDirection.value = direction
         direction = mathUtils.rotateVector2D(direction, e.rotation.value)
+        local velocityZ = e.velocity.value.z
         e.velocity.value = e.velocity.value + direction * acceleration * deltaTime
         e.velocity.value = e.velocity.value - e.velocity.value * friction * deltaTime
-
+        e.velocity.value.z = velocityZ
         e.rotation.value = e.rotation.value + deltaTime * 0.1
     end
 end

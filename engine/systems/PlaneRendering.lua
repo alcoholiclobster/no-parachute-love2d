@@ -18,7 +18,7 @@ local function project(pos, cam)
         return
     end
 
-    local f = math.abs(pos.z + screenHeight * 0.7)
+    local f = math.abs(pos.z - cam.z + screenHeight * 0.7)
     local px = ((pos.x - cam.x) * (f / z)) + cam.x
     local py = ((pos.y - cam.y) * (f / z)) + cam.y
 
@@ -34,7 +34,7 @@ local function render(e, camera)
     love.graphics.translate(x, y)
     love.graphics.rotate(e.rotation.value)
 
-    local depth = 1 - mathUtils.clamp01(e.position.value.z / -100)
+    local depth = 1 - mathUtils.clamp01((e.position.value.z - camera.position.value.z) / -100)
     depth = depth * depth
 
     local size = e.size.value * scale
@@ -81,7 +81,7 @@ function PlaneRendering:draw()
     local sortedEntities = {}
 
     for _, e in ipairs(self.pool) do
-        local z = e.position.value.z
+        local z = e.position.value.z - camera.position.value.z
         if z < maxZ and z > minZ then
             local index = math.floor(-z * depthPrecision)
             if not sortedEntities[index] then

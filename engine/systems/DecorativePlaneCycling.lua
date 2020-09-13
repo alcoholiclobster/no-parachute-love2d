@@ -1,15 +1,21 @@
 local Concord = require("lib.concord")
 
-local Movement = Concord.system({
-    pool = {"position", "decorativePlane"}
+local DecorativePlaneCycling = Concord.system({
+    pool = {"position", "decorativePlane"},
+    cameraPool = {"camera"}
 })
 
-function Movement:update(deltaTime)
+function DecorativePlaneCycling:update(deltaTime)
+    local camera = self.cameraPool[1]
+    if not camera then
+        return
+    end
+
     for _, e in ipairs(self.pool) do
-        if e.position.value.z > 0 then
+        if e.position.value.z > camera.position.value.z then
             e.position.value.z = e.position.value.z - 100
         end
     end
 end
 
-return Movement
+return DecorativePlaneCycling

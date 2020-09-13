@@ -30,7 +30,6 @@ function Engine:initialize()
             :give("rotation", math.random(1, 4)*math.pi * 0.5)
             :give("drawable")
             :give("decorativePlane")
-            :give("velocity", maf.vec3(0, 0, 25))
             :give("color", 1, 1, 1)
             :give("texture", Assets.texture("level1/decorative"..math.random(1, 3)))
     end
@@ -52,15 +51,14 @@ end
 function Engine:createPlayer()
     -- Player
     local player = Concord.entity(self.world)
-        :give("position", maf.vec3(0, 0, -9.9))
+        :give("position", maf.vec3(0, 0, -10))
         :give("size", maf.vec3(2.5, 2.5))
         :give("rotation", 0)
         :give("drawable")
         :give("playerControlled")
-        :give("velocity")
+        :give("velocity", maf.vec3(0, 0, -25))
         :give("moveDirection")
         :give("texture", Assets.texture("player/torso"))
-        :give("fallSpeed", 25)
 
     -- Limbs
     -- Right Hand
