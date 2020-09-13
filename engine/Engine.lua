@@ -18,10 +18,12 @@ function Engine:initialize()
     self.world:addSystem(require("engine.systems.BoundaryLimit"))
     self.world:addSystem(require("engine.systems.DecorativePlaneCycling"))
     self.world:addSystem(require("engine.systems.ObstacleSpawn"))
+    self.world:addSystem(require("engine.systems.ObstacleDestroy"))
     self.world:addSystem(require("engine.systems.PlaneRendering"))
+    self.world:addSystem(require("engine.systems.debug.DebugInfo"))
 
     -- Side wall planes
-    local count = 50
+    local count = 40
     for i = 0, count - 1 do
         local z = -100 + i * 100 / count
         Concord.entity(self.world)
@@ -119,9 +121,6 @@ function Engine:draw()
     self.world:emit("draw")
     love.graphics.origin()
     love.graphics.setColor(1, 1, 1, 1)
-
-    love.graphics.print("no-parachute-ecs", 10, 10)
-    love.graphics.print("fps: "..tostring(love.timer.getFPS()), 10, 30)
 end
 
 return Engine
