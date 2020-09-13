@@ -51,7 +51,7 @@ Concord.component("limbParent", function(component, entity)
 end)
 
 Concord.component("limbRotation", function(component, value)
-    component.value = value
+    component.value = value or 0
 end)
 
 Concord.component("limbRotationPoses", function(component, left, right, up, down)
@@ -63,4 +63,12 @@ end)
 
 Concord.component("offset", function(component, offset)
     component.value = offset
+end)
+
+Concord.component("lastObstacleDistance", function(component, value)
+    component.value = value or 0
+end)
+
+Concord.component("fallSpeed", function(component, value)
+    component.value = value or 0
 end)

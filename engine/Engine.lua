@@ -17,6 +17,7 @@ function Engine:initialize()
     self.world:addSystem(require("engine.systems.CameraFollowPlayer"))
     self.world:addSystem(require("engine.systems.BoundaryLimit"))
     self.world:addSystem(require("engine.systems.DecorativePlaneCycling"))
+    self.world:addSystem(require("engine.systems.ObstacleSpawn"))
     self.world:addSystem(require("engine.systems.PlaneRendering"))
 
     -- Side wall planes
@@ -41,6 +42,11 @@ function Engine:initialize()
         :give("position", maf.vec3(0, 0, 0))
         :give("rotation", 0)
         :give("camera")
+
+    -- Obstacle spawner
+    Concord.entity(self.world)
+        :give("position", maf.vec3(0, 0, -100))
+        :give("lastObstacleDistance")
 end
 
 function Engine:createPlayer()
@@ -54,6 +60,7 @@ function Engine:createPlayer()
         :give("velocity")
         :give("moveDirection")
         :give("texture", Assets.texture("player/torso"))
+        :give("fallSpeed", 25)
 
     -- Limbs
     -- Right Hand
