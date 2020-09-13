@@ -3,7 +3,7 @@ local maf = require("lib.maf")
 local mathUtils = require("utils.math")
 
 local CharacterMovement = Concord.system({
-    pool = {"velocity", "character", "moveDirection", "alive"},
+    pool = {"character", "velocity", "moveDirection", "alive"},
 })
 
 function CharacterMovement:update(deltaTime)

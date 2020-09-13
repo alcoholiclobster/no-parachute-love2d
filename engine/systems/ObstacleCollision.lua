@@ -11,8 +11,9 @@ local ObstacleCollision = Concord.system({
 function ObstacleCollision:update(deltaTime)
     for _, obstacle in ipairs(self.obstaclePool) do
         for _, character in ipairs(self.characterPool) do
-            if character.position.value.z + character.velocity.value.z * deltaTime < obstacle.position.value.z and
-               character.position.value.z > obstacle.position.value.z
+            local characterZ = character.position.value.z - 0.5
+            if characterZ + character.velocity.value.z * deltaTime < obstacle.position.value.z and
+               characterZ > obstacle.position.value.z
             then
                 local offset = mathUtils.rotateVector2D(
                     maf.vec3(
@@ -30,8 +31,7 @@ function ObstacleCollision:update(deltaTime)
                 local _, _, _, alpha = imageData:getPixel(tx, ty)
 
                 if alpha > 0 then
-                    -- print("alpha at "..tostring(tx).." "..tostring(ty).." = "..tostring(alpha))
-                    character.position.value.z = obstacle.position.value.z + 1
+                    character.position.value.z = obstacle.position.value.z + 0.5
                     character.velocity.value = maf.vec3(0, 0, 0)
                     character:remove("alive")
                 end

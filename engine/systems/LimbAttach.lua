@@ -9,7 +9,7 @@ local LimbAttach = Concord.system({
 function LimbAttach:update(deltaTime)
     for _, e in ipairs(self.pool) do
         local offset = mathUtils.rotateVector2D(e.offset.value, e.limbParent.value.rotation.value)
-        e.position.value = e.limbParent.value.position.value + offset + maf.vec3(0, 0, -0.51)
+        e.position.value = e.limbParent.value.position.value + offset + maf.vec3(0, 0, -0.26)
         e.rotation.value = e.limbParent.value.rotation.value + e.limbRotation.value
     end
 end

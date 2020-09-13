@@ -8,7 +8,7 @@ local PlaneRendering = Concord.system({
 })
 
 local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-local depthPrecision = 2
+local depthPrecision = 4
 local minZ = -100
 local maxZ = 0
 
