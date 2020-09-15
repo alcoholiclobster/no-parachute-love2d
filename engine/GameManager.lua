@@ -30,6 +30,7 @@ function GameManager:initialize()
     -- Optional debug systems
     self.world:addSystem(require("engine.systems.debug.DebugCollisions"))
     self.world:addSystem(require("engine.systems.debug.DebugInfo"))
+    self.world:addSystem(require("engine.systems.debug.DebugFrameRateGraph"))
 
     -- Side wall planes
     local count = 40
@@ -45,7 +46,7 @@ function GameManager:initialize()
             :give("texture", Assets.texture("level1/decorative"..math.random(1, 3)))
     end
 
-    local player = self:createCharacter()
+    self:createCharacter()
         :give("playerControlled")
         :give("rotationSpeed", 0.1)
 
@@ -54,16 +55,14 @@ function GameManager:initialize()
         :give("position", maf.vec3(0, 0, 0))
         :give("rotation", 0)
         :give("camera")
-        :give("target", player)
 
     -- Obstacle spawner
     Concord.entity(self.world)
-        :give("position", maf.vec3(0, 0, -100))
         :give("lastObstacleDistance")
 end
 
 function GameManager:createCharacter()
-    -- Player
+    -- Character
     local character = Concord.entity(self.world)
         :give("name", "character")
         :give("position", maf.vec3(0, 0, -10))
