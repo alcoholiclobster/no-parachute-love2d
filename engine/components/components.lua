@@ -88,3 +88,8 @@ end)
 Concord.component("obstacleCollisionCheckOffset", function(component, offset)
     component.value = offset or maf.vec3(0, 0, 0)
 end)
+
+Concord.component("cameraShakeEvent", function(component, level)
+    component.level = level or 1
+    component.time = 0
+end)
