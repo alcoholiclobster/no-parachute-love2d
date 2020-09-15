@@ -11,6 +11,8 @@ function GameManager:initialize()
     self.world = Concord.world()
     self.world.gameManager = self
 
+    self.world:addSystem(require("engine.systems.RespawnTimeout"))
+    self.world:addSystem(require("engine.systems.CharacterRespawn"))
     self.world:addSystem(require("engine.systems.ObstacleCollisionCheck"))
     self.world:addSystem(require("engine.systems.PlayerControl"))
     self.world:addSystem(require("engine.systems.CharacterMovement"))

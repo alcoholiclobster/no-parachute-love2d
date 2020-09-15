@@ -97,3 +97,7 @@ Concord.component("cameraShakeEvent", function(component, level)
     component.level = level or 1
     component.time = 0
 end)
+
+Concord.component("respawnTimeout", function(component, value)
+    component.value = value or 0
+end)
