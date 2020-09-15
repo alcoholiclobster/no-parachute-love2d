@@ -26,8 +26,8 @@ local function hitTestEntity(obstacle, entity)
 
     local imageData = Assets.textureImageData(obstacle.texture.value)
 
-    local tx = math.floor((offset.x + obstacle.size.value.x * 0.5) / obstacle.size.value.x * imageData:getWidth())
-    local ty = math.floor((offset.y + obstacle.size.value.y * 0.5) / obstacle.size.value.y * imageData:getHeight())
+    local tx = math.floor(mathUtils.clamp01((offset.x + obstacle.size.value.x * 0.5) / obstacle.size.value.x) * imageData:getWidth())
+    local ty = math.floor(mathUtils.clamp01((offset.y + obstacle.size.value.y * 0.5) / obstacle.size.value.y) * imageData:getHeight())
     local _, _, _, alpha = imageData:getPixel(tx, ty)
 
     if alpha > 0 then
