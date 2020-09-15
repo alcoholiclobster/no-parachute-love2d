@@ -1,9 +1,9 @@
-local Engine = require("engine.Engine")
+local GameManager = require("engine.GameManager")
 
 local game
 
 function love.load()
-    game = Engine:new()
+    game = GameManager:new()
 end
 
 function love.update(deltaTime)
@@ -12,4 +12,12 @@ end
 
 function love.draw()
     game:draw()
+end
+
+function love.keypressed(...)
+    game:handleKeyPress(...)
+end
+
+function love.keyreleased(...)
+    game:handleKeyRelease(...)
 end

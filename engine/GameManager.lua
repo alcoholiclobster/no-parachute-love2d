@@ -5,10 +5,11 @@ local Assets = require("engine.Assets")
 
 Concord.utils.loadNamespace("engine/components")
 
-local Engine = class("Engine")
+local GameManager = class("GameManager")
 
-function Engine:initialize()
+function GameManager:initialize()
     self.world = Concord.world()
+    self.world.gameManager = self
 
     self.world:addSystem(require("engine.systems.ObstacleCollisionCheck"))
     self.world:addSystem(require("engine.systems.PlayerControl"))
@@ -26,6 +27,7 @@ function Engine:initialize()
     self.world:addSystem(require("engine.systems.CharacterDeath"))
     self.world:addSystem(require("engine.systems.LimbDetach"))
     self.world:addSystem(require("engine.systems.PlaneRendering"))
+    -- Optional debug systems
     self.world:addSystem(require("engine.systems.debug.DebugCollisions"))
     self.world:addSystem(require("engine.systems.debug.DebugInfo"))
 
@@ -60,7 +62,7 @@ function Engine:initialize()
         :give("lastObstacleDistance")
 end
 
-function Engine:createCharacter()
+function GameManager:createCharacter()
     -- Player
     local character = Concord.entity(self.world)
         :give("name", "character")
@@ -139,15 +141,23 @@ function Engine:createCharacter()
     return character
 end
 
-function Engine:update(deltaTime)
+function GameManager:update(deltaTime)
     self.world:emit("update", deltaTime)
 end
 
-function Engine:draw()
+function GameManager:draw()
     love.graphics.clear(0, 0, 0, 1)
     self.world:emit("draw")
     love.graphics.origin()
     love.graphics.setColor(1, 1, 1, 1)
 end
 
-return Engine
+function GameManager:handleKeyPress(...)
+    self.world:emit("keyPress", ...)
+end
+
+function GameManager:handleKeyRelease(...)
+    self.world:emit("keyRelease", ...)
+end
+
+return GameManager
