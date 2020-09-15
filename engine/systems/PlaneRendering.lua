@@ -1,5 +1,6 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
+local renderingUtils = require("utils.rendering")
 local Assets = require("engine.Assets")
 
 local PlaneRendering = Concord.system({
@@ -12,21 +13,8 @@ local depthPrecision = 4
 local minZ = -100
 local maxZ = 0
 
-local function project(pos, cam)
-    local z = pos.z - cam.z
-    if z > 0 then
-        return
-    end
-
-    local f = math.abs(pos.z - cam.z + screenHeight * 0.7)
-    local px = ((pos.x - cam.x) * (f / z)) + cam.x
-    local py = ((pos.y - cam.y) * (f / z)) + cam.y
-
-    return -px, -py, -f / z
-end
-
 local function render(e, camera)
-    local x, y, scale = project(e.position.value, camera.position.value)
+    local x, y, scale = renderingUtils.project(e.position.value, camera.position.value)
     if not x then
         return
     end

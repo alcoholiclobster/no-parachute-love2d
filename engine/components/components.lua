@@ -1,6 +1,10 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 
+Concord.component("name", function(component, name)
+    component.value = name or "unnamed"
+end)
+
 Concord.component("position", function(component, position)
     component.value = position or maf.vec3(0, 0, 0)
 end)
@@ -75,4 +79,12 @@ end)
 
 Concord.component("target", function(component, entity)
     component.value = entity
+end)
+
+Concord.component("lastCollidedObstacle", function(component, entity)
+    component.value = entity
+end)
+
+Concord.component("obstacleCollisionCheckOffset", function(component, offset)
+    component.value = offset or maf.vec3(0, 0, 0)
 end)
