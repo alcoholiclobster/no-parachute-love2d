@@ -60,7 +60,7 @@ function GameManager:initialize()
 
     -- Obstacle spawner
     Concord.entity(self.world)
-        :give("lastObstacleDistance")
+        :give("lastObstacleZ")
 end
 
 function GameManager:createCharacter()

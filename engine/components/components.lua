@@ -77,7 +77,7 @@ Concord.component("offset", function(component, offset)
     component.value = offset
 end)
 
-Concord.component("lastObstacleDistance", function(component, value)
+Concord.component("lastObstacleZ", function(component, value)
     component.value = value or 0
 end)
 

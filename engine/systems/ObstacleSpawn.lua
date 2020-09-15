@@ -3,7 +3,7 @@ local maf = require("lib.maf")
 local Assets = require("engine.Assets")
 
 local ObstacleSpawn = Concord.system({
-    pool = {"lastObstacleDistance"},
+    pool = {"lastObstacleZ"},
     cameraPool = {"camera"}
 })
 
@@ -14,8 +14,10 @@ function ObstacleSpawn:update(deltaTime)
     end
 
     for _, e in ipairs(self.pool) do
-        if e.lastObstacleDistance.value > 40 then
-            e.lastObstacleDistance.value = 0
+        local distance = math.abs((camera.position.value.z - 100) - e.lastObstacleZ.value)
+        if distance > 40 then
+            e.lastObstacleZ.value = camera.position.value.z - 100
+
             Concord.entity(self:getWorld())
                 :give("position", maf.vec3(0, 0, camera.position.value.z - 100))
                 :give("size", maf.vec3(10, 10))
@@ -25,8 +27,6 @@ function ObstacleSpawn:update(deltaTime)
                 :give("destroyAboveCamera")
                 :give("color", 1, 1, 1)
                 :give("texture", Assets.texture("level1/obstacle"..math.random(1, 7)))
-        else
-            e.lastObstacleDistance.value = e.lastObstacleDistance.value + 25 * deltaTime
         end
     end
 end
