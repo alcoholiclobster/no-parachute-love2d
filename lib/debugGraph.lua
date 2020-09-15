@@ -115,7 +115,7 @@ function debugGraph:new(type, x, y, width, height, delay, label, font)
     end
 
     -- Draw the line
-    love.graphics.line(table.unpack(lineData))
+    love.graphics.line(unpack(lineData))
 
     -- Print the label
     if self.label ~= '' then
