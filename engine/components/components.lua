@@ -69,6 +69,10 @@ Concord.component("limbRotationPoses", function(component, left, right, up, down
     component.down = down or 0
 end)
 
+Concord.component("limbMissingTexture", function(component, value)
+    component.value = value
+end)
+
 Concord.component("offset", function(component, offset)
     component.value = offset
 end)

@@ -22,6 +22,7 @@ function ObstacleSpawn:update(deltaTime)
                 :give("rotation", math.random(1, 4)*math.pi * 0.5)
                 :give("drawable")
                 :give("obstaclePlane")
+                :give("destroyAboveCamera")
                 :give("color", 1, 1, 1)
                 :give("texture", Assets.texture("level1/obstacle"..math.random(1, 7)))
         else

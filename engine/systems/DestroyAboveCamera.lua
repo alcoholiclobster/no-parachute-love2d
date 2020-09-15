@@ -1,11 +1,11 @@
 local Concord = require("lib.concord")
 
-local ObstacleDestroy = Concord.system({
-    pool = {"obstaclePlane", "position"},
+local DestroyAboveCamera = Concord.system({
+    pool = {"destroyAboveCamera", "position"},
     cameraPool = {"camera"}
 })
 
-function ObstacleDestroy:update(deltaTime)
+function DestroyAboveCamera:update()
     local camera = self.cameraPool[1]
     if not camera then
         return
@@ -17,4 +17,4 @@ function ObstacleDestroy:update(deltaTime)
     end
 end
 
-return ObstacleDestroy
+return DestroyAboveCamera
