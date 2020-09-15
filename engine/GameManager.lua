@@ -11,6 +11,9 @@ function GameManager:initialize()
     self.world = Concord.world()
     self.world.gameManager = self
 
+    self.world:addSystem(require("engine.systems.LifeTime"))
+    self.world:addSystem(require("engine.systems.BloodSpawn"))
+    self.world:addSystem(require("engine.systems.ParticleEmitter"))
     self.world:addSystem(require("engine.systems.RespawnTimeout"))
     self.world:addSystem(require("engine.systems.CharacterRespawn"))
     self.world:addSystem(require("engine.systems.ObstacleCollisionCheck"))
@@ -18,6 +21,7 @@ function GameManager:initialize()
     self.world:addSystem(require("engine.systems.CharacterMovement"))
     self.world:addSystem(require("engine.systems.CharacterRotation"))
     self.world:addSystem(require("engine.systems.Movement"))
+    self.world:addSystem(require("engine.systems.Friction"))
     self.world:addSystem(require("engine.systems.LimbPoses"))
     self.world:addSystem(require("engine.systems.LimbAttach"))
     self.world:addSystem(require("engine.systems.CameraFollowPlayer"))
@@ -60,7 +64,8 @@ function GameManager:initialize()
 
     -- Obstacle spawner
     Concord.entity(self.world)
-        :give("lastObstacleZ")
+        :give("lastObstacleZ", -100)
+        :give("distanceBetweenObstacles", 40)
 end
 
 function GameManager:createCharacter()
@@ -75,6 +80,7 @@ function GameManager:createCharacter()
         :give("character")
         :give("alive")
         :give("velocity", maf.vec3(0, 0, -25))
+        :give("friction", 7)
         :give("moveDirection")
         :give("texture", Assets.texture("player/torso"))
 

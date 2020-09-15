@@ -17,6 +17,15 @@ function CharacterDeath:update(deltaTime)
         e:remove("alive")
 
         e:give("respawnTimeout", 3)
+
+        -- Create blood
+        Concord.entity(self:getWorld())
+            :give("bloodSpawnEvent", 3)
+            :give("position", maf.vec3(
+                e.position.value.x,
+                e.position.value.y,
+                obstacle.position.value.z + 0.25
+            ))
     end
 end
 

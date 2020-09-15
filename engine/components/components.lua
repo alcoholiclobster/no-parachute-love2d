@@ -50,6 +50,10 @@ Concord.component("velocity", function(component, velocity)
     component.value = velocity or maf.vec3(0, 0, 0)
 end)
 
+Concord.component("friction", function(component, value)
+    component.value = value or 1
+end)
+
 Concord.component("moveDirection", function(component, value)
     component.value = value or maf.vec3(0, 0, 0)
 end)
@@ -81,6 +85,10 @@ Concord.component("lastObstacleZ", function(component, value)
     component.value = value or 0
 end)
 
+Concord.component("distanceBetweenObstacles", function(component, value)
+    component.value = value or 0
+end)
+
 Concord.component("target", function(component, entity)
     component.value = entity
 end)
@@ -100,4 +108,12 @@ end)
 
 Concord.component("respawnTimeout", function(component, value)
     component.value = value or 0
+end)
+
+Concord.component("lifeTime", function(component, value)
+    component.value = value or 0
+end)
+
+Concord.component("bloodSpawnEvent", function(component, level)
+    component.level = level or 1
 end)

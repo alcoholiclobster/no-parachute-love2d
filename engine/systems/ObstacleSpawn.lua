@@ -3,7 +3,7 @@ local maf = require("lib.maf")
 local Assets = require("engine.Assets")
 
 local ObstacleSpawn = Concord.system({
-    pool = {"lastObstacleZ"},
+    pool = {"lastObstacleZ", "distanceBetweenObstacles"},
     cameraPool = {"camera"}
 })
 
@@ -15,7 +15,7 @@ function ObstacleSpawn:update(deltaTime)
 
     for _, e in ipairs(self.pool) do
         local distance = math.abs((camera.position.value.z - 100) - e.lastObstacleZ.value)
-        if distance > 40 then
+        if distance > e.distanceBetweenObstacles.value then
             e.lastObstacleZ.value = camera.position.value.z - 100
 
             Concord.entity(self:getWorld())
