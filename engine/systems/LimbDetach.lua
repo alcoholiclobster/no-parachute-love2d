@@ -22,6 +22,7 @@ function LimbDetach:update(deltaTime)
             :give("size", maf.vec3(e.size.value.x, e.size.value.y, e.size.value.z))
             :give("rotation", e.rotation.value)
             :give("texture", e.texture.value)
+            :give("rotationSpeed", 6 * ((math.random() > 0.5) and 1 or -1))
 
         -- Shake camera
         if e.attachToEntity.value.playerControlled then

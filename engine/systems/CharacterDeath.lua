@@ -1,5 +1,6 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
+local mathUtils = require("utils.math")
 
 local CharacterDeath = Concord.system({
     pool = {"character", "velocity", "alive", "lastCollidedObstacle"}
@@ -12,7 +13,13 @@ function CharacterDeath:update(deltaTime)
         end
 
         local obstacle = e.lastCollidedObstacle.value
-        e.position.value.z = obstacle.position.value.z + 0.5
+        e:give("attachToEntity", obstacle)
+        e:give("attachRotation", e.rotation.value - obstacle.rotation.value)
+        local attachOffset = e.position.value - obstacle.position.value
+        attachOffset = mathUtils.rotateVector2D(attachOffset, -obstacle.rotation.value)
+        attachOffset.z = 0.5
+        e:give("attachOffset", attachOffset)
+
         e.velocity.value = maf.vec3(0, 0, 0)
         e:remove("alive")
         e:remove("rotationSpeed")

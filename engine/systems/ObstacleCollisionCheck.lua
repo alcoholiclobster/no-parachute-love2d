@@ -47,7 +47,7 @@ local function checkCollision(obstacle, entity, deltaTime)
 
     local isMovingTowards = false
 
-    if entity.attachToEntity then
+    if entity.attachToEntity and entity.attachToEntity.value.velocity then
         local parentZ = entity.attachToEntity.value.position.value.z
         if parentZ + entity.attachToEntity.value.velocity.value.z * deltaTime < obstacle.position.value.z and
            parentZ > obstacle.position.value.z
