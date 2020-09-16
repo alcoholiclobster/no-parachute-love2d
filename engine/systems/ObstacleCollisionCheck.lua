@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local mathUtils = require("utils.math")
-local Assets = require("engine.Assets")
+local assets = require("engine.assets")
 
 local ObstacleCollisionCheck = Concord.system({
     obstaclePool = {"obstaclePlane", "position", "collisionTexture"},
@@ -24,7 +24,7 @@ local function hitTestEntity(obstacle, entity)
         -obstacle.rotation.value
     )
 
-    local imageData = Assets.textureImageData(obstacle.collisionTexture.value)
+    local imageData = assets.textureImageData(obstacle.collisionTexture.value)
 
     local imageWidth, imageHeight = imageData:getWidth(), imageData:getHeight()
     local tx = math.floor((offset.x + obstacle.size.value.x * 0.5) / obstacle.size.value.x * imageWidth)

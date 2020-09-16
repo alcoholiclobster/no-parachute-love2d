@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local renderingUtils = require("utils.rendering")
-local Assets = require("engine.Assets")
+local assets = require("engine.assets")
 
 local PlaneRendering = Concord.system({
     pool = {"position", "size", "rotation", "drawable"},
@@ -27,7 +27,7 @@ local function render(e, camera)
 
     local size = e.size.value * scale
     if e.decorativePlane and e.texture then
-        local imageData = Assets.textureImageData(e.texture.value)
+        local imageData = assets.textureImageData(e.texture.value)
         local r, g, b = imageData:getPixel(0, 0)
         love.graphics.setColor(
             r * depthFade,
@@ -37,7 +37,7 @@ local function render(e, camera)
         )
 
         local mul = 1/2*scale*10
-        love.graphics.draw(Assets.texture("plane_border"), 0, 0, 0, mul, mul, 2, 2)
+        love.graphics.draw(assets.texture("plane_border"), 0, 0, 0, mul, mul, 2, 2)
     end
 
     if e.color then

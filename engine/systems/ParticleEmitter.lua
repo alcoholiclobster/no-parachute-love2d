@@ -1,6 +1,6 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
-local Assets = require("engine.Assets")
+local assets = require("engine.assets")
 
 local ParticleEmitter = Concord.system({
     pool = {"position", "particleEmitDelay", "particleEmitCount"}
@@ -34,7 +34,7 @@ function ParticleEmitter:update(deltaTime)
                     :give("drawable")
                     :give("lifeTime", lifeTime)
                     :give("velocity", velocity)
-                    :give("texture", Assets.texture("particle"))
+                    :give("texture", assets.texture("particle"))
                     :give("destroyAboveCamera")
 
                 if e.particleColor then

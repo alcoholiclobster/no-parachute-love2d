@@ -1,9 +1,9 @@
-local Assets = {}
+local assets = {}
 
 local texturesCache = {}
 local imageDataCache = {}
 
-function Assets.texture(name)
+function assets.texture(name)
     if texturesCache[name] then
         return texturesCache[name]
     end
@@ -20,11 +20,11 @@ function Assets.texture(name)
     return texture
 end
 
-function Assets.textureImageData(texture)
+function assets.textureImageData(texture)
     if not imageDataCache[texture] then
         return
     end
     return imageDataCache[texture]
 end
 
-return Assets
+return assets

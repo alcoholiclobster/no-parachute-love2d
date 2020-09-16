@@ -1,6 +1,6 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
-local Assets = require("engine.Assets")
+local assets = require("engine.assets")
 
 local ObstacleSpawn = Concord.system({
     pool = {"lastObstacleZ", "distanceBetweenObstacles"},
@@ -18,7 +18,7 @@ function ObstacleSpawn:update(deltaTime)
         if distance > e.distanceBetweenObstacles.value then
             e.lastObstacleZ.value = camera.position.value.z - 100
 
-            local texture = Assets.texture("level1/obstacle"..math.random(1, 7))
+            local texture = assets.texture("level1/obstacle"..math.random(1, 7))
             local canvas = love.graphics.newCanvas(128, 128)
             love.graphics.setCanvas(canvas)
             love.graphics.clear()
