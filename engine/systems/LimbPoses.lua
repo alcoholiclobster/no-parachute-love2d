@@ -1,17 +1,21 @@
 local Concord = require("lib.concord")
-local maf = require("lib.maf")
-local mathUtils = require("utils.math")
 
 local LimbPoses = Concord.system({
-    pool = {"position", "rotation", "limbParent", "limbRotation", "limbRotationPoses"}
+    pool = {
+        "position",
+        "rotation",
+        "attachToEntity",
+        "attachRotation",
+        "limb",
+        "limbRotationPoses"
+    }
 })
 
 local velocityThreshold = 1
 
 function LimbPoses:update(deltaTime)
     for _, e in ipairs(self.pool) do
-        local velocity = e.limbParent.value.moveDirection.value
-        -- velocity = mathUtils.rotateVector2D(velocity, -e.limbParent.value.rotation.value)
+        local velocity = e.attachToEntity.value.moveDirection.value
         local targetRotation = 0
         if math.abs(velocity.x) > math.abs(velocity.y) then
             if velocity.x > velocityThreshold then
@@ -28,8 +32,8 @@ function LimbPoses:update(deltaTime)
         end
 
         local animAngle = math.sin(love.timer.getTime() * 2) * e.limbRotationPoses.down * 0.002
-        if e.limbParent.value.alive then
-            e.limbRotation.value = e.limbRotation.value + (targetRotation - e.limbRotation.value) * 5 * deltaTime + animAngle
+        if e.attachToEntity.value.alive then
+            e.attachRotation.value = e.attachRotation.value + (targetRotation - e.attachRotation.value) * 5 * deltaTime + animAngle
         end
     end
 end

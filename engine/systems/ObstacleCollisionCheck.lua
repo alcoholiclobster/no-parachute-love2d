@@ -5,8 +5,7 @@ local assets = require("engine.assets")
 
 local ObstacleCollisionCheck = Concord.system({
     obstaclePool = {"obstaclePlane", "position", "collisionTexture"},
-    movingPool = {"position", "velocity"},
-    limbsPool = {"position", "limbParent"},
+    entitiesPool = {"position", "collidesWithObstacles"},
 })
 
 local function hitTestEntity(obstacle, entity)
@@ -41,30 +40,43 @@ local function hitTestEntity(obstacle, entity)
     return false
 end
 
+local function checkCollision(obstacle, entity, deltaTime)
+    if obstacle == entity then
+        return
+    end
+
+    local isMovingTowards = false
+
+    if entity.attachToEntity then
+        local parentZ = entity.attachToEntity.value.position.value.z
+        if parentZ + entity.attachToEntity.value.velocity.value.z * deltaTime < obstacle.position.value.z and
+           parentZ > obstacle.position.value.z
+        then
+            isMovingTowards = true
+        end
+    elseif entity.velocity then
+        local entityZ = entity.position.value.z - 0.5
+        if entityZ + entity.velocity.value.z * deltaTime < obstacle.position.value.z and
+           entityZ > obstacle.position.value.z
+        then
+            isMovingTowards = true
+        end
+    end
+
+    if not isMovingTowards then
+        return
+    end
+
+    local hit, pos, tx, ty = hitTestEntity(obstacle, entity)
+    if hit then
+        entity:give("lastCollidedObstacle", obstacle, pos, tx, ty)
+    end
+end
+
 function ObstacleCollisionCheck:update(deltaTime)
     for _, obstacle in ipairs(self.obstaclePool) do
-        for _, entity in ipairs(self.limbsPool) do
-            local parentZ = entity.limbParent.value.position.value.z
-            if parentZ + entity.limbParent.value.velocity.value.z * deltaTime < obstacle.position.value.z and
-               parentZ > obstacle.position.value.z
-            then
-                local hit, pos, tx, ty = hitTestEntity(obstacle, entity)
-                if hit then
-                    entity:give("lastCollidedObstacle", obstacle, pos, tx, ty)
-                end
-            end
-        end
-
-        for _, entity in ipairs(self.movingPool) do
-            local entityZ = entity.position.value.z - 0.5
-            if entityZ + entity.velocity.value.z * deltaTime < obstacle.position.value.z and
-               entityZ > obstacle.position.value.z
-            then
-                local hit, pos, tx, ty = hitTestEntity(obstacle, entity)
-                if hit then
-                    entity:give("lastCollidedObstacle", obstacle, pos, tx, ty)
-                end
-            end
+        for _, entity in ipairs(self.entitiesPool) do
+            checkCollision(obstacle, entity, deltaTime)
         end
     end
 end

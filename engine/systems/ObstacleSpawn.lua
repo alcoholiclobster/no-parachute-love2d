@@ -37,8 +37,8 @@ function ObstacleSpawn:update(deltaTime)
                 :give("color", 1, 1, 1)
                 :give("texture", canvas)
                 :give("collisionTexture", texture)
-                :give("velocity", maf.vec3(2, 0, 0))
-                :give("rotationSpeed", 0.5)
+                -- :give("velocity", maf.vec3(2, 0, 0))
+                -- :give("rotationSpeed", 0.5)
         end
     end
 end

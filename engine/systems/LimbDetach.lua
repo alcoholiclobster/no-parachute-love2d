@@ -2,7 +2,7 @@ local Concord = require("lib.concord")
 local maf = require("lib.maf")
 
 local LimbDetach = Concord.system({
-    pool = {"limbParent", "lastCollidedObstacle", "alive"}
+    pool = {"attachToEntity", "lastCollidedObstacle", "alive", "limb"}
 })
 
 function LimbDetach:update(deltaTime)
@@ -24,7 +24,7 @@ function LimbDetach:update(deltaTime)
             :give("texture", e.texture.value)
 
         -- Shake camera
-        if e.limbParent.value.playerControlled then
+        if e.attachToEntity.value.playerControlled then
             Concord.entity(self:getWorld()):give("cameraShakeEvent", 2)
         end
 

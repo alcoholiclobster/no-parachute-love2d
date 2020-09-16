@@ -62,11 +62,11 @@ Concord.component("moveDirection", function(component, value)
     component.value = value or maf.vec3(0, 0, 0)
 end)
 
-Concord.component("limbParent", function(component, entity)
+Concord.component("attachToEntity", function(component, entity)
     component.value = entity
 end)
 
-Concord.component("limbRotation", function(component, value)
+Concord.component("attachRotation", function(component, value)
     component.value = value or 0
 end)
 
@@ -81,7 +81,7 @@ Concord.component("limbMissingTexture", function(component, value)
     component.value = value
 end)
 
-Concord.component("offset", function(component, offset)
+Concord.component("attachOffset", function(component, offset)
     component.value = offset
 end)
 
