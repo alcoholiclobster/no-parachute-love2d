@@ -26,6 +26,11 @@ function CharacterDeath:update(deltaTime)
                 e.position.value.y,
                 obstacle.position.value.z + 0.25
             ))
+
+        -- Create decal
+        local tx, ty = e.lastCollidedObstacle.textureX, e.lastCollidedObstacle.textureY
+        Concord.entity(self:getWorld())
+            :give("deferredDecal", "blood_death", obstacle, tx, ty)
     end
 end
 

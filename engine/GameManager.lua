@@ -11,6 +11,7 @@ function GameManager:initialize()
     self.world = Concord.world()
     self.world.gameManager = self
 
+    self.world:addSystem(require("engine.systems.Decals"))
     self.world:addSystem(require("engine.systems.LifeTime"))
     self.world:addSystem(require("engine.systems.BloodSpawn"))
     self.world:addSystem(require("engine.systems.ParticleEmitter"))
@@ -64,7 +65,7 @@ function GameManager:initialize()
 
     -- Obstacle spawner
     Concord.entity(self.world)
-        :give("lastObstacleZ", -100)
+        :give("lastObstacleZ", 0)
         :give("distanceBetweenObstacles", 40)
 end
 

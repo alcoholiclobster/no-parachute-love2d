@@ -18,6 +18,15 @@ function ObstacleSpawn:update(deltaTime)
         if distance > e.distanceBetweenObstacles.value then
             e.lastObstacleZ.value = camera.position.value.z - 100
 
+            local texture = Assets.texture("level1/obstacle"..math.random(1, 7))
+            local canvas = love.graphics.newCanvas(128, 128)
+            love.graphics.setCanvas(canvas)
+            love.graphics.clear()
+            love.graphics.setBlendMode("alpha")
+            love.graphics.draw(texture, 0, 0)
+            love.graphics.setCanvas()
+            canvas:setFilter("nearest", "nearest")
+
             Concord.entity(self:getWorld())
                 :give("position", maf.vec3(0, 0, camera.position.value.z - 100))
                 :give("size", maf.vec3(10, 10))
@@ -26,7 +35,8 @@ function ObstacleSpawn:update(deltaTime)
                 :give("obstaclePlane")
                 :give("destroyAboveCamera")
                 :give("color", 1, 1, 1)
-                :give("texture", Assets.texture("level1/obstacle"..math.random(1, 7)))
+                :give("texture", canvas)
+                :give("collisionTexture", texture)
         end
     end
 end

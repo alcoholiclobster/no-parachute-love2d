@@ -41,10 +41,15 @@ function LimbDetach:update(deltaTime)
         Concord.entity(self:getWorld())
             :give("bloodSpawnEvent", 2)
             :give("position", maf.vec3(
-                e.position.value.x,
-                e.position.value.y,
+                e.lastCollidedObstacle.hitPosition.x,
+                e.lastCollidedObstacle.hitPosition.y,
                 obstacle.position.value.z + 0.5
             ))
+
+        -- Create decal
+        local tx, ty = e.lastCollidedObstacle.textureX, e.lastCollidedObstacle.textureY
+        Concord.entity(self:getWorld())
+            :give("deferredDecal", "blood_limb", obstacle, tx, ty)
     end
 end
 

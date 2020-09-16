@@ -11,7 +11,7 @@ function BloodSpawn:update()
             :give("position", maf.vec3(e.position.value.x, e.position.value.y, e.position.value.z))
             :give("particleEmitDelay", 0)
             :give("lifeTime", 0)
-            :give("particleColor", 1, 0, 0, 1)
+            :give("particleColor", 0.8, 0, 0, 0.5)
             :give("particleSize", 0.08, 0.1)
             :give("particleFriction", 4, 6)
 
@@ -23,14 +23,14 @@ function BloodSpawn:update()
         elseif e.bloodSpawnEvent.level == 2 then
             emitter
                 :give("particleEmitCount", 20, 30)
-                :give("particleSpeed", 0.1, 6)
+                :give("particleSpeed", 2, 8)
                 :give("particleLifeTime", 2, 3)
         else
             emitter
                 :give("particleEmitCount", 40, 60)
                 :give("particleSpeed", 0.1, 5)
                 :give("particleLifeTime", 30)
-                :give("particleSize", 0.08, 0.32)
+                :give("particleSize", 0.08, 0.08)
         end
 
         e:destroy()

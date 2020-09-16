@@ -31,6 +31,10 @@ Concord.component("texture", function(component, texture)
     component.height = texture:getHeight()
 end)
 
+Concord.component("collisionTexture", function(component, texture)
+    component.value = texture
+end)
+
 Concord.component("color", function(component, r, g, b, a)
     component.r = r or 0
     component.g = g or 0
@@ -93,8 +97,11 @@ Concord.component("target", function(component, entity)
     component.value = entity
 end)
 
-Concord.component("lastCollidedObstacle", function(component, entity)
+Concord.component("lastCollidedObstacle", function(component, entity, hitPosition, textureX, textureY)
     component.value = entity
+    component.hitPosition = hitPosition
+    component.textureX = textureX
+    component.textureY = textureY
 end)
 
 Concord.component("obstacleCollisionCheckOffset", function(component, offset)
@@ -116,4 +123,11 @@ end)
 
 Concord.component("bloodSpawnEvent", function(component, level)
     component.level = level or 1
+end)
+
+Concord.component("deferredDecal", function(component, name, entity, textureX, textureY)
+    component.name = name
+    component.entity = entity
+    component.textureX = textureX
+    component.textureY = textureY
 end)
