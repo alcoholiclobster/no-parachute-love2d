@@ -29,7 +29,9 @@ local function hitTestEntity(obstacle, entity)
     local imageWidth, imageHeight = imageData:getWidth(), imageData:getHeight()
     local tx = math.floor((offset.x + obstacle.size.value.x * 0.5) / obstacle.size.value.x * imageWidth)
     local ty = math.floor((offset.y + obstacle.size.value.y * 0.5) / obstacle.size.value.y * imageHeight)
-    tx, ty = mathUtils.clamp(tx, 0, imageWidth - 1), mathUtils.clamp(ty, 0, imageHeight - 1)
+    if tx < 0 or tx > imageWidth - 1 or ty < 0 or ty > imageHeight - 1 then
+        return false
+    end
     local _, _, _, alpha = imageData:getPixel(tx, ty)
 
     if alpha > 0 then

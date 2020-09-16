@@ -20,7 +20,7 @@ function GameManager:initialize()
     self.world:addSystem(require("engine.systems.ObstacleCollisionCheck"))
     self.world:addSystem(require("engine.systems.PlayerControl"))
     self.world:addSystem(require("engine.systems.CharacterMovement"))
-    self.world:addSystem(require("engine.systems.CharacterRotation"))
+    self.world:addSystem(require("engine.systems.Rotation"))
     self.world:addSystem(require("engine.systems.Movement"))
     self.world:addSystem(require("engine.systems.Friction"))
     self.world:addSystem(require("engine.systems.LimbPoses"))
@@ -55,7 +55,6 @@ function GameManager:initialize()
 
     self:createCharacter()
         :give("playerControlled")
-        :give("rotationSpeed", 0.1)
 
     -- Camera
     Concord.entity(self.world)
@@ -84,6 +83,7 @@ function GameManager:createCharacter()
         :give("friction", 7)
         :give("moveDirection")
         :give("texture", assets.texture("player/torso"))
+        :give("rotationSpeed", 0.1)
 
     -- Limbs
     -- Right Hand

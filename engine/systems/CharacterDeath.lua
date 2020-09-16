@@ -15,7 +15,7 @@ function CharacterDeath:update(deltaTime)
         e.position.value.z = obstacle.position.value.z + 0.5
         e.velocity.value = maf.vec3(0, 0, 0)
         e:remove("alive")
-
+        e:remove("rotationSpeed")
         e:give("respawnTimeout", 3)
 
         -- Create blood

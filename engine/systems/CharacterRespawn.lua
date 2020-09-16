@@ -8,7 +8,6 @@ local CharacterRespawn = Concord.system({
 function CharacterRespawn:update(deltaTime)
     for _, e in ipairs(self.pool) do
         local newInstance = self:getWorld().gameManager:createCharacter()
-            :give("rotationSpeed", e.rotationSpeed.value)
             :give("position", maf.vec3(0, 0, e.position.value.z - 1))
 
         if e.playerControlled then
