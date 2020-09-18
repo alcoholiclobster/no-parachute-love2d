@@ -89,6 +89,10 @@ Concord.component("lastObstacleZ", function(component, value)
     component.value = value or 0
 end)
 
+Concord.component("lastObstacleIndex", function(component, value)
+    component.value = value or 0
+end)
+
 Concord.component("distanceBetweenObstacles", function(component, value)
     component.value = value or 0
 end)

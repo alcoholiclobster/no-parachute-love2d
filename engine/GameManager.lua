@@ -2,12 +2,16 @@ local class = require("lib.middleclass")
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local assets = require("engine.assets")
+local mathUtils = require("utils.math")
 
 Concord.utils.loadNamespace("engine/components")
 
 local GameManager = class("GameManager")
 
-function GameManager:initialize()
+function GameManager:initialize(levelConfig)
+    self.levelConfig = levelConfig
+    assert(type(self.levelConfig.fallSpeed) == "number", "Invalid fallSpeed")
+
     self.world = Concord.world()
     self.world.gameManager = self
 
@@ -40,17 +44,22 @@ function GameManager:initialize()
     self.world:addSystem(require("engine.systems.debug.DebugFrameRateGraph"))
 
     -- Side wall planes
-    local count = 40
+    assert(self.levelConfig.decorations, "Invalid decorations config")
+    assert(#self.levelConfig.decorations > 0, "Empty decorations table")
+    assert(type(self.levelConfig.decorationPlanesCount) == "number", "Invalid decoration planes count")
+
+    local count = math.max(27, self.levelConfig.decorationPlanesCount)
     for i = 0, count - 1 do
+        local decoration = self.levelConfig.decorations[math.random(1, #self.levelConfig.decorations)]
         local z = -100 + i * 100 / count
         Concord.entity(self.world)
             :give("position", maf.vec3(0, 0, z))
-            :give("size", maf.vec3(10, 10))
+            :give("size", maf.vec3(10 * mathUtils.sign(math.random() - 0.5), 10 * mathUtils.sign(math.random() - 0.5)))
             :give("rotation", math.random(1, 4)*math.pi * 0.5)
             :give("drawable")
             :give("decorativePlane")
             :give("color", 1, 1, 1)
-            :give("texture", assets.texture("level1/decorative"..math.random(1, 3)))
+            :give("texture", assets.texture(decoration.texture))
     end
 
     self:createCharacter()
@@ -63,9 +72,11 @@ function GameManager:initialize()
         :give("camera")
 
     -- Obstacle spawner
+    assert(type(self.levelConfig.distanceBetweenObstacles) == "number", "Invalid distanceBetweenObstacles")
     Concord.entity(self.world)
         :give("lastObstacleZ", 0)
-        :give("distanceBetweenObstacles", 40)
+        :give("lastObstacleIndex", 0)
+        :give("distanceBetweenObstacles", self.levelConfig.distanceBetweenObstacles)
 end
 
 function GameManager:createCharacter()

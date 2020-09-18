@@ -30,10 +30,21 @@ local function rotateVector2D(v, theta)
     return maf.vec3(px, py, 0)
 end
 
+local function sign(x)
+    if x < 0 then
+        return -1
+    elseif x > 0 then
+        return 1
+    else
+        return 0
+    end
+end
+
 return {
     distance = distance,
     lerp = lerp,
     clamp = clamp,
     clamp01 = clamp01,
     rotateVector2D = rotateVector2D,
+    sign = sign,
 }

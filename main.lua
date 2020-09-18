@@ -3,7 +3,7 @@ local GameManager = require("engine.GameManager")
 local game
 
 function love.load()
-    game = GameManager:new()
+    game = GameManager:new(require("config.levels.level1"))
 end
 
 function love.update(deltaTime)
