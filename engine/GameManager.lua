@@ -20,6 +20,7 @@ function GameManager:initialize(levelConfig, uiScreen)
 
     self.world:addSystem(require("engine.systems.Decals"))
     self.world:addSystem(require("engine.systems.LifeTime"))
+    self.world:addSystem(require("engine.systems.BloodSpawnOnScreen"))
     self.world:addSystem(require("engine.systems.BloodSpawn"))
     self.world:addSystem(require("engine.systems.ParticleEmitter"))
     self.world:addSystem(require("engine.systems.RespawnTimeout"))
@@ -45,6 +46,7 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.world:addSystem(require("engine.systems.LevelFinish"))
     self.world:addSystem(require("engine.systems.LevelProgress"))
     self.world:addSystem(require("engine.systems.PlaneRendering"))
+    self.world:addSystem(require("engine.systems.ScreenRendering"))
     -- Optional debug systems
     self.world:addSystem(require("engine.systems.debug.DebugCollisions"))
     self.world:addSystem(require("engine.systems.debug.DebugInfo"))
@@ -185,10 +187,7 @@ function GameManager:update(deltaTime)
 end
 
 function GameManager:draw()
-    love.graphics.clear(0, 0, 0, 1)
     self.world:emit("draw")
-    love.graphics.origin()
-    love.graphics.setColor(1, 1, 1, 1)
 end
 
 function GameManager:handleKeyPress(...)

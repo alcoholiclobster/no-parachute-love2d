@@ -139,3 +139,13 @@ Concord.component("deferredDecal", function(component, name, entity, textureX, t
     component.textureX = textureX
     component.textureY = textureY
 end)
+
+Concord.component("position2d", function(component, x, y)
+    component.x = x or 0
+    component.y = y or 0
+end)
+
+Concord.component("size2d", function(component, x, y)
+    component.x = x or 0
+    component.y = y or 0
+end)
