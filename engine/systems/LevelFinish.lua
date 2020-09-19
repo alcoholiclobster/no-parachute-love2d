@@ -20,6 +20,8 @@ function LevelFinish:update(deltaTime)
             if self.cameraPool[1] then
                 self.cameraPool[1]:give("velocity", maf.vec3(0, 0, character.velocity.value.z * 0.25))
             end
+
+            self:getWorld().gameManager.ui.state = "finished"
         end
     end
 end

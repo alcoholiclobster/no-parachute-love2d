@@ -9,6 +9,7 @@ function GameScreen:initialize(level)
     assert(type(level) == "number", "Level not specified")
     self.gameManager = GameManager:new(require("config.levels.level"..level), self)
 
+    self.level = level
     self.levelProgress = 0
     self.state = "game"
 end
@@ -37,6 +38,22 @@ function GameScreen:draw()
 
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
+        if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
+            self.screenManager:show(require("ui.screens.MainMenuScreen"):new())
+        end
+    elseif self.state == "finished" then
+        love.graphics.setColor(0, 0, 0, 0.6)
+        love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
+
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.printf("Level finished", 0, screenHeight * 0.3, screenWidth, "center")
+
+        local buttonWidth, buttonHeight = 200, 50
+        local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
+        if buttons.drawButton("Next level", buttonX, buttonY, buttonWidth, buttonHeight) then
+            self.screenManager:show(require("ui.screens.GameScreen"):new(self.level + 1))
+        end
+        buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
             self.screenManager:show(require("ui.screens.MainMenuScreen"):new())
         end
