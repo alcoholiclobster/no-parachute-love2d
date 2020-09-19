@@ -21,6 +21,16 @@ return {
             appearTo = 10,
             -- rotationSpeed = 10,
             -- velocity = {5, 0, 0},
+        },
+        {
+            texture = "level1/obstacle2",
+            appearFrom = 1,
+            appearTo = 10,
+        },
+        {
+            texture = "level1/obstacle3",
+            appearFrom = 1,
+            appearTo = 10,
         }
     },
 }

@@ -13,3 +13,5 @@ Concord.component("gravityNotColliding")
 Concord.component("collidesWithObstacles")
 Concord.component("limb")
 Concord.component("lastObstacle")
+
+Concord.component("bloodParticle")

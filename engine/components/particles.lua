@@ -2,6 +2,10 @@ local Concord = require("lib.concord")
 
 Concord.component("particle")
 
+Concord.component("particleTag", function(component, tag)
+    component.value = tag
+end)
+
 Concord.component("particleEmitDelay", function(component, value)
     component.time = 0
     component.delay = value or 1
@@ -20,6 +24,7 @@ Concord.component("particleColor", function(component, r, g, b, a)
 end)
 
 Concord.component("particleRandomRotation")
+Concord.component("particleCollisionEnabled")
 
 Concord.component("particleLifeTime", function(component, min, max)
     component.min = min or 1

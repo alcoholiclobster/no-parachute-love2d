@@ -34,6 +34,7 @@ function ParticleEmitter:update(deltaTime)
                     :give("size", maf.vec3(size, size, 0))
                     :give("rotation", 0)
                     :give("drawable")
+                    :give("particle")
                     :give("lifeTime", lifeTime)
                     :give("velocity", velocity)
                     :give("texture", assets.texture("particle"))
@@ -51,8 +52,16 @@ function ParticleEmitter:update(deltaTime)
                     particle:give("rotation", math.random() * math.pi * 2)
                 end
 
+                if e.particleCollisionEnabled then
+                    particle:give("collidesWithObstacles")
+                end
+
                 if e.particleGravity then
                     particle:give("gravity", e.particleGravity.value)
+                end
+
+                if e.particleTag then
+                    particle:give(e.particleTag.value)
                 end
             end
         end
