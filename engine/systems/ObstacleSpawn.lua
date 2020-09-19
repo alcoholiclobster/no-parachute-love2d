@@ -52,6 +52,10 @@ function ObstacleSpawn:update(deltaTime)
                     local v = generatedObstacle.plane.velocity
                     obstacleEntity:give("velocity", maf.vec3(v[1], v[2], v[3]))
                 end
+
+                if e.lastObstacleIndex.value == #levelGenerator.obstacles then
+                    obstacleEntity:give("lastObstacle")
+                end
             end
 
             if e.lastObstacleIndex.value == #levelGenerator.obstacles then

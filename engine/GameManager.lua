@@ -39,6 +39,7 @@ function GameManager:initialize(levelConfig)
     self.world:addSystem(require("engine.systems.DestroyAboveCamera"))
     self.world:addSystem(require("engine.systems.CharacterDeath"))
     self.world:addSystem(require("engine.systems.LimbDetach"))
+    self.world:addSystem(require("engine.systems.LevelFinish"))
     self.world:addSystem(require("engine.systems.PlaneRendering"))
     -- Optional debug systems
     self.world:addSystem(require("engine.systems.debug.DebugCollisions"))
