@@ -14,6 +14,7 @@ function Decals:update()
             local y = e.deferredDecal.textureY - texture:getHeight()*0.5
             love.graphics.setCanvas(entity.texture.value)
             love.graphics.setBlendMode("multiply", "premultiplied")
+            love.graphics.setColor(1, 1, 1, 1)
             love.graphics.draw(texture, x, y)
             love.graphics.setCanvas()
             love.graphics.setBlendMode("alpha")

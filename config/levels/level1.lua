@@ -11,7 +11,7 @@ return {
         { texture = "level1/decorative3" },
     },
 
-    distanceBetweenObstacles = 10,
+    distanceBetweenObstacles = 30,
     obstaclesCount = 1,
     obstacles = {
         {

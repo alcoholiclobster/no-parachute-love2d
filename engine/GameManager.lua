@@ -9,10 +9,11 @@ Concord.utils.loadNamespace("engine/components")
 
 local GameManager = class("GameManager")
 
-function GameManager:initialize(levelConfig)
+function GameManager:initialize(levelConfig, uiScreen)
     self.levelConfig = levelConfig
     self.levelGenerator = LevelGenerator:new(self.levelConfig)
     self.levelGenerator:generate()
+    self.ui = uiScreen
 
     self.world = Concord.world()
     self.world.gameManager = self
@@ -40,6 +41,7 @@ function GameManager:initialize(levelConfig)
     self.world:addSystem(require("engine.systems.CharacterDeath"))
     self.world:addSystem(require("engine.systems.LimbDetach"))
     self.world:addSystem(require("engine.systems.LevelFinish"))
+    self.world:addSystem(require("engine.systems.LevelProgress"))
     self.world:addSystem(require("engine.systems.PlaneRendering"))
     -- Optional debug systems
     self.world:addSystem(require("engine.systems.debug.DebugCollisions"))
