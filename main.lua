@@ -15,7 +15,7 @@ function love.draw()
     screenManager:emit("draw")
 
     love.graphics.setColor(1, 1, 1, 0.5)
-    love.graphics.printf("no-parachute-alpha", 0, love.graphics.getHeight() - 20, love.graphics.getWidth() - 10, "right")
+    love.graphics.printf("pre-alpha", 0, love.graphics.getHeight() - 20, love.graphics.getWidth() - 10, "right")
 end
 
 function love.keypressed(...)

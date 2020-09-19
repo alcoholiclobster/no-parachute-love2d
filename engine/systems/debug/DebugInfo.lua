@@ -23,8 +23,10 @@ function DebugInfo:draw()
         y = y + 18
         love.graphics.print("Obstacle planes: "..tostring(#self.obstaclePool), 10, y)
         y = y + 18
-        love.graphics.print("Player Z: "..tostring(math.floor(self.playerPool[1].position.value.z)), 10, y)
-        y = y + 18
+        if self.playerPool[1] then
+            love.graphics.print("Player Z: "..tostring(math.floor(self.playerPool[1].position.value.z)), 10, y)
+            y = y + 18
+        end
         love.graphics.print("Game time: "..tostring(math.floor(love.timer.getTime() - startTime)).."s", 10, y)
     end
 

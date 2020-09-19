@@ -48,7 +48,7 @@ local function render(e, camera)
             e.color.a
         )
     else
-        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.setColor(depthFade, depthFade, depthFade, 1)
     end
 
     if e.fillMode then
