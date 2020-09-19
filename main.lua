@@ -1,23 +1,24 @@
-local GameManager = require("engine.GameManager")
+local ScreenManager = require("ui.ScreenManager")
 
-local game
+local screenManager
 
 function love.load()
-    game = GameManager:new(require("config.levels.level1"))
+    screenManager = ScreenManager:new()
+    screenManager:show(require("ui.screens.MainMenuScreen"))
 end
 
 function love.update(deltaTime)
-    game:update(deltaTime)
+    screenManager:emit("update", deltaTime)
 end
 
 function love.draw()
-    game:draw()
+    screenManager:emit("draw")
 end
 
 function love.keypressed(...)
-    game:handleKeyPress(...)
+    screenManager:emit("handleKeyPress", ...)
 end
 
 function love.keyreleased(...)
-    game:handleKeyRelease(...)
+    screenManager:emit("handleKeyRelease", ...)
 end
