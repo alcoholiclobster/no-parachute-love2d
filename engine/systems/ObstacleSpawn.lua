@@ -40,7 +40,7 @@ function ObstacleSpawn:update(deltaTime)
                     :give("rotation", generatedObstacle.rotation)
                     :give("drawable")
                     :give("obstaclePlane")
-                    :give("destroyAboveCamera")
+                    :give("destroyOutOfBounds")
                     :give("texture", canvas)
                     :give("collisionTexture", texture)
 

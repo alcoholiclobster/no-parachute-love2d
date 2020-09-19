@@ -38,7 +38,7 @@ function ParticleEmitter:update(deltaTime)
                     :give("lifeTime", lifeTime)
                     :give("velocity", velocity)
                     :give("texture", assets.texture("particle"))
-                    :give("destroyAboveCamera")
+                    :give("destroyOutOfBounds")
 
                 if e.particleColor then
                     particle:give("color", e.particleColor.r, e.particleColor.g, e.particleColor.b, e.particleColor.a)
