@@ -58,6 +58,10 @@ Concord.component("friction", function(component, value)
     component.value = value or 1
 end)
 
+Concord.component("gravity", function(component, value)
+    component.value = value or maf.vec3(0, 0, 0)
+end)
+
 Concord.component("moveDirection", function(component, value)
     component.value = value or maf.vec3(0, 0, 0)
 end)

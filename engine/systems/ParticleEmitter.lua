@@ -19,7 +19,9 @@ function ParticleEmitter:update(deltaTime)
                 local direction = math.random() * math.pi * 2
                 local velocity = maf.vec3(math.cos(direction), math.sin(direction), 0)
                 if e.particleSpeed then
-                    velocity = velocity * (e.particleSpeed.min + (e.particleSpeed.max - e.particleSpeed.min) * math.random())
+                    velocity.x = (e.particleSpeed.minX + (e.particleSpeed.maxX - e.particleSpeed.minX) * math.random())
+                    velocity.y = (e.particleSpeed.minY + (e.particleSpeed.maxY - e.particleSpeed.minY) * math.random())
+                    velocity.z = (e.particleSpeed.minZ + (e.particleSpeed.maxZ - e.particleSpeed.minZ) * math.random())
                 end
 
                 local size = 0.5
@@ -43,6 +45,14 @@ function ParticleEmitter:update(deltaTime)
 
                 if e.particleFriction then
                     particle:give("friction", e.particleFriction.min + (e.particleFriction.max - e.particleFriction.min) * math.random())
+                end
+
+                if e.particleRandomRotation then
+                    particle:give("rotation", math.random() * math.pi * 2)
+                end
+
+                if e.particleGravity then
+                    particle:give("gravity", e.particleGravity.value)
                 end
             end
         end
