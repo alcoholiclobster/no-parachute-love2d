@@ -3,6 +3,7 @@ local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local assets = require("engine.assets")
 local mathUtils = require("utils.math")
+local LevelGenerator = require("engine.LevelGenerator")
 
 Concord.utils.loadNamespace("engine/components")
 
@@ -10,7 +11,8 @@ local GameManager = class("GameManager")
 
 function GameManager:initialize(levelConfig)
     self.levelConfig = levelConfig
-    assert(type(self.levelConfig.fallSpeed) == "number", "Invalid fallSpeed")
+    self.levelGenerator = LevelGenerator:new(self.levelConfig)
+    self.levelGenerator:generate()
 
     self.world = Concord.world()
     self.world.gameManager = self
