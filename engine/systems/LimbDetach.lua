@@ -50,6 +50,11 @@ function LimbDetach:update(deltaTime)
         local tx, ty = e.lastCollidedObstacle.textureX, e.lastCollidedObstacle.textureY
         Concord.entity(self:getWorld())
             :give("deferredDecal", "blood_limb", obstacle, tx, ty)
+
+        -- Decrease character acceleration
+        if e.attachToEntity.value.acceleration then
+            e.attachToEntity.value.acceleration.value = e.attachToEntity.value.acceleration.value * 0.5
+        end
     end
 end
 
