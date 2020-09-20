@@ -23,7 +23,7 @@ function CharacterDeath:update(deltaTime)
         e.velocity.value = maf.vec3(0, 0, 0)
         e:remove("alive")
         e:remove("rotationSpeed")
-        e:give("respawnTimeout", 3)
+        -- e:give("respawnTimeout", 3)
 
         -- Create blood
         Concord.entity(self:getWorld())
@@ -38,6 +38,9 @@ function CharacterDeath:update(deltaTime)
         local tx, ty = e.lastCollidedObstacle.textureX, e.lastCollidedObstacle.textureY
         Concord.entity(self:getWorld())
             :give("deferredDecal", "blood_death", obstacle, tx, ty)
+
+        -- UI
+        self:getWorld().gameManager.ui:showDeathScreen()
     end
 end
 

@@ -30,6 +30,22 @@ function GameScreen:draw()
     if self.state == "game" then
         local progress = tostring(math.floor(self.levelProgress * 100))
         love.graphics.printf("Progress: "..progress.."%", 0, screenHeight * 0.95, screenWidth, "center")
+    elseif self.state == "dead" then
+        love.graphics.setColor(0, 0, 0, 0.6)
+        love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
+
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.printf("You are dead", 0, screenHeight * 0.3, screenWidth, "center")
+
+        local buttonWidth, buttonHeight = 200, 50
+        local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
+        if buttons.drawButton("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
+            self.screenManager:show(require("ui.screens.GameScreen"):new(self.level))
+        end
+        buttonY = buttonY + buttonHeight + 10
+        if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
+            self.screenManager:show(require("ui.screens.MainMenuScreen"):new())
+        end
     elseif self.state == "pause" then
         love.graphics.setColor(0, 0, 0, 0.6)
         love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
@@ -63,6 +79,10 @@ end
 
 function GameScreen:updateLevelProgress(value)
     self.levelProgress = value
+end
+
+function GameScreen:showDeathScreen()
+    self.state = "dead"
 end
 
 function GameScreen:update(deltaTime)
