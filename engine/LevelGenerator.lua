@@ -1,4 +1,5 @@
 local class = require("lib.middleclass")
+local tableUtils = require("utils.table")
 
 local LevelGenerator = class("LevelGenerator")
 
@@ -21,10 +22,16 @@ function LevelGenerator:generate()
         end
 
         if #possibleObstacles > 0 then
+            if #possibleObstacles > 1 then
+                local index = tableUtils.indexOf(possibleObstacles, previousObstacle)
+                if index then
+                    table.remove(possibleObstacles, index)
+                end
+            end
             local nextObstacle = possibleObstacles[math.random(1, #possibleObstacles)]
 
             if nextObstacle.requiredFreeSpace and nextObstacle.requiredFreeSpace > 0 then
-                for j = 1, nextObstacle.requiredFreeSpace do
+                for _ = 1, nextObstacle.requiredFreeSpace do
                     table.insert(self.obstacles, false)
                 end
             end

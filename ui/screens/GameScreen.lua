@@ -25,6 +25,7 @@ end
 function GameScreen:draw()
     self.gameManager:draw()
 
+    love.graphics.setColor(1, 1, 1, 1)
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     if self.state == "game" then
         local progress = tostring(math.floor(self.levelProgress * 100))

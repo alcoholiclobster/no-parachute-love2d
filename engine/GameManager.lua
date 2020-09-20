@@ -46,11 +46,10 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.world:addSystem(require("engine.systems.LevelFinish"))
     self.world:addSystem(require("engine.systems.LevelProgress"))
     self.world:addSystem(require("engine.systems.PlaneRendering"))
-    self.world:addSystem(require("engine.systems.ScreenRendering"))
-    -- Optional debug systems
     self.world:addSystem(require("engine.systems.debug.DebugCollisions"))
     self.world:addSystem(require("engine.systems.debug.DebugInfo"))
     self.world:addSystem(require("engine.systems.debug.DebugFrameRateGraph"))
+    self.world:addSystem(require("engine.systems.ScreenRendering"))
 
     -- Side wall planes
     assert(self.levelConfig.decorations, "Invalid decorations config")

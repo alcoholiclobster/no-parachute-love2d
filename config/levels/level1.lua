@@ -11,16 +11,13 @@ return {
         { texture = "level1/decorative3" },
     },
 
-    distanceBetweenObstacles = 15,
-    obstaclesCount = 10,
+    distanceBetweenObstacles = 30,
+    obstaclesCount = 30,
     obstacles = {
         {
             texture = "level1/obstacle1",
-            -- requiredFreeSpace = 0,
             appearFrom = 1,
             appearTo = 10,
-            -- rotationSpeed = 10,
-            -- velocity = {5, 0, 0},
         },
         {
             texture = "level1/obstacle2",
@@ -29,8 +26,30 @@ return {
         },
         {
             texture = "level1/obstacle3",
-            appearFrom = 1,
-            appearTo = 10,
+            appearFrom = 7,
+            appearTo = 20,
+        },
+        {
+            texture = "level1/obstacle4",
+            appearFrom = 15,
+            appearTo = 30,
+            requiredFreeSpace = 1,
+        },
+        {
+            texture = "level1/obstacle5",
+            appearFrom = 20,
+            appearTo = 30,
+            requiredFreeSpace = 1,
+        },
+        {
+            texture = "level1/obstacle6",
+            appearFrom = 20,
+            appearTo = 30,
+        },
+        {
+            texture = "level1/obstacle7",
+            appearFrom = 15,
+            appearTo = 25,
         }
     },
 }
