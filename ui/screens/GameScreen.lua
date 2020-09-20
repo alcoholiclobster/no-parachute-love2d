@@ -55,6 +55,10 @@ function GameScreen:draw()
 
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
+        if buttons.drawButton("Continue", buttonX, buttonY, buttonWidth, buttonHeight) then
+            self.state = "game"
+        end
+        buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
             self.screenManager:show(require("ui.screens.MainMenuScreen"):new())
         end
