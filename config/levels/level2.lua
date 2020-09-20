@@ -1,7 +1,7 @@
 return {
     name = "Level 1",
 
-    fallSpeed = 10,
+    fallSpeed = 30,
 
     decorationPlanesCount = 50,
 
