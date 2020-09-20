@@ -7,20 +7,19 @@ local PlayerControl = Concord.system({
 
 function PlayerControl:update(deltaTime)
     for _, e in ipairs(self.pool) do
-        local speed = 10
         local direction = maf.vec3(0, 0, 0)
         if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
-            direction.x = -speed
+            direction.x = -1
         elseif love.keyboard.isDown("right") or love.keyboard.isDown("d") then
-            direction.x = speed
+            direction.x = 1
         else
             direction.x = 0
         end
 
         if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
-            direction.y = -speed
+            direction.y = -1
         elseif love.keyboard.isDown("down") or love.keyboard.isDown("s") then
-            direction.y = speed
+            direction.y = 1
         else
             direction.y = 0
         end

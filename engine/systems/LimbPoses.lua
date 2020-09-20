@@ -11,7 +11,7 @@ local LimbPoses = Concord.system({
     }
 })
 
-local velocityThreshold = 1
+local velocityThreshold = 0.1
 
 function LimbPoses:update(deltaTime)
     for _, e in ipairs(self.pool) do
