@@ -12,7 +12,11 @@ function ScreenRendering:draw()
         else
             love.graphics.setColor(1, 1, 1, 1)
         end
-        love.graphics.rectangle("fill", e.position2d.x, e.position2d.y, e.size2d.x, e.size2d.y)
+        if e.texture then
+            love.graphics.draw(e.texture.value, e.position2d.x, e.position2d.y)
+        else
+            love.graphics.rectangle("fill", e.position2d.x, e.position2d.y, e.size2d.x, e.size2d.y)
+        end
     end
 end
 

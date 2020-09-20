@@ -10,12 +10,14 @@ function Decals:update()
         local entity = e.deferredDecal.entity
         if entity.texture.value:type() == "Canvas" then
             local texture = assets.texture("effects/"..e.deferredDecal.name)
-            local x = e.deferredDecal.textureX - texture:getWidth()*0.5
-            local y = e.deferredDecal.textureY - texture:getHeight()*0.5
+            local textureWidth = texture:getWidth()
+            local textureHeight = texture:getHeight()
+            local x = e.deferredDecal.textureX
+            local y = e.deferredDecal.textureY
             love.graphics.setCanvas(entity.texture.value)
             love.graphics.setBlendMode("multiply", "premultiplied")
             love.graphics.setColor(1, 1, 1, 1)
-            love.graphics.draw(texture, x, y)
+            love.graphics.draw(texture, x, y, e.deferredDecal.rotation, 1, 1, textureWidth * 0.5, textureHeight * 0.5)
             love.graphics.setCanvas()
             love.graphics.setBlendMode("alpha")
         end

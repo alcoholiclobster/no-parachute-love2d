@@ -13,7 +13,7 @@ function BloodParticleCollision:update(deltaTime)
         local obstacle = e.lastCollidedObstacle.value
         local tx, ty = e.lastCollidedObstacle.textureX, e.lastCollidedObstacle.textureY
         Concord.entity(self:getWorld())
-            :give("deferredDecal", "blood_small"..math.random(1, 4), obstacle, tx, ty)
+            :give("deferredDecal", "blood_small"..math.random(1, 4), obstacle, tx, ty, math.random() * math.pi * 2)
 
         e:destroy()
     end

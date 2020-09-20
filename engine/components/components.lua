@@ -133,11 +133,12 @@ Concord.component("bloodSpawnEvent", function(component, level)
     component.level = level or 1
 end)
 
-Concord.component("deferredDecal", function(component, name, entity, textureX, textureY)
+Concord.component("deferredDecal", function(component, name, entity, textureX, textureY, rotation)
     component.name = name
     component.entity = entity
     component.textureX = textureX
     component.textureY = textureY
+    component.rotation = rotation or 0
 end)
 
 Concord.component("position2d", function(component, x, y)
