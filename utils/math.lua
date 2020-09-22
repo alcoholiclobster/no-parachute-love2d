@@ -27,7 +27,7 @@ local function rotateVector2D(v, theta)
     local px = x * cs - y * sn
     local py = x * sn + y * cs
 
-    return maf.vec3(px, py, 0)
+    return maf.vec3(px, py, v.z or 0)
 end
 
 local function sign(x)

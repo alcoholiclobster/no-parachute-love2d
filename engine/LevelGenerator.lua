@@ -42,7 +42,7 @@ function LevelGenerator:generate()
             end
 
             table.insert(self.obstacles, {
-                plane = nextObstacle,
+                planes = nextObstacle.planes,
                 rotation = rotationDirection * math.pi / 2,
             })
 

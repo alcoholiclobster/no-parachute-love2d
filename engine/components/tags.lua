@@ -12,7 +12,7 @@ Concord.component("destroyOutOfBounds")
 Concord.component("respawn")
 Concord.component("gravityNotColliding")
 Concord.component("collidesWithObstacles")
+Concord.component("collidesWithBoundaries")
 Concord.component("limb")
-Concord.component("lastObstacle")
 
 Concord.component("bloodParticle")

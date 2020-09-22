@@ -15,39 +15,39 @@ return {
     obstaclesCount = 30,
     obstacles = {
         {
-            texture = "level1/obstacle1",
+            planes = { { texture = "level1/obstacle1", }},
             appearFrom = 1,
             appearTo = 10,
         },
         {
-            texture = "level1/obstacle2",
+            planes = { { texture = "level1/obstacle2" }},
             appearFrom = 1,
             appearTo = 10,
         },
         {
-            texture = "level1/obstacle3",
+            planes = { { texture = "level1/obstacle3",}},
             appearFrom = 7,
             appearTo = 20,
         },
         {
-            texture = "level1/obstacle4",
+            planes = { { texture = "level1/obstacle4",}},
             appearFrom = 15,
             appearTo = 30,
             requiredFreeSpace = 1,
         },
         {
-            texture = "level1/obstacle5",
+            planes = { { texture = "level1/obstacle5",}},
             appearFrom = 20,
             appearTo = 30,
             requiredFreeSpace = 1,
         },
         {
-            texture = "level1/obstacle6",
+            planes = { { texture = "level1/obstacle6",}},
             appearFrom = 20,
             appearTo = 30,
         },
         {
-            texture = "level1/obstacle7",
+            planes = { { texture = "level1/obstacle7",}},
             appearFrom = 15,
             appearTo = 25,
         }

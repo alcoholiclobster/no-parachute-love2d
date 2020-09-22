@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 
 local BoundaryLimit = Concord.system({
-    pool = {"position", "size", "velocity"}
+    pool = {"position", "size", "velocity", "collidesWithBoundaries"}
 })
 
 function BoundaryLimit:update(deltaTime)

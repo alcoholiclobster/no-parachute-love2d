@@ -10,20 +10,32 @@ return {
     },
 
     distanceBetweenObstacles = 30,
-    obstaclesCount = 5,
+    obstaclesCount = 50,
     obstacles = {
         {
-            texture = "level2/obstacle1",
+            planes = {{ texture = "level2/obstacle1", }},
             appearFrom = 1,
-            appearTo = 10,
-
-            -- rotationSpeed = 10,
-            -- velocity = {5, 0, 0},
+            appearTo = 50,
         },
         {
-            texture = "level2/obstacle2",
+            planes = {{ texture = "level2/obstacle2", }},
             appearFrom = 1,
-            appearTo = 10,
+            appearTo = 50,
+        },
+        {
+            planes = {{ texture = "level2/obstacle3", }},
+            appearFrom = 1,
+            appearTo = 50,
+        },
+        {
+            appearFrom = 1,
+            appearTo = 50,
+
+            planes = {
+                { texture = "level2/obstacle4_1", position = {0, 0, -2} },
+                { texture = "level2/obstacle4_2", velocity = {5, 0, 0}, position = {-15, 0, 0} },
+                { texture = "level2/obstacle4_3", position = {0, 0, 2} },
+            },
         }
     },
 }
