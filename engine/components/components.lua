@@ -154,3 +154,7 @@ Concord.component("size2d", function(component, x, y)
     component.x = x or 0
     component.y = y or 0
 end)
+
+Concord.component("levelProgress", function(component, value)
+    component.value = value or 0
+end)

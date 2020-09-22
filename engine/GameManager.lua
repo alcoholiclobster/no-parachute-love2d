@@ -105,6 +105,7 @@ function GameManager:createCharacter()
         :give("moveDirection")
         :give("texture", assets.texture("player/torso"))
         :give("rotationSpeed", 0.1)
+        :give("levelProgress", 0)
 
     -- Limbs
     -- Right Hand
