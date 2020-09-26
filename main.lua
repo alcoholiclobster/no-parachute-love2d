@@ -3,6 +3,8 @@ local ScreenManager = require("ui.ScreenManager")
 local screenManager
 
 function love.load()
+    math.randomseed(os.time())
+
     screenManager = ScreenManager:new()
     screenManager:show(require("ui.screens.MainMenuScreen"))
 end

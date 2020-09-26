@@ -20,7 +20,7 @@ local function spawnObstaclePlane(world, plane, position, rotation)
     canvas:setFilter("nearest", "nearest")
 
     if plane.rotation then
-        rotation = rotation + plane.rotation
+        rotation = rotation + math.rad(plane.rotation)
     end
 
     local spawnPosition = position:clone()
