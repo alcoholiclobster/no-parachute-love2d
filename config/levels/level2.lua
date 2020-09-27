@@ -1,7 +1,8 @@
 return {
-    name = "Level 1",
+    name = "Level 2",
 
     fallSpeed = 30,
+    fogColor = {27, 54, 61},
 
     decorationPlanesCount = 50,
 
@@ -33,20 +34,20 @@ return {
                 { texture = "level2/obstacle7_1", },
                 { texture = "level2/obstacle7_2", position = {0, 0, 1} },
             },
-            appearFrom = 18,
+            appearFrom = 6,
             appearTo = 70,
         },
         -- Long middle hole thing
         {
             planes = {{ texture = "level2/obstacle3", }},
-            appearFrom = 5,
+            appearFrom = 3,
             appearTo = 15,
         },
 
         -- Single minecart
         {
             appearFrom = 40,
-            appearTo = 80,
+            appearTo = 60,
 
             planes = {
                 { texture = "level2/obstacle4_1", position = {0, 0, -2} },
@@ -62,6 +63,8 @@ return {
             planes = {
                 { texture = "level2/obstacle4_1", position = {0, 0, -2} },
                 { texture = "level2/obstacle4_2", position = {-20, 0, 0}, velocity = {7, 0, 0} },
+
+                { texture = "level2/obstacle2", position = {0, 0, -5} },
 
                 { texture = "level2/obstacle4_1", position = {0, 0, -10}, rotation = 90 },
                 { texture = "level2/obstacle4_2",  position = {-20, 0, -8}, velocity = {8, 0, 0}, rotation = 90 },

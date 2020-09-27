@@ -66,7 +66,6 @@ function GameManager:initialize(levelConfig, uiScreen)
             :give("rotation", math.random(1, 4)*math.pi * 0.5)
             :give("drawable")
             :give("decorativePlane")
-            :give("color", 1, 1, 1)
             :give("texture", assets.texture(decoration.texture))
     end
 
@@ -85,6 +84,8 @@ function GameManager:initialize(levelConfig, uiScreen)
         :give("lastObstacleZ", 0)
         :give("lastObstacleIndex", 0)
         :give("distanceBetweenObstacles", self.levelConfig.distanceBetweenObstacles)
+
+    self.world:emit("init")
 end
 
 function GameManager:createCharacter()

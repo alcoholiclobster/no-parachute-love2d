@@ -40,6 +40,13 @@ local function sign(x)
     end
 end
 
+local function lerpRGBA(r1, g1, b1, a1, r2, g2, b2, a2, t)
+    return r1 + (r2 - r1) * t,
+           g1 + (g2 - g1) * t,
+           b1 + (b2 - b1) * t,
+           a1 + (a2 - a1) * t
+end
+
 return {
     distance = distance,
     lerp = lerp,
@@ -47,4 +54,5 @@ return {
     clamp01 = clamp01,
     rotateVector2D = rotateVector2D,
     sign = sign,
+    lerpRGBA = lerpRGBA,
 }

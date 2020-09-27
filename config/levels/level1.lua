@@ -2,6 +2,7 @@ return {
     name = "Level 1",
 
     fallSpeed = 25,
+    fogColor = {0, 41, 63},
 
     decorationPlanesCount = 40,
 

@@ -13,6 +13,19 @@ local depthPrecision = 4
 local minZ = -100
 local maxZ = 0
 
+local fogColor = {0, 0, 0}
+local shader = love.graphics.newShader[[
+uniform vec4 fogcolor = vec4(1, 0, 0, 1);
+uniform float depth = 1;
+
+vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
+{
+    vec4 texcolor = Texel(texture, texcoord);
+    vec3 color = (texcolor.rgb * vcolor.rgb) + (fogcolor.rgb - (texcolor.rgb * vcolor.rgb)) * depth;
+    return vec4(color, texcolor.a * vcolor.a);
+}
+]]
+
 local function render(e, camera)
     local x, y, scale = renderingUtils.project(e.position.value, camera.position.value)
     if not x then
@@ -22,18 +35,15 @@ local function render(e, camera)
     love.graphics.translate(x, y)
     love.graphics.rotate(e.rotation.value)
 
-    local depth = 1 - mathUtils.clamp01((e.position.value.z - camera.position.value.z) / -100)
-    local depthFade = depth * depth
+    local depth = mathUtils.clamp01((e.position.value.z - camera.position.value.z) / -100)
+    shader:send("depth", depth)
 
     local size = e.size.value * scale
     if e.decorativePlane and e.texture then
         local imageData = assets.textureImageData(e.texture.value)
         local r, g, b = imageData:getPixel(0, 0)
         love.graphics.setColor(
-            r * depthFade,
-            g * depthFade,
-            b * depthFade,
-            1
+            r, g, b, 1
         )
 
         local mul = 1/2*scale*10
@@ -42,13 +52,13 @@ local function render(e, camera)
 
     if e.color then
         love.graphics.setColor(
-            e.color.r * depthFade,
-            e.color.g * depthFade,
-            e.color.b * depthFade,
-            e.color.a
+            e.color.r,
+            e.color.g,
+            e.color.b,
+            1
         )
     else
-        love.graphics.setColor(depthFade, depthFade, depthFade, 1)
+        love.graphics.setColor(1, 1, 1, 1)
     end
 
     if e.fillMode then
@@ -59,6 +69,12 @@ local function render(e, camera)
         local w, h = e.texture.width, e.texture.height
         love.graphics.draw(e.texture.value, 0, 0, 0, size.x/w, size.y/h, w * 0.5, h * 0.5)
     end
+end
+
+function PlaneRendering:init()
+    fogColor = self:getWorld().gameManager.levelConfig.fogColor or {0, 0, 0}
+    fogColor = {fogColor[1] / 255, fogColor[2] / 255, fogColor[3] / 255, 1}
+    shader:sendColor("fogcolor", fogColor)
 end
 
 function PlaneRendering:draw()
@@ -81,6 +97,8 @@ function PlaneRendering:draw()
         end
     end
 
+    love.graphics.clear(fogColor[1], fogColor[2], fogColor[3], 1)
+    love.graphics.setShader(shader)
     love.graphics.translate(screenWidth/2, screenHeight/2)
     love.graphics.rotate(camera.rotation.value)
     for index = -minZ * depthPrecision, 0, -1 do
@@ -93,6 +111,7 @@ function PlaneRendering:draw()
             end
         end
     end
+    love.graphics.setShader()
 end
 
 return PlaneRendering

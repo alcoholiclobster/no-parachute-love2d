@@ -20,8 +20,6 @@ function CharacterDeath:update(deltaTime)
         attachOffset.z = 0.5
         e:give("attachOffset", attachOffset)
 
-        obstacle:remove("velocity")
-
         e.velocity.value = maf.vec3(0, 0, 0)
         e:remove("alive")
         e:remove("rotationSpeed")
