@@ -125,7 +125,7 @@ function GameManager:createCharacter()
         :give("limbRotationPoses", -0.2, 0.2, 0.1, -0.3)
         :give("texture", assets.texture("player/hand"))
         :give("limbMissingTexture", assets.texture("player/hand_missing"))
-        :give("obstacleCollisionCheckOffset", maf.vec3(0.55, -0.7, 0))
+        :give("obstacleCollisionCheckOffset", maf.vec3(0.5, -0.5, 0))
 
     -- Left Hand
     Concord.entity(self.world)
@@ -143,7 +143,7 @@ function GameManager:createCharacter()
         :give("limbRotationPoses", -0.2, 0.2, -0.1, 0.3)
         :give("texture", assets.texture("player/hand"))
         :give("limbMissingTexture", assets.texture("player/hand_missing2"))
-        :give("obstacleCollisionCheckOffset", maf.vec3(-0.55, -0.7, 0))
+        :give("obstacleCollisionCheckOffset", maf.vec3(-0.5, -0.5, 0))
 
     -- Right Leg
     Concord.entity(self.world)
@@ -161,7 +161,7 @@ function GameManager:createCharacter()
         :give("limbRotationPoses", -0.2, 0.2, 0.2, -0.25)
         :give("texture", assets.texture("player/leg"))
         :give("limbMissingTexture", assets.texture("player/leg_missing"))
-        :give("obstacleCollisionCheckOffset", maf.vec3(0.4, 0.85, 0))
+        :give("obstacleCollisionCheckOffset", maf.vec3(0.18, 0.5, 0))
 
     -- Left Leg
     Concord.entity(self.world)
@@ -179,7 +179,7 @@ function GameManager:createCharacter()
         :give("limbRotationPoses", -0.2, 0.2, -0.2, 0.25)
         :give("texture", assets.texture("player/leg"))
         :give("limbMissingTexture", assets.texture("player/leg_missing2"))
-        :give("obstacleCollisionCheckOffset", maf.vec3(-0.4, 0.85, 0))
+        :give("obstacleCollisionCheckOffset", maf.vec3(-0.18, 0.5, 0))
 
     return character
 end

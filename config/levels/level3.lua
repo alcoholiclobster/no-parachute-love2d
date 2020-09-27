@@ -3,8 +3,8 @@ return {
 
     fallSpeed = 32,
     fogColor = {15, 0, 0},
-    playerRotationMode = "none",
-    playerRotationSpeed = 0,
+    playerRotationMode = "constant",
+    playerRotationSpeed = -0.5,
 
     decorationPlanesCount = 60,
 
