@@ -18,7 +18,11 @@ return {
     obstaclesCount = 30,
     obstacles = {
         {
-            planes = {{ texture = "level3/decorative1", }},
+            planes = {
+                { texture = "level3/obstacle1_1", rotationSpeed = 4, },
+                { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
+                { texture = "level3/obstacle1_3", position = {0, 0, 2}, },
+            },
             appearFrom = 1,
             appearTo = 999,
         },
