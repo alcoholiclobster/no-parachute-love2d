@@ -68,12 +68,14 @@ function ObstacleSpawn:update(deltaTime)
         if distance > e.distanceBetweenObstacles.value then
 
             e.lastObstacleIndex.value = e.lastObstacleIndex.value + 1
-            e.lastObstacleZ.value = camera.position.value.z - 100
 
             local obstacle = levelGenerator.obstacles[e.lastObstacleIndex.value]
 
-            if obstacle then
+            if obstacle and not obstacle.freeSpace then
                 spawnObstacle(world, obstacle, maf.vec3(0, 0, camera.position.value.z - 100 - 0.51))
+                e.lastObstacleZ.value = camera.position.value.z - 100
+            else
+                e.lastObstacleZ.value = e.lastObstacleZ.value - obstacle.freeSpace * e.distanceBetweenObstacles.value
             end
 
             if e.lastObstacleIndex.value == #levelGenerator.obstacles then

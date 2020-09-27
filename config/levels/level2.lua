@@ -21,6 +21,8 @@ return {
             planes = {{ texture = "level2/obstacle1", }},
             appearFrom = 1,
             appearTo = 80,
+
+            isWide = true,
         },
         {
             planes = {{ texture = "level2/obstacle8", }},
@@ -31,6 +33,8 @@ return {
             planes = {{ texture = "level2/obstacle2", }},
             appearFrom = 1,
             appearTo = 30,
+
+            isWide = true,
         },
         -- Corner hole thing
         {
@@ -38,6 +42,9 @@ return {
                 { texture = "level2/obstacle7_1", },
                 { texture = "level2/obstacle7_2", position = {0, 0, 1} },
             },
+
+            requiredFreeSpace = 0.2,
+
             appearFrom = 6,
             appearTo = 70,
         },
@@ -64,6 +71,8 @@ return {
             appearFrom = 50,
             appearTo = 80,
 
+            requiredFreeSpace = 0.5,
+
             planes = {
                 { texture = "level2/obstacle4_1", position = {0, 0, -2} },
                 { texture = "level2/obstacle4_2", position = {-20, 0, 0}, velocity = {7, 0, 0} },
@@ -74,6 +83,7 @@ return {
                 { texture = "level2/obstacle4_2",  position = {-20, 0, -8}, velocity = {8, 0, 0}, rotation = 90 },
             },
         },
+
         -- Conveyor belts
         {
             appearFrom = 25,

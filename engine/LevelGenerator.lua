@@ -12,6 +12,7 @@ function LevelGenerator:generate()
     self.obstacles = {}
 
     local previousObstacle = nil
+    local previousObstacleRotations = {}
 
     for i = 1, self.levelConfig.obstaclesCount do
         local possibleObstacles = {}
@@ -31,13 +32,17 @@ function LevelGenerator:generate()
             local nextObstacle = possibleObstacles[math.random(1, #possibleObstacles)]
 
             if nextObstacle.requiredFreeSpace and nextObstacle.requiredFreeSpace > 0 then
-                for _ = 1, nextObstacle.requiredFreeSpace do
-                    table.insert(self.obstacles, false)
+                local freeSpace = nextObstacle.requiredFreeSpace
+                if previousObstacle.isWide then
+                    freeSpace = freeSpace - 1
+                end
+                if freeSpace > 0 then
+                    table.insert(self.obstacles, { freeSpace = freeSpace })
                 end
             end
 
             local rotationDirection = math.random(1, 4)
-            if previousObstacle == nextObstacle then
+            if previousObstacleRotations[nextObstacle] and previousObstacleRotations[nextObstacle] == rotationDirection then
                 rotationDirection = rotationDirection + 1
             end
 
@@ -46,6 +51,7 @@ function LevelGenerator:generate()
                 rotation = rotationDirection * math.pi / 2,
             })
 
+            previousObstacleRotations[nextObstacle] = rotationDirection
             previousObstacle = nextObstacle
         end
     end
