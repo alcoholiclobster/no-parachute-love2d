@@ -9,12 +9,12 @@ local PlaneRendering = Concord.system({
 })
 
 local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-local depthPrecision = 4
+local depthPrecision = 8
 local minZ = -100
 local maxZ = 0
 
 local fogColor = {0, 0, 0}
-local shader = love.graphics.newShader[[
+local planeShader = love.graphics.newShader[[
 uniform vec4 fogcolor = vec4(1, 0, 0, 1);
 uniform float depth = 1;
 
@@ -36,7 +36,7 @@ local function render(e, camera)
     love.graphics.rotate(e.rotation.value)
 
     local depth = mathUtils.clamp01((e.position.value.z - camera.position.value.z) / -100)
-    shader:send("depth", depth)
+    planeShader:send("depth", depth)
 
     local size = e.size.value * scale
     if e.decorativePlane and e.texture then
@@ -74,7 +74,7 @@ end
 function PlaneRendering:init()
     fogColor = self:getWorld().gameManager.levelConfig.fogColor or {0, 0, 0}
     fogColor = {fogColor[1] / 255, fogColor[2] / 255, fogColor[3] / 255, 1}
-    shader:sendColor("fogcolor", fogColor)
+    planeShader:sendColor("fogcolor", fogColor)
 end
 
 function PlaneRendering:draw()
@@ -98,7 +98,7 @@ function PlaneRendering:draw()
     end
 
     love.graphics.clear(fogColor[1], fogColor[2], fogColor[3], 1)
-    love.graphics.setShader(shader)
+    love.graphics.setShader(planeShader)
     love.graphics.translate(screenWidth/2, screenHeight/2)
     love.graphics.rotate(camera.rotation.value)
     for index = -minZ * depthPrecision, 0, -1 do

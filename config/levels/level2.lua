@@ -3,6 +3,10 @@ return {
 
     fallSpeed = 30,
     fogColor = {27, 54, 61},
+    playerRotationMode = "sinusoid",
+    playerRotationSpeed = 0.7,
+    playerRotationChangeSpeed = 0.3,
+    playerRotationSpeedDependsOnProgress = true,
 
     decorationPlanesCount = 50,
 
