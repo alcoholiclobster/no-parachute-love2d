@@ -1,4 +1,5 @@
 local ScreenManager = require("ui.ScreenManager")
+local joystickManager = require("utils.joystickManager")
 
 local screenManager
 
@@ -26,4 +27,12 @@ end
 
 function love.keyreleased(...)
     screenManager:emit("handleKeyRelease", ...)
+end
+
+function love.joystickadded(joystick)
+    joystickManager.add(joystick)
+end
+
+function love.joystickremoved(joystick)
+    joystickManager.remove(joystick)
 end
