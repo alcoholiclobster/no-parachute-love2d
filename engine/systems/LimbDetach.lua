@@ -53,7 +53,7 @@ function LimbDetach:update(deltaTime)
 
         -- Decrease character acceleration
         if e.attachToEntity.value.acceleration then
-            e.attachToEntity.value.acceleration.value = e.attachToEntity.value.acceleration.value * 0.5
+            e.attachToEntity.value.acceleration.value = e.attachToEntity.value.acceleration.value * 0.75
         end
     end
 end

@@ -2,7 +2,7 @@ return {
     name = "Level 2",
 
     fallSpeed = 30,
-    fogColor = {27, 54, 61},
+    fogColor = {0, 0, 0},
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 0.7,
     playerRotationChangeSpeed = 0.3,

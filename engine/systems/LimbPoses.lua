@@ -1,4 +1,5 @@
 local Concord = require("lib.concord")
+local mathUtils = require("utils.math")
 
 local LimbPoses = Concord.system({
     pool = {
@@ -11,22 +12,22 @@ local LimbPoses = Concord.system({
     }
 })
 
-local velocityThreshold = 0.1
+local minVelocityMagnitude = 2.5
 
 function LimbPoses:update(deltaTime)
     for _, e in ipairs(self.pool) do
-        local velocity = e.attachToEntity.value.moveDirection.value
+        local velocity = mathUtils.rotateVector2D(e.attachToEntity.value.velocity.value, -e.attachToEntity.value.rotation.value)
         local targetRotation = 0
         if math.abs(velocity.x) > math.abs(velocity.y) then
-            if velocity.x > velocityThreshold then
+            if velocity.x > minVelocityMagnitude then
                 targetRotation = e.limbRotationPoses.right
-            elseif velocity.x < -velocityThreshold then
+            elseif velocity.x < -minVelocityMagnitude then
                 targetRotation = e.limbRotationPoses.left
             end
         else
-            if velocity.y > velocityThreshold then
+            if velocity.y > minVelocityMagnitude then
                 targetRotation = e.limbRotationPoses.down
-            elseif velocity.y < -velocityThreshold then
+            elseif velocity.y < -minVelocityMagnitude then
                 targetRotation = e.limbRotationPoses.up
             end
         end
