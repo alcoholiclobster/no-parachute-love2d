@@ -7,11 +7,12 @@ local PlayerControl = Concord.system({
     pool = {"velocity", "character", "moveDirection", "playerControlled"},
 })
 
-local joystickDeadZone = 0.1
+local joystickDeadZone = 0.15
 
 function PlayerControl:update(deltaTime)
     for _, e in ipairs(self.pool) do
         local direction = maf.vec3(0, 0, 0)
+
         if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
             direction.x = -1
         elseif love.keyboard.isDown("right") or love.keyboard.isDown("d") then
@@ -32,11 +33,11 @@ function PlayerControl:update(deltaTime)
         if joystick then
             local xAxis = joystick:getGamepadAxis("leftx")
             local yAxis = joystick:getGamepadAxis("lefty")
-            direction.x = mathUtils.clamp01(math.abs(xAxis) - joystickDeadZone) / (1 - joystickDeadZone) * 1 * mathUtils.sign(xAxis)
-            direction.y = mathUtils.clamp01(math.abs(yAxis) - joystickDeadZone) / (1 - joystickDeadZone) * 1 * mathUtils.sign(yAxis)
+            direction.x = direction.x + mathUtils.clamp01((math.abs(xAxis) - joystickDeadZone) / (1 - joystickDeadZone) * 1 * mathUtils.sign(xAxis))
+            direction.y = direction.y + mathUtils.clamp01((math.abs(yAxis) - joystickDeadZone) / (1 - joystickDeadZone) * 1 * mathUtils.sign(yAxis))
         end
 
-        e.moveDirection.value = direction
+        e.moveDirection.value = direction:normalize()
     end
 end
 
