@@ -9,15 +9,6 @@ local DetachedLimbCollision = Concord.system({
 function DetachedLimbCollision:update(deltaTime)
     for _, e in ipairs(self.pool) do
         local obstacle = e.obstacleCollisionEvent.value
-        e:give("attachToEntity", obstacle)
-        e:give("attachRotation", e.rotation.value - obstacle.rotation.value)
-        local attachOffset = e.position.value - obstacle.position.value
-        attachOffset = mathUtils.rotateVector2D(attachOffset, -obstacle.rotation.value)
-        attachOffset.z = 0.5
-        e:give("attachOffset", attachOffset)
-
-        e.velocity.value = maf.vec3(0, 0, 0)
-        e:remove("rotationSpeed")
 
         -- Create blood
         Concord.entity(self:getWorld())

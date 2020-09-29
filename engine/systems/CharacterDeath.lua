@@ -12,18 +12,9 @@ function CharacterDeath:update(deltaTime)
             Concord.entity(self:getWorld()):give("cameraShakeSource", 3)
         end
 
-        local obstacle = e.obstacleCollisionEvent.value
-        e:give("attachToEntity", obstacle)
-        e:give("attachRotation", e.rotation.value - obstacle.rotation.value)
-        local attachOffset = e.position.value - obstacle.position.value
-        attachOffset = mathUtils.rotateVector2D(attachOffset, -obstacle.rotation.value)
-        attachOffset.z = 0.5
-        e:give("attachOffset", attachOffset)
-
-        e.velocity.value = maf.vec3(0, 0, 0)
         e:remove("alive")
-        e:remove("rotationSpeed")
-        -- e:give("respawnTimeout", 3)
+
+        local obstacle = e.obstacleCollisionEvent.value
 
         -- Create blood
         Concord.entity(self:getWorld())
