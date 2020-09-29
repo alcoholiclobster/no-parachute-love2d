@@ -1,5 +1,6 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
+local maf = require("lib.maf")
 
 local LimbBoundaryCollision = Concord.system({
     pool = {"position", "rotation", "limb", "alive", "obstacleCollisionCheckOffset"}
@@ -16,6 +17,11 @@ function LimbBoundaryCollision:update(deltaTime)
 
         if isColliding then
             e:give("limbDeatchRequest")
+
+            -- Create blood
+            Concord.entity(self:getWorld())
+                :give("bloodSpawnEvent", 1)
+                :give("position", maf.vec3(position))
         end
     end
 end
