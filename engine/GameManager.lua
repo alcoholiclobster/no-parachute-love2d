@@ -4,6 +4,7 @@ local maf = require("lib.maf")
 local assets = require("engine.assets")
 local mathUtils = require("utils.math")
 local LevelGenerator = require("engine.LevelGenerator")
+local console = require("utils.console")
 
 Concord.utils.loadNamespace("engine/components")
 
