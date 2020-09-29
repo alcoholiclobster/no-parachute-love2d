@@ -1,17 +1,13 @@
 local Concord = require("lib.concord")
-local maf = require("lib.maf")
 local mathUtils = require("utils.math")
+local maf = require("lib.maf")
 
-local CharacterDeath = Concord.system({
-    pool = {"character", "velocity", "alive", "obstacleCollisionEvent"}
+local DetachedLimbCollision = Concord.system({
+    pool = {"position", "velocity", "detachedLimb", "obstacleCollisionEvent"}
 })
 
-function CharacterDeath:update(deltaTime)
+function DetachedLimbCollision:update(deltaTime)
     for _, e in ipairs(self.pool) do
-        if e.playerControlled then
-            Concord.entity(self:getWorld()):give("cameraShakeSource", 3)
-        end
-
         local obstacle = e.obstacleCollisionEvent.value
         e:give("attachToEntity", obstacle)
         e:give("attachRotation", e.rotation.value - obstacle.rotation.value)
@@ -21,13 +17,11 @@ function CharacterDeath:update(deltaTime)
         e:give("attachOffset", attachOffset)
 
         e.velocity.value = maf.vec3(0, 0, 0)
-        e:remove("alive")
         e:remove("rotationSpeed")
-        -- e:give("respawnTimeout", 3)
 
         -- Create blood
         Concord.entity(self:getWorld())
-            :give("bloodSpawnEvent", 3)
+            :give("bloodSpawnEvent", 1)
             :give("position", maf.vec3(
                 e.position.value.x,
                 e.position.value.y,
@@ -38,10 +32,7 @@ function CharacterDeath:update(deltaTime)
         local tx, ty = e.obstacleCollisionEvent.textureX, e.obstacleCollisionEvent.textureY
         Concord.entity(self:getWorld())
             :give("deferredDecal", "blood_death", obstacle, tx, ty)
-
-        -- UI
-        self:getWorld().gameManager.ui:showDeathScreen()
     end
 end
 
-return CharacterDeath
+return DetachedLimbCollision

@@ -53,7 +53,7 @@ function ParticleEmitter:update(deltaTime)
                 end
 
                 if e.particleCollisionEnabled then
-                    particle:give("collidesWithObstacles")
+                    particle:give("canCollideWithObstacles")
                 end
 
                 if e.particleGravity then

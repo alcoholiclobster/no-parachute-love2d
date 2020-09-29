@@ -2,30 +2,34 @@ local Concord = require("lib.concord")
 local maf = require("lib.maf")
 
 local LimbDetach = Concord.system({
-    pool = {"attachToEntity", "lastCollidedObstacle", "alive", "limb"}
+    pool = {"attachToEntity", "limbDeatchRequest", "alive", "limb"}
 })
 
 function LimbDetach:update(deltaTime)
     for _, e in ipairs(self.pool) do
+        e:remove("limbDeatchRequest")
+
         -- Spawn detached limb
-        local obstacle = e.lastCollidedObstacle.value
-        local detachedLimbPosition = maf.vec3(
-            e.position.value.x,
-            e.position.value.y,
-            obstacle.position.value.z + 0.5
-        )
+        local velocityX = (math.random() - 0.5) * 4
+        local velocityY = (math.random() - 0.5) * 4
         Concord.entity(self:getWorld())
             :give("name", "detached_limb")
+            :give("detachedLimb")
             :give("drawable")
             :give("destroyOutOfBounds")
-            :give("position", detachedLimbPosition)
+            :give("canCollideWithObstacles")
+            :give("canCollideWithBoundaries")
+            :give("position", e.position.value + maf.vec3(0, 0, 0.5))
+            :give("velocity", maf.vec3(velocityX, velocityY, math.random() * 5))
+            :give("gravity", maf.vec3(0, 0, -40))
             :give("size", maf.vec3(e.size.value.x, e.size.value.y, e.size.value.z))
             :give("rotation", e.rotation.value)
+            :give("rotationSpeed", (math.random() - 0.5) * 2)
             :give("texture", e.texture.value)
 
         -- Shake camera
         if e.attachToEntity.value.playerControlled then
-            Concord.entity(self:getWorld()):give("cameraShakeEvent", 2)
+            Concord.entity(self:getWorld()):give("cameraShakeSource", 2)
         end
 
         -- Change texture
@@ -36,20 +40,6 @@ function LimbDetach:update(deltaTime)
         end
 
         e:remove("alive")
-
-        -- Create blood
-        Concord.entity(self:getWorld())
-            :give("bloodSpawnEvent", 2)
-            :give("position", maf.vec3(
-                e.lastCollidedObstacle.hitPosition.x,
-                e.lastCollidedObstacle.hitPosition.y,
-                obstacle.position.value.z + 0.5
-            ))
-
-        -- Create decal
-        local tx, ty = e.lastCollidedObstacle.textureX, e.lastCollidedObstacle.textureY
-        Concord.entity(self:getWorld())
-            :give("deferredDecal", "blood_limb", obstacle, tx, ty)
 
         -- Decrease character acceleration
         if e.attachToEntity.value.acceleration then

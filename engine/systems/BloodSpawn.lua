@@ -18,9 +18,13 @@ function BloodSpawn:update()
 
         if e.bloodSpawnEvent.level == 1 then
             emitter
-                :give("particleEmitCount", 10, 20)
-                :give("particleSpeed", 0.1, 6, 0.1, 6, 0.1, 0.5)
+                :give("particleEmitCount", 5, 10)
+                :give("particleSpeed", -5, 5, -10, 10, 0.1, 4)
+                :give("particleRandomRotation")
                 :give("particleLifeTime", 2, 3)
+                :give("particleGravity", maf.vec3(0, 0, -30))
+                :give("particleCollisionEnabled")
+                :give("particleTag", "bloodParticle")
         elseif e.bloodSpawnEvent.level == 2 then
             emitter
                 :give("particleEmitCount", 15, 20)
@@ -28,7 +32,6 @@ function BloodSpawn:update()
                 :give("particleRandomRotation")
                 :give("particleLifeTime", 2, 3)
                 :give("particleGravity", maf.vec3(0, 0, -40))
-                :give("particleRandomRotation")
                 :give("particleCollisionEnabled")
                 :give("particleTag", "bloodParticle")
         else

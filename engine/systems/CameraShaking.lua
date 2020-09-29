@@ -4,7 +4,7 @@ local maf = require('lib.maf')
 
 local CameraShaking = Concord.system({
     cameraPool = {"camera", "position"},
-    shakesPool = {"cameraShakeEvent"},
+    shakesPool = {"cameraShakeSource"},
 })
 
 local shakeLevels = {
@@ -24,19 +24,17 @@ local shakeLevels = {
 
 function CameraShaking:update(deltaTime)
     for _, e in ipairs(self.shakesPool) do
-        local shake = shakeLevels[e.cameraShakeEvent.level]
+        local shake = shakeLevels[e.cameraShakeSource.level]
         if shake then
             for _, cam in ipairs(self.cameraPool) do
                 local dir = maf.vec3(math.random()-0.5, math.random()-0.5, math.random()-0.5)
-                cam.position.value = cam.position.value + dir * shake.distance * (1-mathUtils.clamp01(e.cameraShakeEvent.time/shake.duration))
+                cam.position.value = cam.position.value + dir * shake.distance * (1-mathUtils.clamp01(e.cameraShakeSource.time/shake.duration))
             end
 
-            e.cameraShakeEvent.time = e.cameraShakeEvent.time + deltaTime
-            if e.cameraShakeEvent.time > shake.duration then
+            e.cameraShakeSource.time = e.cameraShakeSource.time + deltaTime
+            if e.cameraShakeSource.time > shake.duration then
                 e:destroy()
             end
-        else
-            e:destroy()
         end
     end
 end

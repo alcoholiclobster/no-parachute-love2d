@@ -1,12 +1,18 @@
 local Concord = require("lib.concord")
 
-local BoundaryLimit = Concord.system({
-    pool = {"position", "size", "velocity", "collidesWithBoundaries"}
+local BoundaryCollisionCheck = Concord.system({
+    pool = {
+        "position",
+        "size",
+        "velocity",
+        "canCollideWithBoundaries"
+    }
 })
 
-function BoundaryLimit:update(deltaTime)
+function BoundaryCollisionCheck:update()
     for _, e in ipairs(self.pool) do
         local maxPos = 5 - e.size.value.x * 0.3
+
         if e.position.value.x < -maxPos then
             e.position.value.x = -maxPos
             e.velocity.value.x = 0
@@ -25,4 +31,4 @@ function BoundaryLimit:update(deltaTime)
     end
 end
 
-return BoundaryLimit
+return BoundaryCollisionCheck

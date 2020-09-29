@@ -109,18 +109,11 @@ Concord.component("target", function(component, entity)
     component.value = entity
 end)
 
-Concord.component("lastCollidedObstacle", function(component, entity, hitPosition, textureX, textureY)
-    component.value = entity
-    component.hitPosition = hitPosition
-    component.textureX = textureX
-    component.textureY = textureY
-end)
-
 Concord.component("obstacleCollisionCheckOffset", function(component, offset)
     component.value = offset or maf.vec3(0, 0, 0)
 end)
 
-Concord.component("cameraShakeEvent", function(component, level)
+Concord.component("cameraShakeSource", function(component, level)
     component.level = level or 1
     component.time = 0
 end)

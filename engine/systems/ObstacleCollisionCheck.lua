@@ -5,7 +5,7 @@ local assets = require("engine.assets")
 
 local ObstacleCollisionCheck = Concord.system({
     obstaclePool = {"obstaclePlane", "position", "collisionTexture"},
-    entitiesPool = {"position", "collidesWithObstacles"},
+    entitiesPool = {"position", "canCollideWithObstacles"},
 })
 
 local function hitTestEntity(obstacle, entity)
@@ -69,7 +69,7 @@ local function checkCollision(obstacle, entity, deltaTime)
 
     local hit, pos, tx, ty = hitTestEntity(obstacle, entity)
     if hit then
-        entity:give("lastCollidedObstacle", obstacle, pos, tx, ty)
+        entity:give("obstacleCollisionEvent", obstacle, pos, tx, ty)
     end
 end
 
