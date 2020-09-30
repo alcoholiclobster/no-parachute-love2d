@@ -5,18 +5,24 @@ local joystickManager = require("utils.joystickManager")
 local console = require("utils.console")
 
 local isDebugEnabled = false
+local debugSimulateFrameRate = 30
+local debugUpdateDelay = 0
+
 local screenManager
 
 function love.load(arg)
     console.log("love.load()")
 
     local parser = argparse()
-    parser:flag("-d --debug", "Run game in debug mode")
-    parser:option("-l --level", "Force load game level")
+    parser:flag("--debug", "Run game in debug mode")
+    parser:option("--level", "Force load game level")
+    parser:option("--fps", "Simulate frame rate")
     local args = parser:parse(arg)
 
     isDebugEnabled = args.debug
     math.randomseed(os.time())
+
+    debugSimulateFrameRate = tonumber(args.fps) or 30
 
     screenManager = ScreenManager:new()
     screenManager:show(require("ui.screens.MainMenuScreen"))
@@ -28,7 +34,15 @@ function love.load(arg)
 end
 
 function love.update(deltaTime)
-    screenManager:emit("update", deltaTime)
+    if isDebugEnabled then
+        debugUpdateDelay = debugUpdateDelay + deltaTime
+        if debugUpdateDelay > (1000 / debugSimulateFrameRate) / 1000 then
+            screenManager:emit("update", debugUpdateDelay)
+            debugUpdateDelay = 0
+        end
+    else
+        screenManager:emit("update", deltaTime)
+    end
 end
 
 function love.draw()

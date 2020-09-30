@@ -9,7 +9,7 @@ local PlaneRendering = Concord.system({
 })
 
 local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-local depthPrecision = 8
+local depthPrecision = 4
 local minZ = -100
 local maxZ = 0
 
@@ -84,16 +84,19 @@ function PlaneRendering:draw()
     end
 
     screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-    local sortedEntities = {}
 
+    local sortedGroups = {}
     for _, e in ipairs(self.pool) do
         local z = e.position.value.z - camera.position.value.z
         if z < maxZ and z > minZ then
             local index = math.floor(-z * depthPrecision)
-            if not sortedEntities[index] then
-                sortedEntities[index] = {}
+            if not sortedGroups[index] then
+                sortedGroups[index] = {
+                    count = 0
+                }
             end
-            table.insert(sortedEntities[index], e)
+            table.insert(sortedGroups[index], e)
+            sortedGroups[index].count = sortedGroups[index].count + 1
         end
     end
 
@@ -101,16 +104,21 @@ function PlaneRendering:draw()
     love.graphics.setShader(planeShader)
     love.graphics.translate(screenWidth/2, screenHeight/2)
     love.graphics.rotate(camera.rotation.value)
+
     for index = -minZ * depthPrecision, 0, -1 do
-        local entitites = sortedEntities[index]
-        if entitites then
-            for _, e in ipairs(entitites) do
+        local group = sortedGroups[index]
+        if group then
+            if group.count > 1 then
+                table.sort(group, function (a, b) return a.position.value.z < b.position.value.z end)
+            end
+            for i = 1, group.count do
                 love.graphics.push()
-                render(e, camera)
+                render(group[i], camera)
                 love.graphics.pop()
             end
         end
     end
+
     love.graphics.setShader()
 end
 
