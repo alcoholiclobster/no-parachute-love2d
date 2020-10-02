@@ -3,7 +3,7 @@ local mathUtils = require("utils.math")
 
 local CameraFollowPlayer = Concord.system({
     pool = {"camera", "position"},
-    cameraTargetPool = {"playerControlled", "position", "alive"}
+    cameraTargetPool = {"controlledByPlayer", "position", "alive"}
 })
 
 function CameraFollowPlayer:update(deltaTime)

@@ -3,7 +3,7 @@ local mathUtils = require("utils.math")
 local maf = require("lib.maf")
 local assets = require("engine.assets")
 
-local GameInit = Concord.system({ pool = {} })
+local GameInit = Concord.system({})
 
 function GameInit:init()
     local world = self:getWorld()
@@ -28,7 +28,12 @@ function GameInit:init()
     end
 
     world.gameManager:createCharacter()
-        :give("playerControlled")
+        :give("controlledByPlayer")
+
+    world.gameManager:createCharacter()
+        :give("controlledByAI")
+        :give("rotationSpeed", 0.5)
+        :give("color", 1, 0, 0, 1)
 
     -- Camera
     Concord.entity(world)

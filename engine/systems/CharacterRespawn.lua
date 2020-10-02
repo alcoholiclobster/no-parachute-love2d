@@ -10,8 +10,8 @@ function CharacterRespawn:update(deltaTime)
         local newInstance = self:getWorld().gameManager:createCharacter()
             :give("position", maf.vec3(0, 0, e.position.value.z - 1))
 
-        if e.playerControlled then
-            newInstance:give("playerControlled")
+        if e.controlledByPlayer then
+            newInstance:give("controlledByPlayer")
         end
 
         e:destroy()

@@ -2,14 +2,14 @@ local Concord = require("lib.concord")
 local maf = require("lib.maf")
 
 local LevelFinish = Concord.system({
-    charactersPool = {"character", "position", "playerControlled", "velocity", "moveDirection", "levelProgress"},
+    charactersPool = {"character", "position", "controlledByPlayer", "velocity", "moveDirection", "levelProgress"},
     cameraPool = {"camera"}
 })
 
 function LevelFinish:update(deltaTime)
     for _, character in ipairs(self.charactersPool) do
         if character.levelProgress.value >= 1 then
-            character:remove("playerControlled")
+            character:remove("controlledByPlayer")
             character.velocity.value = maf.vec3(-character.position.value.x, -character.position.value.y, character.velocity.value.z)
             character.moveDirection.value = maf.vec3(0, 0, 0)
 

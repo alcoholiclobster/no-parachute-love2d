@@ -2,7 +2,7 @@ local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 
 local PlayerRotation = Concord.system({
-    playerCharactersPool = {"playerControlled", "position", "alive", "rotation", "levelProgress"}
+    playerCharactersPool = {"controlledByPlayer", "position", "alive", "rotation", "levelProgress"}
 })
 
 function PlayerRotation:update(deltaTime)
