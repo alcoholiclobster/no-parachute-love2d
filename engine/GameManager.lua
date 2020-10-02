@@ -2,9 +2,7 @@ local class = require("lib.middleclass")
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local assets = require("engine.assets")
-local mathUtils = require("utils.math")
 local LevelGenerator = require("engine.LevelGenerator")
-local console = require("utils.console")
 
 Concord.utils.loadNamespace("engine/components")
 
@@ -19,6 +17,7 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.world = Concord.world()
     self.world.gameManager = self
 
+    self.world:addSystem(require("engine.systems.GameInit"))
     self.world:addSystem(require("engine.systems.Decals"))
     self.world:addSystem(require("engine.systems.LifeTime"))
     self.world:addSystem(require("engine.systems.BloodSpawnOnScreen"))
@@ -57,42 +56,6 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.world:addSystem(require("engine.systems.debug.DebugFrameRateGraph"))
     self.world:addSystem(require("engine.systems.ScreenRendering"))
     self.world:addSystem(require("engine.systems.EventCleanup"))
-
-    -- Side wall planes
-    assert(self.levelConfig.decorations, "Invalid decorations config")
-    assert(#self.levelConfig.decorations > 0, "Empty decorations table")
-    assert(type(self.levelConfig.decorationPlanesCount) == "number", "Invalid decoration planes count")
-
-    local count = math.max(27, self.levelConfig.decorationPlanesCount)
-    for i = 0, count - 1 do
-        local decoration = self.levelConfig.decorations[math.random(1, #self.levelConfig.decorations)]
-        local z = -100 + i * 100 / count
-        Concord.entity(self.world)
-            :give("position", maf.vec3(0, 0, z))
-            :give("size", maf.vec3(10 * mathUtils.sign(math.random() - 0.5), 10 * mathUtils.sign(math.random() - 0.5)))
-            :give("rotation", math.random(1, 4)*math.pi * 0.5)
-            :give("drawable")
-            :give("decorativePlane")
-            :give("texture", assets.texture(decoration.texture))
-    end
-
-    self:createCharacter()
-        :give("playerControlled")
-
-    -- Camera
-    Concord.entity(self.world)
-        :give("position", maf.vec3(0, 0, 0))
-        :give("rotation", 0)
-        :give("camera")
-
-    -- Obstacle spawner
-    assert(type(self.levelConfig.distanceBetweenObstacles) == "number", "Invalid distanceBetweenObstacles")
-    Concord.entity(self.world)
-        :give("lastObstacleZ", 0)
-        :give("lastObstacleIndex", 0)
-        :give("distanceBetweenObstacles", self.levelConfig.distanceBetweenObstacles)
-
-    self.world:emit("init")
 end
 
 function GameManager:createCharacter()
