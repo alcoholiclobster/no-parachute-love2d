@@ -22,7 +22,7 @@ function CharacterDeath:update(deltaTime)
             :give("position", maf.vec3(
                 e.position.value.x,
                 e.position.value.y,
-                obstacle.position.value.z + 0.25
+                obstacle.position.value.z + 0.2
             ))
 
         -- Create decal

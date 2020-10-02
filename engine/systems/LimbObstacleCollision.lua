@@ -15,7 +15,7 @@ function LimbObstacleCollisionDetach:update(deltaTime)
             :give("position", maf.vec3(
                 e.obstacleCollisionEvent.hitPosition.x,
                 e.obstacleCollisionEvent.hitPosition.y,
-                obstacle.position.value.z + 0.5
+                obstacle.position.value.z + 0.1
             ))
 
         -- Create decal
