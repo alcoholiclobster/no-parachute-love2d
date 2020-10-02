@@ -33,7 +33,7 @@ local function hitTestEntity(obstacle, entity)
     end
     local _, _, _, alpha = imageData:getPixel(tx, ty)
 
-    if alpha > 0 then
+    if alpha > 0.9 then
         return true, point, tx, ty
     end
 

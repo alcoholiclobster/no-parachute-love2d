@@ -25,6 +25,10 @@ end
 function GameScreen:draw()
     self.gameManager:draw()
 
+    if love.keyboard.isDown("o") then
+        return
+    end
+
     love.graphics.setColor(1, 1, 1, 1)
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     if self.state == "game" then

@@ -13,11 +13,12 @@ local isECSInfoVisible = false
 function DebugInfo:draw()
     love.graphics.origin()
     love.graphics.setColor(0, 1, 0, 1)
-    local y = 10
-    local fps = tostring(love.timer.getFPS())
-    love.graphics.print("FPS: "..fps, 10, y)
 
     if isBasicInfoVisible then
+        local y = 10
+        local fps = tostring(love.timer.getFPS())
+        love.graphics.print("FPS: "..fps, 10, y)
+
         y = y + 18
         love.graphics.print("Decorative planes: "..tostring(#self.decorativePool), 10, y)
         y = y + 18
