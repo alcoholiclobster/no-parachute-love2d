@@ -30,6 +30,10 @@ function GameInit:init()
     Concord.entity(world)
         :give("characterSpawnRequest", "player", true)
 
+    for i = 1, 2 do
+        Concord.entity(world):give("characterSpawnRequest", "military")
+    end
+
     -- Camera
     Concord.entity(world)
         :give("position", maf.vec3(0, 0, 0))

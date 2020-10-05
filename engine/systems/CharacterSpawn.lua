@@ -60,6 +60,8 @@ function CharacterSpawn:update(deltaTime)
 
         if e.characterSpawnRequest.controlledByPlayer then
             characterBody:give("controlledByPlayer")
+        else
+            characterBody:give("controlledByAI")
         end
     end
 end
