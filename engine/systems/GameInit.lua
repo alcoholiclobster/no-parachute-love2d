@@ -30,7 +30,7 @@ function GameInit:init()
     Concord.entity(world)
         :give("characterSpawnRequest", "player", true)
 
-    for i = 1, 2 do
+    for i = 1, 5 do
         Concord.entity(world):give("characterSpawnRequest", "military")
     end
 

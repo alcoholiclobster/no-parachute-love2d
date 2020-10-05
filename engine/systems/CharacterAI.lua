@@ -17,11 +17,14 @@ function CharacterAI:update(deltaTime)
     end
 
     for _, e in ipairs(self.pool) do
-        e.rotation.value = player.rotation.value
+        -- e.rotation.value = player.rotation.value
 
         local targetPosition = player.position.value
         local direction = targetPosition - e.position.value
         local distance = #direction
+
+        local targetRotation = math.atan2(direction.y, direction.x) + math.pi * 0.5
+        e.rotation.value = mathUtils.lerp(e.rotation.value, targetRotation, deltaTime * 1)
 
         if distance > minDistanceFromPlayer then
             direction = direction:normalize()
