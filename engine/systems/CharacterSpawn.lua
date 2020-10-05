@@ -61,7 +61,11 @@ function CharacterSpawn:update(deltaTime)
         if e.characterSpawnRequest.controlledByPlayer then
             characterBody:give("controlledByPlayer")
         else
-            characterBody:give("controlledByAI")
+            characterBody
+                :give("controlledByAI")
+                :give("position", maf.vec3((math.random() - 0.5) * 8, (math.random() - 0.5) * 5, 1))
+                :give("rotation", math.random() * math.pi * 2)
+                :give("rotationSpeed", (math.random() - 0.5) * 2)
         end
     end
 end

@@ -4,7 +4,7 @@ local mathUtils = require("utils.math")
 
 local CharacterAI = Concord.system({
     playerPool = {"position", "rotation", "controlledByPlayer", "alive"},
-    pool = {"position", "rotation", "moveDirection", "controlledByAI"}
+    pool = {"position", "rotation", "rotationSpeed", "moveDirection", "controlledByAI", "alive"}
 })
 
 local minDistanceFromPlayer = 1.5
@@ -17,14 +17,22 @@ function CharacterAI:update(deltaTime)
     end
 
     for _, e in ipairs(self.pool) do
-        -- e.rotation.value = player.rotation.value
-
         local targetPosition = player.position.value
         local direction = targetPosition - e.position.value
-        local distance = #direction
 
         local targetRotation = math.atan2(direction.y, direction.x) + math.pi * 0.5
-        e.rotation.value = mathUtils.lerp(e.rotation.value, targetRotation, deltaTime * 1)
+        if targetRotation > e.rotation.value then
+            e.rotationSpeed.value = mathUtils.lerp(e.rotationSpeed.value, 2, deltaTime * 1)
+        else
+            e.rotationSpeed.value = mathUtils.lerp(e.rotationSpeed.value, -2, deltaTime * 1)
+        end
+
+        local verticalDistance = targetPosition.z - e.position.value.z
+        if verticalDistance < 0 then
+            e.position.value.z = e.position.value.z - deltaTime * 3
+        end
+
+        local distance = #direction
 
         if distance > minDistanceFromPlayer then
             direction = direction:normalize()
@@ -32,6 +40,12 @@ function CharacterAI:update(deltaTime)
                 direction = direction * (distance - minDistanceFromPlayer / (slowdownDistance - minDistanceFromPlayer))
             end
             direction = direction * 0.5
+
+            -- Slowly approach player while moving down
+            if verticalDistance < 0 then
+                direction = direction * 0.1
+            end
+
             e.moveDirection.value = mathUtils.rotateVector2D(direction, -e.rotation.value)
         else
             local ox = math.cos(love.timer.getTime() * 0.6) * 0.1

@@ -26,7 +26,7 @@ return {
 
             collisionOffset = {
                 x = 0.5,
-                y = 0.5,
+                y = -0.5,
                 z = 0
             }
         },
