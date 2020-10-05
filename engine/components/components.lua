@@ -118,10 +118,6 @@ Concord.component("cameraShakeSource", function(component, level)
     component.time = 0
 end)
 
-Concord.component("respawnTimeout", function(component, value)
-    component.value = value or 0
-end)
-
 Concord.component("lifeTime", function(component, value)
     component.value = value or 0
 end)

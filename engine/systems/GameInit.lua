@@ -27,13 +27,8 @@ function GameInit:init()
             :give("texture", assets.texture(decoration.texture))
     end
 
-    world.gameManager:createCharacter()
-        :give("controlledByPlayer")
-
-    world.gameManager:createCharacter()
-        :give("controlledByAI")
-        :give("rotationSpeed", 0.5)
-        :give("color", 1, 0, 0, 1)
+    Concord.entity(world)
+        :give("characterSpawnRequest", "player", true)
 
     -- Camera
     Concord.entity(world)
