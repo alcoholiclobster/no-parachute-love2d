@@ -147,3 +147,8 @@ end)
 Concord.component("levelProgress", function(component, value)
     component.value = value or 0
 end)
+
+Concord.component("delayedVelocity", function(component, delay, velocity)
+    component.time = delay or 0
+    component.velocity = velocity
+end)

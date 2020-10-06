@@ -50,7 +50,7 @@ return {
         {
             planes = {
                 { texture = "level3/obstacle4_1" },
-                { texture = "level3/obstacle4_2", position = {7, 0, -0.5}, velocity = {-4, 0, 0} },
+                { texture = "level3/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
             },
             appearFrom = 1,
             appearTo = 999,

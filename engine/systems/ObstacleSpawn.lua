@@ -44,7 +44,12 @@ local function spawnObstaclePlane(world, plane, position, rotation)
 
     if plane.velocity then
         local velocity = mathUtils.rotateVector2D(maf.vec3(plane.velocity[1], plane.velocity[2], plane.velocity[3]), rotation)
-        entity:give("velocity", velocity)
+
+        if plane.moveDelay then
+            entity:give("delayedVelocity", plane.moveDelay, velocity)
+        else
+            entity:give("velocity", velocity)
+        end
     end
 end
 
