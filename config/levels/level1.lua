@@ -36,13 +36,13 @@ return {
             planes = { { texture = "level1/obstacle4",}},
             appearFrom = 15,
             appearTo = 30,
-            requiredFreeSpace = 1,
+            freeSpaceBefore = 1,
         },
         {
             planes = { { texture = "level1/obstacle5",}},
             appearFrom = 20,
             appearTo = 30,
-            requiredFreeSpace = 1,
+            freeSpaceBefore = 1,
         },
         {
             planes = { { texture = "level1/obstacle6",}},

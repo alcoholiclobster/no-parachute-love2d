@@ -43,7 +43,7 @@ return {
                 { texture = "level2/obstacle7_2", position = {0, 0, 1} },
             },
 
-            requiredFreeSpace = 0.2,
+            freeSpaceBefore = 0.2,
 
             appearFrom = 6,
             appearTo = 70,
@@ -71,7 +71,7 @@ return {
             appearFrom = 50,
             appearTo = 80,
 
-            requiredFreeSpace = 0.5,
+            freeSpaceBefore = 0.5,
 
             planes = {
                 { texture = "level2/obstacle4_1", position = {0, 0, -2} },
