@@ -9,7 +9,9 @@ local CharacterMovement = Concord.system({
 function CharacterMovement:update(deltaTime)
     for _, e in ipairs(self.pool) do
         local direction = mathUtils.rotateVector2D(e.moveDirection.value, e.rotation.value)
-        direction:normalize()
+        if direction:length() > 1 then
+            direction:normalize()
+        end
 
         local velocityZ = e.velocity.value.z
         e.velocity.value = e.velocity.value + direction * e.acceleration.value * deltaTime

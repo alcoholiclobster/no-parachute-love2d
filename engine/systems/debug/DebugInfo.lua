@@ -3,7 +3,7 @@ local Concord = require("lib.concord")
 local DebugInfo = Concord.system({
     decorativePool = {"decorativePlane"},
     obstaclePool = {"obstaclePlane"},
-    playerPool = {"playerControlled"},
+    playerPool = {"controlledByPlayer"},
 })
 
 local startTime = love.timer.getTime()

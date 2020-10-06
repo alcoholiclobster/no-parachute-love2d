@@ -8,7 +8,7 @@ local CharacterDeath = Concord.system({
 
 function CharacterDeath:update(deltaTime)
     for _, e in ipairs(self.pool) do
-        if e.playerControlled then
+        if e.controlledByPlayer then
             Concord.entity(self:getWorld()):give("cameraShakeSource", 3)
         end
 
@@ -31,7 +31,9 @@ function CharacterDeath:update(deltaTime)
             :give("deferredDecal", "blood_death", obstacle, tx, ty)
 
         -- UI
-        self:getWorld().gameManager.ui:showDeathScreen()
+        if e.controlledByPlayer then
+            self:getWorld().gameManager.ui:showDeathScreen()
+        end
     end
 end
 

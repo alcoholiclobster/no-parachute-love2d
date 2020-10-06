@@ -4,7 +4,7 @@ local joystickManager = require("utils.joystickManager")
 local mathUtils = require("utils.math")
 
 local PlayerControl = Concord.system({
-    pool = {"velocity", "character", "moveDirection", "playerControlled"},
+    pool = {"velocity", "character", "moveDirection", "controlledByPlayer"},
 })
 
 local joystickDeadZone = 0.15
@@ -37,7 +37,7 @@ function PlayerControl:update(deltaTime)
             -- direction.y = direction.y + mathUtils.clamp01((math.abs(yAxis) - joystickDeadZone) / (1 - joystickDeadZone) * 1 * mathUtils.sign(yAxis))
         end
 
-        e.moveDirection.value = direction:normalize()
+        e.moveDirection.value = direction
     end
 end
 

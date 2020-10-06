@@ -6,3 +6,8 @@ Concord.component("obstacleCollisionEvent", function(component, entity, hitPosit
     component.textureX = textureX
     component.textureY = textureY
 end)
+
+Concord.component("characterSpawnRequest", function(component, characterType, controlledByPlayer)
+    component.characterType = characterType or "player"
+    component.controlledByPlayer = not not controlledByPlayer
+end)

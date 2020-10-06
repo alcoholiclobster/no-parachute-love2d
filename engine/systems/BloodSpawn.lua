@@ -5,7 +5,12 @@ local BloodSpawn = Concord.system({
     pool = {"position", "bloodSpawnEvent"}
 })
 
+-- Limit blood sources per frame
+local maxEventsPerFrame = 4
+
 function BloodSpawn:update()
+    local processedCount = 0
+
     for _, e in ipairs(self.pool) do
         local emitter = Concord.entity(self:getWorld())
             :give("position", maf.vec3(e.position.value.x, e.position.value.y, e.position.value.z))
@@ -41,6 +46,11 @@ function BloodSpawn:update()
         end
 
         e:destroy()
+
+        processedCount = processedCount + 1
+        if processedCount > maxEventsPerFrame then
+            return
+        end
     end
 end
 

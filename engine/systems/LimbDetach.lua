@@ -28,7 +28,7 @@ function LimbDetach:update(deltaTime)
             :give("texture", e.texture.value)
 
         -- Shake camera
-        if e.attachToEntity.value.playerControlled then
+        if e.attachToEntity.value.controlledByPlayer then
             Concord.entity(self:getWorld()):give("cameraShakeSource", 2)
         end
 

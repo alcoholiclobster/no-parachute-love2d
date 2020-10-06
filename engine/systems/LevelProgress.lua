@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 
 local LevelProgress = Concord.system({
-    pool = {"character", "playerControlled", "position"}
+    pool = {"character", "controlledByPlayer", "position"}
 })
 
 function LevelProgress:update(deltaTime)
