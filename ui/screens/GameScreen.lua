@@ -2,6 +2,7 @@ local class = require("lib.middleclass")
 local Screen = require("ui.Screen")
 local GameManager = require("core.GameManager")
 local buttons = require("ui.controls.buttons")
+local assets = require("core.assets")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -32,14 +33,25 @@ function GameScreen:draw()
     love.graphics.setColor(1, 1, 1, 1)
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     if self.state == "game" then
-        local progress = tostring(math.floor(self.levelProgress * 100))
-        love.graphics.printf("Progress: "..progress.."%", 0, screenHeight * 0.95, screenWidth, "center")
+        local progress = tostring(math.floor(self.levelProgress * 100)).."%"
+
+        love.graphics.setColor(1, 1, 1, 0.75)
+        love.graphics.setFont(assets.font("Roboto-Bold", 32))
+        love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
+        love.graphics.setFont(assets.font("Roboto-Bold", 14))
+        love.graphics.printf("PROGRESS", 0, screenHeight - 50, screenWidth, "center")
     elseif self.state == "dead" then
         love.graphics.setColor(0, 0, 0, 0.6)
         love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
+        local progress = tostring(math.floor(self.levelProgress * 100))
+
         love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.printf("You are dead", 0, screenHeight * 0.3, screenWidth, "center")
+        love.graphics.setFont(assets.font("Roboto-Bold", 48))
+        love.graphics.printf("YOU DIED", 0, screenHeight * 0.3, screenWidth, "center")
+
+        love.graphics.setFont(assets.font("Roboto-Bold", 14))
+        love.graphics.printf("Your progress was "..progress.."%", 0, screenHeight * 0.3 + 55, screenWidth, "center")
 
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
@@ -55,10 +67,14 @@ function GameScreen:draw()
         love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
         love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.printf("PAUSED\n(press esc to continue)", 0, screenHeight * 0.3, screenWidth, "center")
+        love.graphics.setFont(assets.font("Roboto-Bold", 48))
+        love.graphics.printf("PAUSED", 0, screenHeight * 0.3, screenWidth, "center")
+
+        love.graphics.setFont(assets.font("Roboto-Bold", 16))
+        love.graphics.printf("Press ESC to continue", 0, screenHeight * 0.3 + 55, screenWidth, "center")
 
         local buttonWidth, buttonHeight = 200, 50
-        local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
+        local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.5
         if buttons.drawButton("Continue", buttonX, buttonY, buttonWidth, buttonHeight) then
             self.state = "game"
         end

@@ -4,6 +4,7 @@ local GameScreen = require("ui.screens.GameScreen")
 local joystickManager = require("utils.joystickManager")
 local console = require("utils.console")
 local gameConfig = require("config.game")
+local mouseUtils = require("utils.mouse")
 
 local isDebugEnabled = false
 local debugSimulateFrameRate = 30
@@ -35,6 +36,8 @@ function love.load(arg)
 end
 
 function love.update(deltaTime)
+    mouseUtils.update()
+
     if isDebugEnabled then
         debugUpdateDelay = debugUpdateDelay + deltaTime
         if debugUpdateDelay > (1000 / debugSimulateFrameRate) / 1000 then

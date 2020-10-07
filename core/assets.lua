@@ -2,6 +2,9 @@ local assets = {}
 
 local texturesCache = {}
 local imageDataCache = {}
+local fontsCache = {
+    default_14 = love.graphics.getFont()
+}
 
 function assets.texture(name)
     if texturesCache[name] then
@@ -18,6 +21,26 @@ function assets.texture(name)
     imageDataCache[texture] = imageData
 
     return texture
+end
+
+function assets.font(name, size)
+    if not name then
+        name = "default"
+    end
+
+    if not size then
+        size = 14
+    end
+    local fontName = name.."_"..size
+    if fontsCache[fontName] then
+        return fontsCache[fontName]
+    end
+
+    local path = "assets/fonts/"..name..".ttf"
+    local font = love.graphics.newFont(path, size)
+    fontsCache[fontName] = font
+
+    return font
 end
 
 function assets.textureImageData(texture)
