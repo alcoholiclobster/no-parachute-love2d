@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local mathUtils = require("utils.math")
-local assets = require("engine.assets")
+local assets = require("core.assets")
 
 local ObstacleCollisionCheck = Concord.system({
     obstaclePool = {"obstaclePlane", "position", "collisionTexture"},

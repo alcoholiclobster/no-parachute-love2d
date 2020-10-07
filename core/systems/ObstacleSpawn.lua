@@ -1,6 +1,6 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
-local assets = require("engine.assets")
+local assets = require("core.assets")
 local mathUtils = require("utils.math")
 
 local ObstacleSpawn = Concord.system({

@@ -1,5 +1,5 @@
 local Concord = require("lib.concord")
-local assets = require("engine.assets")
+local assets = require("core.assets")
 
 local Decals = Concord.system({
     pool = {"deferredDecal"}

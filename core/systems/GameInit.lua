@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local maf = require("lib.maf")
-local assets = require("engine.assets")
+local assets = require("core.assets")
 
 local GameInit = Concord.system({})
 

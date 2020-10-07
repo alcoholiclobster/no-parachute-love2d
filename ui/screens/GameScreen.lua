@@ -1,6 +1,6 @@
 local class = require("lib.middleclass")
 local Screen = require("ui.Screen")
-local GameManager = require("engine.GameManager")
+local GameManager = require("core.GameManager")
 local buttons = require("ui.controls.buttons")
 
 local GameScreen = class("GameScreen", Screen)

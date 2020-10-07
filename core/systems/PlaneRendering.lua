@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local renderingUtils = require("utils.rendering")
-local assets = require("engine.assets")
+local assets = require("core.assets")
 
 local PlaneRendering = Concord.system({
     pool = {"position", "size", "rotation", "drawable"},
