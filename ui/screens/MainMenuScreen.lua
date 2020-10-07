@@ -12,6 +12,10 @@ Use WASD or arrow keys to control player.
 Controller should probably work too (but not in menus).
 
 Avoid walls and don't die.
+
+Contact me:
+Email: bredikhin.nikita@gmail.com
+Twitter: @alcolobster
 ]]
 
 function MainMenuScreen:initialize()
@@ -35,7 +39,7 @@ function MainMenuScreen:draw()
     love.graphics.printf("No Parachute", 0, screenHeight * 0.2, screenWidth, "center", 0)
 
     love.graphics.setFont(assets.font("Roboto-Bold", 16))
-    love.graphics.printf("VERY EARLY ALPHA", 0, screenHeight * 0.2 + 70, screenWidth, "center", 0)
+    love.graphics.printf("VERY VERY EARLY ALPHA VERSION", 0, screenHeight * 0.2 + 60, screenWidth, "center", 0)
 
     love.graphics.setFont(assets.font("Roboto-Regular", 16))
     love.graphics.printf(howToPlayText, screenWidth * 0.05, screenHeight * 0.4, screenWidth, "left", 0)

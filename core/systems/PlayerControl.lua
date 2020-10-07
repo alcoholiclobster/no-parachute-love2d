@@ -33,8 +33,8 @@ function PlayerControl:update(deltaTime)
         if joystick then
             local xAxis = joystick:getGamepadAxis("leftx")
             local yAxis = joystick:getGamepadAxis("lefty")
-            direction.x = direction.x + (math.abs(xAxis) - joystickDeadZone) / (1 - joystickDeadZone) * 1 * mathUtils.sign(xAxis)
-            direction.y = direction.y + (math.abs(yAxis) - joystickDeadZone) / (1 - joystickDeadZone) * 1 * mathUtils.sign(yAxis)
+            direction.x = direction.x + mathUtils.clamp01((math.abs(xAxis) - joystickDeadZone) / (1 - joystickDeadZone)) * mathUtils.sign(xAxis)
+            direction.y = direction.y + mathUtils.clamp01((math.abs(yAxis) - joystickDeadZone) / (1 - joystickDeadZone)) * mathUtils.sign(yAxis)
         end
 
         e.moveDirection.value = direction
