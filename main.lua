@@ -3,6 +3,7 @@ local ScreenManager = require("ui.ScreenManager")
 local GameScreen = require("ui.screens.GameScreen")
 local joystickManager = require("utils.joystickManager")
 local console = require("utils.console")
+local gameConfig = require("config.game")
 
 local isDebugEnabled = false
 local debugSimulateFrameRate = 30
@@ -49,7 +50,7 @@ function love.draw()
     screenManager:emit("draw")
 
     love.graphics.setColor(1, 1, 1, 0.5)
-    love.graphics.printf("pre-alpha", 0, love.graphics.getHeight() - 20, love.graphics.getWidth() - 10, "right")
+    love.graphics.printf(gameConfig.versionName, 0, love.graphics.getHeight() - 20, love.graphics.getWidth() - 10, "right")
 
     console.draw()
 end

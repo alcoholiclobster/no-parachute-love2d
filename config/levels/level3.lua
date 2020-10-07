@@ -15,56 +15,95 @@ return {
     },
 
     distanceBetweenObstacles = 30,
-    obstaclesCount = 90,
+    obstaclesCount = 50,
     obstacles = {
+        -- Big Fan
         {
             planes = {
                 { texture = "level3/obstacle1_1", rotationSpeed = 4, },
                 { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
                 { texture = "level3/obstacle1_3", position = {0, 0, 2}, },
             },
-            appearFrom = 1,
-            appearTo = 999,
+            appearFrom = 29,
+            appearTo = 40,
         },
 
+        -- Big Fan (Slow)
+        {
+            planes = {
+                { texture = "level3/obstacle1_1", rotationSpeed = 0.5, },
+                { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
+                { texture = "level3/obstacle1_3", position = {0, 0, 2}, },
+            },
+            appearFrom = 29,
+            appearTo = 35,
+        },
+
+        -- Big Fan (Reversed)
+        {
+            planes = {
+                { texture = "level3/obstacle1_1", rotationSpeed = -5, },
+                { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
+                { texture = "level3/obstacle1_3", position = {0, 0, 2}, },
+            },
+            appearFrom = 41,
+            appearTo = 50,
+        },
+
+        -- Big Fan (Stopped)
+        {
+            planes = {
+                { texture = "level3/obstacle1_1", rotation = 30, },
+                { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
+                { texture = "level3/obstacle1_3", position = {0, 0, 2}, },
+            },
+            appearFrom = 10,
+            appearTo = 15,
+        },
+
+        -- Box with fan (middle)
         {
             planes = {
                 { texture = "level3/obstacle2_1"},
                 { texture = "level3/obstacle2_2", position = {0, 0, -0.5}, rotationSpeed = -16, },
                 { texture = "level3/obstacle2_3", position = {0, 0, -1}, },
             },
-            appearFrom = 1,
-            appearTo = 999,
+            appearFrom = 15,
+            appearTo = 35,
         },
 
+        -- Pipes through middle
         {
             planes = {
                 { texture = "level3/obstacle3_1", position = {0, 0, 0} },
                 { texture = "level3/obstacle3_2", position = {0, 0, -10} },
                 { texture = "level3/obstacle3_3", position = {0, 0, -9.5} },
             },
-            appearFrom = 1,
-            appearTo = 999,
+            appearFrom = 3,
+            appearTo = 10,
         },
 
+        -- Door at the middle
         {
             planes = {
                 { texture = "level3/obstacle4_1" },
                 { texture = "level3/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
             },
             appearFrom = 1,
-            appearTo = 999,
+            appearTo = 1,
         },
 
+        -- Ventilation boxes crossed through middle
         {
             planes = {
                 { texture = "level3/obstacle5_1" },
                 { texture = "level3/obstacle5_2", position = {0, 0, -2} },
             },
-            appearFrom = 1,
-            appearTo = 999,
+            appearFrom = 10,
+            appearTo = 35,
         },
 
+        -- Vertical tube-like thing
         {
             planes = {
                 { texture = "level3/obstacle6_0", position = {0, 0, 0}},
@@ -92,10 +131,33 @@ return {
                 { texture = "level3/obstacle6_5", position = {2.96875, -3.125, -2}, rotationSpeed = 10},
                 { texture = "level3/obstacle6_6", position = {0, 0, 5}},
             },
-            appearFrom = 1,
-            appearTo = 999,
+            appearFrom = 20,
+            appearTo = 35,
 
+            freeSpaceBefore = 0.5,
             freeSpaceAfter = 1,
         },
+
+        -- Pipes through sides
+        {
+            planes = {
+                { texture = "level3/obstacle7_1", position = {-3, 0, 0} },
+                { texture = "level3/obstacle7_1", position = {3, 0, -4} },
+            },
+            appearFrom = 2,
+            appearTo = 20,
+        },
+
+        -- Diagonal pipe
+        {
+            planes = {
+                { texture = "level3/obstacle7_1", position = {0, 0, 0}, rotation = 45 },
+                { texture = "level3/obstacle7_1", position = {0, 10, 0}, rotation = 45 },
+                { texture = "level3/obstacle7_1", position = {0, -10, 0}, rotation = 45 },
+            },
+            appearFrom = 3,
+            appearTo = 12,
+        },
+
     }
 }
