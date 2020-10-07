@@ -6,6 +6,7 @@ local LevelGenerator = class("LevelGenerator")
 function LevelGenerator:initialize(levelConfig)
     self.levelConfig = levelConfig
     self.obstacles = {}
+    self.totalLevelHeight = 0
 end
 
 function LevelGenerator:generate()
@@ -61,6 +62,18 @@ function LevelGenerator:generate()
             previousObstacle = nextObstacle
         end
     end
+
+    self.totalLevelHeight = 100
+
+    for _, obstacle in ipairs(self.obstacles) do
+        if obstacle.freeSpace then
+            self.totalLevelHeight = self.totalLevelHeight + obstacle.freeSpace * self.levelConfig.distanceBetweenObstacles
+        else
+            self.totalLevelHeight = self.totalLevelHeight + self.levelConfig.distanceBetweenObstacles
+        end
+    end
+
+    self.totalLevelHeight = self.totalLevelHeight + 50
 end
 
 return LevelGenerator

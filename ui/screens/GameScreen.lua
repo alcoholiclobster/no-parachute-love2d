@@ -63,6 +63,10 @@ function GameScreen:draw()
             self.state = "game"
         end
         buttonY = buttonY + buttonHeight + 10
+        if buttons.drawButton("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
+            self.screenManager:show(require("ui.screens.GameScreen"):new(self.level))
+        end
+        buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
             self.screenManager:show(require("ui.screens.MainMenuScreen"):new())
         end
@@ -75,8 +79,10 @@ function GameScreen:draw()
 
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
-        if buttons.drawButton("Next level", buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.screenManager:show(require("ui.screens.GameScreen"):new(self.level + 1))
+        if self.level < 3 then
+            if buttons.drawButton("Next level", buttonX, buttonY, buttonWidth, buttonHeight) then
+                self.screenManager:show(require("ui.screens.GameScreen"):new(self.level + 1))
+            end
         end
         buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
@@ -97,6 +103,8 @@ function GameScreen:update(deltaTime)
     if self.state ~= "pause" then
         if love.keyboard.isDown("z") then
             deltaTime = deltaTime * 0.25
+        elseif love.keyboard.isDown("x") then
+            deltaTime = deltaTime * 4
         end
         self.gameManager:update(deltaTime)
     end
