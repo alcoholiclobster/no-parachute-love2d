@@ -9,7 +9,11 @@ function GameInit:init()
     local world = self:getWorld()
     local levelConfig = world.gameManager.levelConfig
 
-    levelConfig.totalHeight = 300
+    levelConfig.totalHeight = 0
+    for i, obstacle in ipairs(levelConfig.obstacles) do
+        levelConfig.totalHeight = levelConfig.totalHeight + obstacle.distance
+    end
+    levelConfig.totalHeight = levelConfig.totalHeight + 70
 
     -- Side walls planes
     local count = math.max(27, levelConfig.decorationPlanesCount)

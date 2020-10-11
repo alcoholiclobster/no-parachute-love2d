@@ -67,10 +67,8 @@ function ObstacleSpawn:update(deltaTime)
 
     local world = self:getWorld()
     local levelConfig = world.gameManager.levelConfig
-    -- local levelGenerator = world.gameManager.levelGenerator
 
     for _, e in ipairs(self.pool) do
-        -- local distance = math.abs((camera.position.value.z - 100) - e.lastObstacleZ.value)
         local nextObstacle = levelConfig.obstacles[e.lastObstacleIndex.value + 1]
         local nextObstacleZ = e.lastObstacleZ.value - nextObstacle.distance
         if camera.position.value.z - 100 < nextObstacleZ then
@@ -84,23 +82,6 @@ function ObstacleSpawn:update(deltaTime)
                 e:destroy()
             end
         end
-        -- if distance > e.distanceBetweenObstacles.value then
-
-        --     e.lastObstacleIndex.value = e.lastObstacleIndex.value + 1
-
-            -- local obstacle = levelGenerator.obstacles[e.lastObstacleIndex.value]
-
-            -- if obstacle and not obstacle.freeSpace then
-            --     spawnObstacle(world, obstacle, maf.vec3(0, 0, camera.position.value.z - 100 - 0.51))
-            --     e.lastObstacleZ.value = camera.position.value.z - 100
-            -- else
-            --     e.lastObstacleZ.value = e.lastObstacleZ.value - obstacle.freeSpace * e.distanceBetweenObstacles.value
-            -- end
-
-            -- if e.lastObstacleIndex.value == #levelGenerator.obstacles then
-            --     e:destroy()
-            -- end
-        -- end
     end
 end
 
