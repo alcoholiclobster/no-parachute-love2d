@@ -1,6 +1,9 @@
 return {
-    acceleration = 50,
-    friction = 3,
+    -- acceleration = 50, -- Max speed 14 (actually 15)
+    -- friction = 3,
+
+    acceleration = 120, -- Max speed 13
+    friction = 9,
 
     body = {
         texture = "characters/player/torso",
