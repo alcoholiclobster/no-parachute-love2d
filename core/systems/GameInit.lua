@@ -10,15 +10,15 @@ function GameInit:init()
     local levelConfig = world.gameManager.levelConfig
 
     levelConfig.totalHeight = 0
-    for i, obstacle in ipairs(levelConfig.obstacles) do
-        levelConfig.totalHeight = levelConfig.totalHeight + obstacle.distance
+    for i, p in ipairs(levelConfig.planes) do
+        levelConfig.totalHeight = levelConfig.totalHeight + p.distance
     end
     levelConfig.totalHeight = levelConfig.totalHeight + 70
 
     -- Side walls planes
-    local count = math.max(27, levelConfig.decorationPlanesCount)
+    local count = math.max(27, levelConfig.sidePlanesCount)
     for i = 0, count - 1 do
-        local decoration = levelConfig.decorations[math.random(1, #levelConfig.decorations)]
+        local decoration = levelConfig.sidePlanes[math.random(1, #levelConfig.sidePlanes)]
         local z = -100 + i * 100 / count
         Concord.entity(world)
             :give("position", maf.vec3(0, 0, z))

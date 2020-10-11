@@ -3,21 +3,13 @@ local maf = require("lib.maf")
 local assets = require("core.assets")
 local mathUtils = require("utils.math")
 
-local ObstacleSpawn = Concord.system({
+local PlaneSpawn = Concord.system({
     pool = {"lastObstacleZ", "lastObstacleIndex"},
     cameraPool = {"camera"}
 })
 
-local function spawnObstaclePlane(world, plane, position, rotation)
+local function spawnPlane(world, plane, position, rotation)
     local texture = assets.texture(plane.texture)
-    local canvas = love.graphics.newCanvas(128, 128)
-    love.graphics.setCanvas(canvas)
-    love.graphics.clear()
-    love.graphics.setBlendMode("alpha")
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.draw(texture, 0, 0)
-    love.graphics.setCanvas()
-    canvas:setFilter("nearest", "nearest")
 
     if plane.rotation then
         rotation = rotation + math.rad(plane.rotation)
@@ -33,10 +25,24 @@ local function spawnObstaclePlane(world, plane, position, rotation)
         :give("size", maf.vec3(10, 10))
         :give("rotation", rotation)
         :give("drawable")
-        :give("obstaclePlane")
         :give("destroyOutOfBounds")
-        :give("texture", canvas)
-        :give("collisionTexture", texture)
+
+    if not plane.decorative then
+        local canvas = love.graphics.newCanvas(128, 128)
+        love.graphics.setCanvas(canvas)
+        love.graphics.clear()
+        love.graphics.setBlendMode("alpha")
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(texture, 0, 0)
+        love.graphics.setCanvas()
+        canvas:setFilter("nearest", "nearest")
+
+        entity:give("obstaclePlane")
+        entity:give("texture", canvas)
+        entity:give("collisionTexture", texture)
+    else
+        entity:give("texture", texture)
+    end
 
     if plane.rotationSpeed then
         entity:give("rotationSpeed", plane.rotationSpeed)
@@ -53,13 +59,13 @@ local function spawnObstaclePlane(world, plane, position, rotation)
     end
 end
 
-local function spawnObstacle(world, obstacleType, position, rotation)
-    for i, plane in ipairs(obstacleType.planes) do
-        spawnObstaclePlane(world, plane, position, rotation)
+local function spawnLevelPlane(world, planeConfig, position, rotation)
+    for i, plane in ipairs(planeConfig.planes) do
+        spawnPlane(world, plane, position, rotation)
     end
 end
 
-function ObstacleSpawn:update(deltaTime)
+function PlaneSpawn:update(deltaTime)
     local camera = self.cameraPool[1]
     if not camera then
         return
@@ -69,20 +75,20 @@ function ObstacleSpawn:update(deltaTime)
     local levelConfig = world.gameManager.levelConfig
 
     for _, e in ipairs(self.pool) do
-        local nextObstacle = levelConfig.obstacles[e.lastObstacleIndex.value + 1]
+        local nextObstacle = levelConfig.planes[e.lastObstacleIndex.value + 1]
         local nextObstacleZ = e.lastObstacleZ.value - nextObstacle.distance
         if camera.position.value.z - 100 < nextObstacleZ then
             e.lastObstacleZ.value = nextObstacleZ
             e.lastObstacleIndex.value = e.lastObstacleIndex.value + 1
 
-            local obstacleType = levelConfig.obstacleTypes[nextObstacle.name]
-            spawnObstacle(world, obstacleType, maf.vec3(0, 0, nextObstacleZ), math.rad(nextObstacle.rotation))
+            local planeConfig = levelConfig.planeTypes[nextObstacle.name]
+            spawnLevelPlane(world, planeConfig, maf.vec3(0, 0, nextObstacleZ), math.rad(nextObstacle.rotation))
 
-            if e.lastObstacleIndex.value >= #levelConfig.obstacles then
+            if e.lastObstacleIndex.value >= #levelConfig.planes then
                 e:destroy()
             end
         end
     end
 end
 
-return ObstacleSpawn
+return PlaneSpawn

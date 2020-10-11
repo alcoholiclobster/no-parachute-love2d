@@ -6,17 +6,15 @@ return {
     playerRotationMode = "none",
     playerRotationSpeed = 0,
 
-    decorationPlanesCount = 40,
-
-    decorations = {
-        { texture = "level1/decorative1" },
-        { texture = "level1/decorative2" },
-        { texture = "level1/decorative3" },
+    sidePlanesCount = 40,
+    sidePlanes = {
+        { texture = "level1/wall1" },
+        { texture = "level1/wall2" },
+        { texture = "level1/wall3" },
     },
 
-    distanceBetweenObstacles = 30,
-
-    obstacleTypes = {
+    planeTypes = {
+        -- Collision planes
         middle_hole = {
             planes = { { texture = "level1/obstacle1", }},
         },
@@ -39,28 +37,55 @@ return {
         },
         half_plane = {
             planes = { { texture = "level1/obstacle7",}},
+        },
+
+        -- Decorative planes
+        decorative1 = {
+            planes = { { texture = "level1/decorative1", decorative = true }},
+        },
+        decorative2 = {
+            planes = { { texture = "level1/decorative2", decorative = true }},
+        },
+        decorative3 = {
+            planes = { { texture = "level1/decorative3", decorative = true }},
         }
     },
 
-    obstacles = {
-        { name = "middle_hole", distance = 100, rotation = 0 },
-        { name = "diagonal_thing", distance = 20, rotation = 0 },
+    planes = {
+        { name = "decorative1", distance = 100, rotation = 0 },
+        { name = "middle_hole", distance = 10, rotation = 0 },
+        { name = "decorative1", distance = 5, rotation = 90 },
+        { name = "decorative2", distance = 5, rotation = 0 },
+        { name = "diagonal_thing", distance = 10, rotation = 0 },
         { name = "middle_hole", distance = 40, rotation = 90 },
-        { name = "big_side_hole", distance = 30, rotation = 90 },
+        { name = "decorative3", distance = 10, rotation = 90 },
+        { name = "decorative2", distance = 10, rotation = 180 },
+        { name = "big_side_hole", distance = 10, rotation = 90 },
         { name = "middle_hole", distance = 40, rotation = 180 },
         { name = "big_corner_hole", distance = 20, rotation = 180 },
-        { name = "big_corner_hole", distance = 20, rotation = 90 },
-        { name = "big_corner_hole", distance = 20, rotation = 0 },
+        { name = "decorative1", distance = 10, rotation = 180 },
+        { name = "big_corner_hole", distance = 10, rotation = 90 },
+        { name = "decorative1", distance = 10, rotation = 270 },
+        { name = "big_corner_hole", distance = 10, rotation = 0 },
         { name = "big_side_hole", distance = 30, rotation = 180 },
         { name = "middle_hole", distance = 50, rotation = 270 },
-        { name = "diagonal_thing", distance = 15, rotation = 90 },
-        { name = "diagonal_thing", distance = 25, rotation = 180 },
+        { name = "decorative3", distance = 5, rotation = 270 },
+        { name = "diagonal_thing", distance = 10, rotation = 90 },
+        { name = "decorative1", distance = 15, rotation = 0 },
+        { name = "diagonal_thing", distance = 10, rotation = 180 },
         { name = "big_corner_hole", distance = 25, rotation = 270 },
         { name = "middle_hole", distance = 40, rotation = 0 },
         { name = "two_side_planes", distance = 30, rotation = 0 },
         { name = "two_holes", distance = 25, rotation = 0 },
         { name = "half_plane", distance = 35, rotation = 0 },
-        { name = "big_side_hole", distance = 25, rotation = 270 },
+        { name = "decorative3", distance = 15, rotation = 270 },
+        { name = "big_side_hole", distance = 10, rotation = 270 },
         { name = "two_holes", distance = 35, rotation = 90 },
-    }
+        { name = "decorative1", distance = 20, rotation = 0 },
+        { name = "diagonal_thing", distance = 10, rotation = 270 },
+        { name = "two_holes", distance = 35, rotation = 180 },
+        { name = "decorative2", distance = 10, rotation = 0 },
+        { name = "decorative3", distance = 20, rotation = 0 },
+        { name = "two_holes", distance = 5, rotation = 270 },
+    },
 }
