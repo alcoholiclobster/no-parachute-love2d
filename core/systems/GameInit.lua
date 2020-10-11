@@ -9,11 +9,9 @@ function GameInit:init()
     local world = self:getWorld()
     local levelConfig = world.gameManager.levelConfig
 
-    -- Side wall planes
-    assert(levelConfig.decorations, "Invalid decorations config")
-    assert(#levelConfig.decorations > 0, "Empty decorations table")
-    assert(type(levelConfig.decorationPlanesCount) == "number", "Invalid decoration planes count")
+    levelConfig.totalHeight = 300
 
+    -- Side walls planes
     local count = math.max(27, levelConfig.decorationPlanesCount)
     for i = 0, count - 1 do
         local decoration = levelConfig.decorations[math.random(1, #levelConfig.decorations)]
@@ -27,6 +25,7 @@ function GameInit:init()
             :give("texture", assets.texture(decoration.texture))
     end
 
+    -- Spawn player
     Concord.entity(world)
         :give("characterSpawnRequest", "player", true)
 
@@ -37,11 +36,9 @@ function GameInit:init()
         :give("camera")
 
     -- Obstacle spawner
-    assert(type(levelConfig.distanceBetweenObstacles) == "number", "Invalid distanceBetweenObstacles")
     Concord.entity(world)
         :give("lastObstacleZ", 0)
         :give("lastObstacleIndex", 0)
-        :give("distanceBetweenObstacles", levelConfig.distanceBetweenObstacles)
 end
 
 return GameInit

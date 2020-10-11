@@ -6,7 +6,7 @@ local LevelProgress = Concord.system({
 
 function LevelProgress:update(deltaTime)
     local gameManager = self:getWorld().gameManager
-    local levelHeight = gameManager.levelGenerator.totalLevelHeight
+    local levelHeight = gameManager.levelConfig.totalHeight
 
     for _, e in ipairs(self.pool) do
         local progress = e.position.value.z / levelHeight

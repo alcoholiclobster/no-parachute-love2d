@@ -1,8 +1,5 @@
 local class = require("lib.middleclass")
 local Concord = require("lib.concord")
-local maf = require("lib.maf")
-local assets = require("core.assets")
-local LevelGenerator = require("core.LevelGenerator")
 
 Concord.utils.loadNamespace("core/components")
 
@@ -10,8 +7,6 @@ local GameManager = class("GameManager")
 
 function GameManager:initialize(levelConfig, uiScreen)
     self.levelConfig = levelConfig
-    self.levelGenerator = LevelGenerator:new(self.levelConfig)
-    self.levelGenerator:generate()
     self.ui = uiScreen
 
     self.world = Concord.world()

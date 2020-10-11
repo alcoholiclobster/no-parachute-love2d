@@ -15,44 +15,37 @@ return {
     },
 
     distanceBetweenObstacles = 30,
-    obstaclesCount = 30,
-    obstacles = {
-        {
+
+    obstacleTypes = {
+        middle_hole = {
             planes = { { texture = "level1/obstacle1", }},
-            appearFrom = 1,
-            appearTo = 10,
         },
-        {
+        diagonal_thing = {
             planes = { { texture = "level1/obstacle2" }},
-            appearFrom = 1,
-            appearTo = 10,
         },
-        {
+        big_corner_hole = {
             planes = { { texture = "level1/obstacle3",}},
-            appearFrom = 7,
-            appearTo = 20,
         },
-        {
+        big_side_hole = {
             planes = { { texture = "level1/obstacle4",}},
-            appearFrom = 15,
-            appearTo = 30,
-            freeSpaceBefore = 1,
+            freeSpaceBefore = 30,
         },
-        {
+        two_holes = {
             planes = { { texture = "level1/obstacle5",}},
-            appearFrom = 20,
-            appearTo = 30,
-            freeSpaceBefore = 1,
+            freeSpaceBefore = 30,
         },
-        {
+        two_side_planes = {
             planes = { { texture = "level1/obstacle6",}},
-            appearFrom = 20,
-            appearTo = 30,
         },
-        {
+        half_plane = {
             planes = { { texture = "level1/obstacle7",}},
-            appearFrom = 15,
-            appearTo = 25,
         }
     },
+
+    obstacles = {
+        { name = "middle_hole", distance = 100, rotation = 0 },
+        { name = "middle_hole", distance = 30, rotation = 90 },
+        { name = "middle_hole", distance = 30, rotation = 90 },
+        { name = "middle_hole", distance = 30, rotation = 180 },
+    }
 }
