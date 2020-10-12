@@ -12,11 +12,11 @@ local LimbPoses = Concord.system({
     }
 })
 
-local minVelocityMagnitude = 2.5
+local minVelocityMagnitude = 0.1
 
 function LimbPoses:update(deltaTime)
     for _, e in ipairs(self.pool) do
-        local velocity = mathUtils.rotateVector2D(e.attachToEntity.value.velocity.value, -e.attachToEntity.value.rotation.value)
+        local velocity = e.attachToEntity.value.moveDirection.value--mathUtils.rotateVector2D(e.attachToEntity.value.velocity.value, -e.attachToEntity.value.rotation.value)
         local targetRotation = 0
         if math.abs(velocity.x) > math.abs(velocity.y) then
             if velocity.x > minVelocityMagnitude then
@@ -34,7 +34,7 @@ function LimbPoses:update(deltaTime)
 
         local animAngle = math.sin(love.timer.getTime() * 2) * e.limbRotationPoses.down * 0.002
         if e.attachToEntity.value.alive then
-            e.attachRotation.value = e.attachRotation.value + (targetRotation - e.attachRotation.value) * 5 * deltaTime + animAngle
+            e.attachRotation.value = e.attachRotation.value + (targetRotation - e.attachRotation.value) * 7 * deltaTime + animAngle
         end
     end
 end
