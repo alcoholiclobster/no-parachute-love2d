@@ -5,12 +5,14 @@ return {
     fogColor = {0, 0, 0},
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 1,
-    playerRotationChangeSpeed = 10,
+    playerRotationChangeSpeed = 7,
     playerRotationSpeedDependsOnProgress = true,
 
     sidePlanesCount = 50,
     sidePlanes = {
         { texture = "level2/wall1" },
+        { texture = "level2/wall2" },
+        { texture = "level2/wall3" },
     },
 
     planeTypes = {
@@ -141,7 +143,7 @@ return {
         { name = "side_wood1_1", distance = 20, rotation = 270 },
 
         -- Keep out
-        { name = "keep_out", distance = 20, rotation = 270 },
+        { name = "keep_out", distance = 20, rotation = 90 },
 
         { name = "side_wood1", distance = 20, rotation = 0 },
         { name = "side_wood1", distance = 20, rotation = 180 },
