@@ -36,23 +36,11 @@ return {
         },
 
         -- Single minecart
-        minecart1 = {
+        minecart = {
             planes = {
                 { texture = "level2/obstacle4_1", position = {0, 0, -2} },
                 { texture = "level2/obstacle4_2", position = {-15, 0, 0}, velocity = {5, 0, 0} },
                 { texture = "level2/obstacle4_3", position = {0, 0, 2} },
-            },
-        },
-        -- Two minecarts
-        minecart2 = {
-            planes = {
-                { texture = "level2/obstacle4_1", position = {0, 0, -2} },
-                { texture = "level2/obstacle4_2", position = {-20, 0, 0}, velocity = {7, 0, 0} },
-
-                { texture = "level2/obstacle2", position = {0, 0, -5} },
-
-                { texture = "level2/obstacle4_1", position = {0, 0, -10}, rotation = 90 },
-                { texture = "level2/obstacle4_2",  position = {-20, 0, -8}, velocity = {8, 0, 0}, rotation = 90 },
             },
         },
 
@@ -66,6 +54,18 @@ return {
                 { texture = "level2/obstacle5_2", position = {-10+0.16, 2.5, 0}, velocity = {1.5, 0, 0} },
 
                 { texture = "level2/obstacle1", position = {0, 0, -3.5}, velocity = {0, 0, 0}, rotation = 90 },
+            },
+        },
+        belt1 = {
+            planes = {
+                { texture = "level2/obstacle5_1", position = {0, 0, 0}, velocity = {1.5, 0, 0} },
+                { texture = "level2/obstacle5_1", position = {-10+0.16, 0, 0}, velocity = {1.5, 0, 0} },
+            },
+        },
+        belt2 = {
+            planes = {
+                { texture = "level2/obstacle5_2", position = {0, 0, 0}, velocity = {1.5, 0, 0} },
+                { texture = "level2/obstacle5_2", position = {-10+0.16, 0, 0}, velocity = {1.5, 0, 0} },
             },
         }
     },
@@ -169,15 +169,44 @@ return {
         { name = "side_wood2", distance = 25, rotation = 0 },
         { name = "belts", distance = 20, rotation = 270 },
         { name = "side_wood2", distance = 20, rotation = 90 },
-        { name = "belts", distance = 20, rotation = 0 },
-
-        --
+        { name = "belt1", distance = 20, rotation = 0 },
 
         { name = "side_wood1", distance = 20, rotation = 0 },
         { name = "side_wood1", distance = 20, rotation = 180 },
+
+        {name = "minecart", distance = 20, rotation = 0 },
+
         { name = "side_wood1", distance = 20, rotation = 90 },
-        { name = "side_wood1", distance = 20, rotation = 270 },
+        { name = "belts", distance = 10, rotation = 0 },
+        { name = "side_wood1", distance = 10, rotation = 270 },
 
         -- 45 seconds
+
+        {name = "minecart", distance = 20, rotation = 180 },
+        {name = "minecart", distance = 20, rotation = 270 },
+        {name = "side_wood1", distance = 10, rotation = 0 },
+        {name = "middle_bridge", distance = 10, rotation = 0 },
+        {name = "minecart", distance = 20, rotation = 90 },
+        {name = "middle_hole", distance = 15, rotation = 0 },
+        {name = "middle_hole", distance = 5, rotation = 90 },
+
+        {name = "minecart", distance = 20, rotation = 270 },
+
+        {name = "middle_hole", distance = 15, rotation = 0 },
+        {name = "middle_hole", distance = 5, rotation = 90 },
+
+        {name = "minecart", distance = 20, rotation = 0 },
+
+        {name = "middle_hole", distance = 15, rotation = 0 },
+        {name = "middle_hole", distance = 5, rotation = 90 },
+
+        {name = "minecart", distance = 15, rotation = 180 },
+        {name = "corner_hole", distance = 25, rotation = 0 },
+        {name = "middle_bridge", distance = 15, rotation = 0 },
+        {name = "corner_hole", distance = 20, rotation = 90 },
+
+        { name = "side_wood1", distance = 30, rotation = 0 },
+
+        -- 55 seconds
     },
 }

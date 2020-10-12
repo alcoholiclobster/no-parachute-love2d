@@ -85,5 +85,7 @@ return {
         { name = "decorative2", distance = 10, rotation = 0 },
         { name = "decorative3", distance = 20, rotation = 0 },
         { name = "two_holes", distance = 5, rotation = 270 },
+
+        -- 30 seconds
     },
 }
