@@ -16,8 +16,7 @@ function PlayerRotation:update(deltaTime)
         if levelConfig.playerRotationMode == "constant" then
             e.rotation.value = e.rotation.value + maxSpeed * deltaTime
         elseif levelConfig.playerRotationMode == "sinusoid" then
-            local speed = math.sin(love.timer.getTime() * levelConfig.playerRotationChangeSpeed) * maxSpeed
-            e.rotation.value = e.rotation.value + speed * deltaTime
+            e.rotation.value = math.sin(e.levelProgress.value * levelConfig.playerRotationChangeSpeed) * maxSpeed * math.pi * 2
         end
     end
 end

@@ -4,8 +4,8 @@ return {
     fallSpeed = 30,
     fogColor = {0, 0, 0},
     playerRotationMode = "sinusoid",
-    playerRotationSpeed = 0.7,
-    playerRotationChangeSpeed = 0.3,
+    playerRotationSpeed = 1,
+    playerRotationChangeSpeed = 10,
     playerRotationSpeedDependsOnProgress = true,
 
     sidePlanesCount = 50,
@@ -17,13 +17,19 @@ return {
         side_wood1 = {
             planes = {{ texture = "level2/obstacle1", }},
         },
+        side_wood1_1 = {
+            planes = {{ texture = "level2/obstacle1_1", }},
+        },
         middle_bridge = {
             planes = {{ texture = "level2/obstacle8", }},
+        },
+        middle_bridge2 = {
+            planes = {{ texture = "level2/obstacle8_1", }},
         },
         side_wood2 = {
             planes = {{ texture = "level2/obstacle2", }},
         },
-        side_wood2_2 = {
+        side_wood2_1 = {
             planes = {{ texture = "level2/obstacle2_1", }},
         },
         -- Corner hole thing
@@ -41,6 +47,9 @@ return {
         -- Long middle hole thing
         middle_hole = {
             planes = {{ texture = "level2/obstacle3", }},
+        },
+        middle_hole_1 = {
+            planes = {{ texture = "level2/obstacle3_1", }},
         },
 
         -- Single minecart
@@ -75,52 +84,64 @@ return {
                 { texture = "level2/obstacle5_2", position = {0, 0, 0}, velocity = {1.5, 0, 0} },
                 { texture = "level2/obstacle5_2", position = {-10+0.16, 0, 0}, velocity = {1.5, 0, 0} },
             },
-        }
+        },
+        keep_out = {
+            planes = {{ texture = "level2/keep_out", }},
+        },
     },
 
     planes = {
         { name = "side_wood1", distance = 50, rotation = 0 },
         { name = "side_wood1", distance = 25, rotation = 180 },
-        { name = "side_wood1", distance = 25, rotation = 90 },
-        { name = "side_wood1", distance = 25, rotation = 270 },
+        { name = "side_wood1_1", distance = 25, rotation = 90 },
+        { name = "side_wood1_1", distance = 25, rotation = 270 },
 
         -- 3 seconds
 
-        { name = "middle_bridge", distance = 20, rotation = 0 },
+        { name = "middle_bridge2", distance = 20, rotation = 0 },
         { name = "side_wood1", distance = 20, rotation = 0 },
         { name = "middle_bridge", distance = 20, rotation = 90 },
-        { name = "side_wood2_2", distance = 20, rotation = 0 },
+        { name = "side_wood2_1", distance = 20, rotation = 0 },
 
         --
 
-        { name = "side_wood1", distance = 20, rotation = 90 },
+        { name = "side_wood1_1", distance = 20, rotation = 90 },
         { name = "corner_hole2", distance = 20, rotation = 0 },
         { name = "side_wood1", distance = 20, rotation = 180 },
         { name = "corner_hole", distance = 15, rotation = 180 },
 
         --
 
-        { name = "middle_hole", distance = 20, rotation = 0 },
-        { name = "side_wood2_2", distance = 10, rotation = 0 },
+        { name = "middle_hole_1", distance = 20, rotation = 0 },
+        { name = "side_wood2_1", distance = 10, rotation = 0 },
         { name = "middle_hole", distance = 10, rotation = 90 },
-        { name = "middle_bridge", distance = 15, rotation = 180 },
-        { name = "middle_hole", distance = 15, rotation = 90 },
+        { name = "middle_bridge2", distance = 15, rotation = 180 },
+        { name = "middle_hole_1", distance = 15, rotation = 90 },
 
         { name = "side_wood1", distance = 20, rotation = 270 },
-        { name = "side_wood1", distance = 20, rotation = 0 },
+        { name = "side_wood1_1", distance = 20, rotation = 0 },
 
         { name = "middle_hole", distance = 10, rotation = 90 },
-        { name = "middle_bridge", distance = 20, rotation = 90 },
-        { name = "middle_hole", distance = 30, rotation = 90 },
+        { name = "middle_bridge2", distance = 20, rotation = 90 },
+        { name = "middle_hole_1", distance = 30, rotation = 90 },
 
         --
 
-        { name = "side_wood1", distance = 20, rotation = 90 },
+        { name = "side_wood1_1", distance = 20, rotation = 90 },
         { name = "corner_hole2", distance = 20, rotation = 0 },
-        { name = "side_wood1", distance = 20, rotation = 180 },
+        { name = "side_wood1_1", distance = 20, rotation = 180 },
         { name = "corner_hole", distance = 15, rotation = 180 },
 
         -- 18 seconds
+
+        { name = "side_wood1", distance = 20, rotation = 0 },
+        { name = "side_wood1_1", distance = 20, rotation = 180 },
+        { name = "side_wood1", distance = 20, rotation = 90 },
+        { name = "side_wood2_1", distance = 20, rotation = 90 },
+        { name = "side_wood1_1", distance = 20, rotation = 270 },
+
+        -- Keep out
+        { name = "keep_out", distance = 20, rotation = 270 },
 
         { name = "side_wood1", distance = 20, rotation = 0 },
         { name = "side_wood1", distance = 20, rotation = 180 },
@@ -134,7 +155,7 @@ return {
         { name = "side_wood2", distance = 15, rotation = 180 },
 
         { name = "belts", distance = 15, rotation = 90 },
-        { name = "middle_bridge", distance = 20, rotation = 180 },
+        { name = "middle_bridge2", distance = 20, rotation = 180 },
         { name = "belts", distance = 20, rotation = 180 },
         { name = "middle_bridge", distance = 20, rotation = 180 },
         { name = "middle_bridge", distance = 20, rotation = 270 },
