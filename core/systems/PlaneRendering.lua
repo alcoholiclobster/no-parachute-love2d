@@ -55,7 +55,7 @@ local function render(e, camera)
             e.color.r,
             e.color.g,
             e.color.b,
-            1
+            e.color.a
         )
     else
         love.graphics.setColor(1, 1, 1, 1)

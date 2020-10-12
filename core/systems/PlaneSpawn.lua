@@ -40,6 +40,7 @@ local function spawnPlane(world, plane, position, rotation)
         entity:give("obstaclePlane")
         entity:give("texture", canvas)
         entity:give("collisionTexture", texture)
+        entity:give("color", 1, 1, 1, 1)
     else
         entity:give("texture", texture)
     end

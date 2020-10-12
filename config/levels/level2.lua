@@ -10,7 +10,7 @@ return {
 
     sidePlanesCount = 50,
     sidePlanes = {
-        { texture = "level2/decorative1" },
+        { texture = "level2/wall1" },
     },
 
     planeTypes = {
@@ -23,11 +23,19 @@ return {
         side_wood2 = {
             planes = {{ texture = "level2/obstacle2", }},
         },
+        side_wood2_2 = {
+            planes = {{ texture = "level2/obstacle2_1", }},
+        },
         -- Corner hole thing
         corner_hole = {
             planes = {
                 { texture = "level2/obstacle7_1", },
                 { texture = "level2/obstacle7_2", position = {0, 0, 1} },
+            },
+        },
+        corner_hole2 = {
+            planes = {
+                { texture = "level2/obstacle7_3", },
             },
         },
         -- Long middle hole thing
@@ -81,19 +89,19 @@ return {
         { name = "middle_bridge", distance = 20, rotation = 0 },
         { name = "side_wood1", distance = 20, rotation = 0 },
         { name = "middle_bridge", distance = 20, rotation = 90 },
-        { name = "side_wood2", distance = 20, rotation = 0 },
+        { name = "side_wood2_2", distance = 20, rotation = 0 },
 
         --
 
         { name = "side_wood1", distance = 20, rotation = 90 },
-        { name = "corner_hole", distance = 20, rotation = 0 },
+        { name = "corner_hole2", distance = 20, rotation = 0 },
         { name = "side_wood1", distance = 20, rotation = 180 },
         { name = "corner_hole", distance = 15, rotation = 180 },
 
         --
 
         { name = "middle_hole", distance = 20, rotation = 0 },
-        { name = "side_wood2", distance = 10, rotation = 0 },
+        { name = "side_wood2_2", distance = 10, rotation = 0 },
         { name = "middle_hole", distance = 10, rotation = 90 },
         { name = "middle_bridge", distance = 15, rotation = 180 },
         { name = "middle_hole", distance = 15, rotation = 90 },
@@ -108,7 +116,7 @@ return {
         --
 
         { name = "side_wood1", distance = 20, rotation = 90 },
-        { name = "corner_hole", distance = 20, rotation = 0 },
+        { name = "corner_hole2", distance = 20, rotation = 0 },
         { name = "side_wood1", distance = 20, rotation = 180 },
         { name = "corner_hole", distance = 15, rotation = 180 },
 
