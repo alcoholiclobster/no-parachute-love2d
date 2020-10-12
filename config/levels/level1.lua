@@ -26,11 +26,9 @@ return {
         },
         big_side_hole = {
             planes = { { texture = "level1/obstacle4",}},
-            freeSpaceBefore = 30,
         },
         two_holes = {
             planes = { { texture = "level1/obstacle5",}},
-            freeSpaceBefore = 30,
         },
         two_side_planes = {
             planes = { { texture = "level1/obstacle6",}},
