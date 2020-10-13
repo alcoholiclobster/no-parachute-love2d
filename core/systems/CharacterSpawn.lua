@@ -56,7 +56,7 @@ function CharacterSpawn:update(deltaTime)
                 :give("canCollideWithBoundaries")
                 :give("alive")
                 :give("limb")
-                :give("health", 1)
+                :give("health", 20)
         end
 
         if e.characterSpawnRequest.controlledByPlayer then

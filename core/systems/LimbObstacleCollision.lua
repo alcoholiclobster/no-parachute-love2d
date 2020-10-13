@@ -24,7 +24,7 @@ function LimbObstacleCollisionDetach:update(deltaTime)
             :give("deferredDecal", "blood_limb", obstacle, tx, ty)
 
         -- Damage limb
-        e:give("damageEvent", 1)
+        e:give("damageEvent", e.health.value)
     end
 end
 

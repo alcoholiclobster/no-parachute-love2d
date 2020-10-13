@@ -25,7 +25,7 @@ function BloodSpawn:update()
 
         if e.bloodSpawnEvent.level == 1 then
             emitter
-                :give("particleEmitCount", 1, 1)
+                :give("particleEmitCount", 5, 10)
                 :give("particleSpeed", -5, 5, -10, 10, -5, 1)
                 :give("particleLifeTime", 0.5, 1)
                 :give("particleGravity", maf.vec3(0, 0, -1))
