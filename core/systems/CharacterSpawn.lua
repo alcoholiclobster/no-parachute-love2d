@@ -32,6 +32,7 @@ function CharacterSpawn:update(deltaTime)
             :give("canCollideWithBoundaries")
             :give("character")
             :give("alive")
+            :give("score", 0)
 
         -- Limbs
         for limbName, limbConf in pairs(conf.limbs) do
