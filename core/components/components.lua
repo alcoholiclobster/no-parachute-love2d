@@ -152,3 +152,7 @@ Concord.component("delayedVelocity", function(component, delay, velocity)
     component.time = delay or 0
     component.velocity = velocity
 end)
+
+Concord.component("health", function(component, health)
+    component.value = health or 1
+end)

@@ -11,3 +11,9 @@ Concord.component("characterSpawnRequest", function(component, characterType, co
     component.characterType = characterType or "player"
     component.controlledByPlayer = not not controlledByPlayer
 end)
+
+Concord.component("damageEvent", function(component, damage)
+    component.damage = damage or 0
+end)
+
+Concord.component("deathEvent")

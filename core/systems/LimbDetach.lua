@@ -2,13 +2,11 @@ local Concord = require("lib.concord")
 local maf = require("lib.maf")
 
 local LimbDetach = Concord.system({
-    pool = {"attachToEntity", "limbDeatchRequest", "alive", "limb"}
+    pool = {"attachToEntity", "deathEvent", "alive", "limb"}
 })
 
 function LimbDetach:update(deltaTime)
     for _, e in ipairs(self.pool) do
-        e:remove("limbDeatchRequest")
-
         -- Spawn detached limb
         local velocityX = (math.random() - 0.5) * 4
         local velocityY = (math.random() - 0.5) * 4

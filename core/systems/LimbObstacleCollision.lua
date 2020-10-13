@@ -23,8 +23,8 @@ function LimbObstacleCollisionDetach:update(deltaTime)
         Concord.entity(self:getWorld())
             :give("deferredDecal", "blood_limb", obstacle, tx, ty)
 
-        -- Request limb detach
-        e:give("limbDeatchRequest")
+        -- Damage limb
+        e:give("damageEvent", 1)
     end
 end
 

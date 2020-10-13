@@ -2,7 +2,9 @@ local Concord = require("lib.concord")
 
 local cleanupComponents = {
     "obstacleCollisionEvent",
-    "characterSpawnRequest"
+    "characterSpawnRequest",
+    "damageEvent",
+    "deathEvent",
 }
 
 local pools = {}
