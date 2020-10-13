@@ -27,7 +27,7 @@ vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 ]]
 
 local function render(e, camera)
-    local x, y, scale = renderingUtils.project(e.position.value, camera.position.value)
+    local x, y, scale = renderingUtils.project(e.position.value, camera.position.value, camera.camera.fov)
     if not x then
         return
     end

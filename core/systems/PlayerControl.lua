@@ -29,7 +29,7 @@ function PlayerControl:update(deltaTime)
             direction.y = 0
         end
 
-        if love.keyboard.isDown("e") then
+        if love.keyboard.isDown("space") then
             e.velocity.value.z = e.velocity.value.z - deltaTime * 50
         end
 

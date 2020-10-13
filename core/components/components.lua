@@ -160,3 +160,8 @@ end)
 Concord.component("score", function(component, value)
     component.value = value or 1
 end)
+
+Concord.component("camera", function(component, fov)
+    component.fov = fov or 1
+    component.followDistance = 10
+end)

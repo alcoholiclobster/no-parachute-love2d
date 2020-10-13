@@ -3,6 +3,7 @@ local Screen = require("ui.Screen")
 local GameManager = require("core.GameManager")
 local buttons = require("ui.controls.buttons")
 local assets = require("core.assets")
+local SpeedEffect = require("ui.effects.SpeedEffect")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -15,6 +16,8 @@ function GameScreen:initialize(level)
     self.playerScore = 0
     self.playerSpeed = 0
     self.state = "game"
+
+    self.speedEffect = SpeedEffect:new()
 end
 
 function GameScreen:onShow()
@@ -25,8 +28,13 @@ function GameScreen:onHide()
 
 end
 
+function GameScreen:setSpeedEffectAmount(amount)
+    self.speedEffect:setAmount(amount)
+end
+
 function GameScreen:draw()
     self.gameManager:draw()
+    self.speedEffect:draw()
 
     if love.keyboard.isDown("o") then
         return
@@ -153,6 +161,7 @@ function GameScreen:update(deltaTime)
             deltaTime = deltaTime * 4
         end
         self.gameManager:update(deltaTime)
+        self.speedEffect:update(deltaTime)
     end
 end
 
