@@ -4,7 +4,7 @@ local joystickManager = require("utils.joystickManager")
 local mathUtils = require("utils.math")
 
 local PlayerControl = Concord.system({
-    pool = {"velocity", "character", "moveDirection", "controlledByPlayer"},
+    pool = {"velocity", "character", "moveDirection", "controlledByPlayer", "alive"},
 })
 
 local joystickDeadZone = 0.15
