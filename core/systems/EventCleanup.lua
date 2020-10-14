@@ -5,6 +5,7 @@ local cleanupComponents = {
     "characterSpawnRequest",
     "damageEvent",
     "deathEvent",
+    "planeSpawnEvent"
 }
 
 local pools = {}

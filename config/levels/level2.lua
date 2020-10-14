@@ -185,7 +185,7 @@ return {
         { name = "side_wood2", distance = 15, rotation = 180 },
         { name = "corner_hole_green", distance = 15, rotation = 0 },
 
-        --
+        -- TODO: Add rest part
 
         { name = "belts", distance = 15, rotation = 90 },
         { name = "middle_hole", distance = 15, rotation = 0 },

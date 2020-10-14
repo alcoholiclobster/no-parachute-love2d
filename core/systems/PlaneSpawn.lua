@@ -58,11 +58,15 @@ local function spawnPlane(world, plane, position, rotation)
             entity:give("velocity", velocity)
         end
     end
+
+    return entity
 end
 
-local function spawnLevelPlane(world, planeConfig, position, rotation)
+local function spawnLevelPlane(world, planeConfig, position, rotation, index)
     for i, plane in ipairs(planeConfig.planes) do
-        spawnPlane(world, plane, position, rotation)
+        local entity = spawnPlane(world, plane, position, rotation)
+        entity:give("name", "plane_"..index.."_"..i)
+        entity:give("planeSpawnEvent")
     end
 end
 
@@ -83,7 +87,7 @@ function PlaneSpawn:update(deltaTime)
             e.lastObstacleIndex.value = e.lastObstacleIndex.value + 1
 
             local planeConfig = levelConfig.planeTypes[nextObstacle.name]
-            spawnLevelPlane(world, planeConfig, maf.vec3(0, 0, nextObstacleZ), math.rad(nextObstacle.rotation))
+            spawnLevelPlane(world, planeConfig, maf.vec3(0, 0, nextObstacleZ), math.rad(nextObstacle.rotation), e.lastObstacleIndex.value)
 
             if e.lastObstacleIndex.value >= #levelConfig.planes then
                 e:destroy()

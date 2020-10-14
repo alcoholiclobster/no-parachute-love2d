@@ -15,6 +15,8 @@ local screenManager
 function love.load(arg)
     console.log("love.load()")
 
+    love.filesystem.setIdentity("no_parachute")
+
     local parser = argparse()
     parser:flag("--debug", "Run game in debug mode")
     parser:option("--level", "Force load game level")
