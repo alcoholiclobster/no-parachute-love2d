@@ -30,7 +30,7 @@ function PlayerControl:update(deltaTime)
         end
 
         if love.keyboard.isDown("space") then
-            e.velocity.value.z = e.velocity.value.z - deltaTime * 50
+            e.velocity.value.z = e.velocity.value.z - deltaTime * 32
         end
 
         local joystick = joystickManager.get()

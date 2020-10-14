@@ -9,7 +9,7 @@ function CharacterFallSpeed:update(deltaTime)
 
     for _, e in ipairs(self.pool) do
         local targetVelocity = -gameManager.levelConfig.fallSpeed
-        e.velocity.value.z = e.velocity.value.z + (targetVelocity - e.velocity.value.z) * deltaTime * 3
+        e.velocity.value.z = e.velocity.value.z + (targetVelocity - e.velocity.value.z) * deltaTime * 2
     end
 end
 
