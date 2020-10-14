@@ -4,7 +4,7 @@ local joystickManager = require("utils.joystickManager")
 local mathUtils = require("utils.math")
 
 local PlayerControl = Concord.system({
-    pool = {"velocity", "character", "moveDirection", "controlledByPlayer"},
+    pool = {"velocity", "character", "moveDirection", "controlledByPlayer", "alive"},
 })
 
 local joystickDeadZone = 0.15
@@ -27,6 +27,10 @@ function PlayerControl:update(deltaTime)
             direction.y = 1
         else
             direction.y = 0
+        end
+
+        if love.keyboard.isDown("space") then
+            e.velocity.value.z = e.velocity.value.z - deltaTime * 32
         end
 
         local joystick = joystickManager.get()

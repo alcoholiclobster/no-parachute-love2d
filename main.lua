@@ -19,6 +19,7 @@ function love.load(arg)
     parser:flag("--debug", "Run game in debug mode")
     parser:option("--level", "Force load game level")
     parser:option("--fps", "Simulate frame rate")
+    parser:flag("--fullscreen", "Force fullscreen mode")
     local args = parser:parse(arg)
 
     isDebugEnabled = args.debug
@@ -32,6 +33,10 @@ function love.load(arg)
     if args.level then
         console.log("Force loading level "..tostring(args.level))
         screenManager:show(GameScreen:new(tonumber(args.level)))
+    end
+
+    if args.fullscreen then
+        love.window.setFullscreen(true)
     end
 end
 

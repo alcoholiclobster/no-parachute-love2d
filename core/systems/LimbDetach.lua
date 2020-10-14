@@ -28,6 +28,9 @@ function LimbDetach:update(deltaTime)
         -- Shake camera
         if e.attachToEntity.value.controlledByPlayer then
             Concord.entity(self:getWorld()):give("cameraShakeSource", 2)
+
+            e.attachToEntity.value.velocity.value.z = e.attachToEntity.value.velocity.value.z * 0.8
+            -- e.attachToEntity.value.score.value = e.attachToEntity.value.score.value - 1000
         end
 
         -- Change texture
