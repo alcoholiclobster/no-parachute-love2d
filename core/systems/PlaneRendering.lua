@@ -21,8 +21,8 @@ uniform float depth = 1;
 vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 {
     vec4 texcolor = Texel(texture, texcoord);
-    vec3 color = (texcolor.rgb * vcolor.rgb) + (fogcolor.rgb - (texcolor.rgb * vcolor.rgb)) * depth;
-    return vec4(color, texcolor.a * vcolor.a);
+    texcolor.rgb = mix(texcolor.rgb * vcolor.rgb, fogcolor.rgb, depth);
+    return vec4(texcolor.rgb, texcolor.a * vcolor.a);
 }
 ]]
 

@@ -4,21 +4,18 @@ return {
     fallSpeed = 32,
     fogColor = {15, 0, 0},
     playerRotationMode = "constant",
-    playerRotationSpeed = -0.5,
+    playerRotationSpeed = -2.5,
 
-    decorationPlanesCount = 60,
-
-    decorations = {
+    sidePlanesCount = 60,
+    sidePlanes = {
         { texture = "level3/decorative1" },
         { texture = "level3/decorative2" },
         { texture = "level3/decorative3" },
     },
 
-    distanceBetweenObstacles = 30,
-    obstaclesCount = 50,
-    obstacles = {
+    planeTypes = {
         -- Big Fan
-        {
+        big_fan = {
             planes = {
                 { texture = "level3/obstacle1_1", rotationSpeed = 4, },
                 { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
@@ -29,7 +26,7 @@ return {
         },
 
         -- Big Fan (Slow)
-        {
+        big_fan_slow = {
             planes = {
                 { texture = "level3/obstacle1_1", rotationSpeed = 0.5, },
                 { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
@@ -40,7 +37,7 @@ return {
         },
 
         -- Big Fan (Reversed)
-        {
+        big_fan_reversed = {
             planes = {
                 { texture = "level3/obstacle1_1", rotationSpeed = -5, },
                 { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
@@ -51,7 +48,7 @@ return {
         },
 
         -- Big Fan (Stopped)
-        {
+        big_fan_stopped = {
             planes = {
                 { texture = "level3/obstacle1_1", rotation = 30, },
                 { texture = "level3/obstacle1_2", position = {0, 0, -1}, },
@@ -62,7 +59,7 @@ return {
         },
 
         -- Box with fan (middle)
-        {
+        middle_box_with_fan = {
             planes = {
                 { texture = "level3/obstacle2_1"},
                 { texture = "level3/obstacle2_2", position = {0, 0, -0.5}, rotationSpeed = -16, },
@@ -73,7 +70,7 @@ return {
         },
 
         -- Pipes through middle
-        {
+        middle_pipes = {
             planes = {
                 { texture = "level3/obstacle3_1", position = {0, 0, 0} },
                 { texture = "level3/obstacle3_2", position = {0, 0, -10} },
@@ -84,7 +81,7 @@ return {
         },
 
         -- Door at the middle
-        {
+        middle_door = {
             planes = {
                 { texture = "level3/obstacle4_1" },
                 { texture = "level3/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
@@ -94,7 +91,7 @@ return {
         },
 
         -- Ventilation boxes crossed through middle
-        {
+        crossed_vents = {
             planes = {
                 { texture = "level3/obstacle5_1" },
                 { texture = "level3/obstacle5_2", position = {0, 0, -2} },
@@ -104,7 +101,7 @@ return {
         },
 
         -- Vertical tube-like thing
-        {
+        tube_thing = {
             planes = {
                 { texture = "level3/obstacle6_0", position = {0, 0, 0}},
                 { texture = "level3/obstacle6_2", position = {0, 0, -1}},
@@ -139,7 +136,7 @@ return {
         },
 
         -- Pipes through sides
-        {
+        side_pipes = {
             planes = {
                 { texture = "level3/obstacle7_1", position = {-3, 0, 0} },
                 { texture = "level3/obstacle7_1", position = {3, 0, -4} },
@@ -149,7 +146,7 @@ return {
         },
 
         -- Diagonal pipe
-        {
+        diagonal_pipe = {
             planes = {
                 { texture = "level3/obstacle7_1", position = {0, 0, 0}, rotation = 45 },
                 { texture = "level3/obstacle7_1", position = {0, 10, 0}, rotation = 45 },
@@ -158,6 +155,21 @@ return {
             appearFrom = 3,
             appearTo = 12,
         },
+    },
 
+    planes = {
+        { name = "middle_door", distance = 100, rotation = 270, },
+
+        -- Shitty pipes part
+        { name = "side_pipes", distance = 20, rotation = 0, },
+        { name = "side_pipes", distance = 10, rotation = 90, },
+        { name = "middle_pipes", distance = 10, rotation = 90, },
+        { name = "side_pipes", distance = 10, rotation = 90, },
+        { name = "diagonal_pipe", distance = 10, rotation = 90, },
+        { name = "side_pipes", distance = 10, rotation = 90, },
+        { name = "diagonal_pipe", distance = 10, rotation = 0, },
+        { name = "diagonal_pipe", distance = 10, rotation = 270, },
+        { name = "side_pipes", distance = 5, rotation = 0, },
+        { name = "middle_pipes", distance = 10, rotation = 0, },
     }
 }
