@@ -4,7 +4,7 @@ local assets = require("core.assets")
 local mathUtils = require("utils.math")
 
 local PlaneSpawn = Concord.system({
-    pool = {"lastObstacleZ", "lastObstacleIndex"},
+    pool = {"planeSpawner"},
     cameraPool = {"camera"}
 })
 
@@ -80,16 +80,20 @@ function PlaneSpawn:update(deltaTime)
     local levelConfig = world.gameManager.levelConfig
 
     for _, e in ipairs(self.pool) do
-        local nextObstacle = levelConfig.planes[e.lastObstacleIndex.value + 1]
-        local nextObstacleZ = e.lastObstacleZ.value - nextObstacle.distance
+        local nextObstacle = levelConfig.planes[e.planeSpawner.lastIndex + 1]
+        local nextObstacleZ = e.planeSpawner.lastZ - nextObstacle.distance
         if camera.position.value.z - 100 < nextObstacleZ then
-            e.lastObstacleZ.value = nextObstacleZ
-            e.lastObstacleIndex.value = e.lastObstacleIndex.value + 1
+            e.planeSpawner.lastZ = nextObstacleZ
+            e.planeSpawner.lastIndex = e.planeSpawner.lastIndex + 1
 
             local planeConfig = levelConfig.planeTypes[nextObstacle.name]
-            spawnLevelPlane(world, planeConfig, maf.vec3(0, 0, nextObstacleZ), math.rad(nextObstacle.rotation), e.lastObstacleIndex.value)
+            spawnLevelPlane(world, planeConfig, maf.vec3(0, 0, nextObstacleZ), math.rad(nextObstacle.rotation), e.planeSpawner.lastIndex)
 
-            if e.lastObstacleIndex.value >= #levelConfig.planes then
+            if nextObstacle.switchSidePlanes then
+                e.planeSpawner.sidePlanesIndex = e.planeSpawner.sidePlanesIndex + 1
+            end
+
+            if e.planeSpawner.lastIndex >= #levelConfig.planes then
                 e:destroy()
             end
         end

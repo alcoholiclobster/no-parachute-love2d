@@ -8,9 +8,20 @@ return {
 
     sidePlanesCount = 60,
     sidePlanes = {
-        { texture = "level3/decorative1" },
-        { texture = "level3/decorative2" },
-        { texture = "level3/decorative3" },
+        {
+            textures = {
+                "level2/wall1",
+                "level2/wall2",
+                "level2/wall3",
+            }
+        },
+        {
+            textures = {
+                "level3/decorative1",
+                "level3/decorative2",
+                "level3/decorative3",
+            }
+        }
     },
 
     planeTypes = {
@@ -158,18 +169,23 @@ return {
     },
 
     planes = {
-        { name = "middle_door", distance = 100, rotation = 270, },
+        { name = "middle_door", distance = 100, rotation = 270, switchSidePlanes = true, },
 
         -- Shitty pipes part
-        { name = "side_pipes", distance = 20, rotation = 0, },
-        { name = "side_pipes", distance = 10, rotation = 90, },
-        { name = "middle_pipes", distance = 10, rotation = 90, },
-        { name = "side_pipes", distance = 10, rotation = 90, },
-        { name = "diagonal_pipe", distance = 10, rotation = 90, },
-        { name = "side_pipes", distance = 10, rotation = 90, },
-        { name = "diagonal_pipe", distance = 10, rotation = 0, },
-        { name = "diagonal_pipe", distance = 10, rotation = 270, },
-        { name = "side_pipes", distance = 5, rotation = 0, },
-        { name = "middle_pipes", distance = 10, rotation = 0, },
+        -- { name = "side_pipes", distance = 20, rotation = 0, },
+        -- { name = "side_pipes", distance = 10, rotation = 90, },
+        -- { name = "middle_pipes", distance = 10, rotation = 90, },
+        -- { name = "side_pipes", distance = 10, rotation = 90, },
+        -- { name = "diagonal_pipe", distance = 10, rotation = 90, },
+        -- { name = "side_pipes", distance = 10, rotation = 90, },
+        -- { name = "diagonal_pipe", distance = 10, rotation = 0, },
+        -- { name = "diagonal_pipe", distance = 10, rotation = 270, },
+        -- { name = "side_pipes", distance = 5, rotation = 0, },
+        -- { name = "middle_pipes", distance = 10, rotation = 0, },
+
+        { name = "big_fan", distance = 40, rotation = 0, },
+        { name = "big_fan", distance = 40, rotation = 0, },
+        { name = "big_fan", distance = 40, rotation = 0, },
+        { name = "big_fan", distance = 40, rotation = 0, },
     }
 }

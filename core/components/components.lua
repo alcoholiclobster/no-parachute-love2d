@@ -93,12 +93,10 @@ Concord.component("attachOffset", function(component, offset)
     component.value = offset
 end)
 
-Concord.component("lastObstacleZ", function(component, value)
-    component.value = value or 0
-end)
-
-Concord.component("lastObstacleIndex", function(component, value)
-    component.value = value or 0
+Concord.component("planeSpawner", function(component)
+    component.lastZ = 0
+    component.lastIndex = 0
+    component.sidePlanesIndex = 1
 end)
 
 Concord.component("distanceBetweenObstacles", function(component, value)
@@ -164,4 +162,8 @@ end)
 Concord.component("camera", function(component, fov)
     component.fov = fov or 1
     component.followDistance = 10
+end)
+
+Concord.component("decorativePlane", function (component)
+    component.typeIndex = 0
 end)

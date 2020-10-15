@@ -8,9 +8,13 @@ return {
 
     sidePlanesCount = 40,
     sidePlanes = {
-        { texture = "level1/wall1" },
-        { texture = "level1/wall2" },
-        { texture = "level1/wall3" },
+        {
+            planes = {
+                { texture = "level1/wall1" },
+                { texture = "level1/wall2" },
+                { texture = "level1/wall3" },
+            },
+        }
     },
 
     planeTypes = {

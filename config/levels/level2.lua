@@ -10,9 +10,25 @@ return {
 
     sidePlanesCount = 45,
     sidePlanes = {
-        { texture = "level2/wall1" },
-        { texture = "level2/wall2" },
-        { texture = "level2/wall3" },
+        {
+            textures = {
+                "level2/wall1",
+                "level2/wall2",
+                "level2/wall3",
+            }
+        },
+        {
+            textures = {
+                "level2/wall1",
+                "level2/wall4",
+                "level2/wall4",
+            }
+        },
+        {
+            textures = {
+                "level2/wall4",
+            }
+        },
     },
 
     planeTypes = {
@@ -143,11 +159,11 @@ return {
         { name = "side_wood1_green", distance = 20, rotation = 270 },
 
         -- Keep out
-        { name = "keep_out", distance = 20, rotation = 90 },
+        { name = "keep_out", distance = 20, rotation = 90, switchSidePlanes = true },
 
         { name = "side_wood1", distance = 20, rotation = 0 },
-        { name = "side_wood1", distance = 20, rotation = 180 },
-        { name = "side_wood1", distance = 20, rotation = 90 },
+        { name = "side_wood1_green", distance = 20, rotation = 180 },
+        { name = "side_wood1", distance = 20, rotation = 90, switchSidePlanes = true},
         { name = "side_wood1", distance = 20, rotation = 270 },
 
         { name = "belts", distance = 15, rotation = 0 },
@@ -157,7 +173,7 @@ return {
         { name = "side_wood2", distance = 15, rotation = 180 },
 
         { name = "belts", distance = 15, rotation = 90 },
-        { name = "middle_bridge_green", distance = 20, rotation = 180 },
+        { name = "middle_bridge", distance = 20, rotation = 180 },
         { name = "belts", distance = 20, rotation = 180 },
         { name = "middle_bridge", distance = 20, rotation = 180 },
         { name = "middle_bridge", distance = 20, rotation = 270 },
@@ -179,11 +195,11 @@ return {
 
         { name = "corner_hole", distance = 15, rotation = 0 },
         { name = "side_wood2", distance = 15, rotation = 0 },
-        { name = "corner_hole_green", distance = 15, rotation = 90 },
+        { name = "corner_hole", distance = 15, rotation = 90 },
         { name = "side_wood1", distance = 15, rotation = 90 },
         { name = "corner_hole", distance = 15, rotation = 180 },
         { name = "side_wood2", distance = 15, rotation = 180 },
-        { name = "corner_hole_green", distance = 15, rotation = 0 },
+        { name = "corner_hole", distance = 15, rotation = 0 },
 
         -- TODO: Add rest part
 

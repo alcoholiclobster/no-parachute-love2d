@@ -14,6 +14,7 @@ function DecorativePlaneCycling:update(deltaTime)
     for _, e in ipairs(self.pool) do
         if e.position.value.z > camera.position.value.z then
             e.position.value.z = e.position.value.z - 100
+            e:give("decorativePlaneRespawnEvent")
         end
     end
 end
