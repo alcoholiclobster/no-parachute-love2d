@@ -1,12 +1,12 @@
 local Concord = require("lib.concord")
 local assets = require("core.assets")
 
-local DecorativePlaneTextures = Concord.system({
+local SidePlaneTextures = Concord.system({
     planeSpawnerPool = {"planeSpawner"},
-    pool = {"decorativePlane", "decorativePlaneRespawnEvent", "position"},
+    pool = {"sidePlane", "sidePlaneRespawnEvent", "position"},
 })
 
-function DecorativePlaneTextures:update()
+function SidePlaneTextures:update()
     local planeSpawnerEntity = self.planeSpawnerPool[1]
     if not planeSpawnerEntity then
         return
@@ -15,13 +15,13 @@ function DecorativePlaneTextures:update()
     local levelConfig = self:getWorld().gameManager.levelConfig
 
     for _, e in ipairs(self.pool) do
-        if e.decorativePlane.typeIndex < sidePlanesIndex then
-            e.decorativePlane.typeIndex = e.decorativePlane.typeIndex + 1
+        if e.sidePlane.typeIndex < sidePlanesIndex then
+            e.sidePlane.typeIndex = e.sidePlane.typeIndex + 1
 
-            local config = levelConfig.sidePlanes[e.decorativePlane.typeIndex]
+            local config = levelConfig.sidePlanes[e.sidePlane.typeIndex]
             e:give("texture", assets.texture(config.textures[math.random(1, #config.textures)]))
         end
     end
 end
 
-return DecorativePlaneTextures
+return SidePlaneTextures

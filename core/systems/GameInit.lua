@@ -29,8 +29,8 @@ function GameInit:init()
             :give("size", maf.vec3(10 * mathUtils.sign(math.random() - 0.5), 10 * mathUtils.sign(math.random() - 0.5)))
             :give("rotation", direction*math.pi * 0.5)
             :give("drawable")
-            :give("decorativePlane")
-            :give("decorativePlaneRespawnEvent")
+            :give("sidePlane")
+            :give("sidePlaneRespawnEvent")
     end
 
     -- Spawn player

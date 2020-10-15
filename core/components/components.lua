@@ -164,6 +164,6 @@ Concord.component("camera", function(component, fov)
     component.followDistance = 10
 end)
 
-Concord.component("decorativePlane", function (component)
+Concord.component("sidePlane", function (component)
     component.typeIndex = 0
 end)

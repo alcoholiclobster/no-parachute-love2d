@@ -39,7 +39,7 @@ local function render(e, camera)
     planeShader:send("depth", depth)
 
     local size = e.size.value * scale
-    if e.decorativePlane and e.texture then
+    if e.sidePlane and e.texture then
         local imageData = assets.textureImageData(e.texture.value)
         local r, g, b = imageData:getPixel(0, 0)
         love.graphics.setColor(

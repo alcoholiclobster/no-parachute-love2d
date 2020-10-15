@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 
 local DebugInfo = Concord.system({
-    decorativePool = {"decorativePlane"},
+    sidePlanePool = {"sidePlane"},
     obstaclePool = {"obstaclePlane"},
     playerPool = {"controlledByPlayer"},
 })
@@ -20,7 +20,7 @@ function DebugInfo:draw()
         love.graphics.print("FPS: "..fps, 10, y)
 
         y = y + 18
-        love.graphics.print("Decorative planes: "..tostring(#self.decorativePool), 10, y)
+        love.graphics.print("Side planes: "..tostring(#self.sidePlanePool), 10, y)
         y = y + 18
         love.graphics.print("Obstacle planes: "..tostring(#self.obstaclePool), 10, y)
         y = y + 18

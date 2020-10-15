@@ -18,4 +18,4 @@ end)
 
 Concord.component("deathEvent")
 Concord.component("planeSpawnEvent")
-Concord.component("decorativePlaneRespawnEvent")
+Concord.component("sidePlaneRespawnEvent")
