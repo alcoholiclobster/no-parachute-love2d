@@ -1,5 +1,5 @@
 return {
-    name = "Level 1",
+    name = "Level 3",
 
     fallSpeed = 32,
     fogColor = {15, 0, 0},
@@ -10,9 +10,7 @@ return {
     sidePlanes = {
         {
             textures = {
-                "level2/wall1",
-                "level2/wall2",
-                "level2/wall3",
+                "level2/wall4",
             }
         },
         {
