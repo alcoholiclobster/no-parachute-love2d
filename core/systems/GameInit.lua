@@ -15,7 +15,7 @@ function GameInit:init()
     levelConfig.totalHeight = levelConfig.totalHeight + 70
 
     -- Side walls planes
-    local count = math.max(27, levelConfig.sidePlanesCount)
+    local count = levelConfig.sidePlanesCount
     local previousDirection = -1
     for i = 0, count - 1 do
         local z = -100 + i * 100 / count
@@ -23,6 +23,7 @@ function GameInit:init()
         if direction == previousDirection then
             direction = direction + 1
         end
+        previousDirection = direction
 
         Concord.entity(world)
             :give("position", maf.vec3(0, 0, z))
