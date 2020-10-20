@@ -41,7 +41,7 @@ return {
             planes = { { texture = "levels/level1_2/obstacle_plane5", }},
         },
         obstacle_middle_thing = {
-            planes = { { texture = "levels/level1_2/obstacle_plane6", }},
+            planes = { { texture = "levels/level1_1/obstacle_plane4", }},
         },
     },
 
@@ -76,9 +76,9 @@ return {
         { name = "obstacle_center_hole", distance = 15, rotation = 90 },
 
         { name = "obstacle_diagonal_thing", distance = 50, rotation = 0 },
-        { name = "obstacle_middle_thing", distance = 30, rotation = 0 },
-        { name = "obstacle_diagonal_thing", distance = 30, rotation = 90 },
         { name = "obstacle_middle_thing", distance = 30, rotation = 90 },
+        { name = "obstacle_diagonal_thing", distance = 30, rotation = 90 },
+        { name = "obstacle_middle_thing", distance = 30, rotation = 180 },
 
         -- 26 sec
     },
