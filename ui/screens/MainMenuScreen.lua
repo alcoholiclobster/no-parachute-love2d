@@ -19,7 +19,9 @@ Twitter: @alcolobster
 ]]
 
 function MainMenuScreen:initialize()
-
+    self.levelsList = {
+        { text = "Forest Cave 1", level = "level1_1"},
+    }
 end
 
 function MainMenuScreen:onShow()
@@ -46,9 +48,9 @@ function MainMenuScreen:draw()
 
     local buttonWidth, buttonHeight = 200, 50
     local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.4
-    for i = 1, 3 do
-        if buttons.drawButton("Level "..i, buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.screenManager:show(GameScreen:new(i))
+    for _, listItem in ipairs(self.levelsList) do
+        if buttons.drawButton(listItem.text, buttonX, buttonY, buttonWidth, buttonHeight) then
+            self.screenManager:show(GameScreen:new(listItem.level))
         end
         buttonY = buttonY + buttonHeight + 10
     end

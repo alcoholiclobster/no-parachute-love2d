@@ -30,11 +30,11 @@ function love.load(arg)
     debugSimulateFrameRate = tonumber(args.fps) or 30
 
     screenManager = ScreenManager:new()
-    screenManager:show(require("ui.screens.MainMenuScreen"))
+    screenManager:show(require("ui.screens.MainMenuScreen")())
 
     if args.level then
-        console.log("Force loading level "..tostring(args.level))
-        screenManager:show(GameScreen:new(tonumber(args.level)))
+        print("Force loading level "..tostring(args.level))
+        screenManager:show(GameScreen:new(args.level))
     end
 
     if args.fullscreen then

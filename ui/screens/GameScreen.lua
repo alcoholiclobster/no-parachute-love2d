@@ -4,20 +4,25 @@ local GameManager = require("core.GameManager")
 local buttons = require("ui.controls.buttons")
 local assets = require("core.assets")
 local SpeedEffect = require("ui.effects.SpeedEffect")
+local Tutorial = require("ui.Tutorial")
 
 local GameScreen = class("GameScreen", Screen)
 
-function GameScreen:initialize(level)
-    assert(type(level) == "number", "Level not specified")
-    self.gameManager = GameManager:new(require("config.levels.level"..level), self)
+function GameScreen:initialize(levelName)
+    assert(type(levelName) == "string", "Level not specified")
+    self.levelConfig = require("config.levels."..levelName)
+    self.levelName = levelName
+    self.gameManager = GameManager:new(self.levelConfig, self)
 
-    self.level = level
     self.levelProgress = 0
     self.playerScore = 0
     self.playerSpeed = 0
     self.state = "game"
 
     self.speedEffect = SpeedEffect:new()
+    if self.levelConfig.enableTutorial then
+        self.tutorial = Tutorial:new()
+    end
 end
 
 function GameScreen:onShow()
@@ -32,12 +37,20 @@ function GameScreen:setSpeedEffectAmount(amount)
     self.speedEffect:setAmount(amount)
 end
 
+function GameScreen:restartLevel()
+    self.screenManager:show(require("ui.screens.GameScreen"):new(self.levelName))
+end
+
 function GameScreen:draw()
     self.gameManager:draw()
     self.speedEffect:draw()
 
     if love.keyboard.isDown("o") then
         return
+    end
+
+    if self.tutorial then
+        self.tutorial:draw()
     end
 
     love.graphics.setColor(1, 1, 1, 1)
@@ -83,7 +96,7 @@ function GameScreen:draw()
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
         if buttons.drawButton("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.screenManager:show(require("ui.screens.GameScreen"):new(self.level))
+            self:restartLevel()
         end
         buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
@@ -107,7 +120,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.screenManager:show(require("ui.screens.GameScreen"):new(self.level))
+            self:restartLevel()
         end
         buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
@@ -125,9 +138,9 @@ function GameScreen:draw()
 
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
-        if self.level < 3 then
+        if self.levelConfig.nextLevel then
             if buttons.drawButton("Next level", buttonX, buttonY, buttonWidth, buttonHeight) then
-                self.screenManager:show(require("ui.screens.GameScreen"):new(self.level + 1))
+                self.screenManager:show(require("ui.screens.GameScreen"):new(self.levelConfig.nextLevel))
             end
         end
         buttonY = buttonY + buttonHeight + 10
@@ -160,6 +173,11 @@ function GameScreen:update(deltaTime)
         elseif love.keyboard.isDown("x") then
             deltaTime = deltaTime * 4
         end
+
+        if self.tutorial then
+            self.tutorial:update(deltaTime)
+        end
+
         self.gameManager:update(deltaTime)
         self.speedEffect:update(deltaTime)
     end
