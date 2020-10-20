@@ -27,15 +27,18 @@ function Tutorial:draw()
     if self.time > self.showPart1 and self.time < self.hidePart1 then
         local p = mathUtils.clamp01((self.time - self.showPart1) / 0.3)
         love.graphics.setColor(1, 1, 1, p)
-        love.graphics.setFont(assets.font("Roboto-Bold", 48))
-        love.graphics.printf("Use WASD or arrows to move", 0, screenHeight * 0.15, screenWidth, "center")
+        love.graphics.setFont(assets.font("Roboto-Bold", 44))
+        love.graphics.printf("Use WASD or ARROWS to move", 0, screenHeight * 0.15, screenWidth, "center")
     end
 
     if self.time > self.showPart2 and self.time < self.hidePart2 then
         local p = mathUtils.clamp01((self.time - self.showPart2) / 0.3)
         love.graphics.setColor(1, 1, 1, p)
-        love.graphics.setFont(assets.font("Roboto-Bold", 48))
+        love.graphics.setFont(assets.font("Roboto-Bold", 44))
         love.graphics.printf("Hold SPACE to increase speed", 0, screenHeight * 0.15, screenWidth, "center")
+
+        love.graphics.setFont(assets.font("Roboto-Bold", 24))
+        love.graphics.printf("and to earn more score points", 0, screenHeight * 0.15 + 50, screenWidth, "center")
     end
 
     if self.time > self.showPart3 and self.time < self.hidePart3 then

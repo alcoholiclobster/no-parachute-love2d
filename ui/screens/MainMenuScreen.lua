@@ -21,6 +21,7 @@ Twitter: @alcolobster
 function MainMenuScreen:initialize()
     self.levelsList = {
         { text = "Forest Cave 1", level = "level1_1"},
+        { text = "Forest Cave 2", level = "level1_2"},
     }
 end
 

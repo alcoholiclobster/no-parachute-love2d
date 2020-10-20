@@ -1,6 +1,6 @@
 return {
     name = "Forest 1",
-    -- enableTutorial = true,
+    enableTutorial = true,
 
     fallSpeed = 25,
     fogColor = {0, 20, 31},
