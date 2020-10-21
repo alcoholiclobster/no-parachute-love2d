@@ -76,10 +76,23 @@ return {
         { name = "obstacle_center_hole", distance = 15, rotation = 90 },
 
         { name = "obstacle_diagonal_thing", distance = 50, rotation = 0 },
-        { name = "obstacle_middle_thing", distance = 30, rotation = 90 },
-        { name = "obstacle_diagonal_thing", distance = 30, rotation = 90 },
-        { name = "obstacle_middle_thing", distance = 30, rotation = 180 },
+        { name = "obstacle_middle_thing", distance = 10, rotation = 90 },
+        { name = "obstacle_diagonal_thing", distance = 10, rotation = 90 },
+        { name = "obstacle_middle_thing", distance = 10, rotation = 180 },
+        { name = "obstacle_diagonal_thing", distance = 10, rotation = 180 },
+        { name = "obstacle_center_hole", distance = 15, rotation = 0 },
+        { name = "obstacle_middle_thing", distance = 20, rotation = 0 },
+        { name = "obstacle_round_thing", distance = 30, rotation = 0 },
 
-        -- 26 sec
+        { name = "obstacle_center_hole", distance = 15, rotation = 0 },
+        { name = "obstacle_center_hole", distance = 20, rotation = 180 },
+        { name = "obstacle_center_hole", distance = 25, rotation = 90 },
+
+        { name = "obstacle_three_things", distance = 25, rotation = 0 },
+        { name = "obstacle_side_hole", distance = 20, rotation = 0 },
+        { name = "obstacle_side_hole", distance = 30, rotation = 180 },
+        { name = "obstacle_side_hole", distance = 30, rotation = 0 },
+        { name = "obstacle_corner_hole_big", distance = 30, rotation = 0 },
+        { name = "obstacle_corner_hole_big", distance = 35, rotation = 180 },
     },
 }
