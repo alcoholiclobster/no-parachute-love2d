@@ -1,7 +1,8 @@
 return {
     name = "Forest 2",
+    nextLevel = "level2_1",
 
-    fallSpeed = 27,
+    fallSpeed = 30,
     fogColor = {0, 20, 31},
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 0.2,
@@ -14,6 +15,17 @@ return {
                 "levels/level1_1/side_plane1",
                 "levels/level1_1/side_plane3",
                 "levels/level1_1/side_plane4",
+            },
+        },
+        {
+            textures = {
+                "levels/level1_1/side_plane1",
+                "levels/level1_1/side_plane3",
+            },
+        },
+        {
+            textures = {
+                "levels/level1_1/side_plane3",
             },
         }
     },
@@ -82,13 +94,13 @@ return {
         { name = "obstacle_diagonal_thing", distance = 10, rotation = 180 },
         { name = "obstacle_center_hole", distance = 15, rotation = 0 },
         { name = "obstacle_middle_thing", distance = 20, rotation = 0 },
-        { name = "obstacle_round_thing", distance = 30, rotation = 0 },
+        { name = "obstacle_round_thing", distance = 30, rotation = 0, switchSidePlanes = true},
 
         { name = "obstacle_center_hole", distance = 15, rotation = 0 },
         { name = "obstacle_center_hole", distance = 20, rotation = 180 },
         { name = "obstacle_center_hole", distance = 25, rotation = 90 },
 
-        { name = "obstacle_three_things", distance = 25, rotation = 0 },
+        { name = "obstacle_three_things", distance = 25, rotation = 0, switchSidePlanes = true },
         { name = "obstacle_side_hole", distance = 20, rotation = 0 },
         { name = "obstacle_side_hole", distance = 30, rotation = 180 },
         { name = "obstacle_side_hole", distance = 30, rotation = 0 },

@@ -4,8 +4,8 @@ return {
     fallSpeed = 30,
     fogColor = {0, 0, 0},
     playerRotationMode = "sinusoid",
-    playerRotationSpeed = 1,
-    playerRotationChangeSpeed = 7,
+    playerRotationSpeed = 3,
+    playerRotationChangeSpeed = 0.001,
     playerRotationSpeedDependsOnProgress = true,
 
     sidePlanesCount = 45,
