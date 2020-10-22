@@ -8,17 +8,19 @@ local PlaneSpawn = Concord.system({
     cameraPool = {"camera"}
 })
 
-local function spawnPlane(world, plane, position, rotation)
+local function spawnPlane(world, plane, worldPosition, localPositionOffset, rotation)
     local texture = assets.texture(plane.texture)
 
     if plane.rotation then
         rotation = rotation + math.rad(plane.rotation)
     end
 
-    local spawnPosition = position:clone()
+    local spawnPosition = worldPosition:clone()
+    local localPosition = localPositionOffset
     if plane.position then
-        spawnPosition = spawnPosition + mathUtils.rotateVector2D(maf.vec3(plane.position[1], plane.position[2], plane.position[3]), rotation)
+        localPosition = localPosition + maf.vec3(plane.position[1], plane.position[2], plane.position[3])
     end
+    spawnPosition = spawnPosition + mathUtils.rotateVector2D(localPosition, rotation)
 
     local entity = Concord.entity(world)
         :give("position", spawnPosition)
@@ -62,9 +64,9 @@ local function spawnPlane(world, plane, position, rotation)
     return entity
 end
 
-local function spawnLevelPlane(world, planeConfig, position, rotation, index)
+local function spawnLevelPlane(world, planeConfig, worldPosition, localPosition, rotation, index)
     for i, plane in ipairs(planeConfig.planes) do
-        local entity = spawnPlane(world, plane, position, rotation)
+        local entity = spawnPlane(world, plane, worldPosition, localPosition, rotation)
         entity:give("name", "plane_"..index.."_"..i)
         entity:give("planeSpawnEvent")
     end
@@ -87,7 +89,18 @@ function PlaneSpawn:update(deltaTime)
             e.planeSpawner.lastIndex = e.planeSpawner.lastIndex + 1
 
             local planeConfig = levelConfig.planeTypes[nextObstacle.name]
-            spawnLevelPlane(world, planeConfig, maf.vec3(0, 0, nextObstacleZ), math.rad(nextObstacle.rotation), e.planeSpawner.lastIndex)
+            local positionOffset = maf.vec3(0, 0, 0)
+            if nextObstacle.position then
+                positionOffset = maf.vec3(unpack(nextObstacle.position))
+            end
+            spawnLevelPlane(
+                world,
+                planeConfig,
+                maf.vec3(0, 0, nextObstacleZ),
+                positionOffset,
+                math.rad(nextObstacle.rotation),
+                e.planeSpawner.lastIndex
+            )
 
             if nextObstacle.switchSidePlanes then
                 e.planeSpawner.sidePlanesIndex = e.planeSpawner.sidePlanesIndex + 1
