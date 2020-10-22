@@ -23,6 +23,7 @@ function MainMenuScreen:initialize()
         { text = "Forest Cave 1", level = "level1_1"},
         { text = "Forest Cave 2", level = "level1_2"},
         { text = "Deep Caves 1", level = "level2_1"},
+        { text = "Deep Caves 2", level = "level2_2"},
     }
 end
 
