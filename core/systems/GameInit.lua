@@ -25,6 +25,17 @@ function GameInit:init()
         end
         previousDirection = direction
 
+        local brightness = 1
+        if levelConfig.sidePlanesRandomBrightness then
+            brightness = 0.7 + math.random(1, 3) * 0.1
+        end
+
+        if levelConfig.sidePlanesBrightness then
+            brightness = brightness * levelConfig.sidePlanesBrightness
+        end
+
+        brightness = mathUtils.clamp01(brightness)
+
         Concord.entity(world)
             :give("position", maf.vec3(0, 0, z))
             :give("size", maf.vec3(10 * mathUtils.sign(math.random() - 0.5), 10 * mathUtils.sign(math.random() - 0.5)))
@@ -32,6 +43,7 @@ function GameInit:init()
             :give("drawable")
             :give("sidePlane")
             :give("sidePlaneRespawnEvent")
+            :give("color", brightness, brightness, brightness, 1)
     end
 
     -- Spawn player

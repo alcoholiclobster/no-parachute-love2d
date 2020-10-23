@@ -42,6 +42,11 @@ local function render(e, camera)
     if e.sidePlane and e.texture then
         local imageData = assets.textureImageData(e.texture.value)
         local r, g, b = imageData:getPixel(0, 0)
+        if e.color then
+            r = r * e.color.r
+            g = g * e.color.g
+            b = b * e.color.b
+        end
         love.graphics.setColor(
             r, g, b, 1
         )

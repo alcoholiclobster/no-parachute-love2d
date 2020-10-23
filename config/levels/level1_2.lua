@@ -8,7 +8,9 @@ return {
     playerRotationSpeed = 0.2,
     playerRotationChangeSpeed = 0.02,
 
-    sidePlanesCount = 40,
+    sidePlanesCount = 60,
+    sidePlanesRandomBrightness = true,
+    sidePlanesBrightness = 0.9,
     sidePlanes = {
         {
             textures = {

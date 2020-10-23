@@ -9,6 +9,7 @@ return {
     playerRotationSpeedDependsOnProgress = true,
 
     sidePlanesCount = 45,
+    sidePlanesRandomBrightness = true,
     sidePlanes = {
         {
             textures = {
