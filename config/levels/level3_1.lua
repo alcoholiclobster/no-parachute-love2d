@@ -153,7 +153,7 @@ return {
     },
 
     planes = {
-        { name = "middle_door", distance = 100, rotation = 270 },
+        { name = "middle_door", distance = 100, rotation = 0 },
 
         { name = "crossed_vents", distance = 30, rotation = 0 },
         { name = "diagonal_pipe", distance = 10, rotation = 0 },
@@ -184,10 +184,37 @@ return {
         { name = "middle_box_with_fan", distance = 10, rotation = 90 },
         { name = "side_pipes", distance = 10, rotation = 0 },
         { name = "side_pipes", distance = 5, rotation = 90 },
-        { name = "crossed_vents", distance = 10, rotation = 0 },
-        { name = "middle_box_with_fan", distance = 30, rotation = 0 },
+        { name = "crossed_vents", distance = 15, rotation = 0 },
+        { name = "diagonal_pipe", distance = 30, rotation = 0 },
         { name = "tube_thing", distance = 20, rotation = 0 },
-        { name = "middle_hole", distance = 30, rotation = 0 },
-        { name = "tube_thing", distance = 20, rotation = 180 },
+        { name = "middle_hole", distance = 35, rotation = 0 },
+        { name = "side_pipes", distance = 5, rotation = 90 },
+        { name = "tube_thing", distance = 10, rotation = 180 },
+        { name = "tube_thing", distance = 21, rotation = 180 },
+        { name = "tube_thing", distance = 21, rotation = 180 },
+        { name = "diagonal_pipe", distance = 30, rotation = 0 },
+        { name = "middle_hole", distance = 10, rotation = 0 },
+        { name = "middle_hole", distance = 1, rotation = 0 },
+        { name = "middle_hole", distance = 2, rotation = 90 },
+        { name = "middle_hole", distance = 1, rotation = 180 },
+        { name = "middle_hole", distance = 1, rotation = 270 },
+        { name = "middle_hole", distance = 2, rotation = 90 },
+        { name = "middle_hole", distance = 1, rotation = 180 },
+        { name = "middle_hole", distance = 2, rotation = 0 },
+        { name = "middle_hole", distance = 1, rotation = 90 },
+        { name = "middle_hole", distance = 2, rotation = 270 },
+        { name = "diagonal_pipe", distance = 35, rotation = 0 },
+        { name = "tube_thing", distance = 10, rotation = 0 },
+        { name = "diagonal_pipe", distance = 35, rotation = 0 },
+        { name = "tube_thing", distance = 15, rotation = 180 },
+        { name = "diagonal_pipe", distance = 35, rotation = 0 },
+        { name = "side_pipes", distance = 5, rotation = 90 },
+        { name = "side_pipes", distance = 10, rotation = 0 },
+
+        -- 30 seconds
+
+        -- TODO: Chill part
+
+        -- TODO: Fans part
     }
 }
