@@ -22,8 +22,9 @@ function MainMenuScreen:initialize()
     self.levelsList = {
         { text = "Forest Cave 1", level = "level1_1"},
         { text = "Forest Cave 2", level = "level1_2"},
-        { text = "Deep Caves 1", level = "level2_1"},
-        { text = "Deep Caves 2", level = "level2_2"},
+        { text = "Stone", level = "level2_1"},
+        { text = "Old Mine", level = "level2_2"},
+        { text = "Vents", level = "level3_1"},
     }
 end
 

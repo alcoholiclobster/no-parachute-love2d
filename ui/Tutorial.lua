@@ -21,6 +21,18 @@ function Tutorial:update(deltaTime)
     self.time = self.time + deltaTime
 end
 
+function Tutorial:drawShadowText(text, x, y, width, align)
+    local w = 2
+    local r, g, b, a = love.graphics.getColor()
+    love.graphics.setColor(0, 0, 0, a)
+    love.graphics.printf(text, x-w, y-w, width, align)
+    love.graphics.printf(text, x+w, y-w, width, align)
+    love.graphics.printf(text, x-w, y+w, width, align)
+    love.graphics.printf(text, x+w, y+w, width, align)
+    love.graphics.setColor(r, g, b, a)
+    love.graphics.printf(text, x, y, width, align)
+end
+
 function Tutorial:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
@@ -28,24 +40,24 @@ function Tutorial:draw()
         local p = mathUtils.clamp01((self.time - self.showPart1) / 0.3)
         love.graphics.setColor(1, 1, 1, p)
         love.graphics.setFont(assets.font("Roboto-Bold", 44))
-        love.graphics.printf("Use WASD or ARROWS to move", 0, screenHeight * 0.15, screenWidth, "center")
+        self:drawShadowText("Use WASD or ARROWS to move", 0, screenHeight * 0.15, screenWidth, "center")
     end
 
     if self.time > self.showPart2 and self.time < self.hidePart2 then
         local p = mathUtils.clamp01((self.time - self.showPart2) / 0.3)
         love.graphics.setColor(1, 1, 1, p)
         love.graphics.setFont(assets.font("Roboto-Bold", 44))
-        love.graphics.printf("Hold SPACE to increase speed", 0, screenHeight * 0.15, screenWidth, "center")
+        self:drawShadowText("Hold SPACE to increase speed", 0, screenHeight * 0.15, screenWidth, "center")
 
         love.graphics.setFont(assets.font("Roboto-Bold", 24))
-        love.graphics.printf("and to earn more score points", 0, screenHeight * 0.15 + 50, screenWidth, "center")
+        self:drawShadowText("and to earn more score points", 0, screenHeight * 0.15 + 50, screenWidth, "center")
     end
 
     if self.time > self.showPart3 and self.time < self.hidePart3 then
         local p = mathUtils.clamp01((self.time - self.showPart3) / 0.3)
         love.graphics.setColor(1, 1, 1, p)
         love.graphics.setFont(assets.font("Roboto-Bold", 48))
-        love.graphics.printf("Avoid obstacles to survive", 0, screenHeight * 0.15, screenWidth, "center")
+        self:drawShadowText("Avoid obstacles to survive", 0, screenHeight * 0.15, screenWidth, "center")
     end
 end
 
