@@ -82,32 +82,30 @@ function PlaneSpawn:update(deltaTime)
     local levelConfig = world.gameManager.levelConfig
 
     for _, e in ipairs(self.pool) do
-        local nextObstacle = levelConfig.planes[e.planeSpawner.lastIndex + 1]
-        local nextObstacleZ = e.planeSpawner.lastZ - nextObstacle.distance
-        if camera.position.value.z - 100 < nextObstacleZ then
-            e.planeSpawner.lastZ = nextObstacleZ
-            e.planeSpawner.lastIndex = e.planeSpawner.lastIndex + 1
+        if e.planeSpawner.lastIndex < #levelConfig.planes then
+            local nextObstacle = levelConfig.planes[e.planeSpawner.lastIndex + 1]
+            local nextObstacleZ = e.planeSpawner.lastZ - nextObstacle.distance
+            if camera.position.value.z - 100 < nextObstacleZ then
+                e.planeSpawner.lastZ = nextObstacleZ
+                e.planeSpawner.lastIndex = e.planeSpawner.lastIndex + 1
 
-            local planeConfig = levelConfig.planeTypes[nextObstacle.name]
-            local positionOffset = maf.vec3(0, 0, 0)
-            if nextObstacle.position then
-                positionOffset = maf.vec3(unpack(nextObstacle.position))
-            end
-            spawnLevelPlane(
-                world,
-                planeConfig,
-                maf.vec3(0, 0, nextObstacleZ),
-                positionOffset,
-                math.rad(nextObstacle.rotation or 0),
-                e.planeSpawner.lastIndex
-            )
+                local planeConfig = levelConfig.planeTypes[nextObstacle.name]
+                local positionOffset = maf.vec3(0, 0, 0)
+                if nextObstacle.position then
+                    positionOffset = maf.vec3(unpack(nextObstacle.position))
+                end
+                spawnLevelPlane(
+                    world,
+                    planeConfig,
+                    maf.vec3(0, 0, nextObstacleZ),
+                    positionOffset,
+                    math.rad(nextObstacle.rotation or 0),
+                    e.planeSpawner.lastIndex
+                )
 
-            if nextObstacle.switchSidePlanes then
-                e.planeSpawner.sidePlanesIndex = e.planeSpawner.sidePlanesIndex + 1
-            end
-
-            if e.planeSpawner.lastIndex >= #levelConfig.planes then
-                e:destroy()
+                if nextObstacle.switchSidePlanes then
+                    e.planeSpawner.sidePlanesIndex = e.planeSpawner.sidePlanesIndex + 1
+                end
             end
         end
     end

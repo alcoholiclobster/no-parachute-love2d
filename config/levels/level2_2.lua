@@ -7,7 +7,6 @@ return {
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 3,
     playerRotationChangeSpeed = 0.001,
-    playerRotationSpeedDependsOnProgress = true,
 
     sidePlanesCount = 45,
     sidePlanesRandomBrightness = true,
@@ -29,6 +28,13 @@ return {
         {
             textures = {
                 "levels/level2_2/wall4",
+            }
+        },
+        {
+            textures = {
+                "levels/level3_1/decorative1",
+                "levels/level3_1/decorative2",
+                "levels/level3_1/decorative3",
             }
         },
     },
@@ -107,6 +113,13 @@ return {
         },
         keep_out = {
             planes = {{ texture = "levels/level2_2/keep_out", }},
+        },
+
+        level3_middle_door = {
+            planes = {
+                { texture = "levels/level3_1/obstacle4_1" },
+                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
+            },
         },
     },
 
@@ -257,5 +270,8 @@ return {
         { name = "side_wood1", distance = 30, rotation = 0 },
 
         -- 55 seconds
+
+        -- Next level transition
+        { name = "level3_middle_door", distance = 30, rotation = 0, switchSidePlanes = true },
     },
 }

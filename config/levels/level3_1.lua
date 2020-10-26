@@ -8,11 +8,6 @@ return {
 
     sidePlanesCount = 60,
     sidePlanes = {
-        -- {
-        --     textures = {
-        --         "levels/level2_2/wall4",
-        --     }
-        -- },
         {
             textures = {
                 "levels/level3_1/decorative1",
