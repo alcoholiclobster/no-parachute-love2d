@@ -10,7 +10,7 @@ local function drawButton(text, x, y, width, height)
     love.graphics.setFont(assets.font("Roboto-Bold", 14))
     love.graphics.printf(text, x, y + height * 0.5 - 7, width, "center")
 
-    if isMouseOver and love.mouse.isDown(1) then
+    if isMouseOver and mouseUtils.isMouseJustPressed() then
         return true
     end
 end

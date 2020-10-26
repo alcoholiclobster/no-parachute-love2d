@@ -98,7 +98,7 @@ function PlaneSpawn:update(deltaTime)
                 planeConfig,
                 maf.vec3(0, 0, nextObstacleZ),
                 positionOffset,
-                math.rad(nextObstacle.rotation),
+                math.rad(nextObstacle.rotation or 0),
                 e.planeSpawner.lastIndex
             )
 
