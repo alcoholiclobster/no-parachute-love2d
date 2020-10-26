@@ -21,7 +21,7 @@ function DebugCollisions:draw()
             local offset = e.obstacleCollisionCheckOffset.value
             local point = e.position.value + mathUtils.rotateVector2D(offset, e.rotation.value)
 
-            local x, y = renderingUtils.project(point, camera.position.value)
+            local x, y = renderingUtils.project(point, camera.position.value, camera.camera.fov)
             if x then
                 love.graphics.rectangle("fill", x - 2, y - 2, 4, 4)
                 love.graphics.print(e.name.value, x + 6, y - 4)

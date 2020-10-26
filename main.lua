@@ -6,7 +6,8 @@ local console = require("utils.console")
 local gameConfig = require("config.game")
 local mouseUtils = require("utils.mouse")
 
-local isDebugEnabled = false
+GLOBAL_DEBUG_ENABLED = false
+
 local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
 
@@ -24,10 +25,10 @@ function love.load(arg)
     parser:flag("--fullscreen", "Force fullscreen mode")
     local args = parser:parse(arg)
 
-    isDebugEnabled = args.debug
+    GLOBAL_DEBUG_ENABLED = args.debug
     math.randomseed(os.time())
 
-    debugSimulateFrameRate = tonumber(args.fps) or 30
+    debugSimulateFrameRate = tonumber(args.fps) or 0
 
     screenManager = ScreenManager:new()
     screenManager:show(require("ui.screens.MainMenuScreen")())
@@ -45,7 +46,7 @@ end
 function love.update(deltaTime)
     mouseUtils.update()
 
-    if isDebugEnabled then
+    if GLOBAL_DEBUG_ENABLED and debugSimulateFrameRate > 0 then
         debugUpdateDelay = debugUpdateDelay + deltaTime
         if debugUpdateDelay > (1000 / debugSimulateFrameRate) / 1000 then
             screenManager:emit("update", debugUpdateDelay)
@@ -68,7 +69,7 @@ end
 function love.keypressed(key, ...)
     screenManager:emit("handleKeyPress", key, ...)
 
-    if key == "`" and isDebugEnabled then
+    if key == "`" and GLOBAL_DEBUG_ENABLED then
         console.toggle()
     end
 end
