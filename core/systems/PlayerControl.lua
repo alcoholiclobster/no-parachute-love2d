@@ -29,11 +29,12 @@ function PlayerControl:update(deltaTime)
             direction.y = 0
         end
 
-        if love.keyboard.isDown("space") then
+        local joystick = joystickManager.get()
+
+        if love.keyboard.isDown("space") or (joystick and joystick:isDown(1)) then
             e.velocity.value.z = e.velocity.value.z - deltaTime * 32
         end
 
-        local joystick = joystickManager.get()
         if joystick then
             local xAxis = joystick:getGamepadAxis("leftx")
             local yAxis = joystick:getGamepadAxis("lefty")
