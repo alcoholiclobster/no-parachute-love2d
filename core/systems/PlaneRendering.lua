@@ -14,6 +14,8 @@ local depthPrecision = 4
 local minZ = -100
 local maxZ = 0
 
+local lastFrameCameraZ = 0
+
 local fogColor = {0, 0, 0}
 local planeShader = love.graphics.newShader[[
 uniform vec4 fogcolor = vec4(1, 0, 0, 1);
@@ -29,7 +31,8 @@ vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 
 local blurShader = love.graphics.newShader[[
 uniform float aspect_ratio = 0.0;
-float blur_radius = 3;
+uniform float blur_level = 0.0;
+float blur_radius = 3.0;
 int blur_steps = 4;
 
 vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
@@ -42,7 +45,7 @@ vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 
     vec4 color = vec4(0.0);
 
-    dir = normalize(dir) * blur_amount / 128.0 * blur_radius;
+    dir = normalize(dir) * blur_amount / 128.0 * blur_radius * blur_level;
     float count = 0.0;
     for (int i = 0; i < blur_steps; i++)
     {
@@ -156,8 +159,11 @@ function PlaneRendering:draw()
     love.graphics.setShader()
     love.graphics.setCanvas()
 
+    local cameraSpeed = mathUtils.clamp01((lastFrameCameraZ - camera.position.value.z) / 0.1)
+    lastFrameCameraZ = camera.position.value.z
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.origin(1, 1, 1, 1)
+    blurShader:send("blur_level", cameraSpeed)
     love.graphics.setShader(blurShader)
     love.graphics.draw(canvas)
     love.graphics.setShader()
