@@ -10,6 +10,7 @@ return {
 
     sidePlanesCount = 80,
     sidePlanesRandomBrightness = true,
+    sidePlanesBrightness = 0.85,
     sidePlanes = {
         {
             textures = {
@@ -23,10 +24,17 @@ return {
 
     planeTypes = {
         obstacle1 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane1", }},
+            planes = {
+                { texture = "levels/level1_1/obstacle_plane1", },
+                { texture = "levels/level1_1/decorative_plane2", decorative = true, position = {0, 0, 5 }}
+            },
         },
         obstacle2 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane2", }},
+            planes = {
+                { texture = "levels/level1_1/obstacle_plane2", },
+                { texture = "levels/level1_1/decorative_plane2", decorative = true, position = {0, 0, 5 }},
+                { texture = "levels/level1_1/decorative_plane2", decorative = true, position = {0, 0, 7 }, rotation = 90},
+            },
         },
         obstacle3 = {
             planes = { { texture = "levels/level1_1/obstacle_plane3", }},
@@ -37,14 +45,31 @@ return {
         obstacle5 = {
             planes = { { texture = "levels/level1_1/obstacle_plane5", }},
         },
+        decorative1 = {
+            planes = { { texture = "levels/level1_1/decorative_plane1", decorative = true }},
+        },
+        decorative2 = {
+            planes = { { texture = "levels/level1_1/decorative_plane2", decorative = true }},
+        },
     },
 
     planes = {
-        { name = "obstacle1", distance = 200, rotation = 0 },
-        { name = "obstacle1", distance = 40, rotation = 180 },
+        { name = "decorative1", distance = 50, rotation = 0 },
+        { name = "decorative2", distance = 50, rotation = 90 },
+        { name = "decorative1", distance = 50, rotation = 180 },
+        { name = "decorative2", distance = 30, rotation = 0 },
+        { name = "decorative1", distance = 10, rotation = 180 },
+        { name = "obstacle1", distance = 10, rotation = 0 },
+        { name = "decorative2", distance = 30, rotation = 0 },
+        { name = "obstacle1", distance = 10, rotation = 180 },
 
-        { name = "obstacle2", distance = 300, rotation = 0 },
-        { name = "obstacle1", distance = 40, rotation = 90 },
+        { name = "decorative1", distance = 150, rotation = 0 },
+        { name = "decorative2", distance = 50, rotation = 90 },
+        { name = "decorative1", distance = 50, rotation = 180 },
+
+        { name = "obstacle2", distance = 50, rotation = 0 },
+        { name = "decorative1", distance = 30, rotation = 0 },
+        { name = "obstacle1", distance = 10, rotation = 90 },
         { name = "obstacle1", distance = 40, rotation = 270 },
 
         { name = "obstacle2", distance = 150, rotation = 90 },
