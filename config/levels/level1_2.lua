@@ -27,7 +27,7 @@ return {
         },
         {
             textures = {
-                "levels/level1_1/side_plane3",
+                "levels/level1_1/side_plane4",
             },
         }
     },
