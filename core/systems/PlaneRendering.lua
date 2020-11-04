@@ -17,6 +17,7 @@ local maxZ = 0
 local lastFrameCameraZ = 0
 
 local fogColor = {0, 0, 0}
+local fogDistance = 100
 local planeShader = love.graphics.newShader[[
 uniform vec4 fogcolor = vec4(1, 0, 0, 1);
 uniform float depth = 1;
@@ -64,7 +65,7 @@ local function render(e, camera)
     love.graphics.translate(x, y)
     love.graphics.rotate(e.rotation.value)
 
-    local depth = mathUtils.clamp01((e.position.value.z - camera.position.value.z) / -100)
+    local depth = mathUtils.clamp01((e.position.value.z - camera.position.value.z) / -fogDistance)
     planeShader:send("depth", depth)
 
     local size = e.size.value * scale
@@ -108,6 +109,9 @@ end
 function PlaneRendering:init()
     fogColor = self:getWorld().gameManager.levelConfig.fogColor or {0, 0, 0}
     fogColor = {fogColor[1] / 255, fogColor[2] / 255, fogColor[3] / 255, 1}
+
+    fogDistance = self:getWorld().gameManager.levelConfig.fogDistance or 100
+    minZ = -fogDistance - 5
     planeShader:sendColor("fogcolor", fogColor)
 
     blurShader:send("aspect_ratio", screenWidth / screenHeight)

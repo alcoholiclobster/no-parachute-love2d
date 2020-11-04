@@ -3,7 +3,8 @@ return {
     nextLevel = "level2_1",
 
     fallSpeed = 30,
-    fogColor = {0, 20, 31},
+    fogColor = {0, 20, 40},
+    fogDistance = 60,
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 0.2,
     playerRotationChangeSpeed = 0.02,
