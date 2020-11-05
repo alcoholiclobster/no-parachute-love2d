@@ -3,7 +3,7 @@ return {
     nextLevel = "level2_1",
 
     fallSpeed = 30,
-    fogColor = {0, 20, 40},
+    fogColor = {0, 5, 10},
     fogDistance = 60,
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 0.2,
@@ -35,7 +35,7 @@ return {
 
     planeTypes = {
         obstacle_center_hole = {
-            planes = { { texture = "levels/level1_1/obstacle_plane2", }},
+            planes = { { texture = "levels/level1_2/obstacle_plane7", }},
         },
         obstacle_side_hole = {
             planes = { { texture = "levels/level1_1/obstacle_plane3", }},
@@ -58,6 +58,18 @@ return {
         obstacle_middle_thing = {
             planes = { { texture = "levels/level1_1/obstacle_plane4", }},
         },
+        obstacle_half_plane = {
+            planes = { { texture = "levels/level1_2/obstacle_plane6", }},
+        },
+        obstacle_half_plane2 = {
+            planes = { { texture = "levels/level1_2/obstacle_plane6_2", }},
+        },
+        decorative1 = {
+            planes = { { texture = "levels/level1_1/decorative_plane1", decorative = true }},
+        },
+        decorative2 = {
+            planes = { { texture = "levels/level1_1/decorative_plane2", decorative = true }},
+        },
     },
 
     planes = {
@@ -77,11 +89,21 @@ return {
         { name = "obstacle_round_thing", distance = 20, rotation = 180 },
 
         { name = "obstacle_three_things", distance = 50, rotation = 0 },
-        { name = "obstacle_center_hole", distance = 20, rotation = 0 },
+        { name = "decorative2", distance = 10, rotation = 0 },
+        { name = "obstacle_center_hole", distance = 10, rotation = 0 },
         { name = "obstacle_three_things", distance = 15, rotation = 90 },
         { name = "obstacle_three_things", distance = 20, rotation = 180 },
 
-        { name = "obstacle_center_hole", distance = 70, rotation = 0 },
+        { name = "obstacle_half_plane2", distance = 70, rotation = 0, },
+        { name = "decorative1", distance = 10, rotation = 180, },
+        { name = "obstacle_half_plane", distance = 10, rotation = 180, },
+        { name = "decorative1", distance = 10, rotation = 90, },
+        { name = "obstacle_half_plane2", distance = 12, rotation = 0, },
+        { name = "decorative1", distance = 10, rotation = 0, },
+        { name = "obstacle_half_plane", distance = 7, rotation = 90, },
+        { name = "decorative2", distance = 20, rotation = 90, },
+
+        { name = "obstacle_center_hole", distance = 50, rotation = 0 },
         { name = "obstacle_corner_hole_big", distance = 20, rotation = 180 },
         { name = "obstacle_corner_hole", distance = 20, rotation = 0 },
         { name = "obstacle_side_hole", distance = 20, rotation = 0 },
