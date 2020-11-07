@@ -30,7 +30,7 @@ local function spawnPlane(world, plane, worldPosition, localPositionOffset, rota
         :give("destroyOutOfBounds")
 
     if not plane.decorative then
-        local canvas = love.graphics.newCanvas(128, 128)
+        local canvas = love.graphics.newCanvas(texture:getWidth(), texture:getHeight())
         love.graphics.setCanvas(canvas)
         love.graphics.clear()
         love.graphics.setBlendMode("alpha")
