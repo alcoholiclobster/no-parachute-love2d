@@ -19,13 +19,17 @@ Twitter: @alcolobster
 ]]
 
 function MainMenuScreen:initialize()
-    self.levelsList = {
-        { text = "Forest Cave 1", level = "level1_1"},
-        { text = "Forest Cave 2", level = "level1_2"},
-        { text = "Stone", level = "level2_1"},
-        { text = "Old Mine", level = "level2_2"},
-        { text = "Vents", level = "level3_1"},
-    }
+    self.levelsList = {}
+
+    local levelName = "level1_1"
+    while levelName do
+        local config = require("config.levels."..levelName)
+        table.insert(self.levelsList, {
+            text = config.name,
+            level = levelName,
+        })
+        levelName = config.nextLevel
+    end
 end
 
 function MainMenuScreen:onShow()

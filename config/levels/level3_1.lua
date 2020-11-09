@@ -1,8 +1,9 @@
 return {
-    name = "Level 3",
+    name = "Vents",
 
     fallSpeed = 32,
     fogColor = {15, 0, 0},
+    fogDistance = 70,
     playerRotationMode = "constant",
     playerRotationSpeed = -2.5,
 

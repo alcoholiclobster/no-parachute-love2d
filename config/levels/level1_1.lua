@@ -1,5 +1,5 @@
 return {
-    name = "Forest 1",
+    name = "Tutorial",
     nextLevel = "level1_2",
     enableTutorial = true,
 

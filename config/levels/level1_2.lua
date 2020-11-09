@@ -1,5 +1,5 @@
 return {
-    name = "Forest 2",
+    name = "Deep Forest",
     nextLevel = "level2_2",
 
     fallSpeed = 30,
