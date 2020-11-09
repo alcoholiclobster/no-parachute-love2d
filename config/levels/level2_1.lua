@@ -4,6 +4,7 @@ return {
 
     fallSpeed = 27,
     fogColor = {0, 0, 0},
+    fogDistance = 70,
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 0.2,
     playerRotationChangeSpeed = 0.02,
