@@ -9,15 +9,15 @@ return {
     playerRotationSpeed = 0.2,
     playerRotationChangeSpeed = 0.02,
 
-    sidePlanesCount = 80,
+    sidePlanesCount = 40,
     sidePlanesRandomBrightness = true,
     sidePlanes = {
         {
             textures = {
-                "levels/level2_1/side_plane1",
-                "levels/level2_1/side_plane2",
+                -- "levels/level2_1/side_plane1",
+                -- "levels/level2_1/side_plane2",
                 "levels/level2_1/side_plane3",
-                "levels/level2_1/side_plane4",
+                -- "levels/level2_1/side_plane4",
             },
         },
     },
