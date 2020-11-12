@@ -3,14 +3,15 @@ return {
     nextLevel = "level3_1",
 
     fallSpeed = 27,
-    fogColor = {0, 5, 0},
-    fogDistance = 70,
+    fogColor = {25, 10, 10},
+    fogDistance = 40,
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 0.2,
     playerRotationChangeSpeed = 0.02,
 
     sidePlanesCount = 180,
     sidePlanesRandomBrightness = true,
+    sidePlanesBrightness = 0.95,
     sidePlanes = {
         {
             textures = {
