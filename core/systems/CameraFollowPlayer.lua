@@ -13,9 +13,10 @@ function CameraFollowPlayer:update(deltaTime)
     end
 
     for _, e in ipairs(self.pool) do
-        e.position.value.x = mathUtils.lerp(0, target.position.value.x, 0.8)
-        e.position.value.y = mathUtils.lerp(0, target.position.value.y, 0.8)
-        e.position.value.z = target.position.value.z + e.camera.followDistance
+        local t = love.timer.getTime() * 1.2
+        e.position.value.x = mathUtils.lerp(0, target.position.value.x + math.cos(t) * 0.1, 0.8)
+        e.position.value.y = mathUtils.lerp(0, target.position.value.y + math.sin(t) * 0.12, 0.8)
+        e.position.value.z = target.position.value.z + e.camera.followDistance + math.cos(t) * 0.15
         e.rotation.value = -target.rotation.value
     end
 end
