@@ -37,7 +37,7 @@ function GameInit:init()
         brightness = mathUtils.clamp01(brightness)
 
         Concord.entity(world)
-            :give("position", maf.vec3(0, 0, z))
+            :give("position", maf.vec3(0, 0, z + 0.05))
             :give("size", maf.vec3(10 * mathUtils.sign(math.random() - 0.5), 10 * mathUtils.sign(math.random() - 0.5)))
             :give("rotation", direction*math.pi * 0.5)
             :give("drawable")

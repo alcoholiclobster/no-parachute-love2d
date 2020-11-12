@@ -3,19 +3,19 @@ return {
     nextLevel = "level3_1",
 
     fallSpeed = 27,
-    fogColor = {0, 0, 0},
+    fogColor = {0, 5, 0},
     fogDistance = 70,
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 0.2,
     playerRotationChangeSpeed = 0.02,
 
-    sidePlanesCount = 40,
+    sidePlanesCount = 180,
     sidePlanesRandomBrightness = true,
     sidePlanes = {
         {
             textures = {
-                -- "levels/level2_1/side_plane1",
-                -- "levels/level2_1/side_plane2",
+                "levels/level2_1/side_plane1",
+                "levels/level2_1/side_plane2",
                 "levels/level2_1/side_plane3",
                 -- "levels/level2_1/side_plane4",
             },
@@ -28,6 +28,9 @@ return {
         },
         obstacle_big_hole_sharp = {
             planes = { { texture = "levels/level2_1/obstacle_plane2", }},
+        },
+        obstacle_big_hole_sharp2 = {
+            planes = { { texture = "levels/level2_1/obstacle_plane2_2", }},
         },
         obstacle_side_hole_sharp = {
             planes = { { texture = "levels/level2_1/obstacle_plane3", }},
@@ -59,14 +62,14 @@ return {
         { name = "obstacle_half_hole_sharp", distance = 20, rotation = 180 },
         { name = "obstacle_half_hole_sharp", distance = 20, rotation = 90 },
         { name = "obstacle_big_hole_sharp", distance = 30, rotation = 90 },
-        { name = "obstacle_big_hole_sharp", distance = 10, rotation = 270 },
+        { name = "obstacle_big_hole_sharp2", distance = 10, rotation = 270 },
         { name = "obstacle_big_hole_sharp", distance = 5, rotation = 90 },
         { name = "obstacle_side_hole_sharp", distance = 5, rotation = 90 },
         { name = "obstacle_half_hole_sharp", distance = 25, rotation = 180 },
         { name = "obstacle_half_hole_sharp", distance = 20, rotation = 0 },
         { name = "obstacle_side_hole_sharp", distance = 10, rotation = 90 },
         { name = "obstacle_side_hole_sharp", distance = 10, rotation = 90 },
-        { name = "obstacle_big_hole_sharp", distance = 10, rotation = 90 },
+        { name = "obstacle_big_hole_sharp2", distance = 10, rotation = 90 },
         { name = "obstacle_big_hole_sharp", distance = 15, rotation = 270 },
 
         { name = "obstacle_triangle_thing", distance = 30, rotation = 0, },
