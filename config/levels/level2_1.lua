@@ -14,10 +14,21 @@ return {
     sidePlanes = {
         {
             textures = {
+                -- "levels/level2_1/side_plane1",
+                "levels/level2_1/side_plane2",
+                "levels/level2_1/side_plane3",
+            },
+        },
+        {
+            textures = {
+                "levels/level2_1/side_plane4",
+            },
+        },
+        {
+            textures = {
                 "levels/level2_1/side_plane1",
                 "levels/level2_1/side_plane2",
                 "levels/level2_1/side_plane3",
-                -- "levels/level2_1/side_plane4",
             },
         },
     },
@@ -28,9 +39,6 @@ return {
         },
         obstacle_big_hole_sharp = {
             planes = { { texture = "levels/level2_1/obstacle_plane2", }},
-        },
-        obstacle_big_hole_sharp2 = {
-            planes = { { texture = "levels/level2_1/obstacle_plane2_2", }},
         },
         obstacle_side_hole_sharp = {
             planes = { { texture = "levels/level2_1/obstacle_plane3", }},
@@ -53,7 +61,7 @@ return {
     },
 
     planes = {
-        { name = "obstacle_long_thing", distance = 30, rotation = 0, position = {0, -4, 0} },
+        { name = "obstacle_long_thing", distance = 80, rotation = 0, position = {0, -4, 0} },
         { name = "obstacle_long_thing", distance = 20, rotation = 90, position = {0, -4, 0} },
         { name = "obstacle_long_thing", distance = 20, rotation = 180, position = {0, -4, 0} },
         { name = "obstacle_long_thing", distance = 20, rotation = 270, position = {0, -4, 0} },
@@ -62,14 +70,13 @@ return {
         { name = "obstacle_half_hole_sharp", distance = 20, rotation = 180 },
         { name = "obstacle_half_hole_sharp", distance = 20, rotation = 90 },
         { name = "obstacle_big_hole_sharp", distance = 30, rotation = 90 },
-        { name = "obstacle_big_hole_sharp2", distance = 10, rotation = 270 },
-        { name = "obstacle_big_hole_sharp", distance = 5, rotation = 90 },
-        { name = "obstacle_side_hole_sharp", distance = 5, rotation = 90 },
-        { name = "obstacle_half_hole_sharp", distance = 25, rotation = 180 },
+        { name = "obstacle_big_hole_sharp", distance = 10, rotation = 270 },
+        { name = "obstacle_side_hole_sharp", distance = 8, rotation = 90 },
+        { name = "obstacle_half_hole_sharp", distance = 45, rotation = 180 },
         { name = "obstacle_half_hole_sharp", distance = 20, rotation = 0 },
         { name = "obstacle_side_hole_sharp", distance = 10, rotation = 90 },
         { name = "obstacle_side_hole_sharp", distance = 10, rotation = 90 },
-        { name = "obstacle_big_hole_sharp2", distance = 10, rotation = 90 },
+        { name = "obstacle_big_hole_sharp", distance = 10, rotation = 90 },
         { name = "obstacle_big_hole_sharp", distance = 15, rotation = 270 },
 
         { name = "obstacle_triangle_thing", distance = 30, rotation = 0, },
@@ -77,14 +84,14 @@ return {
 
         { name = "obstacle_long_thing", distance = 10, rotation = 0, position = {0, -4, 0} },
         { name = "obstacle_long_thing", distance = 10, rotation = 90, position = {0, -4, 0} },
-        { name = "obstacle_long_thing", distance = 5, rotation = 0, position = {0, 0, 0} },
-        { name = "obstacle_long_thing", distance = 5, rotation = 180, position = {0, -4, 0} },
-        { name = "obstacle_long_thing", distance = 10, rotation = 270, position = {0, -4, 0} },
+        { name = "obstacle_long_thing", distance = 10, rotation = 0, position = {0, 0, 0} },
+        { name = "obstacle_long_thing", distance = 15, rotation = 180, position = {0, -4, 0} },
+        { name = "obstacle_long_thing", distance = 35, rotation = 270, position = {0, -4, 0} },
 
         { name = "obstacle_two_corner_holes", distance = 10, rotation = 0 },
         { name = "obstacle_two_corner_holes", distance = 22, rotation = 90 },
         { name = "obstacle_two_corner_holes", distance = 22, rotation = 180 },
-        { name = "obstacle_half_hole_sharp", distance = 20, rotation = 270 },
+        { name = "obstacle_half_hole_sharp", distance = 60, rotation = 270 },
         { name = "obstacle_half_hole_sharp", distance = 10, rotation = 0 },
         { name = "obstacle_half_hole_sharp", distance = 10, rotation = 90 },
         { name = "obstacle_side_hole_sharp", distance = 10, rotation = 90 },
@@ -98,12 +105,12 @@ return {
         { name = "obstacle_long_thing", distance = 10, rotation = 270, position = {0, -4, 0} },
         { name = "obstacle_long_thing", distance = 5, rotation = 90, position = {0, 0, 0} },
 
-        { name = "obstacle_center_hole", distance = 40, rotation = 0, },
+        { name = "obstacle_center_hole", distance = 60, rotation = 0, switchSidePlanes = true, },
         { name = "obstacle_triangle_thing", distance = 20, rotation = 0, },
         { name = "obstacle_triangle_thing", distance = 20, rotation = 180, },
         { name = "obstacle_triangle_thing", distance = 30, rotation = 270, },
-        { name = "obstacle_triangle_thing", distance = 10, rotation = 0, },
-        { name = "obstacle_diagonal_thing", distance = 10, rotation = 90, },
+        { name = "obstacle_triangle_thing", distance = 10, rotation = 0 },
+        { name = "obstacle_diagonal_thing", distance = 10, rotation = 90 },
         { name = "obstacle_diagonal_thing", distance = 10, rotation = 180, },
         { name = "obstacle_diagonal_thing", distance = 10, rotation = 270, },
         { name = "obstacle_diagonal_thing", distance = 10, rotation = 0, },
@@ -120,7 +127,7 @@ return {
         { name = "obstacle_diagonal_thing", distance = 10, rotation = 270, },
         { name = "obstacle_diagonal_thing", distance = 10, rotation = 180, },
         { name = "obstacle_diagonal_thing", distance = 10, rotation = 90, },
-        { name = "obstacle_diagonal_thing", distance = 10, rotation = 0, },
+        { name = "obstacle_diagonal_thing", distance = 10, rotation = 0, switchSidePlanes = true,  },
         { name = "obstacle_two_corner_holes", distance = 15, rotation = 0 },
 
         { name = "obstacle_half_hole_sharp", distance = 30, rotation = 0 },
