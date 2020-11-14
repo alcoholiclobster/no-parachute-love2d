@@ -68,7 +68,7 @@ function MainMenuScreen:draw()
     local buttonX, buttonY = screenWidth * 0.1, screenHeight * 0.4
     for _, listItem in ipairs(self.levelsList) do
         if buttons.drawButton(listItem.text, buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.screenManager:show(GameScreen:new(listItem.level))
+            self.screenManager:transition(GameScreen:new(listItem.level))
         end
         buttonY = buttonY + buttonHeight + 10
     end

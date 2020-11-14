@@ -38,7 +38,7 @@ function GameScreen:setSpeedEffectAmount(amount)
 end
 
 function GameScreen:restartLevel()
-    self.screenManager:show(require("ui.screens.GameScreen"):new(self.levelName))
+    self.screenManager:transition(require("ui.screens.GameScreen"):new(self.levelName))
 end
 
 function GameScreen:draw()
@@ -100,7 +100,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.screenManager:show(require("ui.screens.MainMenuScreen"):new())
+            self.screenManager:transition(require("ui.screens.MainMenuScreen"):new())
         end
     elseif self.state == "pause" then
         love.graphics.setColor(0, 0, 0, 0.6)
@@ -124,7 +124,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.screenManager:show(require("ui.screens.MainMenuScreen"):new())
+            self.screenManager:transition(require("ui.screens.MainMenuScreen"):new())
         end
     elseif self.state == "finished" then
         love.graphics.setColor(0, 0, 0, 0.6)

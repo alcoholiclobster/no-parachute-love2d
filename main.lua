@@ -31,7 +31,8 @@ function love.load(arg)
     debugSimulateFrameRate = tonumber(args.fps) or 0
 
     screenManager = ScreenManager:new()
-    screenManager:show(require("ui.screens.MainMenuScreen")())
+    screenManager:transition(require("ui.screens.MainMenuScreen")())
+    screenManager.fadeProgress = 0.5
 
     if args.level then
         print("Force loading level "..tostring(args.level))
@@ -45,6 +46,7 @@ end
 
 function love.update(deltaTime)
     mouseUtils.update()
+    screenManager:update(deltaTime)
 
     if GLOBAL_DEBUG_ENABLED and debugSimulateFrameRate > 0 then
         debugUpdateDelay = debugUpdateDelay + deltaTime
@@ -59,6 +61,7 @@ end
 
 function love.draw()
     screenManager:emit("draw")
+    screenManager:draw()
 
     love.graphics.setColor(1, 1, 1, 0.5)
     love.graphics.printf(gameConfig.versionName, 0, love.graphics.getHeight() - 20, love.graphics.getWidth() - 10, "right")
