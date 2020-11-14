@@ -12,6 +12,9 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.world = Concord.world()
     self.world.gameManager = self
 
+    self.time = 0
+    self.deltaTimeMultiplier = 1
+
     self.world:addSystem(require("core.systems.GameInit"))
     self.world:addSystem(require("core.systems.CharacterSpawn"))
     self.world:addSystem(require("core.systems.LifeTime"))
@@ -72,7 +75,8 @@ function GameManager:triggerUI(name, ...)
 end
 
 function GameManager:update(deltaTime)
-    self.world:emit("update", deltaTime)
+    self.time = self.time + deltaTime * self.deltaTimeMultiplier
+    self.world:emit("update", deltaTime * self.deltaTimeMultiplier)
 end
 
 function GameManager:draw()
@@ -85,6 +89,18 @@ end
 
 function GameManager:handleKeyRelease(...)
     self.world:emit("keyRelease", ...)
+end
+
+function GameManager:initializeMenuMode()
+    self.world:getSystem(require("core.systems.PlaneSpawn")):setEnabled(false)
+    self.world:getSystem(require("core.systems.PlayerControl")):setEnabled(false)
+    self.world:getSystem(require("core.systems.CameraFollowPlayer")):setEnabled(false)
+    self.world:getSystem(require("core.systems.PlayerRotation")):setEnabled(false)
+    self.world:getSystem(require("core.systems.PlaneRendering")).overrideBlurLevel = 0.7
+
+    self.world:addSystem(require("core.systems.menu.MenuCamera"))
+
+    self.deltaTimeMultiplier = 0.05
 end
 
 return GameManager

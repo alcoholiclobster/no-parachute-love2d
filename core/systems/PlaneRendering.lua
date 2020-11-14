@@ -163,11 +163,15 @@ function PlaneRendering:draw()
     love.graphics.setShader()
     love.graphics.setCanvas()
 
-    local cameraSpeed = mathUtils.clamp01((lastFrameCameraZ - camera.position.value.z) / 0.1)
-    lastFrameCameraZ = camera.position.value.z
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.origin(1, 1, 1, 1)
-    blurShader:send("blur_level", cameraSpeed)
+    if not self.overrideBlurLevel then
+        local cameraSpeed = mathUtils.clamp01((lastFrameCameraZ - camera.position.value.z) / 0.1)
+        lastFrameCameraZ = camera.position.value.z
+        blurShader:send("blur_level", cameraSpeed)
+    else
+        blurShader:send("blur_level", self.overrideBlurLevel)
+    end
     love.graphics.setShader(blurShader)
     love.graphics.draw(canvas)
     love.graphics.setShader()

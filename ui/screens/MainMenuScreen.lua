@@ -2,6 +2,7 @@ local class = require("lib.middleclass")
 local Screen = require("ui.Screen")
 local buttons = require("ui.controls.buttons")
 local GameScreen = require("ui.screens.GameScreen")
+local GameManager = require("core.GameManager")
 local assets = require("core.assets")
 
 local MainMenuScreen = class("MainMenuScreen", Screen)
@@ -19,6 +20,9 @@ Twitter: @alcolobster
 ]]
 
 function MainMenuScreen:initialize()
+    self.gameManager = GameManager:new(require("config.levels.level1_2"), self)
+    self.gameManager:initializeMenuMode()
+
     self.levelsList = {}
 
     local levelName = "level1_1"
@@ -40,22 +44,28 @@ function MainMenuScreen:onHide()
 
 end
 
+function MainMenuScreen:update(deltaTime)
+    self.gameManager:update(deltaTime)
+end
+
 function MainMenuScreen:draw()
-    love.graphics.clear(44/255, 27/255, 63/255, 1)
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
+
+    love.graphics.clear(44/255, 27/255, 63/255, 1)
+    self.gameManager:draw()
 
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.setFont(assets.font("Roboto-Bold", 48))
     love.graphics.printf("No Parachute", 0, screenHeight * 0.2, screenWidth, "center", 0)
 
     love.graphics.setFont(assets.font("Roboto-Bold", 16))
-    love.graphics.printf("VERY VERY EARLY ALPHA VERSION", 0, screenHeight * 0.2 + 60, screenWidth, "center", 0)
+    love.graphics.printf("DEVELOPMENT VERSION", 0, screenHeight * 0.2 + 60, screenWidth, "center", 0)
 
     love.graphics.setFont(assets.font("Roboto-Regular", 16))
-    love.graphics.printf(howToPlayText, screenWidth * 0.05, screenHeight * 0.4, screenWidth, "left", 0)
+    love.graphics.printf(howToPlayText, screenWidth * 0.1 + 250, screenHeight * 0.4, screenWidth, "left", 0)
 
     local buttonWidth, buttonHeight = 200, 50
-    local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.4
+    local buttonX, buttonY = screenWidth * 0.1, screenHeight * 0.4
     for _, listItem in ipairs(self.levelsList) do
         if buttons.drawButton(listItem.text, buttonX, buttonY, buttonWidth, buttonHeight) then
             self.screenManager:show(GameScreen:new(listItem.level))

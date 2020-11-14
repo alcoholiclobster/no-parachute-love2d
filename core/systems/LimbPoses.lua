@@ -37,9 +37,10 @@ function LimbPoses:update(deltaTime)
             end
         end
 
-        local animAngle = math.sin(love.timer.getTime() * 2) * e.limbRotationPoses.down * 0.002 + e.limbRotationPoses.up * velocityIncrease * 0.025 * math.sin(love.timer.getTime() * 10)
+        local animAngle = math.sin(gameManager.time * 2) * e.limbRotationPoses.down * 0.02 + e.limbRotationPoses.up * velocityIncrease * 0.025 * math.sin(gameManager.time * 10)
         if e.attachToEntity.value.alive then
-            e.attachRotation.value = e.attachRotation.value + (targetRotation - e.attachRotation.value) * 7 * deltaTime + animAngle
+            targetRotation = targetRotation + animAngle
+            e.attachRotation.value = e.attachRotation.value + (targetRotation - e.attachRotation.value) * 7 * deltaTime
         end
     end
 end
