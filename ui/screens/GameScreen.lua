@@ -140,12 +140,12 @@ function GameScreen:draw()
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
         if self.levelConfig.nextLevel then
             if buttons.drawButton("Next level", buttonX, buttonY, buttonWidth, buttonHeight) then
-                self.screenManager:show(require("ui.screens.GameScreen"):new(self.levelConfig.nextLevel))
+                self.screenManager:transition(require("ui.screens.GameScreen"):new(self.levelConfig.nextLevel))
             end
         end
         buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.screenManager:show(require("ui.screens.MainMenuScreen"):new())
+            self.screenManager:transition(require("ui.screens.MainMenuScreen"):new())
         end
     end
 end
