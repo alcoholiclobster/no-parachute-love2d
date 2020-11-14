@@ -21,8 +21,8 @@ function ScorePoints:update(deltaTime)
 
     playerCharacter.score.value = playerCharacter.score.value + scoreIncrease
 
-    gameManager.ui:updateScore(playerCharacter.score.value)
-    gameManager.ui:updateSpeed(playerCharacter.velocity.value.z + math.sin(love.timer.getTime() * 0.4) * 0.1)
+    gameManager:triggerUI("updateScore", playerCharacter.score.value)
+    gameManager:triggerUI("updateSpeed", playerCharacter.velocity.value.z + math.sin(love.timer.getTime() * 0.4) * 0.1)
 end
 
 return ScorePoints

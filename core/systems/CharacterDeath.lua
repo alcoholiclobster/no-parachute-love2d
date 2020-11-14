@@ -32,7 +32,7 @@ function CharacterDeath:update(deltaTime)
 
         -- UI
         if e.controlledByPlayer then
-            self:getWorld().gameManager.ui:showDeathScreen()
+            self:getWorld().gameManager:triggerUI("showDeathScreen")
         end
     end
 end

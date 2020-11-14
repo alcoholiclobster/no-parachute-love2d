@@ -15,7 +15,7 @@ function LevelProgress:update(deltaTime)
     end
 
     if self.pool[1] then
-        gameManager.ui:updateLevelProgress(self.pool[1].levelProgress.value)
+        gameManager:triggerUI("updateLevelProgress", self.pool[1].levelProgress.value)
     end
 end
 

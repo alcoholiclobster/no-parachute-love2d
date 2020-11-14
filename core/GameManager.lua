@@ -65,6 +65,12 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.world:addSystem(require("core.systems.EventCleanup"))
 end
 
+function GameManager:triggerUI(name, ...)
+    if self.ui and self.ui[name] then
+        self.ui[name](self.ui, ...)
+    end
+end
+
 function GameManager:update(deltaTime)
     self.world:emit("update", deltaTime)
 end
