@@ -100,26 +100,7 @@ return {
         tube_thing = {
             planes = {
                 { texture = "levels/level3_1/obstacle6_0", position = {0, 0, 0}},
-                { texture = "levels/level3_1/obstacle6_2", position = {0, 0, -1}},
-                { texture = "levels/level3_1/obstacle6_3", position = {0, 0, -2}},
-                { texture = "levels/level3_1/obstacle6_1", position = {0, 0, -3}},
-                { texture = "levels/level3_1/obstacle6_2", position = {0, 0, -4}},
-                { texture = "levels/level3_1/obstacle6_3", position = {0, 0, -5}},
-                { texture = "levels/level3_1/obstacle6_1", position = {0, 0, -6}},
-                { texture = "levels/level3_1/obstacle6_3", position = {0, 0, -7}},
-                { texture = "levels/level3_1/obstacle6_4", position = {0, 0, -8}},
-                { texture = "levels/level3_1/obstacle6_2", position = {0, 0, -9}},
-                { texture = "levels/level3_1/obstacle6_1", position = {0, 0, -10}},
-                { texture = "levels/level3_1/obstacle6_3", position = {0, 0, -11}},
-                { texture = "levels/level3_1/obstacle6_4", position = {0, 0, -12}},
-                { texture = "levels/level3_1/obstacle6_3", position = {0, 0, -13}},
-                { texture = "levels/level3_1/obstacle6_2", position = {0, 0, -14}},
-                { texture = "levels/level3_1/obstacle6_1", position = {0, 0, -15}},
-                { texture = "levels/level3_1/obstacle6_3", position = {0, 0, -16}},
-                { texture = "levels/level3_1/obstacle6_2", position = {0, 0, -17}},
-                { texture = "levels/level3_1/obstacle6_4", position = {0, 0, -18}},
-                { texture = "levels/level3_1/obstacle6_1", position = {0, 0, -19}},
-                { texture = "levels/level3_1/obstacle6_2", position = {0, 0, -20}},
+                { texture = "levels/level3_1/obstacle6_1", position = {0, 0, -2}},
 
                 { texture = "levels/level3_1/obstacle6_5", position = {2.96875, -3.125, -2}, rotationSpeed = 10},
                 { texture = "levels/level3_1/obstacle6_6", position = {0, 0, 5}},
@@ -151,25 +132,32 @@ return {
     planes = {
         { name = "middle_door", distance = 100, rotation = 0 },
 
-        { name = "crossed_vents", distance = 30, rotation = 0 },
-        { name = "diagonal_pipe", distance = 10, rotation = 0 },
+        { name = "crossed_vents", distance = 50, rotation = 0 },
+        { name = "middle_hole", distance = 10, rotation = 0 },
+        { name = "diagonal_pipe", distance = 40, rotation = 0 },
         { name = "diagonal_pipe", distance = 10, rotation = 90 },
-        { name = "crossed_vents", distance = 20, rotation = 270 },
+        { name = "middle_hole", distance = 25, rotation = 0 },
+        { name = "crossed_vents", distance = 10, rotation = 270 },
+        { name = "middle_hole", distance = 17, rotation = 270 },
         { name = "middle_door_clean", distance = 30, rotation = 0 },
 
         { name = "diagonal_pipe", distance = 25, rotation = 0 },
         { name = "middle_pipes", distance = 20, rotation = 0 },
         { name = "diagonal_pipe", distance = 20, rotation = 90 },
         { name = "side_pipes", distance = 10, rotation = 90 },
-        { name = "middle_pipes", distance = 10, rotation = 90 },
+        { name = "middle_hole", distance = 15, rotation = 270 },
+        { name = "middle_pipes", distance = 20, rotation = 90 },
         { name = "side_pipes", distance = 30, rotation = 90 },
         { name = "side_pipes", distance = 10, rotation = 180 },
+        { name = "crossed_vents", distance = 10, rotation = 270 },
         { name = "middle_door_clean", distance = 20, rotation = 270 },
 
         { name = "big_fan_stopped", distance = 30, rotation = 0 },
         { name = "big_fan_stopped", distance = 30, rotation = 90 },
         { name = "big_fan_slow", distance = 30, rotation = 180 },
-        { name = "big_fan_slow", distance = 30, rotation = 90 },
+        { name = "middle_hole", distance = 15, rotation = 0 },
+        { name = "middle_box_with_fan", distance = 15, rotation = 0 },
+        { name = "big_fan_slow", distance = 15, rotation = 90 },
 
         { name = "middle_door_clean", distance = 40, rotation = 0 },
         { name = "middle_door_clean", distance = 20, rotation = 0 },
@@ -207,10 +195,19 @@ return {
         { name = "side_pipes", distance = 5, rotation = 90 },
         { name = "side_pipes", distance = 10, rotation = 0 },
 
-        -- 30 seconds
+        { name = "middle_door_clean", distance = 35, rotation = 0 },
+        { name = "side_pipes", distance = 30, rotation = 90 },
+        { name = "side_pipes", distance = 10, rotation = 180 },
+        { name = "side_pipes", distance = 30, rotation = 90 },
+        { name = "side_pipes", distance = 30, rotation = 90 },
+        { name = "side_pipes", distance = 30, rotation = 90 },
+        { name = "side_pipes", distance = 40, rotation = 180 },
+        { name = "side_pipes", distance = 20, rotation = 90 },
+        { name = "big_fan", distance = 60, rotation = 90 },
+        { name = "big_fan_reversed", distance = 40, rotation = 90 },
+        { name = "big_fan", distance = 40, rotation = 0 },
+        { name = "big_fan_reversed", distance = 40, rotation = 0 },
+        { name = "big_fan", distance = 40, rotation = 90 },
 
-        -- TODO: Chill part
-
-        -- TODO: Fans part
     }
 }
