@@ -97,6 +97,7 @@ function GameManager:initializeMenuMode()
     self.world:getSystem(require("core.systems.CameraFollowPlayer")):setEnabled(false)
     self.world:getSystem(require("core.systems.PlayerRotation")):setEnabled(false)
     self.world:getSystem(require("core.systems.PlaneRendering")).overrideBlurLevel = 0.7
+    self.world:getSystem(require("core.systems.LevelFinish")):setEnabled(false)
 
     self.world:addSystem(require("core.systems.menu.MenuCamera"))
 

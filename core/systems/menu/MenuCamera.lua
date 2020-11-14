@@ -17,7 +17,6 @@ function MenuCamera:update(deltaTime)
     target.rotation.value = -0.2 + math.sin(gameManager.time) * 0.1
 
     for _, e in ipairs(self.pool) do
-        local t = gameManager.time * 1.2
         e.position.value.x = 0
         e.position.value.y = 0
         e.position.value.z = target.position.value.z + 3 + math.cos(gameManager.time * 2) * 0.5
