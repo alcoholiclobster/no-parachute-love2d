@@ -7,7 +7,7 @@ function ScreenManager:initialize()
 
     self.fadeOutTime = 0.2
     self.fadeInTime = 0.5
-    self.fadeProgress = 1
+    self.fadeProgress = 0
     self.fadeScreen = nil
 end
 
@@ -40,8 +40,12 @@ function ScreenManager:draw()
     end
 end
 
-function ScreenManager:transition(screen)
-    self.fadeScreen = screen
+function ScreenManager:transition(name, ...)
+    if self.fadeProgress ~= 0 then
+        return
+    end
+
+    self.fadeScreen = require("ui.screens."..name)(...)
     self.fadeProgress = 0
 end
 

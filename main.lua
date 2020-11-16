@@ -5,6 +5,7 @@ local joystickManager = require("utils.joystickManager")
 local console = require("utils.console")
 local gameConfig = require("config.game")
 local mouseUtils = require("utils.mouse")
+local scheduler = require("utils.scheduler")
 
 GLOBAL_DEBUG_ENABLED = false
 
@@ -31,7 +32,7 @@ function love.load(arg)
     debugSimulateFrameRate = tonumber(args.fps) or 0
 
     screenManager = ScreenManager:new()
-    screenManager:transition(require("ui.screens.MainMenuScreen")())
+    screenManager:transition("MainMenuScreen")
     screenManager.fadeProgress = 0.5
 
     if args.level then
@@ -45,6 +46,7 @@ function love.load(arg)
 end
 
 function love.update(deltaTime)
+    scheduler.update(deltaTime)
     mouseUtils.update()
     screenManager:update(deltaTime)
 
