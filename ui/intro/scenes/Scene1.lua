@@ -26,7 +26,7 @@ function Scene1:process()
     self.line = self.line + 1
     scheduler.wait(3)
 
-    self.introManager:transition("Scene2")
+    self.introManager:changeScene("Scene2")
 end
 
 function Scene1:update(deltaTime)

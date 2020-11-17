@@ -33,10 +33,6 @@ function IntroManager:draw()
     end
 end
 
-function IntroManager:transition(sceneName)
-    self:changeScene(sceneName)
-end
-
 function IntroManager:changeScene(sceneName)
     if self.scene then
         self.scene:onHide()
