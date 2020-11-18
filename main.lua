@@ -46,6 +46,10 @@ function love.load(arg)
 end
 
 function love.update(deltaTime)
+    if deltaTime > 0.5 then
+        return
+    end
+
     scheduler.update(deltaTime)
     mouseUtils.update()
     screenManager:update(deltaTime)
