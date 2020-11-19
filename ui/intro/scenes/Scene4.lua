@@ -47,6 +47,8 @@ function Scene4:process()
     scheduler.wait(2)
     self.fadeProgress = 0
     self.isFading = true
+    scheduler.wait(0.5)
+    self.introManager:changeScene("Scene5")
 end
 
 function Scene4:update(deltaTime)
@@ -78,6 +80,13 @@ function Scene4:draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.draw(assets.texture("cutscenes/intro/sky_bg"), 0, 0)
 
+    local skyParallax = (-love.timer.getTime() * 64) % 128
+    local alpha = math.max(0, 1 - self.treesProgress * 4)
+    love.graphics.setColor(1, 1, 1, alpha)
+    love.graphics.draw(assets.texture("cutscenes/intro/sky_clouds"), 0, skyParallax)
+    love.graphics.draw(assets.texture("cutscenes/intro/sky_clouds"), 0, skyParallax-128)
+
+    love.graphics.setColor(1, 1, 1)
     local treesY = 32 - self.treesProgress * 32
     local px1 = (-love.timer.getTime() * 2) % 128
     love.graphics.draw(assets.texture("cutscenes/intro/mountains_bg"), px1, treesY)

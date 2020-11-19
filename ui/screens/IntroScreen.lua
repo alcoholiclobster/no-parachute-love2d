@@ -7,6 +7,7 @@ local IntroScreen = class("IntroScreen", Screen)
 
 function IntroScreen:initialize(levelName)
     self.introManager = IntroManager:new()
+    self.introManager.screen = self
 end
 
 function IntroScreen:draw()
@@ -25,6 +26,10 @@ function IntroScreen:handleKeyPress(key, ...)
     if key == "escape" then
         self.screenManager:transition("MainMenuScreen")
     end
+end
+
+function IntroScreen:startGame()
+    self.screenManager:transition("GameScreen", "level1_1")
 end
 
 return IntroScreen

@@ -49,4 +49,8 @@ function IntroManager:changeScene(sceneName)
     self.scene.introManager = self
 end
 
+function IntroManager:startGame()
+    self.screen:startGame()
+end
+
 return IntroManager
