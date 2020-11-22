@@ -30,7 +30,9 @@ function GameScreen:onShow()
 end
 
 function GameScreen:onHide()
-
+    if self.tutorial then
+        self.tutorial:destroy()
+    end
 end
 
 function GameScreen:setSpeedEffectAmount(amount)
@@ -172,10 +174,6 @@ function GameScreen:update(deltaTime)
             deltaTime = deltaTime * 0.25
         elseif love.keyboard.isDown("x") then
             deltaTime = deltaTime * 4
-        end
-
-        if self.tutorial then
-            self.tutorial:update(deltaTime)
         end
 
         self.gameManager:update(deltaTime)

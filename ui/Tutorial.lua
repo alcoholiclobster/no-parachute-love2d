@@ -1,24 +1,60 @@
 local class = require("lib.middleclass")
 local assets = require("core.assets")
 local mathUtils = require("utils.math")
+local scheduler = require("utils.scheduler")
 
 local Tutorial = class("Tutorial")
 
+local lastLineIndex = 0
+
 function Tutorial:initialize()
-    self.time = 0
+    self.lines = {
+        {
+            text = "Use WASD or ARROWS to move",
 
-    self.showPart1 = 3
-    self.hidePart1 = 8
+            delay = 3,
+            duration = 5,
+        },
+        {
+            text = "Hold SPACE to increase speed",
+            additionalText = "and earn more score points",
 
-    self.showPart2 = 11
-    self.hidePart2 = 16
+            delay = 3,
+            duration = 5,
+        },
+        {
+            text = "Avoid obstacles to survive",
 
-    self.showPart3 = 22
-    self.hidePart3 = 27
+            delay = 6,
+            duration = 5,
+        },
+    }
+
+    local this = self
+    self.thread = scheduler.createThread(function () this:process() end)
+
+    self.lineAppearedAt = 0
+    self.currentLineIndex = 0
 end
 
-function Tutorial:update(deltaTime)
-    self.time = self.time + deltaTime
+function Tutorial:process()
+    for i, line in ipairs(self.lines) do
+        scheduler.wait(line.delay)
+        if lastLineIndex < i then
+            self.currentLineIndex = i
+            lastLineIndex = i
+        else
+            self.currentLineIndex = 0
+        end
+        self.lineAppearedAt = love.timer.getTime()
+        scheduler.wait(line.duration)
+
+        self.currentLineIndex = 0
+    end
+end
+
+function Tutorial:destroy()
+    scheduler.killThread(self.thread)
 end
 
 function Tutorial:drawShadowText(text, x, y, width, align)
@@ -36,28 +72,19 @@ end
 function Tutorial:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
-    if self.time > self.showPart1 and self.time < self.hidePart1 then
-        local p = mathUtils.clamp01((self.time - self.showPart1) / 0.3)
-        love.graphics.setColor(1, 1, 1, p)
-        love.graphics.setFont(assets.font("Roboto-Bold", 44))
-        self:drawShadowText("Use WASD or ARROWS to move", 0, screenHeight * 0.15, screenWidth, "center")
+    local line = self.lines[self.currentLineIndex]
+    if not line then
+        return
     end
 
-    if self.time > self.showPart2 and self.time < self.hidePart2 then
-        local p = mathUtils.clamp01((self.time - self.showPart2) / 0.3)
-        love.graphics.setColor(1, 1, 1, p)
-        love.graphics.setFont(assets.font("Roboto-Bold", 44))
-        self:drawShadowText("Hold SPACE to increase speed", 0, screenHeight * 0.15, screenWidth, "center")
+    local p = mathUtils.clamp01((love.timer.getTime() - self.lineAppearedAt) / 0.3)
+    love.graphics.setColor(1, 1, 1, p)
+    love.graphics.setFont(assets.font("Roboto-Bold", 44))
+    self:drawShadowText(line.text, 0, screenHeight * 0.15, screenWidth, "center")
 
+    if line.additionalText then
         love.graphics.setFont(assets.font("Roboto-Bold", 24))
-        self:drawShadowText("and to earn more score points", 0, screenHeight * 0.15 + 50, screenWidth, "center")
-    end
-
-    if self.time > self.showPart3 and self.time < self.hidePart3 then
-        local p = mathUtils.clamp01((self.time - self.showPart3) / 0.3)
-        love.graphics.setColor(1, 1, 1, p)
-        love.graphics.setFont(assets.font("Roboto-Bold", 48))
-        self:drawShadowText("Avoid obstacles to survive", 0, screenHeight * 0.15, screenWidth, "center")
+        self:drawShadowText(line.additionalText, 0, screenHeight * 0.15 + 50, screenWidth, "center")
     end
 end
 
