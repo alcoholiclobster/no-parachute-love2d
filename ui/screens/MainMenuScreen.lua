@@ -73,7 +73,7 @@ function MainMenuScreen:draw()
     love.graphics.printf("DEVELOPMENT VERSION", 0, screenHeight * 0.1 + 60, screenWidth, "center", 0)
 
     love.graphics.setFont(assets.font("Roboto-Regular", 16))
-    love.graphics.printf(howToPlayText, screenWidth * 0.1 + 250, screenHeight * 0.3, screenWidth, "left", 0)
+    love.graphics.printf(howToPlayText, screenWidth * 0.1 + 250, screenHeight * 0.3 + 15, screenWidth, "left", 0)
 
     local buttonWidth, buttonHeight = 200, 50
     local buttonX, buttonY = screenWidth * 0.1, screenHeight * 0.3

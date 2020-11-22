@@ -69,9 +69,6 @@ function love.draw()
     screenManager:emit("draw")
     screenManager:draw()
 
-    love.graphics.setColor(1, 1, 1, 0.5)
-    love.graphics.printf(gameConfig.versionName, 0, love.graphics.getHeight() - 20, love.graphics.getWidth() - 10, "right")
-
     console.draw()
 end
 
