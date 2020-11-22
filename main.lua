@@ -32,13 +32,14 @@ function love.load(arg)
     debugSimulateFrameRate = tonumber(args.fps) or 0
 
     screenManager = ScreenManager:new()
-    screenManager:transition("MainMenuScreen")
-    screenManager.fadeProgress = 0.5
 
     if args.level then
         print("Force loading level "..tostring(args.level))
-        screenManager:show(GameScreen:new(args.level))
+        screenManager:transition("GameScreen", args.level)
+    else
+        screenManager:transition("MainMenuScreen")
     end
+    screenManager.fadeProgress = 0.5
 
     if args.fullscreen then
         love.window.setFullscreen(true)
