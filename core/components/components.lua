@@ -97,6 +97,7 @@ Concord.component("planeSpawner", function(component)
     component.lastZ = 0
     component.lastIndex = 0
     component.sidePlanesIndex = 1
+    component.sidePlanePatternIndex = 1
 end)
 
 Concord.component("distanceBetweenObstacles", function(component, value)

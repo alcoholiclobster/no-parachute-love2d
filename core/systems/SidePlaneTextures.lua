@@ -11,7 +11,8 @@ function SidePlaneTextures:update()
     if not planeSpawnerEntity then
         return
     end
-    local sidePlanesIndex = planeSpawnerEntity.planeSpawner.sidePlanesIndex
+    local planeSpawner = planeSpawnerEntity.planeSpawner
+    local sidePlanesIndex = planeSpawner.sidePlanesIndex
     local levelConfig = self:getWorld().gameManager.levelConfig
 
     for _, e in ipairs(self.pool) do
@@ -19,7 +20,20 @@ function SidePlaneTextures:update()
             e.sidePlane.typeIndex = e.sidePlane.typeIndex + 1
 
             local config = levelConfig.sidePlanes[e.sidePlane.typeIndex]
-            e:give("texture", assets.texture(config.textures[math.random(1, #config.textures)]))
+            local textureIndex = 1
+            if config.pattern then
+                if planeSpawner.sidePlanePatternIndex > #config.pattern then
+                    planeSpawner.sidePlanePatternIndex = 1
+                end
+
+                textureIndex = config.textures[config.pattern[planeSpawner.sidePlanePatternIndex]]
+            else
+                textureIndex = config.textures[math.random(1, #config.textures)]
+            end
+            e:give("texture", assets.texture(textureIndex))
+            if config.pattern then
+                planeSpawner.sidePlanePatternIndex = planeSpawner.sidePlanePatternIndex + 1
+            end
         end
     end
 end

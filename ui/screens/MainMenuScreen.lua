@@ -88,7 +88,7 @@ function MainMenuScreen:draw()
         if buttons.drawButton(listItem.text, buttonX, buttonY, buttonWidth, buttonHeight) then
             self.screenManager:transition("GameScreen", listItem.level)
         end
-        buttonY = buttonY + buttonHeight + 10
+        buttonY = buttonY + buttonHeight
     end
 
     if buttons.drawButton("Exit to desktop", buttonX, screenHeight - buttonHeight * 2, buttonWidth, buttonHeight) then
