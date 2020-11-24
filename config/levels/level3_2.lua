@@ -36,17 +36,23 @@ return {
     },
 
     planeTypes = {
-        middle_door = {
+        two_red_gears_big = {
             planes = {
-                { texture = "levels/level3_1/obstacle4_1" },
-                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
+                { texture = "levels/level3_2/gear_red_big", rotationSpeed = 1, position = {2.5, 2.5, 0} },
+                { texture = "levels/level3_2/gear_holder", position = {2.5, 2.5, 0.5} },
+                { texture = "levels/level3_2/gear_red_medium", rotationSpeed = -1, position = {-3, -3, 0} },
+                { texture = "levels/level3_2/gear_holder", position = {3, 3, 0.5}, rotation = 180, },
             },
         },
     },
 
     planes = {
-        { name = "middle_door", distance = 200, rotation = 0, switchSidePlanes = true, },
-        { name = "middle_door", distance = 200, rotation = 0, switchSidePlanes = true, },
-        { name = "middle_door", distance = 1000, rotation = 0 },
+        { name = "two_red_gears_big", distance = 100, rotation = 0 },
+        { name = "two_red_gears_big", distance = 40, rotation = 90 },
+        { name = "two_red_gears_big", distance = 40, rotation = 180 },
+        { name = "two_red_gears_big", distance = 40, rotation = 270 },
+        { name = "two_red_gears_big", distance = 200, rotation = 0, switchSidePlanes = true, },
+        { name = "two_red_gears_big", distance = 200, rotation = 0, switchSidePlanes = true, },
+        { name = "two_red_gears_big", distance = 1000, rotation = 0 },
     }
 }
