@@ -7,14 +7,21 @@ local CharacterMovement = Concord.system({
 })
 
 function CharacterMovement:update(deltaTime)
+    local gameManager = self:getWorld().gameManager
+
     for _, e in ipairs(self.pool) do
         local direction = mathUtils.rotateVector2D(e.moveDirection.value, e.rotation.value)
         if direction:length() > 1 then
             direction:normalize()
         end
 
+        local velocityIncrease = mathUtils.clamp01(e.velocity.value.z / -gameManager.levelConfig.fallSpeed - 1)
+        print(velocityIncrease)
+        -- Slowdown vertical speed when fall speed is above level fall speed
+        local acceleration = e.acceleration.value * (1 - (velocityIncrease * 1))
+
         local velocityZ = e.velocity.value.z
-        e.velocity.value = e.velocity.value + direction * e.acceleration.value * deltaTime
+        e.velocity.value = e.velocity.value + direction * acceleration * deltaTime
         e.velocity.value.z = velocityZ
     end
 end
