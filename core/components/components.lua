@@ -168,3 +168,10 @@ end)
 Concord.component("sidePlane", function (component)
     component.typeIndex = 0
 end)
+
+Concord.component("planeTextureColor", function(component, r, g, b, a)
+    component.r = r or 0
+    component.g = g or 0
+    component.b = b or 0
+    component.a = a or 1
+end)

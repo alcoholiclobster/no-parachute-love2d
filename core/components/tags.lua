@@ -13,5 +13,6 @@ Concord.component("canCollideWithBoundaries")
 Concord.component("limb")
 Concord.component("detachedLimb")
 Concord.component("limbDeatchRequest")
+Concord.component("breakableObstacle")
 
 Concord.component("bloodParticle")

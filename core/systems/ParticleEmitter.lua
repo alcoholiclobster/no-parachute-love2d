@@ -41,7 +41,12 @@ function ParticleEmitter:update(deltaTime)
                     :give("destroyOutOfBounds")
 
                 if e.particleColor then
-                    particle:give("color", e.particleColor.r, e.particleColor.g, e.particleColor.b, e.particleColor.a)
+                    local r, g, b = e.particleColor.r, e.particleColor.g, e.particleColor.b
+                    if e.particleColor.randomizeBrightness then
+                        local brightness = math.random() + 0.5
+                        r, g, b = r * brightness, g * brightness, b * brightness
+                    end
+                    particle:give("color", r, g, b, e.particleColor.a)
                 end
 
                 if e.particleFriction then

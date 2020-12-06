@@ -69,6 +69,7 @@ local function checkCollision(obstacle, entity, deltaTime)
 
     local hit, pos, tx, ty = hitTestEntity(obstacle, entity)
     if hit then
+        obstacle:give("obstacleHitByEntityEvent", entity, pos, tx, ty)
         entity:give("obstacleCollisionEvent", obstacle, pos, tx, ty)
     end
 end

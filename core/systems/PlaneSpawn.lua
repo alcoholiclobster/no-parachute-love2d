@@ -30,12 +30,23 @@ local function spawnPlane(world, plane, worldPosition, localPositionOffset, rota
         :give("destroyOutOfBounds")
 
     if not plane.decorative then
+        local imageData = assets.textureImageData(texture)
+        entity:give("planeTextureColor", imageData:getPixel(0, 0))
+
         local canvas = love.graphics.newCanvas(texture:getWidth(), texture:getHeight())
         love.graphics.setCanvas(canvas)
         love.graphics.clear()
         love.graphics.setBlendMode("alpha")
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(texture, 0, 0)
+        if plane.breakable then
+            entity:give("breakableObstacle")
+
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.setBlendMode("multiply", "premultiplied")
+            love.graphics.draw(assets.texture("plane_cracks"), 0, 0)
+            love.graphics.setBlendMode("alpha")
+        end
         love.graphics.setCanvas()
         canvas:setFilter("nearest", "nearest")
 

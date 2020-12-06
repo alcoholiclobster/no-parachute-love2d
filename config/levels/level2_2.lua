@@ -116,6 +116,10 @@ return {
             planes = {{ texture = "levels/level2_2/keep_out", }},
         },
 
+        breakable1 = {
+            planes = {{ texture = "levels/level2_2/obstacle9", breakable = true }},
+        },
+
         level3_middle_door = {
             planes = {
                 { texture = "levels/level3_1/obstacle4_1" },
@@ -125,6 +129,11 @@ return {
     },
 
     planes = {
+        { name = "breakable1", distance = 50, rotation = 0 },
+        { name = "middle_bridge_green", distance = 50, rotation = 0 },
+        { name = "breakable1", distance = 50, rotation = 0 },
+        { name = "breakable1", distance = 50, rotation = 0 },
+        { name = "breakable1", distance = 50, rotation = 0 },
         { name = "side_wood1", distance = 50, rotation = 0 },
         { name = "side_wood1", distance = 25, rotation = 180 },
         { name = "side_wood1_green", distance = 25, rotation = 90 },

@@ -66,6 +66,9 @@ return {
         obstacle7 = {
             planes = { { texture = "levels/level1_1/obstacle_plane7", }},
         },
+        breakable1 = {
+            planes = { { texture = "levels/level1_1/obstacle_plane8", breakable = true }},
+        },
         decorative1 = {
             planes = { { texture = "levels/level1_1/decorative_plane1", decorative = true }},
         },
@@ -84,7 +87,8 @@ return {
         { name = "decorative2", distance = 30, rotation = 0 },
         { name = "obstacle1", distance = 10, rotation = 180 },
 
-        { name = "decorative1", distance = 150, rotation = 0 },
+        { name = "decorative1", distance = 100, rotation = 0 },
+        { name = "breakable1", distance = 50, rotation = 0 },
         { name = "obstacle6", distance = 50, rotation = 180 },
         { name = "decorative2", distance = 45, rotation = 0 },
         { name = "obstacle6", distance = 5, rotation = 0 },

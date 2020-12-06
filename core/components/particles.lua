@@ -16,11 +16,12 @@ Concord.component("particleEmitCount", function(component, min, max)
     component.max = max or min
 end)
 
-Concord.component("particleColor", function(component, r, g, b, a)
+Concord.component("particleColor", function(component, r, g, b, a, randomizeBrightness)
     component.r = r or 0
     component.g = g or 0
     component.b = b or 0
     component.a = a or 1
+    component.randomizeBrightness = not not randomizeBrightness
 end)
 
 Concord.component("particleRandomRotation")
