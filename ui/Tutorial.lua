@@ -16,8 +16,8 @@ function Tutorial:initialize()
             duration = 5,
         },
         {
-            text = "Hold SPACE to increase speed",
-            additionalText = "and earn more score points",
+            text = "Hold SPACE to break fragile walls",
+            additionalText = "and fall faster",
 
             delay = 3,
             duration = 5,

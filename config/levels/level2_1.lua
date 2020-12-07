@@ -76,6 +76,9 @@ return {
         obstacle_long_thing = {
             planes = { { texture = "levels/level2_1/obstacle_plane8", }},
         },
+        breakable1 = {
+            planes = { { texture = "levels/level2_1/obstacle_plane9", breakable = true }},
+        },
     },
 
     planes = {
@@ -123,7 +126,9 @@ return {
         { name = "obstacle_long_thing", distance = 10, rotation = 270, position = {0, -4, 0} },
         { name = "obstacle_long_thing", distance = 5, rotation = 90, position = {0, 0, 0} },
 
-        { name = "obstacle_center_hole", distance = 60, rotation = 0, switchSidePlanes = true, },
+        { name = "obstacle_center_hole", distance = 45, rotation = 0, switchSidePlanes = true, },
+        { name = "breakable1", distance = 15, rotation = 0 },
+        { name = "obstacle_center_hole", distance = 30, rotation = 0 },
         { name = "obstacle_triangle_thing", distance = 20, rotation = 0, },
         { name = "obstacle_triangle_thing", distance = 20, rotation = 180, },
         { name = "obstacle_triangle_thing", distance = 30, rotation = 270, },
