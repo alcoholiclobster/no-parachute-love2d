@@ -7,9 +7,14 @@ local PlaneDestruction = Concord.system({
     pool = {"breakableObstacle", "obstacleHitByEntityEvent"}
 })
 
+local partsDirections = {
+    {-1, 0.2},
+    {1, 0.5},
+    {0.1, -1},
+}
+
 function PlaneDestruction:update(deltaTime)
     local gameManager = self:getWorld().gameManager
-
     for _, e in ipairs(self.pool) do
         local entity = e.obstacleHitByEntityEvent.value
         if entity.velocity and entity.character then
@@ -43,15 +48,46 @@ function PlaneDestruction:update(deltaTime)
                     :give("particleLifeTime", 3, 5)
 
                 local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-                for i = 1, math.random(40, 50) do
-                    local s = math.floor(screenHeight/128*math.random(1, 4))
+                for _ = 1, math.random(5, 15) do
+                    local s = math.floor(screenHeight/128*4)
                     local b = math.random() + 0.5
                     Concord.entity(self:getWorld())
                         :give("position2d", screenWidth * math.random(), screenHeight * math.random())
                         :give("size2d", s, s)
                         :give("lifeTime", 1 + math.random() * 2)
-                        :give("color", e.planeTextureColor.r*b, e.planeTextureColor.g*b, e.planeTextureColor.b*b, 0.2 + math.random() * 0.4)
+                        :give("color", e.planeTextureColor.r*b, e.planeTextureColor.g*b, e.planeTextureColor.b*b, 1)
                 end
+
+                -- Broken parts
+                for i = 1, 3 do
+                    local texture = assets.texture("plane_broken_part"..i)
+
+                    local canvas = love.graphics.newCanvas(texture:getWidth(), texture:getHeight())
+                    love.graphics.setCanvas(canvas)
+                    love.graphics.clear()
+                    love.graphics.setColor(1, 1, 1, 1)
+                    love.graphics.setBlendMode("alpha")
+                    love.graphics.draw(e.collisionTexture.value, 0, 0)
+                    love.graphics.setBlendMode("multiply", "premultiplied")
+                    love.graphics.draw(texture, 0, 0)
+                    canvas:setFilter("nearest", "nearest")
+
+                    local speed = math.random() * 10 + 5
+                    local vx = partsDirections[i][1] * (math.random() * 0.5 + 0.5) * speed
+                    local vy = partsDirections[i][2] * (math.random() * 0.5 + 0.5) * speed
+                    Concord.entity(self:getWorld())
+                        :give("position", e.position.value:clone())
+                        :give("size", maf.vec3(10, 10))
+                        :give("rotation", e.rotation.value)
+                        :give("drawable")
+                        :give("texture", canvas)
+                        :give("lifeTime", 3)
+                        :give("rotationSpeed", (math.random() - 0.5) * 2)
+                        :give("velocity", maf.vec3(vx, vy, entity.velocity.value.z * math.random()))
+                end
+
+                love.graphics.setBlendMode("alpha")
+                love.graphics.setCanvas()
             end
         end
     end
