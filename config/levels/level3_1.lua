@@ -2,7 +2,7 @@ return {
     name = "Vents",
     nextLevel = "level3_2",
 
-    fallSpeed = 32,
+    fallSpeed = 40,
     fogColor = {15, 0, 0},
     fogDistance = 70,
     playerRotationMode = "constant",

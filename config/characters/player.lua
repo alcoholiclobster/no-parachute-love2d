@@ -1,5 +1,5 @@
 return {
-    acceleration = 50,
+    acceleration = 60,
     friction = 3,
 
     body = {

@@ -2,7 +2,7 @@ return {
     name = "Old Mine",
     nextLevel = "level2_1",
 
-    fallSpeed = 30,
+    fallSpeed = 35,
     fogColor = {0, 0, 0},
     fogDistance = 60,
     playerRotationMode = "sinusoid",
@@ -29,13 +29,6 @@ return {
         {
             textures = {
                 "levels/level2_2/wall4",
-            }
-        },
-        {
-            textures = {
-                "levels/level3_1/decorative1",
-                "levels/level3_1/decorative2",
-                "levels/level3_1/decorative3",
             }
         },
     },
@@ -118,13 +111,6 @@ return {
 
         breakable1 = {
             planes = {{ texture = "levels/level2_2/obstacle9", breakable = true }},
-        },
-
-        level3_middle_door = {
-            planes = {
-                { texture = "levels/level3_1/obstacle4_1" },
-                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
-            },
         },
     },
 
@@ -275,10 +261,5 @@ return {
         {name = "corner_hole", distance = 20, rotation = 90 },
 
         { name = "side_wood1", distance = 30, rotation = 0 },
-
-        -- 55 seconds
-
-        -- Next level transition
-        { name = "level3_middle_door", distance = 30, rotation = 0, switchSidePlanes = true },
     },
 }
