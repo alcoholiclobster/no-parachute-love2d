@@ -78,14 +78,14 @@ return {
         middle_door = {
             planes = {
                 { texture = "levels/level3_1/obstacle4_1" },
-                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
+                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1.5, },
             },
         },
 
         middle_door_clean = {
             planes = {
                 { texture = "levels/level3_1/obstacle8" },
-                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
+                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1.5, },
             },
         },
 
