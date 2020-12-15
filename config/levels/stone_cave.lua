@@ -87,8 +87,8 @@ return {
         },
         vents_middle_door = {
             planes = {
-                { texture = "levels/vents/obstacle4_1" },
-                { texture = "levels/vents/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
+                { texture = "levels/vents/middle_door_frame" },
+                { texture = "levels/vents/middle_door", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1.5, },
             },
         },
     },
