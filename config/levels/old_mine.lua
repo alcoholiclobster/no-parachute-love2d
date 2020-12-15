@@ -1,6 +1,6 @@
 return {
     name = "Old Mine",
-    nextLevel = "level2_1",
+    nextLevel = "stone_cave",
 
     fallSpeed = 35,
     fogColor = {0, 0, 0},

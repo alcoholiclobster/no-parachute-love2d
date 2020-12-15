@@ -26,12 +26,12 @@ function MainMenuScreen:initialize()
     self.themeMusic:setVolume(0)
     -- self.themeMusic:play()
 
-    self.gameManager = GameManager:new(require("config.levels.level1_2"), self)
+    self.gameManager = GameManager:new(require("config.levels.deep_forest"), self)
     self.gameManager:initializeMenuMode()
 
     self.levelsList = {}
 
-    local levelName = "level1_1"
+    local levelName = "tutorial"
     while levelName do
         local config = require("config.levels."..levelName)
         table.insert(self.levelsList, {

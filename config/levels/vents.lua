@@ -1,6 +1,6 @@
 return {
     name = "Vents",
-    nextLevel = "level3_2",
+    nextLevel = "gears",
 
     fallSpeed = 40,
     fogColor = {15, 0, 0},
