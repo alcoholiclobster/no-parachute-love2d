@@ -15,9 +15,9 @@ return {
     sidePlanes = {
         {
             textures = {
-                "levels/level1_1/side_plane1",
-                "levels/level1_1/side_plane3",
-                "levels/level1_1/side_plane4",
+                "levels/tutorial/side_plane1",
+                "levels/tutorial/side_plane3",
+                "levels/tutorial/side_plane4",
             },
         },
 
@@ -26,56 +26,56 @@ return {
     planeTypes = {
         obstacle_center_hole = {
             planes = {
-                { texture = "levels/level1_2/obstacle_plane7", },
-                { texture = "levels/level1_2/decorative_plane1", decorative = true, position = {0, 0, 3} },
+                { texture = "levels/deep_forest/obstacle_plane7", },
+                { texture = "levels/deep_forest/decorative_plane1", decorative = true, position = {0, 0, 3} },
             },
         },
         obstacle_side_hole = {
-            planes = { { texture = "levels/level1_1/obstacle_plane3", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane3", }},
         },
         obstacle_corner_hole = {
             planes = {
-                { texture = "levels/level1_2/obstacle_plane1", },
-                { texture = "levels/level1_2/decorative_plane2", decorative = true, position = {0, 0, 4}, rotation = 180 },
-                { texture = "levels/level1_2/decorative_plane2", decorative = true, position = {0, 0, 8}, rotation = 270 },
+                { texture = "levels/deep_forest/obstacle_plane1", },
+                { texture = "levels/deep_forest/decorative_plane2", decorative = true, position = {0, 0, 4}, rotation = 180 },
+                { texture = "levels/deep_forest/decorative_plane2", decorative = true, position = {0, 0, 8}, rotation = 270 },
             },
         },
         obstacle_corner_hole_big = {
-            planes = { { texture = "levels/level1_2/obstacle_plane2", }},
+            planes = { { texture = "levels/deep_forest/obstacle_plane2", }},
         },
         obstacle_round_thing = {
-            planes = { { texture = "levels/level1_2/obstacle_plane3", }},
+            planes = { { texture = "levels/deep_forest/obstacle_plane3", }},
         },
         obstacle_diagonal_thing = {
-            planes = { { texture = "levels/level1_2/obstacle_plane4", }},
+            planes = { { texture = "levels/deep_forest/obstacle_plane4", }},
         },
         obstacle_three_things = {
             planes = {
-                { texture = "levels/level1_2/obstacle_plane5", },
-                { texture = "levels/level1_2/obstacle_plane5_2", position = {0, 0, -3} },
-                { texture = "levels/level1_2/obstacle_plane5_3", position = {0, 0, -3}, decorative = true },
+                { texture = "levels/deep_forest/obstacle_plane5", },
+                { texture = "levels/deep_forest/obstacle_plane5_2", position = {0, 0, -3} },
+                { texture = "levels/deep_forest/obstacle_plane5_3", position = {0, 0, -3}, decorative = true },
             },
         },
         obstacle_middle_thing = {
-            planes = { { texture = "levels/level1_1/obstacle_plane4", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane4", }},
         },
         obstacle_half_plane = {
-            planes = { { texture = "levels/level1_2/obstacle_plane6", }},
+            planes = { { texture = "levels/deep_forest/obstacle_plane6", }},
         },
         obstacle_half_plane2 = {
-            planes = { { texture = "levels/level1_2/obstacle_plane6_2", }},
+            planes = { { texture = "levels/deep_forest/obstacle_plane6_2", }},
         },
         obstacle_broken_pipe = {
-            planes = { { texture = "levels/level1_1/obstacle_plane6_2", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane6_2", }},
         },
         decorative1 = {
-            planes = { { texture = "levels/level1_2/decorative_plane1", decorative = true }},
+            planes = { { texture = "levels/deep_forest/decorative_plane1", decorative = true }},
         },
         decorative2 = {
-            planes = { { texture = "levels/level1_2/decorative_plane2", decorative = true }},
+            planes = { { texture = "levels/deep_forest/decorative_plane2", decorative = true }},
         },
         breakable1 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane8", breakable = true }},
+            planes = { { texture = "levels/tutorial/obstacle_plane8", breakable = true }},
         },
     },
 

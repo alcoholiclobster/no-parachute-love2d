@@ -15,10 +15,10 @@ return {
     sidePlanes = {
         {
             textures = {
-                "levels/level1_1/side_plane1",
-                "levels/level1_1/side_plane2",
-                "levels/level1_1/side_plane3",
-                "levels/level1_1/side_plane4",
+                "levels/tutorial/side_plane1",
+                "levels/tutorial/side_plane2",
+                "levels/tutorial/side_plane3",
+                "levels/tutorial/side_plane4",
             },
         }
     },
@@ -26,54 +26,54 @@ return {
     planeTypes = {
         obstacle1 = {
             planes = {
-                { texture = "levels/level1_1/obstacle_plane1", },
+                { texture = "levels/tutorial/obstacle_plane1", },
             },
         },
         obstacle1_simple = {
             planes = {
-                { texture = "levels/level1_1/obstacle_plane1_2", },
+                { texture = "levels/tutorial/obstacle_plane1_2", },
             },
         },
         obstacle2 = {
             planes = {
-                { texture = "levels/level1_1/obstacle_plane2", },
-                { texture = "levels/level1_1/decorative_plane2", decorative = true, position = {0, 0, 5 }},
+                { texture = "levels/tutorial/obstacle_plane2", },
+                { texture = "levels/tutorial/decorative_plane2", decorative = true, position = {0, 0, 5 }},
             },
         },
         obstacle2_simple = {
             planes = {
-                { texture = "levels/level1_1/obstacle_plane2_2", },
+                { texture = "levels/tutorial/obstacle_plane2_2", },
             },
         },
         obstacle3 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane3", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane3", }},
         },
         obstacle3_rails = {
-            planes = { { texture = "levels/level1_1/obstacle_plane3_2", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane3_2", }},
         },
         obstacle4 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane4", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane4", }},
         },
         obstacle5 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane5", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane5", }},
         },
         obstacle6 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane6", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane6", }},
         },
         obstacle6_broken = {
-            planes = { { texture = "levels/level1_1/obstacle_plane6_2", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane6_2", }},
         },
         obstacle7 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane7", }},
+            planes = { { texture = "levels/tutorial/obstacle_plane7", }},
         },
         breakable1 = {
-            planes = { { texture = "levels/level1_1/obstacle_plane8", breakable = true }},
+            planes = { { texture = "levels/tutorial/obstacle_plane8", breakable = true }},
         },
         decorative1 = {
-            planes = { { texture = "levels/level1_1/decorative_plane1", decorative = true }},
+            planes = { { texture = "levels/tutorial/decorative_plane1", decorative = true }},
         },
         decorative2 = {
-            planes = { { texture = "levels/level1_1/decorative_plane2", decorative = true }},
+            planes = { { texture = "levels/tutorial/decorative_plane2", decorative = true }},
         },
     },
 

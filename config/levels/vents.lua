@@ -12,9 +12,9 @@ return {
     sidePlanes = {
         {
             textures = {
-                "levels/level3_1/decorative1",
-                "levels/level3_1/decorative2",
-                "levels/level3_1/decorative3",
+                "levels/vents/decorative1",
+                "levels/vents/decorative2",
+                "levels/vents/decorative3",
             }
         }
     },
@@ -23,109 +23,109 @@ return {
         -- Big Fan
         big_fan = {
             planes = {
-                { texture = "levels/level3_1/obstacle1_1", rotationSpeed = 4, },
-                { texture = "levels/level3_1/obstacle1_2", position = {0, 0, -1}, },
-                { texture = "levels/level3_1/obstacle1_3", position = {0, 0, 2}, },
+                { texture = "levels/vents/obstacle1_1", rotationSpeed = 4, },
+                { texture = "levels/vents/obstacle1_2", position = {0, 0, -1}, },
+                { texture = "levels/vents/obstacle1_3", position = {0, 0, 2}, },
             },
         },
 
         -- Big Fan (Slow)
         big_fan_slow = {
             planes = {
-                { texture = "levels/level3_1/obstacle1_1", rotationSpeed = 0.5, },
-                { texture = "levels/level3_1/obstacle1_2", position = {0, 0, -1}, },
-                { texture = "levels/level3_1/obstacle1_3", position = {0, 0, 2}, },
+                { texture = "levels/vents/obstacle1_1", rotationSpeed = 0.5, },
+                { texture = "levels/vents/obstacle1_2", position = {0, 0, -1}, },
+                { texture = "levels/vents/obstacle1_3", position = {0, 0, 2}, },
             },
         },
 
         -- Big Fan (Reversed)
         big_fan_reversed = {
             planes = {
-                { texture = "levels/level3_1/obstacle1_1", rotationSpeed = -5, },
-                { texture = "levels/level3_1/obstacle1_2", position = {0, 0, -1}, },
-                { texture = "levels/level3_1/obstacle1_3", position = {0, 0, 2}, },
+                { texture = "levels/vents/obstacle1_1", rotationSpeed = -5, },
+                { texture = "levels/vents/obstacle1_2", position = {0, 0, -1}, },
+                { texture = "levels/vents/obstacle1_3", position = {0, 0, 2}, },
             },
         },
 
         -- Big Fan (Stopped)
         big_fan_stopped = {
             planes = {
-                { texture = "levels/level3_1/obstacle1_1", rotation = 30, },
-                { texture = "levels/level3_1/obstacle1_2", position = {0, 0, -1}, },
-                { texture = "levels/level3_1/obstacle1_3", position = {0, 0, 2}, },
+                { texture = "levels/vents/obstacle1_1", rotation = 30, },
+                { texture = "levels/vents/obstacle1_2", position = {0, 0, -1}, },
+                { texture = "levels/vents/obstacle1_3", position = {0, 0, 2}, },
             },
         },
 
         -- Box with fan (middle)
         middle_box_with_fan = {
             planes = {
-                { texture = "levels/level3_1/obstacle2_1"},
-                { texture = "levels/level3_1/obstacle2_2", position = {0, 0, -0.5}, rotationSpeed = -16, },
-                { texture = "levels/level3_1/obstacle2_3", position = {0, 0, -1}, },
+                { texture = "levels/vents/obstacle2_1"},
+                { texture = "levels/vents/obstacle2_2", position = {0, 0, -0.5}, rotationSpeed = -16, },
+                { texture = "levels/vents/obstacle2_3", position = {0, 0, -1}, },
             },
         },
 
         -- Pipes through middle
         middle_pipes = {
             planes = {
-                { texture = "levels/level3_1/obstacle3_1", position = {0, 0, 0} },
-                { texture = "levels/level3_1/obstacle3_2", position = {0, 0, -10} },
-                { texture = "levels/level3_1/obstacle3_3", position = {0, 0, -9.5} },
+                { texture = "levels/vents/obstacle3_1", position = {0, 0, 0} },
+                { texture = "levels/vents/obstacle3_2", position = {0, 0, -10} },
+                { texture = "levels/vents/obstacle3_3", position = {0, 0, -9.5} },
             },
         },
 
         -- Door at the middle
         middle_door = {
             planes = {
-                { texture = "levels/level3_1/obstacle4_1" },
-                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1.5, },
+                { texture = "levels/vents/obstacle4_1" },
+                { texture = "levels/vents/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1.5, },
             },
         },
 
         middle_door_clean = {
             planes = {
-                { texture = "levels/level3_1/obstacle8" },
-                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1.5, },
+                { texture = "levels/vents/obstacle8" },
+                { texture = "levels/vents/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1.5, },
             },
         },
 
         -- Ventilation boxes crossed through middle
         crossed_vents = {
             planes = {
-                { texture = "levels/level3_1/obstacle5_1" },
-                { texture = "levels/level3_1/obstacle5_2", position = {0, 0, -2} },
+                { texture = "levels/vents/obstacle5_1" },
+                { texture = "levels/vents/obstacle5_2", position = {0, 0, -2} },
             },
         },
 
         -- Vertical tube-like thing
         tube_thing = {
             planes = {
-                { texture = "levels/level3_1/obstacle6_0", position = {0, 0, 0}},
-                { texture = "levels/level3_1/obstacle6_1", position = {0, 0, -2}},
+                { texture = "levels/vents/obstacle6_0", position = {0, 0, 0}},
+                { texture = "levels/vents/obstacle6_1", position = {0, 0, -2}},
 
-                { texture = "levels/level3_1/obstacle6_5", position = {2.96875, -3.125, -2}, rotationSpeed = 10},
-                { texture = "levels/level3_1/obstacle6_6", position = {0, 0, 5}},
+                { texture = "levels/vents/obstacle6_5", position = {2.96875, -3.125, -2}, rotationSpeed = 10},
+                { texture = "levels/vents/obstacle6_6", position = {0, 0, 5}},
             },
         },
 
         side_pipes = {
             planes = {
-                { texture = "levels/level3_1/obstacle7_1", position = {-3, 0, 0} },
-                { texture = "levels/level3_1/obstacle7_1", position = {3, 0, -4} },
+                { texture = "levels/vents/obstacle7_1", position = {-3, 0, 0} },
+                { texture = "levels/vents/obstacle7_1", position = {3, 0, -4} },
             },
         },
 
         diagonal_pipe = {
             planes = {
-                { texture = "levels/level3_1/obstacle7_1", position = {0, 0, 0}, rotation = 45 },
-                { texture = "levels/level3_1/obstacle7_1", position = {0, 10, 0}, rotation = 45 },
-                { texture = "levels/level3_1/obstacle7_1", position = {0, -10, 0}, rotation = 45 },
+                { texture = "levels/vents/obstacle7_1", position = {0, 0, 0}, rotation = 45 },
+                { texture = "levels/vents/obstacle7_1", position = {0, 10, 0}, rotation = 45 },
+                { texture = "levels/vents/obstacle7_1", position = {0, -10, 0}, rotation = 45 },
             },
         },
 
         middle_hole = {
             planes = {
-                { texture = "levels/level3_1/obstacle8" },
+                { texture = "levels/vents/obstacle8" },
             },
         },
     },

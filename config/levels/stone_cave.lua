@@ -15,21 +15,20 @@ return {
     sidePlanes = {
         {
             textures = {
-                -- "levels/level2_1/side_plane1",
-                "levels/level2_1/side_plane2",
-                "levels/level2_1/side_plane3",
+                "levels/stone_cave/side_plane2",
+                "levels/stone_cave/side_plane3",
             },
         },
         {
             textures = {
-                "levels/level2_1/side_plane4",
+                "levels/stone_cave/side_plane4",
             },
         },
         {
             textures = {
-                "levels/level2_1/side_plane1",
-                "levels/level2_1/side_plane2",
-                "levels/level2_1/side_plane3",
+                "levels/stone_cave/side_plane1",
+                "levels/stone_cave/side_plane2",
+                "levels/stone_cave/side_plane3",
             },
         },
         {
@@ -44,47 +43,47 @@ return {
     planeTypes = {
         obstacle_half_hole_sharp = {
             planes = {
-                { texture = "levels/level2_1/obstacle_plane1", position = {0, 0, -4}},
-                { texture = "levels/level2_1/obstacle_plane1_2", position = {0, 0, -2}},
-                { texture = "levels/level2_1/obstacle_plane1_3", },
+                { texture = "levels/stone_cave/obstacle_plane1", position = {0, 0, -4}},
+                { texture = "levels/stone_cave/obstacle_plane1_2", position = {0, 0, -2}},
+                { texture = "levels/stone_cave/obstacle_plane1_3", },
             },
         },
         obstacle_big_hole_sharp = {
             planes = {
-                { texture = "levels/level2_1/obstacle_plane2",  position = {0, 0, -3} },
-                { texture = "levels/level2_1/obstacle_plane2_2", position = {0, 0, 0} }
+                { texture = "levels/stone_cave/obstacle_plane2",  position = {0, 0, -3} },
+                { texture = "levels/stone_cave/obstacle_plane2_2", position = {0, 0, 0} }
             },
         },
         obstacle_side_hole_sharp = {
             planes = {
-                { texture = "levels/level2_1/obstacle_plane3", position = {0, 0, -6}},
-                { texture = "levels/level2_1/obstacle_plane3_2", position = {0, 0, -4}},
-                { texture = "levels/level2_1/obstacle_plane3_3", position = {0, 0, -2}},
-                { texture = "levels/level2_1/obstacle_plane3_4", position = {0, 0, 0}},
+                { texture = "levels/stone_cave/obstacle_plane3", position = {0, 0, -6}},
+                { texture = "levels/stone_cave/obstacle_plane3_2", position = {0, 0, -4}},
+                { texture = "levels/stone_cave/obstacle_plane3_3", position = {0, 0, -2}},
+                { texture = "levels/stone_cave/obstacle_plane3_4", position = {0, 0, 0}},
             },
         },
         obstacle_two_corner_holes = {
             planes = {
-                { texture = "levels/level2_1/obstacle_plane4", position = {0, 0, -6} },
-                { texture = "levels/level2_1/obstacle_plane4_2", position = {0, 0, -4} },
-                { texture = "levels/level2_1/obstacle_plane4_3", position = {0, 0, -2} },
-                { texture = "levels/level2_1/obstacle_plane4_4", position = {0, 0, -0} },
+                { texture = "levels/stone_cave/obstacle_plane4", position = {0, 0, -6} },
+                { texture = "levels/stone_cave/obstacle_plane4_2", position = {0, 0, -4} },
+                { texture = "levels/stone_cave/obstacle_plane4_3", position = {0, 0, -2} },
+                { texture = "levels/stone_cave/obstacle_plane4_4", position = {0, 0, -0} },
             },
         },
         obstacle_triangle_thing = {
-            planes = { { texture = "levels/level2_1/obstacle_plane7", }},
+            planes = { { texture = "levels/stone_cave/obstacle_plane7", }},
         },
         obstacle_diagonal_thing = {
-            planes = { { texture = "levels/level2_1/obstacle_plane5", }},
+            planes = { { texture = "levels/stone_cave/obstacle_plane5", }},
         },
         obstacle_center_hole = {
-            planes = { { texture = "levels/level2_1/obstacle_plane6", }},
+            planes = { { texture = "levels/stone_cave/obstacle_plane6", }},
         },
         obstacle_long_thing = {
-            planes = { { texture = "levels/level2_1/obstacle_plane8", }},
+            planes = { { texture = "levels/stone_cave/obstacle_plane8", }},
         },
         breakable1 = {
-            planes = { { texture = "levels/level2_1/obstacle_plane9", breakable = true }},
+            planes = { { texture = "levels/stone_cave/obstacle_plane9", breakable = true }},
         },
         level3_middle_door = {
             planes = {

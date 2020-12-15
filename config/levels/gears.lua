@@ -1,7 +1,7 @@
 return {
     name = "Gears",
 
-    fallSpeed = 32,
+    fallSpeed = 40,
     fogColor = {0, 20, 10},
     fogDistance = 70,
     playerRotationMode = "constant",
@@ -13,23 +13,23 @@ return {
     sidePlanes = {
         {
             textures = {
-                "levels/level3_2/decorative1",
-                "levels/level3_2/decorative3",
+                "levels/gears/decorative1",
+                "levels/gears/decorative3",
             },
             pattern = { 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2 },
         },
         {
             textures = {
-                "levels/level3_2/decorative2",
-                "levels/level3_2/decorative3",
+                "levels/gears/decorative2",
+                "levels/gears/decorative3",
             },
             pattern = { 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2 },
         },
         {
             textures = {
-                "levels/level3_2/decorative1",
-                "levels/level3_2/decorative2",
-                "levels/level3_2/decorative3",
+                "levels/gears/decorative1",
+                "levels/gears/decorative2",
+                "levels/gears/decorative3",
             },
             pattern = { 1, 1, 1, 1, 1, 3, 2, 2, 2, 2, 2, 3 },
         },
@@ -38,31 +38,31 @@ return {
     planeTypes = {
         two_red_gears_big = {
             planes = {
-                { texture = "levels/level3_2/gear_red_big", rotationSpeed = 1, position = {2.5, 2.5, 0} },
-                { texture = "levels/level3_2/gear_holder", position = {2.5, 2.5, 0.5} },
-                { texture = "levels/level3_2/gear_red_medium", rotationSpeed = -1, position = {-3, -3, 0} },
-                { texture = "levels/level3_2/gear_holder", position = {3, 3, 0.5}, rotation = 180, },
+                { texture = "levels/gears/gear_red_big", rotationSpeed = 1, position = {2.5, 2.5, 0} },
+                { texture = "levels/gears/gear_holder", position = {2.5, 2.5, 0.5} },
+                { texture = "levels/gears/gear_red_medium", rotationSpeed = -1, position = {-3, -3, 0} },
+                { texture = "levels/gears/gear_holder", position = {3, 3, 0.5}, rotation = 180, },
             },
         },
         big_rotating_holes = {
             planes = {
-                { texture = "levels/level3_2/gear_with_holes", rotationSpeed = 2 },
-                { texture = "levels/level3_2/middle_hole", position = {0, 0, -0.5} },
-                { texture = "levels/level3_2/small_dark_gear", position = {-3.85, -3.85, 0}, rotationSpeed = -7 },
-                { texture = "levels/level3_2/small_dark_gear", position = {3.85, -3.85, 0}, rotationSpeed = -7 },
-                { texture = "levels/level3_2/small_dark_gear", position = {3.85, 3.85, 0}, rotationSpeed = -7 },
-                { texture = "levels/level3_2/small_dark_gear", position = {-3.85, 3.85, 0}, rotationSpeed = -7 },
+                { texture = "levels/gears/gear_with_holes", rotationSpeed = 2 },
+                { texture = "levels/gears/middle_hole", position = {0, 0, -0.5} },
+                { texture = "levels/gears/small_dark_gear", position = {-3.85, -3.85, 0}, rotationSpeed = -7 },
+                { texture = "levels/gears/small_dark_gear", position = {3.85, -3.85, 0}, rotationSpeed = -7 },
+                { texture = "levels/gears/small_dark_gear", position = {3.85, 3.85, 0}, rotationSpeed = -7 },
+                { texture = "levels/gears/small_dark_gear", position = {-3.85, 3.85, 0}, rotationSpeed = -7 },
             },
         },
 
         moving_gears = {
             planes = {
-                { texture = "levels/level3_2/small_blade", position = {3.85, 0, 0}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
-                { texture = "levels/level3_2/small_blade", position = {3.85, -1.8, 0.5}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
-                { texture = "levels/level3_2/small_blade", position = {3.85, 1.8, 0.5}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
-                { texture = "levels/level3_2/small_blade", position = {3.85, -3.6, 0}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
-                { texture = "levels/level3_2/small_blade", position = {3.85, 3.6, 0}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
-                { texture = "levels/level3_2/small_blade_holder", position = {3.85, 0, 0.25}, velocity = {-7, 0, 0}, moveDelay = 1.8, },
+                { texture = "levels/gears/small_blade", position = {3.85, 0, 0}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
+                { texture = "levels/gears/small_blade", position = {3.85, -1.8, 0.5}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
+                { texture = "levels/gears/small_blade", position = {3.85, 1.8, 0.5}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
+                { texture = "levels/gears/small_blade", position = {3.85, -3.6, 0}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
+                { texture = "levels/gears/small_blade", position = {3.85, 3.6, 0}, rotationSpeed = -7, velocity = {-7, 0, 0}, moveDelay = 1.8, },
+                { texture = "levels/gears/small_blade_holder", position = {3.85, 0, 0.25}, velocity = {-7, 0, 0}, moveDelay = 1.8, },
             }
         },
     },
