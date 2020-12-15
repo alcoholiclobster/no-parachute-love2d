@@ -78,6 +78,8 @@ function love.keypressed(key, ...)
 
     if key == "`" and GLOBAL_DEBUG_ENABLED then
         console.toggle()
+    elseif key == "f11" then
+        love.window.setFullscreen(not love.window.getFullscreen(), "desktop")
     end
 end
 
