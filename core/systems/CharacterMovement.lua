@@ -15,9 +15,9 @@ function CharacterMovement:update(deltaTime)
             direction:normalize()
         end
 
-        local velocityIncrease = mathUtils.clamp01(e.velocity.value.z / -gameManager.levelConfig.fallSpeed - 1)
-        -- Slowdown vertical speed when fall speed is above level fall speed
-        local acceleration = e.acceleration.value * (1 - (velocityIncrease * 1))
+        -- Increase horizontal speed when fall speed is above level fall speed
+        -- local velocityIncrease = mathUtils.clamp01(e.velocity.value.z / -gameManager.levelConfig.fallSpeed - 1)
+        local acceleration = e.acceleration.value-- * (1 + (velocityIncrease * 0.25))
 
         local velocityZ = e.velocity.value.z
         e.velocity.value = e.velocity.value + direction * acceleration * deltaTime
