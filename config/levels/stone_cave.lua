@@ -33,9 +33,9 @@ return {
         },
         {
             textures = {
-                "levels/level3_1/decorative1",
-                "levels/level3_1/decorative2",
-                "levels/level3_1/decorative3",
+                "levels/vents/decorative1",
+                "levels/vents/decorative2",
+                "levels/vents/decorative3",
             }
         },
     },
@@ -85,10 +85,10 @@ return {
         breakable1 = {
             planes = { { texture = "levels/stone_cave/obstacle_plane9", breakable = true }},
         },
-        level3_middle_door = {
+        vents_middle_door = {
             planes = {
-                { texture = "levels/level3_1/obstacle4_1" },
-                { texture = "levels/level3_1/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
+                { texture = "levels/vents/obstacle4_1" },
+                { texture = "levels/vents/obstacle4_2", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 2, },
             },
         },
     },
@@ -180,6 +180,6 @@ return {
         { name = "obstacle_two_corner_holes", distance = 10, rotation = 0 },
 
         -- Next level transition
-        { name = "level3_middle_door", distance = 70, rotation = 0, switchSidePlanes = true },
+        { name = "vents_middle_door", distance = 70, rotation = 0, switchSidePlanes = true },
     },
 }
