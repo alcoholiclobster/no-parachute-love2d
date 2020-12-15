@@ -25,7 +25,7 @@ local function drawButton(text, x, y, width, height)
     else
         love.graphics.setColor(1, 1, 1, 1)
     end
-    love.graphics.setFont(assets.font("Roboto-bold", 26))
+    love.graphics.setFont(assets.font("Roboto-Bold", 26))
     drawShadowText(text, x, y + height * 0.5 - 15, width, "left")
 
     if isMouseOver and mouseUtils.isMouseJustPressed() then
