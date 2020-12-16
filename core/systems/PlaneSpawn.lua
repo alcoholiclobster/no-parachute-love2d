@@ -5,7 +5,8 @@ local mathUtils = require("utils.math")
 
 local PlaneSpawn = Concord.system({
     pool = {"planeSpawner"},
-    cameraPool = {"camera"}
+    cameraPool = {"camera"},
+    tunnelEndPool = {"tunnelEnd", "position", "rotation"},
 })
 
 local function spawnPlane(world, plane, worldPosition, localPositionOffset, rotation)
@@ -83,6 +84,11 @@ local function spawnLevelPlane(world, planeConfig, worldPosition, localPosition,
     end
 end
 
+function PlaneSpawn:init()
+    Concord.entity(self:getWorld())
+        :give("planeSpawner")
+end
+
 function PlaneSpawn:update(deltaTime)
     local camera = self.cameraPool[1]
     if not camera then
@@ -105,12 +111,25 @@ function PlaneSpawn:update(deltaTime)
                 if nextObstacle.position then
                     positionOffset = maf.vec3(unpack(nextObstacle.position))
                 end
+
+                local planePosition = maf.vec3(0, 0, nextObstacleZ)
+                local planeRotation = math.rad(nextObstacle.rotation or 0)
+                local tunnelEnd = self.tunnelEndPool[1]
+
+                if tunnelEnd then
+                    planePosition.x = planePosition.x + tunnelEnd.position.value.x
+                    planePosition.y = planePosition.y + tunnelEnd.position.value.y
+
+                    planeRotation = planeRotation + tunnelEnd.rotation.value
+                end
+
+
                 spawnLevelPlane(
                     world,
                     planeConfig,
-                    maf.vec3(0, 0, nextObstacleZ),
+                    planePosition,
                     positionOffset,
-                    math.rad(nextObstacle.rotation or 0),
+                    planeRotation,
                     e.planeSpawner.lastIndex
                 )
 
