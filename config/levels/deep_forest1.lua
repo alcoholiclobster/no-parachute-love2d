@@ -1,6 +1,6 @@
 return {
-    name = "Deep Forest",
-    nextLevel = "old_mine1",
+    name = "Deep Forest 1",
+    nextLevel = "deep_forest2",
 
     fallSpeed = 30,
     fogColor = {0, 5, 10},
@@ -104,43 +104,5 @@ return {
         { name = "obstacle_center_hole", distance = 10, rotation = 0 },
         { name = "obstacle_three_things", distance = 15, rotation = 90 },
         { name = "obstacle_three_things", distance = 20, rotation = 180 },
-
-        { name = "obstacle_half_plane2", distance = 70, rotation = 0, },
-        { name = "decorative1", distance = 10, rotation = 180, },
-        { name = "obstacle_half_plane", distance = 10, rotation = 180, },
-        { name = "decorative1", distance = 10, rotation = 90, },
-        { name = "obstacle_half_plane2", distance = 12, rotation = 0, },
-        { name = "decorative1", distance = 10, rotation = 0, },
-        { name = "obstacle_half_plane", distance = 7, rotation = 90, },
-        { name = "decorative2", distance = 20, rotation = 90, },
-
-        { name = "obstacle_center_hole", distance = 50, rotation = 0 },
-        { name = "obstacle_corner_hole_big", distance = 20, rotation = 180 },
-        { name = "obstacle_corner_hole", distance = 20, rotation = 0 },
-        { name = "obstacle_side_hole", distance = 20, rotation = 0 },
-        { name = "obstacle_corner_hole_big", distance = 20, rotation = 90 },
-        { name = "obstacle_corner_hole", distance = 20, rotation = 270 },
-        { name = "obstacle_side_hole", distance = 20, rotation = 270 },
-        { name = "obstacle_center_hole", distance = 15, rotation = 90 },
-
-        { name = "obstacle_diagonal_thing", distance = 50, rotation = 0 },
-        { name = "obstacle_middle_thing", distance = 20, rotation = 90 },
-        { name = "obstacle_diagonal_thing", distance = 20, rotation = 90 },
-        { name = "obstacle_middle_thing", distance = 20, rotation = 180 },
-        { name = "obstacle_diagonal_thing", distance = 20, rotation = 180 },
-        { name = "obstacle_center_hole", distance = 25, rotation = 0 },
-        { name = "obstacle_middle_thing", distance = 20, rotation = 0 },
-        { name = "obstacle_round_thing", distance = 30, rotation = 0 },
-
-        { name = "obstacle_center_hole", distance = 15, rotation = 0 },
-        { name = "obstacle_center_hole", distance = 20, rotation = 180 },
-        { name = "obstacle_center_hole", distance = 25, rotation = 90 },
-
-        { name = "obstacle_three_things", distance = 70, rotation = 0  },
-        { name = "obstacle_side_hole", distance = 20, rotation = 0 },
-        { name = "obstacle_side_hole", distance = 30, rotation = 180 },
-        { name = "obstacle_side_hole", distance = 30, rotation = 0 },
-        { name = "obstacle_corner_hole_big", distance = 30, rotation = 0 },
-        { name = "obstacle_corner_hole_big", distance = 35, rotation = 180 },
     },
 }

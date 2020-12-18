@@ -1,6 +1,6 @@
 return {
     name = "Tutorial",
-    nextLevel = "deep_forest",
+    nextLevel = "deep_forest1",
     enableTutorial = true,
 
     fallSpeed = 25,
