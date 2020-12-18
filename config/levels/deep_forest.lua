@@ -1,6 +1,6 @@
 return {
     name = "Deep Forest",
-    nextLevel = "old_mine",
+    nextLevel = "old_mine1",
 
     fallSpeed = 30,
     fogColor = {0, 5, 10},
