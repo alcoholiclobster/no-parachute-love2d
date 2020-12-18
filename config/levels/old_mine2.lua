@@ -1,5 +1,5 @@
 return {
-    name = "Old Mine",
+    name = "Old Mine 2",
     nextLevel = "stone_cave",
 
     fallSpeed = 35,
@@ -12,20 +12,6 @@ return {
     sidePlanesCount = 45,
     sidePlanesRandomBrightness = true,
     sidePlanes = {
-        {
-            textures = {
-                "levels/old_mine/wall1",
-                "levels/old_mine/wall2",
-                "levels/old_mine/wall3",
-            }
-        },
-        {
-            textures = {
-                "levels/old_mine/wall1",
-                "levels/old_mine/wall4",
-                "levels/old_mine/wall4",
-            }
-        },
         {
             textures = {
                 "levels/old_mine/wall4",
@@ -115,80 +101,7 @@ return {
     },
 
     planes = {
-        { name = "breakable1", distance = 80, rotation = 0 },
-        { name = "middle_bridge_green", distance = 50, rotation = 0 },
-        { name = "breakable1", distance = 50, rotation = 90 },
-        { name = "breakable1", distance = 25, rotation = 180 },
-        { name = "side_wood1_green", distance = 25, rotation = 90 },
-        { name = "side_wood1_green", distance = 25, rotation = 270 },
-
-        -- 3 seconds
-
-        { name = "middle_bridge_green", distance = 20, rotation = 0 },
-        { name = "side_wood1", distance = 20, rotation = 0 },
-        { name = "middle_bridge", distance = 20, rotation = 90 },
-        { name = "side_wood2_green", distance = 20, rotation = 0 },
-
-        --
-
-        { name = "side_wood1_green", distance = 20, rotation = 90 },
-        { name = "corner_hole_green", distance = 20, rotation = 0 },
-        { name = "side_wood1", distance = 20, rotation = 180 },
-        { name = "corner_hole", distance = 15, rotation = 180 },
-
-        --
-
-        { name = "middle_hole_green", distance = 20, rotation = 0 },
-        { name = "side_wood2_green", distance = 10, rotation = 0 },
-        { name = "middle_hole", distance = 10, rotation = 90 },
-        { name = "middle_bridge_green", distance = 15, rotation = 180 },
-        { name = "middle_hole_green", distance = 15, rotation = 90 },
-
-        { name = "side_wood1", distance = 20, rotation = 270 },
-        { name = "side_wood1_green", distance = 20, rotation = 0 },
-
-        { name = "middle_hole", distance = 10, rotation = 90 },
-        { name = "middle_bridge_green", distance = 20, rotation = 90 },
-        { name = "middle_hole_green", distance = 30, rotation = 90 },
-
-        --
-
-        { name = "side_wood1_green", distance = 20, rotation = 90 },
-        { name = "corner_hole_green", distance = 20, rotation = 0 },
-        { name = "side_wood1_green", distance = 20, rotation = 180 },
-        { name = "corner_hole", distance = 15, rotation = 180 },
-
-        -- 18 seconds
-
-        { name = "side_wood1", distance = 20, rotation = 0 },
-        { name = "side_wood1_green", distance = 20, rotation = 180 },
-        { name = "side_wood1", distance = 20, rotation = 90 },
-        { name = "side_wood2_green", distance = 20, rotation = 90 },
-        { name = "side_wood1_green", distance = 20, rotation = 270 },
-
-        -- Keep out
-        { name = "keep_out", distance = 20, rotation = 90, switchSidePlanes = true },
-
-        { name = "side_wood1", distance = 20, rotation = 0 },
-        { name = "side_wood1_green", distance = 20, rotation = 180 },
-        { name = "side_wood1", distance = 20, rotation = 90, switchSidePlanes = true},
-        { name = "side_wood1", distance = 20, rotation = 270 },
-
-        { name = "belts", distance = 15, rotation = 0 },
-        { name = "middle_bridge", distance = 25, rotation = 90 },
-
-        { name = "side_wood2", distance = 15, rotation = 0 },
-        { name = "side_wood2", distance = 15, rotation = 180 },
-
-        { name = "belts", distance = 15, rotation = 90 },
-        { name = "middle_bridge", distance = 20, rotation = 180 },
-        { name = "belts", distance = 20, rotation = 180 },
-        { name = "middle_bridge", distance = 20, rotation = 180 },
-        { name = "middle_bridge", distance = 20, rotation = 270 },
-
-        -- 25 seconds
-
-        { name = "middle_hole", distance = 30, rotation = 270 },
+        { name = "middle_hole", distance = 100, rotation = 270 },
         { name = "middle_bridge", distance = 30, rotation = 270 },
 
         { name = "middle_hole", distance = 30, rotation = 270 },
