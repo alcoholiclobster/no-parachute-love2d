@@ -15,10 +15,6 @@ function DestroyOutOfBounds:update()
         if e.position.value.z > cameraZ + 5 or e.position.value.z < cameraZ - 130 then
             e:destroy()
         end
-
-        if math.abs(e.position.value.x) > 20 or math.abs(e.position.value.y) > 20 then
-            e:destroy()
-        end
     end
 end
 

@@ -23,19 +23,18 @@ function BoundaryCollisionCheck:update()
 
         if e.position.value.x < -maxPos + centerPos.x then
             e.position.value.x = -maxPos + centerPos.x
-            e.velocity.value.x = 0
+            e.velocity.value.x = math.max(0, e.velocity.value.x)
         elseif e.position.value.x > maxPos + centerPos.x then
             e.position.value.x = maxPos + centerPos.x
-            print("hi")
-            e.velocity.value.x = 0
+            e.velocity.value.x = math.min(0, e.velocity.value.x)
         end
 
         if e.position.value.y < -maxPos + centerPos.y then
             e.position.value.y = -maxPos + centerPos.y
-            e.velocity.value.y = 0
+            e.velocity.value.y = math.max(0, e.velocity.value.y)
         elseif e.position.value.y > maxPos + centerPos.y then
             e.position.value.y = maxPos + centerPos.y
-            e.velocity.value.y = 0
+            e.velocity.value.y = math.min(0, e.velocity.value.y)
         end
     end
 end
