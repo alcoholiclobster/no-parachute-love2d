@@ -115,48 +115,48 @@ return {
     },
 
     planes = {
-        -- { name = "breakable1", distance = 80, rotation = 0 },
-        -- { name = "middle_bridge_green", distance = 50, rotation = 0 },
-        -- { name = "breakable1", distance = 50, rotation = 90 },
-        -- { name = "breakable1", distance = 25, rotation = 180 },
-        -- { name = "side_wood1_green", distance = 25, rotation = 90 },
-        -- { name = "side_wood1_green", distance = 25, rotation = 270 },
+        { name = "breakable1", distance = 80, rotation = 0 },
+        { name = "middle_bridge_green", distance = 50, rotation = 0 },
+        { name = "breakable1", distance = 50, rotation = 90 },
+        { name = "breakable1", distance = 25, rotation = 180 },
+        { name = "side_wood1_green", distance = 25, rotation = 90 },
+        { name = "side_wood1_green", distance = 25, rotation = 270 },
 
-        -- -- 3 seconds
+        -- 3 seconds
 
-        -- { name = "middle_bridge_green", distance = 20, rotation = 0 },
-        -- { name = "side_wood1", distance = 20, rotation = 0 },
-        -- { name = "middle_bridge", distance = 20, rotation = 90 },
-        -- { name = "side_wood2_green", distance = 20, rotation = 0 },
+        { name = "middle_bridge_green", distance = 20, rotation = 0 },
+        { name = "side_wood1", distance = 20, rotation = 0 },
+        { name = "middle_bridge", distance = 20, rotation = 90 },
+        { name = "side_wood2_green", distance = 20, rotation = 0 },
 
-        -- --
+        --
 
-        -- { name = "side_wood1_green", distance = 20, rotation = 90 },
-        -- { name = "corner_hole_green", distance = 20, rotation = 0 },
-        -- { name = "side_wood1", distance = 20, rotation = 180 },
-        -- { name = "corner_hole", distance = 15, rotation = 180 },
+        { name = "side_wood1_green", distance = 20, rotation = 90 },
+        { name = "corner_hole_green", distance = 20, rotation = 0 },
+        { name = "side_wood1", distance = 20, rotation = 180 },
+        { name = "corner_hole", distance = 15, rotation = 180 },
 
-        -- --
+        --
 
-        -- { name = "middle_hole_green", distance = 20, rotation = 0 },
-        -- { name = "side_wood2_green", distance = 10, rotation = 0 },
-        -- { name = "middle_hole", distance = 10, rotation = 90 },
-        -- { name = "middle_bridge_green", distance = 15, rotation = 180 },
-        -- { name = "middle_hole_green", distance = 15, rotation = 90 },
+        { name = "middle_hole_green", distance = 20, rotation = 0 },
+        { name = "side_wood2_green", distance = 10, rotation = 0 },
+        { name = "middle_hole", distance = 10, rotation = 90 },
+        { name = "middle_bridge_green", distance = 15, rotation = 180 },
+        { name = "middle_hole_green", distance = 15, rotation = 90 },
 
-        -- { name = "side_wood1", distance = 20, rotation = 270 },
-        -- { name = "side_wood1_green", distance = 20, rotation = 0 },
+        { name = "side_wood1", distance = 20, rotation = 270 },
+        { name = "side_wood1_green", distance = 20, rotation = 0 },
 
-        -- { name = "middle_hole", distance = 10, rotation = 90 },
-        -- { name = "middle_bridge_green", distance = 20, rotation = 90 },
-        -- { name = "middle_hole_green", distance = 30, rotation = 90 },
+        { name = "middle_hole", distance = 10, rotation = 90 },
+        { name = "middle_bridge_green", distance = 20, rotation = 90 },
+        { name = "middle_hole_green", distance = 30, rotation = 90 },
 
-        -- --
+        --
 
-        -- { name = "side_wood1_green", distance = 20, rotation = 90 },
-        -- { name = "corner_hole_green", distance = 20, rotation = 0 },
-        -- { name = "side_wood1_green", distance = 20, rotation = 180 },
-        -- { name = "corner_hole", distance = 15, rotation = 180 },
+        { name = "side_wood1_green", distance = 20, rotation = 90 },
+        { name = "corner_hole_green", distance = 20, rotation = 0 },
+        { name = "side_wood1_green", distance = 20, rotation = 180 },
+        { name = "corner_hole", distance = 15, rotation = 180 },
 
         -- 18 seconds
 
