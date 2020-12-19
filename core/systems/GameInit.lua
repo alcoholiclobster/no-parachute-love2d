@@ -55,10 +55,6 @@ function GameInit:init()
         :give("position", maf.vec3(0, 0, 0))
         :give("rotation", 0)
         :give("camera")
-
-    -- Obstacle spawner
-    Concord.entity(world)
-        :give("planeSpawner")
 end
 
 return GameInit
