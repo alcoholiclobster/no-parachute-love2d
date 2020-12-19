@@ -14,7 +14,6 @@ Concord.component("limb")
 Concord.component("detachedLimb")
 Concord.component("limbDeatchRequest")
 Concord.component("breakableObstacle")
-Concord.component("tunnelEnd")
 Concord.component("tunnelCenter")
 
 Concord.component("bloodParticle")

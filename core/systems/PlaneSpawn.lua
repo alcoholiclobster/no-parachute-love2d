@@ -106,35 +106,46 @@ function PlaneSpawn:update(deltaTime)
                 e.planeSpawner.lastZ = nextObstacleZ
                 e.planeSpawner.lastIndex = e.planeSpawner.lastIndex + 1
 
-                local planeConfig = levelConfig.planeTypes[nextObstacle.name]
-                local positionOffset = maf.vec3(0, 0, 0)
-                if nextObstacle.position then
-                    positionOffset = maf.vec3(unpack(nextObstacle.position))
+                if nextObstacle.name then
+                    local planeConfig = levelConfig.planeTypes[nextObstacle.name]
+                    local positionOffset = maf.vec3(0, 0, 0)
+                    if nextObstacle.position then
+                        positionOffset = maf.vec3(unpack(nextObstacle.position))
+                    end
+
+                    local planePosition = maf.vec3(0, 0, nextObstacleZ)
+                    local planeRotation = math.rad(nextObstacle.rotation or 0)
+                    local tunnelEnd = self.tunnelEndPool[1]
+
+                    if tunnelEnd then
+                        planePosition.x = planePosition.x + tunnelEnd.position.value.x
+                        planePosition.y = planePosition.y + tunnelEnd.position.value.y
+
+                        planeRotation = planeRotation + tunnelEnd.rotation.value
+                    end
+
+
+                    spawnLevelPlane(
+                        world,
+                        planeConfig,
+                        planePosition,
+                        positionOffset,
+                        planeRotation,
+                        e.planeSpawner.lastIndex
+                    )
                 end
-
-                local planePosition = maf.vec3(0, 0, nextObstacleZ)
-                local planeRotation = math.rad(nextObstacle.rotation or 0)
-                local tunnelEnd = self.tunnelEndPool[1]
-
-                if tunnelEnd then
-                    planePosition.x = planePosition.x + tunnelEnd.position.value.x
-                    planePosition.y = planePosition.y + tunnelEnd.position.value.y
-
-                    planeRotation = planeRotation + tunnelEnd.rotation.value
-                end
-
-
-                spawnLevelPlane(
-                    world,
-                    planeConfig,
-                    planePosition,
-                    positionOffset,
-                    planeRotation,
-                    e.planeSpawner.lastIndex
-                )
 
                 if nextObstacle.switchSidePlanes then
                     e.planeSpawner.sidePlanesIndex = e.planeSpawner.sidePlanesIndex + 1
+                end
+
+                if nextObstacle.tunnelShape then
+                    local s = nextObstacle.tunnelShape
+                    Concord.entity(world)
+                        :give("updateTunnelShapeEvent",
+                            s.direction and maf.vec3(s.direction[1], s.direction[2], 0),
+                            s.offset and maf.vec3(s.offset[1], s.offset[2], 0),
+                            s.shapeType)
                 end
             end
         end

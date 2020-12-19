@@ -175,3 +175,7 @@ Concord.component("planeTextureColor", function(component, r, g, b, a)
     component.b = b or 0
     component.a = a or 1
 end)
+
+Concord.component("tunnelEnd", function(component)
+    component.velocityMode = "none"
+end)

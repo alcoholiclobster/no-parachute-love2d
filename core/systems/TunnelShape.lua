@@ -15,8 +15,6 @@ function TunnelShape:init()
         :give("position", maf.vec3(0, 0, -100))
         :give("velocity", maf.vec3(0, 0, 0))
         :give("rotation", 0)
-        :give("drawable")
-        :give("fillMode", "fill")
 
     Concord.entity(self:getWorld())
         :give("tunnelCenter")
