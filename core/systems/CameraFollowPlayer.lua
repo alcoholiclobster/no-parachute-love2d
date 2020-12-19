@@ -31,8 +31,8 @@ function CameraFollowPlayer:update(deltaTime)
         e.position.value.z = target.position.value.z + e.camera.followDistance + math.cos(t) * 0.15
         e.rotation.value = -target.rotation.value
 
-        e.position.value.x = mathUtils.clamp(e.position.value.x, topPos.x - 4.75, topPos.x + 4.75)
-        e.position.value.y = mathUtils.clamp(e.position.value.y, topPos.y - 4.75, topPos.y + 4.75)
+        e.position.value.x = mathUtils.clamp(e.position.value.x, topPos.x - 4.4, topPos.x + 4.4)
+        e.position.value.y = mathUtils.clamp(e.position.value.y, topPos.y - 4.4, topPos.y + 4.4)
     end
 end
 
