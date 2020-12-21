@@ -10,6 +10,8 @@ local CharacterSpawn = Concord.system({
 function CharacterSpawn:update(deltaTime)
     local gameManager = self:getWorld().gameManager
     for _, e in ipairs(self.pool) do
+        e:destroy()
+
         local conf = charactersConfig[e.characterSpawnRequest.characterType]
         if not conf then
             error("Unknown character type \""..tostring(e.characterSpawnRequest.characterType).."\"")

@@ -2,7 +2,6 @@ local Concord = require("lib.concord")
 
 local cleanupComponents = {
     "obstacleCollisionEvent",
-    "characterSpawnRequest",
     "damageEvent",
     "deathEvent",
     "planeSpawnEvent",
