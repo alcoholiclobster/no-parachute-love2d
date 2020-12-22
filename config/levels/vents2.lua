@@ -7,7 +7,7 @@ return {
     fogColor = {15, 0, 0},
     fogDistance = 70,
     playerRotationMode = "constant",
-    playerRotationSpeed = -15,
+    playerRotationSpeed = -12,
 
     sidePlanesRandomBrightness = true,
     sidePlanesCount = 60,
@@ -112,7 +112,22 @@ return {
 
         fan = {
             planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 3, },
+                { texture = "levels/vents/fan", rotationSpeed = 4, },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
+            },
+        },
+
+
+        fan2 = {
+            planes = {
+                { texture = "levels/vents/fan", rotationSpeed = 5, },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
+            },
+        },
+
+        fan3 = {
+            planes = {
+                { texture = "levels/vents/fan", rotationSpeed = 6, },
                 { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
             },
         },
@@ -131,14 +146,26 @@ return {
         { distance = 30, name = "middle_wide_door", rotation = 90 },
         { distance = 1, tunnelShape = { direction = {-10, 0} }},
         { distance = 30, tunnelShape = { direction = {0, 0} }},
-        { name = "side_long_sticks", distance = 1, rotation = 90 },
         { name = "middle_long_stick", distance = 15, rotation = 0 },
         { name = "corner_hole", distance = 5 },
         { distance = 1, tunnelShape = { offset = {4, 4} }},
         { distance = 25, tunnelShape = { direction = {15, 0} }},
-        { name = "side_long_sticks", distance = 15, },
-        { name = "middle_wide_door", distance = 25, tunnelShape = { direction = {0, 0} }, switchSidePlanes = true, },
+        { name = "middle_wide_door", distance = 40, tunnelShape = { direction = {0, 0} }, switchSidePlanes = true, },
         { distance = 100, switchSidePlanes = true, name = "middle_wide_door", rotation = 90, },
-        { name = "middle_wide_door", distance = 5000, rotation = 180, },
+        -- { distance = 100, },
+        { distance = 50, name = "corner_hole", rotation = 0, },
+        { distance = 35, name = "corner_hole", rotation = 180, },
+        { distance = 35, name = "corner_hole", rotation = 0, },
+        { distance = 20, name = "middle_long_stick", rotation = 90, },
+        { distance = 19, name = "corner_hole", rotation = 180, },
+        { distance = 38, name = "corner_hole", rotation = 0, },
+        { distance = 18, name = "middle_small_hole", },
+        { distance = 17, name = "corner_hole", rotation = 180, },
+        { distance = 36, name = "corner_hole", rotation = 0, },
+
+        { distance = 36, name = "fan", rotation = 0, },
+        { distance = 50, name = "fan", rotation = 0, },
+        { distance = 20, name = "fan2", rotation = 90, },
+        { distance = 20, name = "fan3", rotation = 0, },
     }
 }
