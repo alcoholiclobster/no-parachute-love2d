@@ -75,6 +75,12 @@ return {
             },
         },
 
+        half_hole_transparent = {
+            planes = {
+                { texture = "levels/vents/half_hole_transparent", position = {0, 0, 0} },
+            },
+        },
+
         corner_hole = {
             planes = {
                 { texture = "levels/vents/corner_hole", position = {0, 0, 0} },
@@ -151,21 +157,27 @@ return {
         { distance = 1, tunnelShape = { offset = {4, 4} }},
         { distance = 25, tunnelShape = { direction = {15, 0} }},
         { name = "middle_wide_door", distance = 40, tunnelShape = { direction = {0, 0} }, switchSidePlanes = true, },
-        { distance = 100, switchSidePlanes = true, name = "middle_wide_door", rotation = 90, },
+        { distance = 40, name = "half_hole_transparent", rotation = 0, },
+        { distance = 40, name = "half_hole_transparent", rotation = 180, },
+        { distance = 20, switchSidePlanes = true, name = "middle_wide_door", rotation = 90, },
         -- { distance = 100, },
         { distance = 50, name = "corner_hole", rotation = 0, },
         { distance = 35, name = "corner_hole", rotation = 180, },
         { distance = 35, name = "corner_hole", rotation = 0, },
-        { distance = 20, name = "middle_long_stick", rotation = 90, },
-        { distance = 19, name = "corner_hole", rotation = 180, },
+        { distance = 19, name = "middle_long_stick", rotation = 90, },
+        { distance = 20, name = "corner_hole", rotation = 180, },
         { distance = 38, name = "corner_hole", rotation = 0, },
         { distance = 18, name = "middle_small_hole", },
         { distance = 17, name = "corner_hole", rotation = 180, },
         { distance = 36, name = "corner_hole", rotation = 0, },
 
         { distance = 36, name = "fan", rotation = 0, },
+        { distance = 20, name = "middle_wide_hole", rotation = 0, },
         { distance = 50, name = "fan", rotation = 0, },
         { distance = 20, name = "fan2", rotation = 90, },
         { distance = 20, name = "fan3", rotation = 0, },
+        { distance = 20, name = "middle_wide_door", rotation = 0, },
+        { distance = 7, name = "middle_wide_door", rotation = 90, },
+        { distance = 7, name = "middle_wide_door", rotation = 180, },
     }
 }
