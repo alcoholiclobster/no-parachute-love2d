@@ -148,6 +148,7 @@ return {
     },
 
     planes = {
+        -- Curved tunnel
         { distance = 100, tunnelShape = { direction = {17, 10} }},
         { distance = 30, name = "middle_wide_door", rotation = 90 },
         { distance = 1, tunnelShape = { direction = {-10, 0} }},
@@ -160,7 +161,9 @@ return {
         { distance = 40, name = "half_hole_transparent", rotation = 0, },
         { distance = 40, name = "half_hole_transparent", rotation = 180, },
         { distance = 20, switchSidePlanes = true, name = "middle_wide_door", rotation = 90, },
+
         -- { distance = 100, },
+        -- Hard corner thing
         { distance = 50, name = "corner_hole", rotation = 0, },
         { distance = 35, name = "corner_hole", rotation = 180, },
         { distance = 35, name = "corner_hole", rotation = 0, },
@@ -171,13 +174,32 @@ return {
         { distance = 17, name = "corner_hole", rotation = 180, },
         { distance = 36, name = "corner_hole", rotation = 0, },
 
+        -- Fans
         { distance = 36, name = "fan", rotation = 0, },
         { distance = 20, name = "middle_wide_hole", rotation = 0, },
         { distance = 50, name = "fan", rotation = 0, },
         { distance = 20, name = "fan2", rotation = 90, },
         { distance = 20, name = "fan3", rotation = 0, },
+        -- { distance = 100, },
         { distance = 20, name = "middle_wide_door", rotation = 0, },
         { distance = 7, name = "middle_wide_door", rotation = 90, },
         { distance = 7, name = "middle_wide_door", rotation = 180, },
+
+        { distance = 20, tunnelShape = { direction = {15, 0} }},
+        { distance = 20, tunnelShape = { direction = {-15, 0} }},
+        { distance = 20, tunnelShape = { direction = {15, 0} }},
+        { distance = 20, tunnelShape = { direction = {8, 0} }},
+
+        { distance = 500},
+        -- Weird shaped thing (good for ending)
+        { distance = 20, tunnelShape = { offset = {1, 0} }},
+        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
+        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
+        { distance = 10, tunnelShape = { offset = {-4, 0} }},
+
+        { distance = 20, tunnelShape = { offset = {0, 1} }},
+        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
+        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
+        { distance = 10, tunnelShape = { offset = {0, -4} }},
     }
 }
