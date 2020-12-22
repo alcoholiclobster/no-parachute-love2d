@@ -1,7 +1,7 @@
 local level_64 = require "config.levels.level_64"
 return {
-    name = "Vents",
-    nextLevel = "gears",
+    name = "Vents 1",
+    nextLevel = "vents2",
 
     fallSpeed = 40,
     fogColor = {15, 0, 0},
