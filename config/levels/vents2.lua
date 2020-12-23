@@ -138,13 +138,54 @@ return {
             },
         },
 
+        fan_part1 = {
+            planes = {
+                { texture = "levels/vents/fan", rotationSpeed = 6, },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
+            },
+        },
+
+        fan_part2 = {
+            planes = {
+                { texture = "levels/vents/fan", rotationSpeed = 6, },
+            },
+        },
 
         fan_reversed = {
             planes = {
                 { texture = "levels/vents/fan", rotationSpeed = -4, },
                 { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
             },
-        }
+        },
+
+        fan_slow = {
+            planes = {
+                { texture = "levels/vents/fan", rotationSpeed = 1, },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
+            },
+        },
+
+        -- fan_rotated1 = {
+        --     planes = {
+        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 0 },
+        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 10, position = {0, 0, -2} },
+        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 20, position = {0, 0, -4} },
+        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 30, position = {0, 0, -6} },
+        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 40, position = {0, 0, -8} },
+        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 50, position = {0, 0, -10} },
+        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 60, position = {0, 0, -12} },
+        --         { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
+        --     },
+        -- },
+
+        -- fan_rotated1_reversed = {
+        --     planes = {
+        --         { texture = "levels/vents/fan", rotationSpeed = -4, rotation = 0 },
+        --         { texture = "levels/vents/fan", rotationSpeed = -4, rotation = 30, position = {0, 0, -2} },
+        --         { texture = "levels/vents/fan", rotationSpeed = -4, rotation = 60, position = {0, 0, -4} },
+        --         { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
+        --     },
+        -- },
     },
 
     planes = {
@@ -177,29 +218,58 @@ return {
         -- Fans
         { distance = 36, name = "fan", rotation = 0, },
         { distance = 20, name = "middle_wide_hole", rotation = 0, },
-        { distance = 50, name = "fan", rotation = 0, },
         { distance = 20, name = "fan2", rotation = 90, },
-        { distance = 20, name = "fan3", rotation = 0, },
-        -- { distance = 100, },
-        { distance = 20, name = "middle_wide_door", rotation = 0, },
+        { distance = 60, },
+        { distance = 30, name = "middle_wide_door", rotation = 0, },
         { distance = 7, name = "middle_wide_door", rotation = 90, },
         { distance = 7, name = "middle_wide_door", rotation = 180, },
 
         { distance = 20, tunnelShape = { direction = {15, 0} }},
+        { distance = 20, name = "middle_long_stick", position = {2.5, 0, 0}},
         { distance = 20, tunnelShape = { direction = {-15, 0} }},
-        { distance = 20, tunnelShape = { direction = {15, 0} }},
-        { distance = 20, tunnelShape = { direction = {8, 0} }},
+        { distance = 1, name = "middle_long_stick", position = {2.5, 0, 0}, rotation = 90},
+        { distance = 25, name = "middle_long_stick", position = {-2.5, 0, 0}, rotation = 90},
+        { distance = 15, tunnelShape = { direction = {15, 0} }},
+        { distance = 25, name = "middle_long_stick", position = {-2.5, 0, 0}, rotation = 0},
+        { distance = 10, name = "middle_long_stick", position = {2.5, 0, 0}, rotation = 90},
+        { distance = 5, tunnelShape = { direction = {0, 0} }},
+        { distance = 20, name = "middle_wide_door" },
+        { distance = 40, name = "fan_slow" },
+        { distance = 30, name = "middle_wide_door" },
+        { distance = 40, name = "fan_part1" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 20, name = "middle_small_hole" },
 
-        { distance = 500},
-        -- Weird shaped thing (good for ending)
-        { distance = 20, tunnelShape = { offset = {1, 0} }},
-        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        { distance = 10, tunnelShape = { offset = {-4, 0} }},
+        -- { distance = 500},
+        -- -- Weird shaped thing (good for ending)
+        -- { distance = 20, tunnelShape = { offset = {1, 0} }},
+        -- { distance = 0.1, tunnelShape = { offset = {1, 0} }},
+        -- { distance = 0.1, tunnelShape = { offset = {1, 0} }},
+        -- { distance = 10, tunnelShape = { offset = {-4, 0} }},
 
-        { distance = 20, tunnelShape = { offset = {0, 1} }},
-        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        { distance = 10, tunnelShape = { offset = {0, -4} }},
+        -- { distance = 20, tunnelShape = { offset = {0, 1} }},
+        -- { distance = 0.1, tunnelShape = { offset = {0, 1} }},
+        -- { distance = 0.1, tunnelShape = { offset = {0, 1} }},
+        -- { distance = 10, tunnelShape = { offset = {0, -4} }},
     }
 }
