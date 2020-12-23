@@ -33,8 +33,8 @@ vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 local blurShader = love.graphics.newShader[[
 uniform float aspect_ratio = 0.0;
 uniform float blur_level = 0.0;
-float blur_radius = 3.0;
-int blur_steps = 4;
+float blur_radius = 1.0;
+int blur_steps = 12;
 
 vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 {
