@@ -65,6 +65,7 @@ function PlaneDestruction:update(deltaTime)
                     love.graphics.draw(e.collisionTexture.value, 0, 0)
                     love.graphics.setBlendMode("multiply", "premultiplied")
                     love.graphics.draw(texture, 0, 0)
+                    love.graphics.draw(assets.texture("plane_cracks"), 0, 0)
                     canvas:setFilter("nearest", "nearest")
 
                     local speed = math.random() * 10 + 5
