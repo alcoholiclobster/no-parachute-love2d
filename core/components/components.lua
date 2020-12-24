@@ -179,3 +179,15 @@ end)
 Concord.component("tunnelEnd", function(component)
     component.velocityMode = "none"
 end)
+
+Concord.component("replayRecorder", function(component)
+    component.recordingStartedAt = nil
+    component.lastDataTime = 0
+    component.data = {}
+end)
+
+Concord.component("replayPlayer", function(component)
+    component.time = nil
+    component.dataIndex = 1
+    component.data = {}
+end)

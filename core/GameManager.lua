@@ -37,7 +37,7 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.world:addSystem(require("core.systems.Gravity"))
     self.world:addSystem(require("core.systems.LimbPoses"))
     self.world:addSystem(require("core.systems.Attach"))
-    self.world:addSystem(require("core.systems.CharacterCollision"))
+    -- self.world:addSystem(require("core.systems.CharacterCollision"))
     self.world:addSystem(require("core.systems.CameraFollowPlayer"))
     self.world:addSystem(require("core.systems.CameraShaking"))
     self.world:addSystem(require("core.systems.BoundaryCollisionCheck"))
@@ -68,6 +68,8 @@ function GameManager:initialize(levelConfig, uiScreen)
         self.world:addSystem(require("core.systems.debug.DebugFrameRateGraph"))
     end
     self.world:addSystem(require("core.systems.ScreenRendering"))
+    -- self.world:addSystem(require("core.systems.ReplayRecording"))
+    self.world:addSystem(require("core.systems.ReplayPlayback"))
     self.world:addSystem(require("core.systems.EventCleanup"))
 end
 

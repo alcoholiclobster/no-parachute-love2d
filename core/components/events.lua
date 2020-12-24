@@ -7,9 +7,10 @@ Concord.component("obstacleCollisionEvent", function(component, entity, hitPosit
     component.textureY = textureY
 end)
 
-Concord.component("characterSpawnRequest", function(component, characterType, controlledByPlayer)
+Concord.component("characterSpawnRequest", function(component, characterType, controlledByPlayer, loadReplay)
     component.characterType = characterType or "player"
     component.controlledByPlayer = not not controlledByPlayer
+    component.loadReplay = not not loadReplay
 end)
 
 Concord.component("damageEvent", function(component, damage)

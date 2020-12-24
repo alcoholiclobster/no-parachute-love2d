@@ -48,13 +48,16 @@ function GameInit:init()
 
     -- Spawn player
     Concord.entity(world)
-        :give("characterSpawnRequest", "player", true)
+        :give("characterSpawnRequest", "player", true, true)
 
     -- Camera
     Concord.entity(world)
         :give("position", maf.vec3(0, 0, 0))
         :give("rotation", 0)
         :give("camera")
+
+    -- Concord.entity(world)
+    --     :give("characterSpawnRequest", "player", false, true)
 end
 
 return GameInit
