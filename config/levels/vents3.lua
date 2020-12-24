@@ -261,17 +261,5 @@ return {
         { distance = 4, name = "fan_part2" },
         { distance = 20, name = "middle_small_hole" },
         { distance = 50, name = "middle_door", rotation = 90 },
-
-        -- { distance = 500},
-        -- -- Weird shaped thing (good for ending)
-        -- { distance = 20, tunnelShape = { offset = {1, 0} }},
-        -- { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        -- { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        -- { distance = 10, tunnelShape = { offset = {-4, 0} }},
-
-        -- { distance = 20, tunnelShape = { offset = {0, 1} }},
-        -- { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        -- { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        -- { distance = 10, tunnelShape = { offset = {0, -4} }},
     }
 }

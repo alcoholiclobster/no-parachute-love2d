@@ -114,7 +114,7 @@ return {
         { name = "middle_door", distance = 100, rotation = 90, },
         { name = "side_long_sticks", distance = 30, rotation = 0, },
         { name = "side_long_sticks", distance = 30, rotation = 180, },
-        { name = "middle_long_stick", distance = 30, rotation = 0, },
+        { name = "fan", distance = 30, },
         { name = "side_long_sticks", distance = 30, rotation = 0, },
         { name = "middle_sticks_hole", distance = 30, rotation = 180, },
 
@@ -131,6 +131,17 @@ return {
         { name = "corner_hole", distance = 15, rotation = 90, },
         { name = "middle_long_stick", distance = 15, rotation = 0, },
         { name = "corner_hole", distance = 15, rotation = 180, },
+
+        -- Ez part
+        { name = "side_long_sticks", distance = 15, rotation = 0, },
+        { name = "middle_small_hole", distance = 15, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+
+        { name = "fan", distance = 30, },
+        { name = "fan", distance = 30, },
 
         -- Easy part
         { name = "middle_wide_hole", distance = 30, rotation = 0, },

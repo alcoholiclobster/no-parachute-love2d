@@ -135,19 +135,29 @@ return {
         { name = "fan_reversed", distance = 45, rotation = 0, },
         { name = "middle_wide_hole", distance = 25, rotation = 0, },
         { name = "middle_small_hole", distance = 15, rotation = 0, },
-        { name = "middle_small_hole", distance = 40, rotation = 0, },
-        { name = "middle_small_hole", distance = 8, rotation = 0, },
-        { name = "middle_small_hole", distance = 8, rotation = 0, },
-        { name = "middle_small_hole", distance = 8, rotation = 0, },
-        { name = "middle_small_hole", distance = 8, rotation = 0, },
 
         -- Ez part
-        { name = "side_long_sticks", distance = 15, rotation = 0, },
+        { distance = 20, tunnelShape = { offset = {1, 0} }},
+        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
+        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
+        { distance = 10, tunnelShape = { offset = {-4, 0} }},
+
+        { distance = 20, tunnelShape = { offset = {0, 1} }},
+        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
+        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
+        { distance = 10, tunnelShape = { offset = {0, -4} }},
+
+        { distance = 20, tunnelShape = { offset = {1, 0} }},
+        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
+        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
+        { distance = 10, tunnelShape = { offset = {-4, 0} }},
+
+        { distance = 20, tunnelShape = { offset = {0, 1} }},
+        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
+        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
+        { distance = 10, tunnelShape = { offset = {0, -4} }},
+
         { name = "middle_small_hole", distance = 15, rotation = 0, },
-        { name = "middle_small_hole", distance = 8, rotation = 0, },
-        { name = "middle_small_hole", distance = 8, rotation = 0, },
-        { name = "middle_small_hole", distance = 8, rotation = 0, },
-        { name = "middle_small_hole", distance = 8, rotation = 0, },
 
         -- Half hole fans
         { name = "half_hole", distance = 40, rotation = 0, },
