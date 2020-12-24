@@ -93,7 +93,7 @@ Concord.component("attachOffset", function(component, offset)
     component.value = offset
 end)
 
-Concord.component("planeSpawner", function(component)
+Concord.component("levelStreamer", function(component)
     component.lastZ = 0
     component.lastIndex = 0
     component.sidePlanesIndex = 1

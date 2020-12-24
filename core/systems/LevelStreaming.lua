@@ -3,8 +3,8 @@ local maf = require("lib.maf")
 local assets = require("core.assets")
 local mathUtils = require("utils.math")
 
-local PlaneSpawn = Concord.system({
-    pool = {"planeSpawner"},
+local LevelStreaming = Concord.system({
+    pool = {"levelStreamer"},
     cameraPool = {"camera"},
     tunnelEndPool = {"tunnelEnd", "position", "rotation"},
 })
@@ -84,12 +84,12 @@ local function spawnLevelPlane(world, planeConfig, worldPosition, localPosition,
     end
 end
 
-function PlaneSpawn:init()
+function LevelStreaming:init()
     Concord.entity(self:getWorld())
-        :give("planeSpawner")
+        :give("levelStreamer")
 end
 
-function PlaneSpawn:update(deltaTime)
+function LevelStreaming:update(deltaTime)
     local camera = self.cameraPool[1]
     if not camera then
         return
@@ -99,12 +99,12 @@ function PlaneSpawn:update(deltaTime)
     local levelConfig = world.gameManager.levelConfig
 
     for _, e in ipairs(self.pool) do
-        if e.planeSpawner.lastIndex < #levelConfig.planes then
-            local nextObstacle = levelConfig.planes[e.planeSpawner.lastIndex + 1]
-            local nextObstacleZ = e.planeSpawner.lastZ - nextObstacle.distance
+        if e.levelStreamer.lastIndex < #levelConfig.planes then
+            local nextObstacle = levelConfig.planes[e.levelStreamer.lastIndex + 1]
+            local nextObstacleZ = e.levelStreamer.lastZ - nextObstacle.distance
             if camera.position.value.z - 100 < nextObstacleZ then
-                e.planeSpawner.lastZ = nextObstacleZ
-                e.planeSpawner.lastIndex = e.planeSpawner.lastIndex + 1
+                e.levelStreamer.lastZ = nextObstacleZ
+                e.levelStreamer.lastIndex = e.levelStreamer.lastIndex + 1
 
                 if nextObstacle.name then
                     local planeConfig = levelConfig.planeTypes[nextObstacle.name]
@@ -131,12 +131,12 @@ function PlaneSpawn:update(deltaTime)
                         planePosition,
                         positionOffset,
                         planeRotation,
-                        e.planeSpawner.lastIndex
+                        e.levelStreamer.lastIndex
                     )
                 end
 
                 if nextObstacle.switchSidePlanes then
-                    e.planeSpawner.sidePlanesIndex = e.planeSpawner.sidePlanesIndex + 1
+                    e.levelStreamer.sidePlanesIndex = e.levelStreamer.sidePlanesIndex + 1
                 end
 
                 if nextObstacle.tunnelShape then
@@ -152,4 +152,4 @@ function PlaneSpawn:update(deltaTime)
     end
 end
 
-return PlaneSpawn
+return LevelStreaming

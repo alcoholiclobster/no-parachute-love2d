@@ -2,17 +2,17 @@ local Concord = require("lib.concord")
 local assets = require("core.assets")
 
 local SidePlaneTextures = Concord.system({
-    planeSpawnerPool = {"planeSpawner"},
+    levelStreamerPool = {"levelStreamer"},
     pool = {"sidePlane", "sidePlaneRespawnEvent", "position"},
 })
 
 function SidePlaneTextures:update()
-    local planeSpawnerEntity = self.planeSpawnerPool[1]
-    if not planeSpawnerEntity then
+    local levelStreamerEntity = self.levelStreamerPool[1]
+    if not levelStreamerEntity then
         return
     end
-    local planeSpawner = planeSpawnerEntity.planeSpawner
-    local sidePlanesIndex = planeSpawner.sidePlanesIndex
+    local levelStreamer = levelStreamerEntity.levelStreamer
+    local sidePlanesIndex = levelStreamer.sidePlanesIndex
     local levelConfig = self:getWorld().gameManager.levelConfig
 
     for _, e in ipairs(self.pool) do
@@ -22,17 +22,17 @@ function SidePlaneTextures:update()
             local config = levelConfig.sidePlanes[e.sidePlane.typeIndex]
             local textureIndex = 1
             if config.pattern then
-                if planeSpawner.sidePlanePatternIndex > #config.pattern then
-                    planeSpawner.sidePlanePatternIndex = 1
+                if levelStreamer.sidePlanePatternIndex > #config.pattern then
+                    levelStreamer.sidePlanePatternIndex = 1
                 end
 
-                textureIndex = config.textures[config.pattern[planeSpawner.sidePlanePatternIndex]]
+                textureIndex = config.textures[config.pattern[levelStreamer.sidePlanePatternIndex]]
             else
                 textureIndex = config.textures[math.random(1, #config.textures)]
             end
             e:give("texture", assets.texture(textureIndex))
             if config.pattern then
-                planeSpawner.sidePlanePatternIndex = planeSpawner.sidePlanePatternIndex + 1
+                levelStreamer.sidePlanePatternIndex = levelStreamer.sidePlanePatternIndex + 1
             end
         end
     end
