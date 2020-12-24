@@ -1,15 +1,14 @@
 local level_64 = require "config.levels.level_64"
 return {
     name = "Vents 2",
-    nextLevel = "lava",
+    nextLevel = "vents3",
 
-    fallSpeed = 45,
+    fallSpeed = 40,
     fogColor = {15, 0, 0},
     fogDistance = 70,
     playerRotationMode = "constant",
-    playerRotationSpeed = -12,
+    playerRotationSpeed = -15,
 
-    sidePlanesRandomBrightness = true,
     sidePlanesCount = 60,
     sidePlanes = {
         {
@@ -18,25 +17,7 @@ return {
                 "levels/vents/decorative2",
                 "levels/vents/decorative3",
             }
-        },
-        {
-            textures = {
-                "levels/vents/dt1",
-                "levels/vents/dt2",
-                "levels/vents/dt3",
-                "levels/vents/dt4",
-                "levels/vents/dt5",
-                "levels/vents/dt6",
-            },
-            pattern = { 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5 },
-        },
-        {
-            textures = {
-                "levels/vents/decorative_dark1",
-                "levels/vents/decorative_dark2",
-            },
-            pattern = { 1, 1, 1, 1, 1, 1, 2, 2 },
-        },
+        }
     },
 
     planeTypes = {
@@ -75,15 +56,11 @@ return {
             },
         },
 
-        half_hole_transparent = {
-            planes = {
-                { texture = "levels/vents/half_hole_transparent", position = {0, 0, 0} },
-            },
-        },
-
         corner_hole = {
             planes = {
-                { texture = "levels/vents/corner_hole", position = {0, 0, 0} },
+                { texture = "levels/vents/fan_holder", position = {-0.5, 0, 2}},
+                { texture = "levels/vents/corner_hole" },
+                { texture = "levels/vents/small_fan", position = {-2.96875, -3.125, -0.5}, rotationSpeed = -16, },
             },
         },
 
@@ -118,158 +95,82 @@ return {
 
         fan = {
             planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 4, },
+                { texture = "levels/vents/fan", rotationSpeed = 3, },
                 { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
             },
         },
 
-
-        fan2 = {
-            planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 5, },
-                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
-            },
-        },
-
-        fan3 = {
-            planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 6, },
-                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
-            },
-        },
-
-        fan_part1 = {
-            planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 6, },
-                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
-            },
-        },
-
-        fan_part2 = {
-            planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 6, },
-            },
-        },
 
         fan_reversed = {
             planes = {
                 { texture = "levels/vents/fan", rotationSpeed = -4, },
                 { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
             },
-        },
-
-        fan_slow = {
-            planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 1, },
-                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
-            },
-        },
-
-        -- fan_rotated1 = {
-        --     planes = {
-        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 0 },
-        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 10, position = {0, 0, -2} },
-        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 20, position = {0, 0, -4} },
-        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 30, position = {0, 0, -6} },
-        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 40, position = {0, 0, -8} },
-        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 50, position = {0, 0, -10} },
-        --         { texture = "levels/vents/fan", rotationSpeed = 4, rotation = 60, position = {0, 0, -12} },
-        --         { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
-        --     },
-        -- },
-
-        -- fan_rotated1_reversed = {
-        --     planes = {
-        --         { texture = "levels/vents/fan", rotationSpeed = -4, rotation = 0 },
-        --         { texture = "levels/vents/fan", rotationSpeed = -4, rotation = 30, position = {0, 0, -2} },
-        --         { texture = "levels/vents/fan", rotationSpeed = -4, rotation = 60, position = {0, 0, -4} },
-        --         { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
-        --     },
-        -- },
+        }
     },
 
     planes = {
-        -- Curved tunnel
-        { distance = 100, tunnelShape = { direction = {17, 10} }},
-        { distance = 30, name = "middle_wide_door", rotation = 90 },
-        { distance = 1, tunnelShape = { direction = {-10, 0} }},
-        { distance = 30, tunnelShape = { direction = {0, 0} }},
-        { name = "middle_long_stick", distance = 15, rotation = 0 },
-        { name = "corner_hole", distance = 5 },
-        { distance = 1, tunnelShape = { offset = {4, 4} }},
-        { distance = 25, tunnelShape = { direction = {15, 0} }},
-        { name = "middle_wide_door", distance = 40, tunnelShape = { direction = {0, 0} }, switchSidePlanes = true, },
-        { distance = 40, name = "half_hole_transparent", rotation = 0, },
-        { distance = 40, name = "half_hole_transparent", rotation = 180, },
-        { distance = 20, switchSidePlanes = true, name = "middle_wide_door", rotation = 90, },
-
-        -- { distance = 100, },
-        -- Hard corner thing
-        { distance = 50, name = "corner_hole", rotation = 0, },
-        { distance = 35, name = "corner_hole", rotation = 180, },
-        { distance = 35, name = "corner_hole", rotation = 0, },
-        { distance = 19, name = "middle_long_stick", rotation = 90, },
-        { distance = 20, name = "corner_hole", rotation = 180, },
-        { distance = 38, name = "corner_hole", rotation = 0, },
-        { distance = 18, name = "middle_small_hole", },
-        { distance = 17, name = "corner_hole", rotation = 180, },
-        { distance = 36, name = "corner_hole", rotation = 0, },
+        -- Ez part
+        { name = "middle_wide_hole", distance = 100, rotation = 0, },
+        { name = "middle_wide_door", distance = 10, rotation = 0, },
+        { name = "middle_wide_door", distance = 20, rotation = 180, },
+        { name = "middle_wide_door", distance = 20, rotation = 0, },
+        { name = "middle_wide_door", distance = 20, rotation = 180, },
+        { name = "middle_wide_door", distance = 20, rotation = 0, },
+        { name = "middle_wide_door", distance = 20, rotation = 180, },
+        { name = "middle_wide_hole", distance = 10, rotation = 0, },
 
         -- Fans
-        { distance = 36, name = "fan", rotation = 0, },
-        { distance = 20, name = "middle_wide_hole", rotation = 0, },
-        { distance = 20, name = "fan2", rotation = 90, },
-        { distance = 60, },
-        { distance = 30, name = "middle_wide_door", rotation = 0, },
-        { distance = 7, name = "middle_wide_door", rotation = 90, },
-        { distance = 7, name = "middle_wide_door", rotation = 180, },
+        { name = "fan", distance = 40, rotation = 0, },
+        { name = "middle_wide_hole", distance = 30, rotation = 90, },
+        { name = "fan", distance = 20, rotation = 0, },
+        { name = "middle_wide_hole", distance = 20, rotation = 90, },
+        { name = "middle_small_hole", distance = 15, rotation = 90, },
+        { name = "middle_wide_hole", distance = 15, rotation = 90, },
+        { name = "fan", distance = 25, rotation = 0, },
+        { name = "middle_wide_hole", distance = 30, rotation = 0, },
+        { name = "middle_small_hole", distance = 15, rotation = 0, },
+        { name = "middle_small_hole", distance = 15, rotation = 0, },
+        { name = "middle_wide_hole", distance = 15, rotation = 0, },
+        { name = "fan_reversed", distance = 45, rotation = 0, },
+        { name = "middle_wide_hole", distance = 25, rotation = 0, },
+        { name = "middle_small_hole", distance = 15, rotation = 0, },
+        { name = "middle_small_hole", distance = 40, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
 
-        { distance = 20, tunnelShape = { direction = {15, 0} }},
-        { distance = 20, name = "middle_long_stick", position = {2.5, 0, 0}},
-        { distance = 20, tunnelShape = { direction = {-15, 0} }},
-        { distance = 1, name = "middle_long_stick", position = {2.5, 0, 0}, rotation = 90},
-        { distance = 25, name = "middle_long_stick", position = {-2.5, 0, 0}, rotation = 90},
-        { distance = 15, tunnelShape = { direction = {15, 0} }},
-        { distance = 25, name = "middle_long_stick", position = {-2.5, 0, 0}, rotation = 0},
-        { distance = 10, name = "middle_long_stick", position = {2.5, 0, 0}, rotation = 90},
-        { distance = 5, tunnelShape = { direction = {0, 0} }},
-        { distance = 20, name = "middle_wide_door" },
-        { distance = 40, name = "fan_slow" },
-        { distance = 30, name = "middle_wide_door" },
-        { distance = 40, name = "fan_part1" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 20, name = "middle_small_hole" },
+        -- Ez part
+        { name = "side_long_sticks", distance = 15, rotation = 0, },
+        { name = "middle_small_hole", distance = 15, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
+        { name = "middle_small_hole", distance = 8, rotation = 0, },
 
-        -- { distance = 500},
-        -- -- Weird shaped thing (good for ending)
-        -- { distance = 20, tunnelShape = { offset = {1, 0} }},
-        -- { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        -- { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        -- { distance = 10, tunnelShape = { offset = {-4, 0} }},
+        -- Half hole fans
+        { name = "half_hole", distance = 40, rotation = 0, },
+        { name = "half_hole", distance = 25, rotation = 180, },
 
-        -- { distance = 20, tunnelShape = { offset = {0, 1} }},
-        -- { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        -- { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        -- { distance = 10, tunnelShape = { offset = {0, -4} }},
+        { name = "half_hole", distance = 35, rotation = 180, },
+        { name = "fan", distance = 1, rotation = 0, },
+
+        { name = "half_hole", distance = 35, rotation = 0, },
+        { name = "fan", distance = 1, rotation = 180, },
+        { name = "side_long_sticks", distance = 20, rotation = 180, },
+        { name = "side_long_sticks", distance = 30, rotation = 180, },
+        { name = "middle_long_stick", distance = 30, rotation = 180, },
+        { name = "fan", distance = 1, rotation = 180, },
+        { name = "side_long_sticks", distance = 20, rotation = 0, },
+        { name = "middle_small_hole", distance = 20, rotation = 0, },
+        { name = "half_hole", distance = 35, rotation = 90, },
+        { name = "fan", distance = 1, rotation = 270, },
+        { name = "half_hole", distance = 35, rotation = 90, },
+        { name = "fan_reversed", distance = 1, rotation = 270, },
+
+        -- Fake door part
+        { name = "middle_wide_door", distance = 50, rotation = 180, },
+        { name = "middle_wide_door_breakable", distance = 30, rotation = 180, },
     }
 }

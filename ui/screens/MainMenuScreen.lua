@@ -75,7 +75,7 @@ function MainMenuScreen:draw()
     love.graphics.setFont(assets.font("Roboto-Regular", 16))
     love.graphics.printf(howToPlayText, screenWidth * 0.1 + 250, screenHeight * 0.3 + 15, screenWidth, "left", 0)
 
-    local buttonWidth, buttonHeight = 200, 50
+    local buttonWidth, buttonHeight = 200, 45
     local buttonX, buttonY = screenWidth * 0.1, screenHeight * 0.3
 
     if buttons.drawButton("Play Intro", buttonX, buttonY, buttonWidth, buttonHeight) then
