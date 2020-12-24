@@ -3,7 +3,7 @@ return {
     nextLevel = nil,
 
     fallSpeed = 45,
-    fogColor = {25, 10, 10},
+    fogColor = {25, 10, 0},
     fogDistance = 55,
     playerRotationMode = "sinusoid",
     playerRotationSpeed = 0.2,
@@ -13,6 +13,16 @@ return {
     sidePlanesRandomBrightness = true,
     sidePlanesBrightness = 0.95,
     sidePlanes = {
+        {
+            textures = {
+                "levels/lava/side_plane1",
+            },
+        },
+        {
+            textures = {
+                "levels/lava/side_plane2",
+            },
+        },
         {
             textures = {
                 "levels/lava/side_plane1",
@@ -43,6 +53,12 @@ return {
         breakable_wall = {
             planes = {{ texture = "levels/lava/breakable_wall", breakable = true }},
         },
+        breakable_wall_blue = {
+            planes = {{ texture = "levels/lava/breakable_wall_blue", breakable = true }},
+        },
+        projectile = {
+            planes = {{ texture = "projectiles/lava", velocity = {0, -2, 10} }},
+        },
     },
 
     planes = {
@@ -56,7 +72,33 @@ return {
         { distance = 19, name = "corner_hole_big", rotation = 270, },
         { distance = 40, name = "corner_hole", rotation = 90, },
         { distance = 25, name = "middle_hole", rotation = 0, },
-        { distance = 10, name = "breakable_wall", rotation = 0, },
+        { distance = 10, name = "breakable_wall", rotation = 0, switchSidePlanes = true },
+
+        { distance = 100, name = "projectile", position = {-2, 4, 0}, rotation = 90 },
+        { distance = 10, name = "projectile", position = {2, -2, 0}, rotation = 180 },
+        { distance = 30, name = "projectile", position = {4, 0, 0}, rotation = 0 },
+        { distance = 1, name = "projectile", position = {-4, 3, 0}, rotation = 270 },
+        { distance = 10, name = "projectile", position = {-3, 2, 0}, rotation = 90 },
+        { distance = 1, name = "projectile", position = {-1, -4, 0}, rotation = 180 },
+        { distance = 20, name = "projectile", position = {-2, 4, 0}, rotation = 90 },
+        { distance = 10, name = "projectile", position = {2, -2, 0}, rotation = 180 },
+        { distance = 30, name = "projectile", position = {4, 0, 0}, rotation = 0 },
+        { distance = 1, name = "projectile", position = {-4, 3, 0}, rotation = 270 },
+        { distance = 10, name = "projectile", position = {-3, 2, 0}, rotation = 90 },
+        { distance = 1, name = "projectile", position = {-1, -4, 0}, rotation = 180 },
+        { distance = 10, name = "projectile", position = {2, -2, 0}, rotation = 180 },
+        { distance = 30, name = "projectile", position = {4, 0, 0}, rotation = 0 },
+        { distance = 1, name = "projectile", position = {-1, 3, 0}, rotation = 270 },
+        { distance = 10, name = "projectile", position = {-3, 2, 0}, rotation = 90 },
+        { distance = 1, name = "projectile", position = {-1, -4, 0}, rotation = 180 },
+        { distance = 20, name = "projectile", position = {-2, 4, 0}, rotation = 90 },
+        { distance = 10, name = "projectile", position = {2, -2, 0}, rotation = 180 },
+        { distance = 30, name = "projectile", position = {4, 0, 0}, rotation = 0 },
+        { distance = 1, name = "projectile", position = {-1, 3, 0}, rotation = 270 },
+        { distance = 10, name = "projectile", position = {-3, 2, 0}, rotation = 90 },
+        { distance = 1, name = "projectile", position = {-1, -4, 0}, rotation = 180 },
+        { distance = 20, name = "breakable_wall_blue", rotation = 0, switchSidePlanes = true },
+
         { distance = 5000000 },
     },
 }

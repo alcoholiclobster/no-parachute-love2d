@@ -25,7 +25,7 @@ local function spawnPlane(world, plane, worldPosition, localPositionOffset, rota
 
     local entity = Concord.entity(world)
         :give("position", spawnPosition)
-        :give("size", maf.vec3(10, 10))
+        :give("size", maf.vec3(texture:getWidth() / 128 * 10, texture:getHeight() / 128 * 10))
         :give("rotation", rotation)
         :give("drawable")
         :give("destroyOutOfBounds")
@@ -91,62 +91,62 @@ end
 
 function LevelStreaming:update(deltaTime)
     local camera = self.cameraPool[1]
-    if not camera then
+    local levelStreamerEntity = self.pool[1]
+    local tunnelEnd = self.tunnelEndPool[1]
+    if not levelStreamerEntity or not camera then
         return
     end
 
+    local levelStreamer = levelStreamerEntity.levelStreamer
     local world = self:getWorld()
     local levelConfig = world.gameManager.levelConfig
 
-    for _, e in ipairs(self.pool) do
-        if e.levelStreamer.lastIndex < #levelConfig.planes then
-            local nextObstacle = levelConfig.planes[e.levelStreamer.lastIndex + 1]
-            local nextObstacleZ = e.levelStreamer.lastZ - nextObstacle.distance
-            if camera.position.value.z - 100 < nextObstacleZ then
-                e.levelStreamer.lastZ = nextObstacleZ
-                e.levelStreamer.lastIndex = e.levelStreamer.lastIndex + 1
+    if levelStreamer.lastIndex < #levelConfig.planes then
+        local nextObstacle = levelConfig.planes[levelStreamer.lastIndex + 1]
+        local nextObstacleZ = levelStreamer.lastZ - nextObstacle.distance
+        if camera.position.value.z - 100 < nextObstacleZ then
+            levelStreamer.lastZ = nextObstacleZ
+            levelStreamer.lastIndex = levelStreamer.lastIndex + 1
 
-                if nextObstacle.name then
-                    local planeConfig = levelConfig.planeTypes[nextObstacle.name]
-                    local positionOffset = maf.vec3(0, 0, 0)
-                    if nextObstacle.position then
-                        positionOffset = maf.vec3(unpack(nextObstacle.position))
-                    end
-
-                    local planePosition = maf.vec3(0, 0, nextObstacleZ)
-                    local planeRotation = math.rad(nextObstacle.rotation or 0)
-                    local tunnelEnd = self.tunnelEndPool[1]
-
-                    if tunnelEnd then
-                        planePosition.x = planePosition.x + tunnelEnd.position.value.x
-                        planePosition.y = planePosition.y + tunnelEnd.position.value.y
-
-                        planeRotation = planeRotation + tunnelEnd.rotation.value
-                    end
-
-
-                    spawnLevelPlane(
-                        world,
-                        planeConfig,
-                        planePosition,
-                        positionOffset,
-                        planeRotation,
-                        e.levelStreamer.lastIndex
-                    )
+            if nextObstacle.name then
+                local planeConfig = levelConfig.planeTypes[nextObstacle.name]
+                local positionOffset = maf.vec3(0, 0, 0)
+                if nextObstacle.position then
+                    positionOffset = maf.vec3(unpack(nextObstacle.position))
                 end
 
-                if nextObstacle.switchSidePlanes then
-                    e.levelStreamer.sidePlanesIndex = e.levelStreamer.sidePlanesIndex + 1
+                local planePosition = maf.vec3(0, 0, nextObstacleZ)
+                local planeRotation = math.rad(nextObstacle.rotation or 0)
+
+                if tunnelEnd then
+                    planePosition.x = planePosition.x + tunnelEnd.position.value.x
+                    planePosition.y = planePosition.y + tunnelEnd.position.value.y
+
+                    planeRotation = planeRotation + tunnelEnd.rotation.value
                 end
 
-                if nextObstacle.tunnelShape then
-                    local s = nextObstacle.tunnelShape
-                    Concord.entity(world)
-                        :give("updateTunnelShapeEvent",
-                            s.direction and maf.vec3(s.direction[1], s.direction[2], 0),
-                            s.offset and maf.vec3(s.offset[1], s.offset[2], 0),
-                            s.shapeType)
-                end
+
+                spawnLevelPlane(
+                    world,
+                    planeConfig,
+                    planePosition,
+                    positionOffset,
+                    planeRotation,
+                    levelStreamer.lastIndex
+                )
+            end
+
+            if nextObstacle.switchSidePlanes then
+                levelStreamer.sidePlanesIndex = levelStreamer.sidePlanesIndex + 1
+            end
+
+            if nextObstacle.tunnelShape then
+                local s = nextObstacle.tunnelShape
+                Concord.entity(world)
+                    :give("updateTunnelShapeEvent",
+                        s.direction and maf.vec3(s.direction[1], s.direction[2], 0),
+                        s.offset and maf.vec3(s.offset[1], s.offset[2], 0),
+                        s.shapeType)
             end
         end
     end

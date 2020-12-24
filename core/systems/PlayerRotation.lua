@@ -1,5 +1,4 @@
 local Concord = require("lib.concord")
-local mathUtils = require("utils.math")
 
 local PlayerRotation = Concord.system({
     playerCharactersPool = {"controlledByPlayer", "position", "alive", "rotation", "levelProgress"}
