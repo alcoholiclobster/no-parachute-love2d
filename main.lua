@@ -7,6 +7,7 @@ local scheduler = require("utils.scheduler")
 local settings = require("core.settings")
 
 GLOBAL_DEBUG_ENABLED = true
+GLOBAL_HUD_DISABLED = false
 
 local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
@@ -25,9 +26,11 @@ function love.load(arg)
     parser:option("--level", "Force load game level")
     parser:option("--fps", "Simulate frame rate")
     parser:flag("--fullscreen", "Force fullscreen mode")
+    parser:flag("--nohud", "Disable HUD")
     local args = parser:parse(arg)
 
     GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
+    GLOBAL_HUD_DISABLED = not not args.nohud
     math.randomseed(os.time())
 
     debugSimulateFrameRate = tonumber(args.fps) or 0
@@ -80,7 +83,7 @@ function love.keypressed(key, ...)
     if key == "`" and GLOBAL_DEBUG_ENABLED then
         console.toggle()
     elseif key == "f11" then
-        love.window.setFullscreen(not love.window.getFullscreen(), "desktop")
+        love.window.setFullscreen(not love.window.getFullscreen(), "exclusive")
     end
 end
 

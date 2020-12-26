@@ -47,7 +47,7 @@ end
 function GameScreen:draw()
     self.gameManager:draw()
 
-    if love.keyboard.isDown("o") then
+    if GLOBAL_HUD_DISABLED then
         return
     end
 

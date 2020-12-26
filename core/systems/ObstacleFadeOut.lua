@@ -1,5 +1,6 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
+local settings = require("core.settings")
 
 local ObstacleFadeOut = Concord.system({
     characterPool = {"controlledByPlayer", "position", "alive"},
@@ -9,6 +10,10 @@ local ObstacleFadeOut = Concord.system({
 function ObstacleFadeOut:update(deltaTime)
     local character = self.characterPool[1]
     if not character then
+        return
+    end
+
+    if not settings.get("plane_fading") then
         return
     end
 
