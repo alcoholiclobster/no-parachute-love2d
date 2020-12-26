@@ -1,6 +1,7 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local maf = require("lib.maf")
+local settings = require("core.settings")
 
 local GameInit = Concord.system({})
 
@@ -15,7 +16,7 @@ function GameInit:init()
     levelConfig.totalHeight = levelConfig.totalHeight + 70
 
     -- Side walls planes
-    local count = levelConfig.sidePlanesCount
+    local count = math.floor(levelConfig.sidePlanesCount * settings.get("world_quality"))
     local previousDirection = -1
     for i = 0, count - 1 do
         local z = -100 + i * 100 / count

@@ -1,5 +1,5 @@
 local Concord = require("lib.concord")
-local assets = require("core.assets")
+local settings = require "core.settings"
 
 local BloodCameraCollision = Concord.system({
     pool = {"position", "bloodSpawnEvent"},
@@ -15,7 +15,7 @@ function BloodCameraCollision:update(deltaTime)
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     for _, e in ipairs(self.pool) do
         if math.abs(e.position.value.z - camera.position.value.z) < 15 and e.bloodSpawnEvent.level > 1 then
-            for i = 1, math.random(5, 10) * e.bloodSpawnEvent.level do
+            for i = 1, math.random(5, 10) * e.bloodSpawnEvent.level * settings.get("particles_quality") do
                 local s = math.floor(screenHeight/128*math.random(1, 4))
                 Concord.entity(self:getWorld())
                     :give("position2d", screenWidth * math.random(), screenHeight * math.random())

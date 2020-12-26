@@ -9,7 +9,7 @@ return {
     playerRotationSpeed = 0.2,
     playerRotationChangeSpeed = 0.02,
 
-    sidePlanesCount = 180,
+    sidePlanesCount = 65,
     sidePlanesRandomBrightness = true,
     sidePlanesBrightness = 0.95,
     sidePlanes = {

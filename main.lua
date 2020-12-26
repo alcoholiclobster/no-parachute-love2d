@@ -1,13 +1,11 @@
 local argparse = require("lib.argparse")
 local ScreenManager = require("ui.ScreenManager")
-local GameScreen = require("ui.screens.GameScreen")
 local joystickManager = require("utils.joystickManager")
 local console = require("utils.console")
-local gameConfig = require("config.game")
 local mouseUtils = require("utils.mouse")
 local scheduler = require("utils.scheduler")
 
-GLOBAL_DEBUG_ENABLED = false
+GLOBAL_DEBUG_ENABLED = true
 
 local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
@@ -26,7 +24,7 @@ function love.load(arg)
     parser:flag("--fullscreen", "Force fullscreen mode")
     local args = parser:parse(arg)
 
-    GLOBAL_DEBUG_ENABLED = args.debug
+    GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
     math.randomseed(os.time())
 
     debugSimulateFrameRate = tonumber(args.fps) or 0

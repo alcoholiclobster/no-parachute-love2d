@@ -1,6 +1,7 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local assets = require("core.assets")
+local settings = require "core.settings"
 
 local ParticleEmitter = Concord.system({
     pool = {"position", "particleEmitDelay", "particleEmitCount"}
@@ -13,7 +14,7 @@ function ParticleEmitter:update(deltaTime)
         if e.particleEmitDelay.time > e.particleEmitDelay.delay then
             e.particleEmitDelay.time = 0
 
-            local count = math.random(e.particleEmitCount.min, e.particleEmitCount.max)
+            local count = math.random(e.particleEmitCount.min, e.particleEmitCount.max) * settings.get("particles_quality")
             for i = 1, count do
                 local lifeTime = e.particleLifeTime.min + (e.particleLifeTime.max - e.particleLifeTime.min) * math.random()
                 local direction = math.random() * math.pi * 2

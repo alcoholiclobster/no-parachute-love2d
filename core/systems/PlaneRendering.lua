@@ -2,6 +2,7 @@ local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local renderingUtils = require("utils.rendering")
 local assets = require("core.assets")
+local settings = require "core.settings"
 
 local PlaneRendering = Concord.system({
     pool = {"position", "size", "rotation", "drawable"},
@@ -82,7 +83,7 @@ local function render(e, camera)
         )
 
         local mul = 1/2*scale*10
-        love.graphics.draw(assets.texture("plane_border"), 0, 0, 0, mul, mul, 2, 2)
+        love.graphics.draw(assets.texture("plane_border"), 0, 0, 0, mul, mul, 4, 4)
     end
 
     if e.color then
@@ -172,7 +173,9 @@ function PlaneRendering:draw()
     else
         blurShader:send("blur_level", self.overrideBlurLevel)
     end
-    love.graphics.setShader(blurShader)
+    if settings.get("motion_blur") then
+        love.graphics.setShader(blurShader)
+    end
     love.graphics.draw(canvas)
     love.graphics.setShader()
 end
