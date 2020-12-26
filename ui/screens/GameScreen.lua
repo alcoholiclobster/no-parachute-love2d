@@ -5,6 +5,7 @@ local buttons = require("ui.controls.buttons")
 local assets = require("core.assets")
 local SpeedEffect = require("ui.effects.SpeedEffect")
 local Tutorial = require("ui.Tutorial")
+local settings = require("core.settings")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -45,7 +46,6 @@ end
 
 function GameScreen:draw()
     self.gameManager:draw()
-    self.speedEffect:draw()
 
     if love.keyboard.isDown("o") then
         return
@@ -58,6 +58,10 @@ function GameScreen:draw()
     love.graphics.setColor(1, 1, 1, 1)
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     if self.state == "game" then
+        if settings.get("speed_lines") then
+            self.speedEffect:draw()
+        end
+
         local progress = tostring(math.floor(self.levelProgress * 100)).."%"
 
         love.graphics.setColor(1, 1, 1, 0.75)
@@ -177,7 +181,9 @@ function GameScreen:update(deltaTime)
         end
 
         self.gameManager:update(deltaTime)
-        self.speedEffect:update(deltaTime)
+        if settings.get("speed_lines") then
+            self.speedEffect:update(deltaTime)
+        end
     end
 end
 

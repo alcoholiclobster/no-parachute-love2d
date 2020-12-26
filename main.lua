@@ -4,6 +4,7 @@ local joystickManager = require("utils.joystickManager")
 local console = require("utils.console")
 local mouseUtils = require("utils.mouse")
 local scheduler = require("utils.scheduler")
+local settings = require("core.settings")
 
 GLOBAL_DEBUG_ENABLED = true
 
@@ -16,6 +17,8 @@ function love.load(arg)
     console.log("love.load()")
 
     love.filesystem.setIdentity("no_parachute")
+
+    settings.load()
 
     local parser = argparse()
     parser:flag("--debug", "Run game in debug mode")
