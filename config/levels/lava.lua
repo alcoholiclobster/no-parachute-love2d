@@ -15,17 +15,19 @@ return {
     sidePlanes = {
         {
             textures = {
-                "levels/lava/side_plane1",
+                "levels/lava/side_plane_red1",
+                "levels/lava/side_plane_red2",
+                "levels/lava/side_plane_red3",
             },
         },
         {
             textures = {
-                "levels/lava/side_plane2",
+                "levels/lava/side_plane_blue1",
             },
         },
         {
             textures = {
-                "levels/lava/side_plane1",
+                "levels/lava/side_plane_red1",
             },
         },
     },
@@ -34,20 +36,18 @@ return {
         corner_hole = {
             planes = {{ texture = "levels/lava/corner_hole", }},
         },
-        corner_hole_big = {
-            planes = {
-                { texture = "levels/lava/corner_hole_big4", position = {0, 0, 0}},
-                { texture = "levels/lava/corner_hole_big3", position = {0, 0, -2}},
-                { texture = "levels/lava/corner_hole_big2", position = {0, 0, -4}},
-                { texture = "levels/lava/corner_hole_big", position = {0, 0, -6}},
-            },
+        sharp_corner_hole = {
+            planes = {{ texture = "levels/lava/sharp_corner_hole", }},
+        },
+        sharp_middle_thing = {
+            planes = {{ texture = "levels/lava/sharp_middle_thing", }},
+        },
+        sharp_side_things = {
+            planes = {{ texture = "levels/lava/sharp_side_things", }},
         },
         middle_hole = {
             planes = {
-                { texture = "levels/lava/middle_hole4", position = {0, 0, 0}},
-                { texture = "levels/lava/middle_hole3", position = {0, 0, -1}},
-                { texture = "levels/lava/middle_hole2", position = {0, 0, -2}},
-                { texture = "levels/lava/middle_hole", position = {0, 0, -3}},
+                { texture = "levels/lava/middle_hole" },
             },
         },
         breakable_wall = {
@@ -65,14 +65,16 @@ return {
     },
 
     planes = {
-        { distance = 100, name = "corner_hole_big", rotation = 0, },
-        { distance = 19, name = "corner_hole_big", rotation = 90, },
-        { distance = 19, name = "corner_hole_big", rotation = 180, },
-        { distance = 19, name = "corner_hole_big", rotation = 270, },
-        { distance = 19, name = "corner_hole_big", rotation = 0, },
-        { distance = 19, name = "corner_hole_big", rotation = 90, },
-        { distance = 19, name = "corner_hole_big", rotation = 180, },
-        { distance = 19, name = "corner_hole_big", rotation = 270, },
+        { distance = 100, name = "sharp_corner_hole", },
+        { distance = 15, name = "sharp_corner_hole", rotation = 90, },
+        { distance = 15, name = "sharp_corner_hole", rotation = 180, },
+        { distance = 15, name = "sharp_corner_hole", rotation = 270, },
+
+        { distance = 40, name = "sharp_middle_thing", rotation = 0, },
+        { distance = 15, name = "sharp_side_things", rotation = 0, },
+        { distance = 10, name = "sharp_middle_thing", rotation = 180, },
+        { distance = 10, name = "sharp_side_things", rotation = 180, },
+
         { distance = 40, name = "corner_hole", rotation = 90, },
         { distance = 25, name = "middle_hole", rotation = 0, },
         { distance = 10, name = "breakable_wall", rotation = 0, switchSidePlanes = true },
