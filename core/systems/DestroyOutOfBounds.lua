@@ -12,7 +12,7 @@ function DestroyOutOfBounds:update()
     end
     for _, e in ipairs(self.pool) do
         local cameraZ = camera.position.value.z
-        if e.position.value.z > cameraZ + 5 or e.position.value.z < cameraZ - 130 then
+        if e.position.value.z > cameraZ + 15 or e.position.value.z < cameraZ - 130 then
             e:destroy()
         end
     end

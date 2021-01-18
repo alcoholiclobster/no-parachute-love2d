@@ -18,7 +18,7 @@ function GameScreen:initialize(levelName)
     self.levelProgress = 0
     self.playerScore = 0
     self.playerSpeed = 0
-    self.state = "game"
+    self:setState("game")
 
     self.speedEffect = SpeedEffect:new()
     if self.levelConfig.enableTutorial then
@@ -42,6 +42,16 @@ end
 
 function GameScreen:restartLevel()
     self.screenManager:transition("GameScreen", self.levelName)
+end
+
+function GameScreen:setState(newState)
+    self.state = newState
+
+    if self.state == "game" then
+        love.mouse.setVisible(false)
+    else
+        love.mouse.setVisible(true)
+    end
 end
 
 function GameScreen:draw()
@@ -122,7 +132,7 @@ function GameScreen:draw()
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.5
         if buttons.drawButton("Continue", buttonX, buttonY, buttonWidth, buttonHeight) then
-            self.state = "game"
+            self:setState("game")
         end
         buttonY = buttonY + buttonHeight + 10
         if buttons.drawButton("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
@@ -169,7 +179,7 @@ function GameScreen:updateSpeed(value)
 end
 
 function GameScreen:showDeathScreen()
-    self.state = "dead"
+    self:setState("dead")
 end
 
 function GameScreen:update(deltaTime)
@@ -190,9 +200,9 @@ end
 function GameScreen:handleKeyPress(key, ...)
     if key == "escape" then
         if self.state == "game" then
-            self.state = "pause"
+            self:setState("pause")
         elseif self.state == "pause" then
-            self.state = "game"
+            self:setState("game")
         end
     else
         self.gameManager:handleKeyPress(key, ...)

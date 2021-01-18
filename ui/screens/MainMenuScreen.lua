@@ -43,7 +43,8 @@ function MainMenuScreen:initialize()
 end
 
 function MainMenuScreen:onShow()
-
+    love.window.setTitle("No Parachute")
+    love.mouse.setVisible(true)
 end
 
 function MainMenuScreen:onHide()
@@ -86,6 +87,7 @@ function MainMenuScreen:draw()
 
     for _, listItem in ipairs(self.levelsList) do
         if buttons.drawButton(listItem.text, buttonX, buttonY, buttonWidth, buttonHeight) then
+            love.window.setTitle("No Parachute - " .. listItem.level)
             self.screenManager:transition("GameScreen", listItem.level)
         end
         buttonY = buttonY + buttonHeight
