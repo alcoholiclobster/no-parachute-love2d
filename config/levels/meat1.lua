@@ -22,14 +22,20 @@ return {
     },
 
     planeTypes = {
+        wall_hands = {
+            planes = {{ texture = "levels/meat/obstacles/wall_hands", }},
+        },
         side_hand = {
             planes = {{ texture = "levels/meat/obstacles/side_hand", }},
         },
     },
 
     planes = {
-        { distance = 100, name = "side_hand", },
-        { distance = 100, name = "side_hand", },
+        { distance = 100, name = "wall_hands", },
+        { distance = 5, name = "wall_hands", rotation = 90 },
+        { distance = 5, name = "wall_hands", rotation = 180 },
+        { distance = 5, name = "side_hand", },
+        { distance = 10, name = "side_hand", rotation = 180 },
         { distance = 100, name = "side_hand", },
         { distance = 100, name = "side_hand", },
         { distance = 100, name = "side_hand", },
