@@ -45,6 +45,9 @@ return {
         sharp_side_things = {
             planes = {{ texture = "levels/lava/sharp_side_things", }},
         },
+        wide_middle_thing = {
+            planes = {{ texture = "levels/lava/wide_middle_thing", }},
+        },
         middle_hole = {
             planes = {
                 { texture = "levels/lava/middle_hole" },
@@ -69,6 +72,8 @@ return {
         { distance = 15, name = "sharp_corner_hole", rotation = 90, },
         { distance = 15, name = "sharp_corner_hole", rotation = 180, },
         { distance = 15, name = "sharp_corner_hole", rotation = 270, },
+
+        { distance = 50, name = "wide_middle_thing", },
 
         { distance = 40, name = "sharp_middle_thing", rotation = 0, },
         { distance = 15, name = "sharp_side_things", rotation = 0, },
