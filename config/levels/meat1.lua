@@ -22,18 +22,18 @@ return {
     },
 
     planeTypes = {
-        long_meat_middle_thing = {
-            planes = {{ texture = "levels/meat/obstacles/long_meat_middle_thing", }},
+        side_hand = {
+            planes = {{ texture = "levels/meat/obstacles/side_hand", }},
         },
     },
 
     planes = {
-        { distance = 100, name = "long_meat_middle_thing", },
-        { distance = 100, name = "long_meat_middle_thing", },
-        { distance = 100, name = "long_meat_middle_thing", },
-        { distance = 100, name = "long_meat_middle_thing", },
-        { distance = 100, name = "long_meat_middle_thing", },
-        { distance = 100, name = "long_meat_middle_thing", },
+        { distance = 100, name = "side_hand", },
+        { distance = 100, name = "side_hand", },
+        { distance = 100, name = "side_hand", },
+        { distance = 100, name = "side_hand", },
+        { distance = 100, name = "side_hand", },
+        { distance = 100, name = "side_hand", },
 
         { distance = 5000000 },
     },
