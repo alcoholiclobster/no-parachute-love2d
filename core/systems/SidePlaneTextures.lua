@@ -1,5 +1,6 @@
 local Concord = require("lib.concord")
 local assets = require("core.assets")
+local maf = require("lib.maf")
 
 local SidePlaneTextures = Concord.system({
     levelStreamerPool = {"levelStreamer"},
@@ -30,7 +31,9 @@ function SidePlaneTextures:update()
             else
                 textureIndex = config.textures[math.random(1, #config.textures)]
             end
-            e:give("texture", assets.texture(textureIndex))
+            local texture = assets.texture(textureIndex)
+            e:give("texture", texture)
+             :give("size", maf.vec3(texture:getWidth() / 128 * 10, texture:getHeight() / 128 * 10))
             if config.pattern then
                 levelStreamer.sidePlanePatternIndex = levelStreamer.sidePlanePatternIndex + 1
             end

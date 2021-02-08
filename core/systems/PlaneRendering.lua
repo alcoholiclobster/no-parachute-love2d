@@ -82,7 +82,7 @@ local function render(e, camera)
             r, g, b, 1
         )
 
-        local mul = 1/2*scale*10
+        local mul = (1/2*scale*10)*(e.size.value.x/10)
         love.graphics.draw(assets.texture("plane_border"), 0, 0, 0, mul, mul, 4, 4)
     end
 
