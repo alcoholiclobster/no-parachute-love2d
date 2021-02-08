@@ -73,6 +73,12 @@ function TunnelShape:update(deltaTime)
         tunnelCenter.position.value.x = tunnelCenter.position.value.x + (centerSidePlane.position.value.x - tunnelCenter.position.value.x) * deltaTime * 5
         tunnelCenter.position.value.y = tunnelCenter.position.value.y + (centerSidePlane.position.value.y - tunnelCenter.position.value.y) * deltaTime * 5
         tunnelCenter.position.value.z = player.position.value.z
+
+        if centerSidePlane.texture then
+            local size = centerSidePlane.texture.value:getWidth() / 128 * 10
+            tunnelCenter.size.value.x = size
+            tunnelCenter.size.value.y = size
+        end
     end
 
     if topSidePlane then

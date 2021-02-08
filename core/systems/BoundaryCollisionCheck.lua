@@ -14,12 +14,14 @@ local BoundaryCollisionCheck = Concord.system({
 
 function BoundaryCollisionCheck:update()
     local centerPos = maf.vec3(0, 0, 0)
+    local tunnelHalfSize = 5
     if self.tunnelCenterPool[1] then
         centerPos = self.tunnelCenterPool[1].position.value
+        tunnelHalfSize = self.tunnelCenterPool[1].size.value.x / 2
     end
 
     for _, e in ipairs(self.pool) do
-        local maxPos = 5 - e.size.value.x * 0.3
+        local maxPos = tunnelHalfSize - e.size.value.x * 0.3
 
         if e.position.value.x < -maxPos + centerPos.x then
             e.position.value.x = -maxPos + centerPos.x

@@ -9,14 +9,16 @@ local LimbBoundaryCollision = Concord.system({
 
 function LimbBoundaryCollision:update(deltaTime)
     local centerPos = maf.vec3(0, 0, 0)
+    local tunnelHalfSize = 5
     if self.tunnelCenterPool[1] then
         centerPos = self.tunnelCenterPool[1].position.value
+        tunnelHalfSize = self.tunnelCenterPool[1].size.value.x / 2
     end
 
     for _, e in ipairs(self.pool) do
         local offset = mathUtils.rotateVector2D(e.obstacleCollisionCheckOffset.value, e.rotation.value)
         local position = e.position.value + offset
-        local maxPos = 5 - math.abs(e.size.value.x) * 0.15
+        local maxPos = tunnelHalfSize - math.abs(e.size.value.x) * 0.15
 
         local isCollidingLeft = position.x < -maxPos + centerPos.x
         local isCollidingRight = position.x > maxPos + centerPos.x
