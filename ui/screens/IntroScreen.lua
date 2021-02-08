@@ -29,7 +29,7 @@ function IntroScreen:handleKeyPress(key, ...)
 end
 
 function IntroScreen:startGame()
-    self.screenManager:transition("GameScreen", "level1_1")
+    self.screenManager:transition("GameScreen", "intro")
 end
 
 return IntroScreen

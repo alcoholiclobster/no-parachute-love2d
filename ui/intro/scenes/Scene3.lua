@@ -36,7 +36,8 @@ function Scene3:process()
     self.isPlaneMoving = true
 
     scheduler.wait(2.5)
-    self.introManager:changeScene("Scene4")
+    -- self.introManager:changeScene("Scene4")
+    self.introManager:startGame()
 end
 
 function Scene3:update(deltaTime)
