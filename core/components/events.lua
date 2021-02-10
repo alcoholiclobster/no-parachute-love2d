@@ -27,8 +27,8 @@ Concord.component("obstacleHitByEntityEvent", function(component, entity, hitPos
     component.textureY = textureY
 end)
 
-Concord.component("updateTunnelShapeEvent", function(component, direction, offset, shapeType)
+Concord.component("updateTunnelShapeEvent", function(component, direction, offset, rotationSpeed)
     component.direction = direction
     component.offset = offset
-    component.shapeType = shapeType
+    component.rotationSpeed = rotationSpeed
 end)

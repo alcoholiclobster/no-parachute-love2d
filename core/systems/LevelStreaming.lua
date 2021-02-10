@@ -146,7 +146,7 @@ function LevelStreaming:update(deltaTime)
                     :give("updateTunnelShapeEvent",
                         s.direction and maf.vec3(s.direction[1], s.direction[2], 0),
                         s.offset and maf.vec3(s.offset[1], s.offset[2], 0),
-                        s.shapeType)
+                        s.rotationSpeed)
             end
         end
     end

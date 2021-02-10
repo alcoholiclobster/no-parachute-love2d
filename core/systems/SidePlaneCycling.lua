@@ -19,7 +19,7 @@ function SidePlaneCycling:update(deltaTime)
             if tunnelEnd then
                 e.position.value.x = tunnelEnd.position.value.x
                 e.position.value.y = tunnelEnd.position.value.y
-                e.rotation.value = tunnelEnd.rotation.value
+                e.rotation.value = tunnelEnd.rotation.value + math.random(1, 4) * math.pi * 0.5
             end
             e:give("sidePlaneRespawnEvent")
         end

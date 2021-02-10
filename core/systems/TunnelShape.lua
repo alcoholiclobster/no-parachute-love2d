@@ -1,5 +1,6 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
+local mathUtils = require("utils.math")
 
 local TunnelShape = Concord.system({
     cameraPool = {"camera"},
@@ -35,12 +36,9 @@ function TunnelShape:update(deltaTime)
         return
     end
 
-    for _, e in ipairs(self.tunnelEndPool) do
-        -- e.velocity.value.x = math.cos(love.timer.getTime() * 2.2) * 6
-        -- e.velocity.value.y = math.sin(love.timer.getTime() * 2.2) * 6
-
-        e.position.value.z = camera.position.value.z - 100
-    end
+    local tunnelEnd = self.tunnelEndPool[1]
+    tunnelEnd.position.value.z = camera.position.value.z - 100
+    tunnelEnd.position.value = tunnelEnd.position.value + mathUtils.rotateVector2D(tunnelEnd.tunnelEnd.direction, tunnelEnd.rotation.value) * deltaTime
 
     local tunnelCenter = self.tunnelCenterPool[1]
     local tunnelTop = self.tunnelTopPool[1]

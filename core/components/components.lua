@@ -178,4 +178,5 @@ end)
 
 Concord.component("tunnelEnd", function(component)
     component.velocityMode = "none"
+    component.direction = maf.vec3(0, 0, 0)
 end)

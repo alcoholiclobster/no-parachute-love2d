@@ -13,11 +13,15 @@ function TunnelShapeUpdate:update()
 
     for _, e in ipairs(self.pool) do
         local event = e.updateTunnelShapeEvent
-        if event.shapeMode then
-
+        if event.rotationSpeed then
+            if event.rotationSpeed > 0 then
+                tunnelEnd:give("rotationSpeed", event.rotationSpeed)
+            else
+                tunnelEnd:remove("rotationSpeed")
+            end
         end
         if event.direction then
-            tunnelEnd.velocity.value = event.direction:clone()
+            tunnelEnd.tunnelEnd.direction = event.direction:clone()
         end
         if event.offset then
             tunnelEnd.position.value = tunnelEnd.position.value + event.offset
