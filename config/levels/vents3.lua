@@ -37,6 +37,12 @@ return {
             },
             pattern = { 1, 1, 1, 1, 1, 1, 2, 2 },
         },
+        {
+            textures = {
+                "levels/meat/side_planes/cave1",
+                "levels/meat/side_planes/cave2",
+            },
+        },
     },
 
     planeTypes = {
@@ -260,6 +266,6 @@ return {
         { distance = 4, name = "fan_part2" },
         { distance = 4, name = "fan_part2" },
         { distance = 20, name = "middle_small_hole" },
-        { distance = 50, name = "middle_door", rotation = 90 },
+        { distance = 50, name = "middle_door", rotation = 90, switchSidePlanes = true },
     }
 }
