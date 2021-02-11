@@ -1,6 +1,6 @@
 return {
     name = "Flesh Hell 1",
-    nextLevel = nil,
+    nextLevel = "meat2",
 
     fallSpeed = 47,
     fogColor = {25, 10, 0},
@@ -30,28 +30,6 @@ return {
         wall_hands = {
             planes = {{ texture = "levels/meat/obstacles/wall_hands", }},
         },
-        big_skull = {
-            planes = {
-                { texture = "levels/meat/obstacles/big_skull", },
-                { texture = "levels/meat/obstacles/big_skull_eyes", position = {0, 0, -4}, decorative = true  }
-            },
-        },
-        side_hand = {
-            planes = {{ texture = "levels/meat/obstacles/side_hand", }},
-        },
-        moving_hands = {
-            planes = {
-                { texture = "levels/meat/obstacles/big_hand", rotationSpeed = 0.4, position = {-5, 1, 0}},
-                { texture = "levels/meat/obstacles/big_hand_right", rotationSpeed = -0.6, position = {5, 2, 0}},
-            },
-        },
-        huge_bone = {
-            planes = {
-                { texture = "levels/meat/obstacles/huge_bone_test"}
-            }
-        },
-
-        --
         stone_hole = {
             planes = {{ texture = "levels/meat/obstacles/stone_obstacle1", }},
         },
@@ -149,7 +127,7 @@ return {
         { distance = 10, name = "meat_half_wall" },
 
         { distance = 10, name = "meat_long_middle_thing", rotation = 90 },
-        { distance = 15, tunnelShape = { direction = {0, 0}, rotationSpeed = 3 },},
+        { distance = 15, tunnelShape = { direction = {0, 8}, rotationSpeed = 3 },},
 
         { distance = 5, name = "meat_long_middle_thing" },
         { distance = 5, name = "meat_half_wall" },
