@@ -125,7 +125,6 @@ function LevelStreaming:update(deltaTime)
                     planeRotation = planeRotation + tunnelEnd.rotation.value
                 end
 
-
                 spawnLevelPlane(
                     world,
                     planeConfig,

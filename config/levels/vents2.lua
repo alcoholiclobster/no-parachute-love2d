@@ -17,6 +17,18 @@ return {
                 "levels/vents/decorative2",
                 "levels/vents/decorative3",
             }
+        },
+        {
+            textures = {
+                "levels/vents/decorative_big",
+            }
+        },
+        {
+            textures = {
+                "levels/vents/decorative1",
+                "levels/vents/decorative2",
+                "levels/vents/decorative3",
+            }
         }
     },
 
@@ -106,7 +118,31 @@ return {
                 { texture = "levels/vents/fan", rotationSpeed = -4, },
                 { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
             },
-        }
+        },
+
+        big_transition_obstacle = {
+            planes = {
+                { texture = "levels/vents/big_transition_obstacle" },
+                { texture = "levels/vents/decorative1", decorative = true, position = {0, 0, -2}, rotation = 90},
+                { texture = "levels/vents/decorative1", decorative = true, position = {0, 0, -4}, rotation = 0},
+                { texture = "levels/vents/decorative1", decorative = true, position = {0, 0, -6}, rotation = 180},
+                { texture = "levels/vents/decorative1", decorative = true, position = {0, 0, -8}, rotation = 270},
+                { texture = "levels/vents/decorative1", decorative = true, position = {0, 0, -10}, rotation = 270},
+            }
+        },
+
+        big_obstacle1 = {
+            planes = {
+                { texture = "levels/vents/big_obstacle1", position = {0, 0, 0} },
+            }
+        },
+
+        big_obstacle2 = {
+            planes = {
+                { texture = "levels/vents/big_obstacle2", position = {0, 0, 0} },
+                { texture = "levels/vents/big_obstacle3", position = {0, 0, -1} },
+            }
+        },
     },
 
     planes = {
@@ -134,28 +170,16 @@ return {
         { name = "middle_wide_hole", distance = 15, rotation = 0, },
         { name = "fan_reversed", distance = 45, rotation = 0, },
         { name = "middle_wide_hole", distance = 25, rotation = 0, },
-        { name = "middle_small_hole", distance = 15, rotation = 0, },
+        { name = "middle_small_hole", distance = 15, rotation = 0, switchSidePlanes = true },
 
         -- Ez part
-        { distance = 20, tunnelShape = { offset = {1, 0} }},
-        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        { distance = 10, tunnelShape = { offset = {-4, 0} }},
-
-        { distance = 20, tunnelShape = { offset = {0, 1} }},
-        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        { distance = 10, tunnelShape = { offset = {0, -4} }},
-
-        { distance = 20, tunnelShape = { offset = {1, 0} }},
-        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        { distance = 0.1, tunnelShape = { offset = {1, 0} }},
-        { distance = 10, tunnelShape = { offset = {-4, 0} }},
-
-        { distance = 20, tunnelShape = { offset = {0, 1} }},
-        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        { distance = 0.1, tunnelShape = { offset = {0, 1} }},
-        { distance = 10, tunnelShape = { offset = {0, -4} }},
+        { name = "big_obstacle2", distance = 60 },
+        { name = "big_obstacle2", distance = 40, rotation = 90 },
+        { name = "big_obstacle1", distance = 20, rotation = 90, position = {0, 5, 0} },
+        { name = "big_obstacle1", distance = 10, rotation = 90, position = {0, -5, 0} },
+        { name = "big_obstacle2", distance = 10, rotation = 0, position = {0, -2, 0} },
+        { name = "big_transition_obstacle", distance = 30 },
+        { distance = 10, switchSidePlanes = true},
 
         { name = "middle_small_hole", distance = 15, rotation = 0, },
 
