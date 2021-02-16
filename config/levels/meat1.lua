@@ -51,6 +51,12 @@ return {
                 { texture = "levels/vents/middle_door", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1, },
             },
         },
+        fan = {
+            planes = {
+                { texture = "levels/meat/obstacles/fan", rotationSpeed = 1, },
+                { texture = "levels/meat/obstacles/fan_holder", position = {0, 0, -0.5} },
+            },
+        },
         meat_long_middle_thing = {
             planes = {
                 { texture = "levels/meat/obstacles/long_meat_middle_thing" },
@@ -96,6 +102,7 @@ return {
         { distance = 10, name = "stone_breakable_wall", rotation = 0, switchSidePlanes = true, },
         { distance = 30, tunnelShape = { direction = {10, 0}, rotationSpeed = 0.2 },},
         { distance = 30, name = "meat_long_middle_thing" },
+        { distance = 30, name = "fan" },
         { distance = 15, name = "meat_half_wall", rotation = 90, },
         { distance = 15, tunnelShape = { direction = {0, 0}, rotationSpeed = 0 },},
         { distance = 20, tunnelShape = { direction = {10, 0}, rotationSpeed = 0.8 },},
@@ -107,6 +114,8 @@ return {
         { distance = 14, name = "meat_long_middle_thing", rotation = 180 },
         { distance = 19, name = "meat_long_middle_thing", rotation = 90 },
         { distance = 20, name = "meat_half_wall", rotation = 90 },
+        { distance = 20, name = "fan" },
+        { distance = 20, name = "fan", rotation = 90 },
         { distance = 15, name = "meat_long_middle_thing" },
         { distance = 17, name = "meat_half_wall", rotation = 180 },
         { distance = 20, name = "meat_long_middle_thing" },

@@ -56,6 +56,9 @@ function GameInit:init()
         :give("position", maf.vec3(0, 0, 0))
         :give("rotation", 0)
         :give("camera")
+
+    Concord.entity(world)
+        :give("gameState")
 end
 
 return GameInit

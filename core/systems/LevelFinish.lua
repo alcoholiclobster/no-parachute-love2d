@@ -3,7 +3,8 @@ local maf = require("lib.maf")
 
 local LevelFinish = Concord.system({
     charactersPool = {"character", "position", "controlledByPlayer", "velocity", "moveDirection", "levelProgress"},
-    cameraPool = {"camera"}
+    cameraPool = {"camera"},
+    gameStatePool = {"gameState"},
 })
 
 function LevelFinish:update(deltaTime)
@@ -17,7 +18,7 @@ function LevelFinish:update(deltaTime)
                 self.cameraPool[1]:give("velocity", maf.vec3(0, 0, character.velocity.value.z * 0.9))
             end
 
-            self:getWorld().gameManager.ui.state = "finished"
+            self:getWorld().gameManager:triggerUI("showFinishedScreen", self.gameStatePool[1].gameState.timePassed)
         end
     end
 end

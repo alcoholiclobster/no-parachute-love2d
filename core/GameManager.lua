@@ -16,6 +16,7 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.deltaTimeMultiplier = 1
 
     self.world:addSystem(require("core.systems.GameInit"))
+    self.world:addSystem(require("core.systems.GameStateUpdate"))
     self.world:addSystem(require("core.systems.CharacterSpawn"))
     self.world:addSystem(require("core.systems.LifeTime"))
     self.world:addSystem(require("core.systems.TunnelShapeUpdate"))

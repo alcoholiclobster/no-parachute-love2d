@@ -151,6 +151,7 @@ function GameScreen:draw()
 
         local score = tostring(math.ceil(self.playerScore))
         love.graphics.printf("Score: "..score, 0, screenHeight * 0.3 + 70, screenWidth, "center")
+        love.graphics.printf("Time passed: "..tostring(self.timePassed), 0, screenHeight * 0.3 + 140, screenWidth, "center")
 
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
@@ -180,6 +181,16 @@ end
 
 function GameScreen:showDeathScreen()
     self:setState("dead")
+end
+
+function GameScreen:showFinishedScreen(timePassed)
+    self:setState("finished")
+    self.timePassed = timePassed or 0
+
+    local minutes = math.floor(self.timePassed / 60)
+    local seconds = self.timePassed % 60
+
+    self.timePassed = string.format("%02d:%02d", minutes, seconds)
 end
 
 function GameScreen:update(deltaTime)
