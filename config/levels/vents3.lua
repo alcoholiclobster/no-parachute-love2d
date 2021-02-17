@@ -197,7 +197,7 @@ return {
 
     planes = {
         -- Curved tunnel
-        { distance = 100, tunnelShape = { direction = {17, 10} }},
+        { distance = 120, tunnelShape = { direction = {17, 10} }},
         { distance = 30, name = "middle_wide_door", rotation = 90 },
         { distance = 1, tunnelShape = { direction = {-10, 0} }},
         { distance = 30, tunnelShape = { direction = {0, 0} }},
