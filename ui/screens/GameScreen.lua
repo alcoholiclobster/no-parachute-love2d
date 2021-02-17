@@ -220,6 +220,12 @@ function GameScreen:handleKeyPress(key, ...)
     end
 end
 
+function GameScreen:handleWindowFocus(isFocused)
+    if not isFocused then
+        self:setState("pause")
+    end
+end
+
 function GameScreen:handleKeyRelease(...)
     self.gameManager:handleKeyRelease(...)
 end

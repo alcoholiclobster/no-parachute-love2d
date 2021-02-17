@@ -93,6 +93,10 @@ function love.keyreleased(...)
     screenManager:emit("handleKeyRelease", ...)
 end
 
+function love.focus(isFocused)
+    screenManager:emit("handleWindowFocus", isFocused)
+end
+
 function love.joystickadded(joystick)
     joystickManager.add(joystick)
 end
