@@ -26,8 +26,9 @@ function LimbBoundaryCollision:update(deltaTime)
         local isCollidingDown = position.y > maxPos + centerPos.y
         local isColliding = isCollidingLeft or isCollidingRight or isCollidingUp or isCollidingDown
 
-        if isColliding and not e.damageEvent then
+        if isColliding and not e.damageEvent and not e.damageCooldown then
             e:give("damageEvent", 1)
+            e:give("damageCooldown", 0.5)
 
             local parentVelocity = e.attachToEntity.value.velocity
             if isCollidingLeft then

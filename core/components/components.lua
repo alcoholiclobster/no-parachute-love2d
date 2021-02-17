@@ -186,3 +186,7 @@ end)
 Concord.component("gameState", function(component)
     component.timePassed = 0
 end)
+
+Concord.component("damageCooldown", function(component, time)
+    component.time = time or 1
+end)
