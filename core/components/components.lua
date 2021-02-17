@@ -121,8 +121,9 @@ Concord.component("lifeTime", function(component, value)
     component.value = value or 0
 end)
 
-Concord.component("bloodSpawnEvent", function(component, level)
+Concord.component("bloodSpawnEvent", function(component, level, screenBloodLevel)
     component.level = level or 1
+    component.screenBloodLevel = screenBloodLevel or 0
 end)
 
 Concord.component("deferredDecal", function(component, name, entity, textureX, textureY, rotation)
