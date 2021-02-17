@@ -9,6 +9,9 @@ function Damage:update(deltaTime)
     for _, e in ipairs(self.damagePool) do
         if not e.damageCooldown then
             e.health.value = e.health.value - e.damageEvent.damage
+            if e.damageEvent.cooldown > 0 then
+                e:give("damageCooldown", e.damageEvent.cooldown)
+            end
 
             if e.health.value <= 0 then
                 e:give("deathEvent")

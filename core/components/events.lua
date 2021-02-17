@@ -12,8 +12,9 @@ Concord.component("characterSpawnRequest", function(component, characterType, co
     component.controlledByPlayer = not not controlledByPlayer
 end)
 
-Concord.component("damageEvent", function(component, damage)
+Concord.component("damageEvent", function(component, damage, cooldown)
     component.damage = damage or 0
+    component.cooldown = cooldown or 0
 end)
 
 Concord.component("deathEvent")

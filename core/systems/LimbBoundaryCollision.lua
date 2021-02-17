@@ -28,19 +28,24 @@ function LimbBoundaryCollision:update(deltaTime)
             local isColliding = isCollidingLeft or isCollidingRight or isCollidingUp or isCollidingDown
 
             if isColliding and not e.damageEvent then
-                e:give("damageEvent", 1)
-                e:give("damageCooldown", math.random() * 0.2 + 0.3)
+                local parentVelocity = e.attachToEntity.value.velocity.value
+                local parentVelocityLen = #parentVelocity
 
-                local parentVelocity = e.attachToEntity.value.velocity
-                local pushVelocity = math.max(4, #parentVelocity.value * 0.2)
+                e:give(
+                    "damageEvent",
+                    math.max(1, parentVelocityLen * 0.075),
+                    math.random() * 0.2 + 0.3
+                )
+
+                local pushVelocity = math.max(4, parentVelocityLen * 0.2)
                 if isCollidingLeft then
-                    parentVelocity.value.x = pushVelocity
+                    parentVelocity.x = pushVelocity
                 elseif isCollidingRight then
-                    parentVelocity.value.x = -pushVelocity
+                    parentVelocity.x = -pushVelocity
                 elseif isCollidingUp then
-                    parentVelocity.value.y = pushVelocity
+                    parentVelocity.y = pushVelocity
                 elseif isCollidingDown then
-                    parentVelocity.value.y = -pushVelocity
+                    parentVelocity.y = -pushVelocity
                 end
 
                 -- Create blood
