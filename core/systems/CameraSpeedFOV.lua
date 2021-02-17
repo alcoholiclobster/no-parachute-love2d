@@ -21,7 +21,7 @@ function CameraSpeedFOV:update(deltaTime)
     local velocityIncrease = mathUtils.clamp01((velocity.z / -gameManager.levelConfig.fallSpeed - 1) / 0.5)
 
     cameraEntity.camera.fov = 1 + velocityIncrease * 0.6
-    cameraEntity.camera.followDistance = 8 - velocityIncrease * 2
+    cameraEntity.camera.followDistance = cameraEntity.camera.distanceFromPlayer - velocityIncrease * 2
 
     gameManager:triggerUI("setSpeedEffectAmount", velocityIncrease)
 end

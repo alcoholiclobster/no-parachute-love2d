@@ -1,10 +1,12 @@
+local size = 2.5
+
 return {
     acceleration = 60,
     friction = 3,
 
     body = {
         texture = "characters/player/torso",
-        size = { x = 2.5, y = 2.5 },
+        size = { x = size, y = size },
     },
 
     limbs = {
@@ -14,7 +16,7 @@ return {
                 destroyed = "characters/player/hand_missing"
             },
 
-            size = { x = 2.5, y = 2.5 },
+            size = { x = size, y = size },
             offset = { x = 0, y = 0, z = -0.1 },
 
             rotationPoses = {
@@ -37,7 +39,7 @@ return {
                 destroyed = "characters/player/hand_missing2"
             },
 
-            size = { x = -2.5, y = 2.5 },
+            size = { x = -size, y = size },
             offset = { x = -0.08, y = 0, z = -0.1 },
 
             rotationPoses = {
@@ -60,7 +62,7 @@ return {
                 destroyed = "characters/player/leg_missing"
             },
 
-            size = { x = 2.5, y = 2.5 },
+            size = { x = size, y = size },
             offset = { x = 0, y = 0, z = -0.1 },
 
             rotationPoses = {
@@ -83,7 +85,7 @@ return {
                 destroyed = "characters/player/leg_missing2"
             },
 
-            size = { x = -2.5, y = 2.5 },
+            size = { x = -size, y = size },
             offset = { x = -0.08, y = 0, z = -0.1 },
 
             rotationPoses = {
