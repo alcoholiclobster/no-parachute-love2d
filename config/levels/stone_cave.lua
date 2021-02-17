@@ -122,8 +122,8 @@ return {
         { name = "obstacle_long_thing", distance = 35, rotation = 270, position = {0, -4, 0} },
 
         { name = "obstacle_two_corner_holes", distance = 10, rotation = 0 },
-        { name = "obstacle_two_corner_holes", distance = 22, rotation = 90 },
-        { name = "obstacle_two_corner_holes", distance = 22, rotation = 180 },
+        { name = "obstacle_two_corner_holes", distance = 35, rotation = 90 },
+        { name = "obstacle_two_corner_holes", distance = 35, rotation = 180 },
         { name = "obstacle_half_hole_sharp", distance = 80, rotation = 270 },
         { name = "obstacle_half_hole_sharp", distance = 10, rotation = 0 },
         { name = "obstacle_half_hole_sharp", distance = 10, rotation = 90 },
