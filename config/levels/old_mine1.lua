@@ -175,35 +175,17 @@ return {
         { name = "side_wood1", distance = 20, rotation = 270 },
 
         { distance = 30, tunnelShape = { direction = {0, 10} } },
-        { distance = 30, tunnelShape = { direction = {0, 12} } },
-        { distance = 30, tunnelShape = { direction = {0, 14} } },
-        { distance = 50, tunnelShape = { direction = {0, -10} } },
+        { distance = 30, tunnelShape = { direction = {5, 10} } },
+        { distance = 40, tunnelShape = { direction = {0, -10} } },
         { name = "side_wood1", distance = 20, rotation = 0 },
         { distance = 20, tunnelShape = { direction = {0, 0} } },
         { name = "side_wood1", distance = 20, rotation = 0 },
 
         { name = "belts", distance = 15, rotation = 0 },
         { name = "middle_bridge", distance = 25, rotation = 90 },
-
         { name = "side_wood2", distance = 15, rotation = 0 },
-        { name = "side_wood2", distance = 15, rotation = 180 },
-
-        { distance = 50, tunnelShape = { direction = {10, 0} } },
-        { name = "side_wood1", distance = 25, rotation = 0 },
-        { distance = 25, tunnelShape = { direction = {0, 10} } },
-        { name = "side_wood1", distance = 40, rotation = 90 },
-        { distance = 10, tunnelShape = { direction = {-10, 0} } },
         { name = "side_wood1", distance = 15, rotation = 180 },
         { name = "middle_bridge", distance = 20, rotation = 90 },
-        { distance = 15, tunnelShape = { direction = {0, -10} } },
-
-        { distance = 50, tunnelShape = { direction = {0, 0} } },
-
-        { name = "belts", distance = 15, rotation = 90 },
-        { name = "middle_bridge", distance = 20, rotation = 180 },
-        { name = "belts", distance = 20, rotation = 180 },
-        { name = "middle_bridge", distance = 20, rotation = 180 },
-        { name = "middle_bridge", distance = 20, rotation = 270 },
         -- 25 seconds
     },
 }
