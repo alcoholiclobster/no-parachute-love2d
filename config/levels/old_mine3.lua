@@ -101,10 +101,13 @@ return {
     },
 
     planes = {
-        { distance = 50, name = "side_wood1", rotation = 0 },
+        { distance = 50, name = "side_wood1", rotation = 0, },
         { distance = 25, name = "side_wood1", rotation = 90 },
+        { distance = 5, name = "middle_bridge", rotation = 90 },
         { distance = 25, name = "side_wood1", rotation = 180 },
         { distance = 20, tunnelShape = { direction = {10, 0} } },
+        { distance = 1, tunnelShape = { direction = {0, 0}, rotationSpeed = 0.2 } },
+        { distance = 1, name = "middle_bridge", rotation = 90 },
         { name = "side_wood1", distance = 25, rotation = 0 },
         { distance = 25, tunnelShape = { direction = {0, 10} } },
         { name = "side_wood1", distance = 40, rotation = 90 },
@@ -128,11 +131,11 @@ return {
         {name = "minecart", distance = 20, rotation = 90 },
         {name = "middle_hole", distance = 15, rotation = 0 },
 
-        { distance = 20, tunnelShape = { direction = {8, 8} } },
+        { distance = 20, tunnelShape = { direction = {8, 8}, rotationSpeed = 0.75 } },
         { distance = 40, tunnelShape = { direction = {11, 0} }, name = "side_wood2" },
         { distance = 40, tunnelShape = { direction = {0, 12} }, name = "side_wood1" },
         { distance = 40, tunnelShape = { direction = {0, -12} }, name = "side_wood2" },
-        { distance = 40, tunnelShape = { direction = {0, 0} } },
+        { distance = 40, tunnelShape = { direction = {0, 0}, rotationSpeed = 0 } },
 
         {name = "middle_hole", distance = 5, rotation = 90 },
 
