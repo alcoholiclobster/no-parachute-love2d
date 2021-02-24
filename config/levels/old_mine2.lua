@@ -1,6 +1,7 @@
 return {
     name = "Old Mine 2",
     nextLevel = "old_mine3",
+    music = "mine_theme1",
 
     fallSpeed = 35,
     fogColor = {0, 0, 0},

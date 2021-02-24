@@ -1,6 +1,7 @@
 return {
     name = "Tutorial",
     nextLevel = "deep_forest1",
+    music = "forest_theme1",
     enableTutorial = true,
 
     fallSpeed = 25,

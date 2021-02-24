@@ -1,11 +1,12 @@
-local class = require("lib.middleclass")
-local Screen = require("ui.Screen")
-local GameManager = require("core.GameManager")
-local buttons = require("ui.controls.buttons")
 local assets = require("core.assets")
+local buttons = require("ui.controls.buttons")
+local class = require("lib.middleclass")
+local GameManager = require("core.GameManager")
+local musicManager = require("utils.musicManager")
+local Screen = require("ui.Screen")
+local settings = require("core.settings")
 local SpeedEffect = require("ui.effects.SpeedEffect")
 local Tutorial = require("ui.Tutorial")
-local settings = require("core.settings")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -34,6 +35,7 @@ function GameScreen:onHide()
     if self.tutorial then
         self.tutorial:destroy()
     end
+    self.gameManager:destroy()
 end
 
 function GameScreen:setSpeedEffectAmount(amount)
@@ -212,8 +214,10 @@ function GameScreen:handleKeyPress(key, ...)
     if key == "escape" then
         if self.state == "game" then
             self:setState("pause")
+            musicManager:setSilenced(true)
         elseif self.state == "pause" then
             self:setState("game")
+            musicManager:setSilenced(false)
         end
     else
         self.gameManager:handleKeyPress(key, ...)

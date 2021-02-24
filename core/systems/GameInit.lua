@@ -2,6 +2,7 @@ local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local maf = require("lib.maf")
 local settings = require("core.settings")
+local musicManager = require("utils.musicManager")
 
 local GameInit = Concord.system({})
 
@@ -59,6 +60,15 @@ function GameInit:init()
 
     Concord.entity(world)
         :give("gameState")
+
+
+    if not world.isMenuBackground then
+        if levelConfig.music then
+            musicManager:play(levelConfig.music)
+        else
+            musicManager:stop()
+        end
+    end
 end
 
 return GameInit

@@ -5,6 +5,7 @@ local GameScreen = require("ui.screens.GameScreen")
 local IntroScreen = require("ui.screens.IntroScreen")
 local GameManager = require("core.GameManager")
 local assets = require("core.assets")
+local musicManager = require("utils.musicManager")
 
 local MainMenuScreen = class("MainMenuScreen", Screen)
 
@@ -21,13 +22,9 @@ Twitter: @alcolobster
 ]]
 
 function MainMenuScreen:initialize()
-    self.themeMusic = love.audio.newSource("assets/music/menu_theme.mp3", "static")
-    self.themeMusic:setLooping(true)
-    self.themeMusic:setVolume(0)
-    -- self.themeMusic:play()
+    musicManager:play("menu_theme")
 
-    self.gameManager = GameManager:new(require("config.levels.deep_forest1"), self)
-    self.gameManager:initializeMenuMode()
+    self.gameManager = GameManager:new(require("config.levels.deep_forest1"), self, true)
 
     self.levelsList = {}
 
@@ -48,15 +45,9 @@ function MainMenuScreen:onShow()
 end
 
 function MainMenuScreen:onHide()
-    self.themeMusic:stop()
 end
 
 function MainMenuScreen:update(deltaTime)
-    local volume = self.themeMusic:getVolume()
-    if volume < 1 then
-        self.themeMusic:setVolume(volume + deltaTime / 2)
-    end
-
     self.gameManager:update(deltaTime)
 end
 

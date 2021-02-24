@@ -5,11 +5,12 @@ Concord.utils.loadNamespace("core/components")
 
 local GameManager = class("GameManager")
 
-function GameManager:initialize(levelConfig, uiScreen)
+function GameManager:initialize(levelConfig, uiScreen, isMenuBackground)
     self.levelConfig = levelConfig
     self.ui = uiScreen
 
     self.world = Concord.world()
+    self.world.isMenuBackground = isMenuBackground
     self.world.gameManager = self
 
     self.time = 0
@@ -47,6 +48,7 @@ function GameManager:initialize(levelConfig, uiScreen)
     self.world:addSystem(require("core.systems.LevelStreaming"))
     self.world:addSystem(require("core.systems.DestroyOutOfBounds"))
     self.world:addSystem(require("core.systems.ObstacleCollisionProcessing"))
+    self.world:addSystem(require("core.systems.ObstaclePassPlayer"))
     self.world:addSystem(require("core.systems.LimbObstacleCollision"))
     self.world:addSystem(require("core.systems.LimbBoundaryCollision"))
     self.world:addSystem(require("core.systems.Damage"))
@@ -69,7 +71,14 @@ function GameManager:initialize(levelConfig, uiScreen)
         self.world:addSystem(require("core.systems.debug.DebugFrameRateGraph"))
     end
     self.world:addSystem(require("core.systems.ScreenRendering"))
+    if not isMenuBackground then
+        self.world:addSystem(require("core.systems.SoundEffects"))
+    end
     self.world:addSystem(require("core.systems.EventCleanup"))
+
+    if isMenuBackground then
+        self:initializeMenuMode()
+    end
 end
 
 function GameManager:triggerUI(name, ...)
@@ -93,6 +102,10 @@ end
 
 function GameManager:handleKeyRelease(...)
     self.world:emit("keyRelease", ...)
+end
+
+function GameManager:destroy()
+    self.world:emit("destroy")
 end
 
 function GameManager:initializeMenuMode()

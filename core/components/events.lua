@@ -20,6 +20,7 @@ end)
 Concord.component("deathEvent")
 Concord.component("planeSpawnEvent")
 Concord.component("sidePlaneRespawnEvent")
+Concord.component("obstaclePassedPlayerEvent")
 
 Concord.component("obstacleHitByEntityEvent", function(component, entity, hitPosition, textureX, textureY)
     component.value = entity

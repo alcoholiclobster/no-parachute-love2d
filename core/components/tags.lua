@@ -16,5 +16,6 @@ Concord.component("limbDeatchRequest")
 Concord.component("breakableObstacle")
 Concord.component("tunnelCenter")
 Concord.component("tunnelTop")
+Concord.component("obstacleNotAbovePlayer")
 
 Concord.component("bloodParticle")

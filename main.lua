@@ -3,6 +3,7 @@ local ScreenManager = require("ui.ScreenManager")
 local joystickManager = require("utils.joystickManager")
 local console = require("utils.console")
 local mouseUtils = require("utils.mouse")
+local musicManager = require("utils.musicManager")
 local scheduler = require("utils.scheduler")
 local settings = require("core.settings")
 
@@ -60,6 +61,7 @@ function love.update(deltaTime)
     scheduler.update(deltaTime)
     mouseUtils.update()
     screenManager:update(deltaTime)
+    musicManager:update(deltaTime)
 
     if GLOBAL_DEBUG_ENABLED and debugSimulateFrameRate > 0 then
         debugUpdateDelay = debugUpdateDelay + deltaTime

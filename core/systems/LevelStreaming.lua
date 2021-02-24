@@ -29,6 +29,7 @@ local function spawnPlane(world, plane, worldPosition, localPositionOffset, rota
         :give("rotation", rotation)
         :give("drawable")
         :give("destroyOutOfBounds")
+        :give("obstacleNotAbovePlayer")
 
     if not plane.decorative then
         local imageData = assets.textureImageData(texture)

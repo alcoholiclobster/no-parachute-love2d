@@ -1,6 +1,7 @@
 return {
     name = "Stone cave",
     nextLevel = "vents1",
+    music = "stone_cave",
 
     fallSpeed = 35,
     fogColor = {25, 10, 10},

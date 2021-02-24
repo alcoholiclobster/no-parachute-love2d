@@ -2,6 +2,7 @@ local level_64 = require "config.levels.level_64"
 return {
     name = "Vents 2",
     nextLevel = "vents3",
+    music = "vents_theme",
 
     fallSpeed = 40,
     fogColor = {15, 0, 0},

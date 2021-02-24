@@ -1,6 +1,7 @@
 return {
     name = "Deep Forest 1",
     nextLevel = "deep_forest2",
+    music = "forest_theme2",
 
     fallSpeed = 30,
     fogColor = {0, 5, 10},

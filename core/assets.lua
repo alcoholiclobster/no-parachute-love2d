@@ -5,6 +5,7 @@ local imageDataCache = {}
 local fontsCache = {
     default_14 = love.graphics.getFont()
 }
+local soundsCache = {}
 
 function assets.texture(name)
     if texturesCache[name] then
@@ -48,6 +49,15 @@ function assets.textureImageData(texture)
         return
     end
     return imageDataCache[texture]
+end
+
+function assets.sound(name)
+    if soundsCache[name] then
+        return soundsCache[name]
+    end
+    local source = love.audio.newSource("assets/sounds/"..name, "static")
+    soundsCache[name] = source
+    return source
 end
 
 return assets
