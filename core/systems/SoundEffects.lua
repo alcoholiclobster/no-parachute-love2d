@@ -3,35 +3,66 @@ local assets = require("core.assets")
 
 local SoundEffects = Concord.system({
     obstaclesPassedPlayerPool = {"obstaclePassedPlayerEvent"},
-    playerPool = {"controlledByPlayer", "character"}
+    playerPool = {"controlledByPlayer", "character"},
+    detachedLimbsPool = {"deathEvent", "limb"},
+    limgDamagePool = {"damageEvent", "limb"},
+    obstacleHitPool = {"controlledByPlayer", "character", "obstacleCollisionEvent"},
+    obstacleBreakPool = {"breakableObstacle", "obstacleHitByEntityEvent"},
 })
 
-local obstacleSoundInstances = {}
-local lastTimePlayed = 0
+local soundInstances = {}
 
-local function getFreeObstacleSound()
-    for i, source in ipairs(obstacleSoundInstances) do
+local passedSoundLastTimePlayed = 0
+local obstacleBreakLastPlayedAt = 0
+
+local function getSoundSource(name)
+    if not soundInstances[name] then
+        soundInstances[name] = {}
+    end
+    local instances = soundInstances[name]
+
+    for i, source in ipairs(instances) do
         if not source:isPlaying() then
             return source
         end
     end
 
-    local source = love.audio.newSource("assets/sounds/obstacle.wav", "static")
-    table.insert(obstacleSoundInstances, source)
+    local source = love.audio.newSource("assets/sounds/"..name, "static")
+    table.insert(instances, source)
     return source
 end
 
 function SoundEffects:init()
-    self.windSound = assets.sound("wind_loop.ogg")
+    local world = self:getWorld()
+    local levelConfig = world.gameManager.levelConfig
+
+    if levelConfig.ambient then
+        self.ambientSound = assets.sound("ambient/"..levelConfig.ambient..".wav")
+        self.ambientSound:play()
+        self.ambientSound:setLooping(true)
+    end
+
+    self.windSound = assets.sound("wind_loop.wav")
     self.windSound:play()
     self.windSound:setLooping(true)
+
+    self.windClothesSound = assets.sound("wind_clothes_loop.wav")
+    self.windClothesSound:play()
+    self.windClothesSound:setLooping(true)
 
     self.obstacleSound = assets.sound("obstacle.wav")
 end
 
 function SoundEffects:destroy()
     self.windSound:stop()
+    self.windClothesSound:stop()
     self.windSound = nil
+    self.windClothesSound = nil
+
+    if self.ambientSound then
+        self.ambientSound:stop()
+        self.ambientSound = nil
+    end
 end
 
 function SoundEffects:update(deltaTime)
@@ -43,22 +74,52 @@ function SoundEffects:update(deltaTime)
     local velocity = playerCharacter.velocity.value
     local velocityIncrease = velocity.z / -gameManager.levelConfig.fallSpeed
     if velocityIncrease > 0 then
-        self.windSound:setPitch(velocityIncrease * 0.5)
-        self.windSound:setVolume(velocityIncrease * 0.8)
+        self.windSound:setPitch(velocityIncrease * 0.75)
+        self.windClothesSound:setPitch(velocityIncrease * 0.75)
+        self.windSound:setVolume(velocityIncrease)
+        self.windClothesSound:setVolume(velocityIncrease)
     else
         self.windSound:setVolume(0)
+        self.windClothesSound:setVolume(0)
     end
 
     local time = love.timer.getTime()
-    if time - lastTimePlayed > 0.2 then
-        for _ in ipairs(self.obstaclesPassedPlayerPool) do
-            local sound = getFreeObstacleSound()
-            sound:play()
-            sound:setVolume(0.9 * velocityIncrease)
-            sound:setPitch(1.75 * velocityIncrease + math.random() * 0.5)
+    if time - passedSoundLastTimePlayed > 0.2 and #self.obstaclesPassedPlayerPool > 0 then
+        local sound = getSoundSource("obstacle.wav")
+        sound:play()
+        sound:setVolume(0.9 * velocityIncrease)
+        sound:setPitch(1.75 * math.pow(velocityIncrease, 2) + math.random() * 0.5)
 
-            lastTimePlayed = time
-        end
+        passedSoundLastTimePlayed = time
+    end
+
+    if #self.detachedLimbsPool > 0 then
+        local index = math.random(1, 2)
+        local sound = getSoundSource("limb_detach"..index..".wav")
+        sound:play()
+        sound:setVolume(1)
+        sound:setPitch(0.75 + math.random() * 0.5)
+    end
+
+    if #self.limgDamagePool > 0 then
+        local sound = getSoundSource("wall_hit.wav")
+        sound:play()
+        sound:setVolume(self.limgDamagePool[1].damageEvent.damage / 3)
+        sound:setPitch(0.5 + math.random() * 1)
+    end
+
+    if #self.obstacleHitPool > 0 then
+        local sound = getSoundSource("death_hit.wav")
+        sound:play()
+        sound:setPitch(0.75 + math.random() * 0.5)
+    end
+
+    if #self.obstacleBreakPool > 0 and time - obstacleBreakLastPlayedAt > 0.2 then
+        local sound = getSoundSource("wall_break.wav")
+        sound:play()
+        sound:setPitch(0.4 + math.random() * 0.6)
+
+        obstacleBreakLastPlayedAt = time
     end
 end
 
