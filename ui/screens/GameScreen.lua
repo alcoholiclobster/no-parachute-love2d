@@ -7,6 +7,7 @@ local Screen = require("ui.Screen")
 local settings = require("core.settings")
 local SpeedEffect = require("ui.effects.SpeedEffect")
 local Tutorial = require("ui.Tutorial")
+local mathUtils = require("utils.math")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -20,6 +21,8 @@ function GameScreen:initialize(levelName)
     self.playerScore = 0
     self.playerSpeed = 0
     self:setState("game")
+
+    self.stateChangedAt = love.timer.getTime()
 
     self.speedEffect = SpeedEffect:new()
     if self.levelConfig.enableTutorial then
@@ -48,12 +51,15 @@ end
 
 function GameScreen:setState(newState)
     self.state = newState
+    self.stateChangedAt = love.timer.getTime()
 
     if self.state == "game" then
         love.mouse.setVisible(false)
     else
         love.mouse.setVisible(true)
     end
+
+    self.gameManager:handlePause(self.state == "pause")
 end
 
 function GameScreen:draw()
@@ -95,12 +101,14 @@ function GameScreen:draw()
         love.graphics.printf("SPEED", 0, screenHeight - 50, screenWidth - 20, "right")
 
     elseif self.state == "dead" then
-        love.graphics.setColor(0, 0, 0, 0.6)
+        local stateTime = love.timer.getTime() - self.stateChangedAt
+
+        love.graphics.setColor(0, 0, 0, 0.6 * mathUtils.clamp01(stateTime * 4))
         love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
         local progress = tostring(math.floor(self.levelProgress * 100))
 
-        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.setColor(1, 1, 1, math.min(1, stateTime * 2))
         love.graphics.setFont(assets.font("Roboto-Bold", 48))
         love.graphics.printf("YOU DIED", 0, screenHeight * 0.3, screenWidth, "center")
 

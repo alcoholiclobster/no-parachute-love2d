@@ -53,6 +53,16 @@ function SoundEffects:init()
     self.obstacleSound = assets.sound("obstacle.wav")
 end
 
+function SoundEffects:handlePause(isPaused)
+    if isPaused then
+        self.windSound:stop()
+        self.windClothesSound:stop()
+    else
+        self.windSound:play()
+        self.windClothesSound:play()
+    end
+end
+
 function SoundEffects:destroy()
     self.windSound:stop()
     self.windClothesSound:stop()

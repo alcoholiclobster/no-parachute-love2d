@@ -108,6 +108,10 @@ function GameManager:destroy()
     self.world:emit("destroy")
 end
 
+function GameManager:handlePause(isPaused)
+    self.world:emit("handlePause", isPaused)
+end
+
 function GameManager:initializeMenuMode()
     self.world:getSystem(require("core.systems.LevelStreaming")):setEnabled(false)
     self.world:getSystem(require("core.systems.PlayerControl")):setEnabled(false)

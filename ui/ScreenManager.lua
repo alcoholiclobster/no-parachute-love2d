@@ -9,6 +9,7 @@ function ScreenManager:initialize()
     self.fadeInTime = 0.5
     self.fadeProgress = 0
     self.fadeScreen = nil
+    self.fadeScreenArgs = {}
 end
 
 function ScreenManager:emit(name, ...)
@@ -22,8 +23,9 @@ function ScreenManager:update(deltaTime)
         self.fadeProgress = self.fadeProgress + deltaTime / self.fadeOutTime
         if self.fadeProgress > 1 then
             self.fadeProgress = 1
-            self:show(self.fadeScreen)
+            self:show(self.fadeScreen, unpack(self.fadeScreenArgs))
             self.fadeScreen = nil
+            self.fadeScreenArgs = {}
         end
     elseif not self.fadeScreen and self.fadeProgress > 0 then
         self.fadeProgress = self.fadeProgress - deltaTime / self.fadeInTime
@@ -45,16 +47,17 @@ function ScreenManager:transition(name, ...)
         return
     end
 
-    self.fadeScreen = require("ui.screens."..name)(...)
+    self.fadeScreen = name
     self.fadeProgress = 0
+    self.fadeScreenArgs = {...}
 end
 
-function ScreenManager:show(screen)
+function ScreenManager:show(screen, ...)
     if self.screen then
         self.screen:onHide()
     end
 
-    self.screen = screen
+    self.screen = require("ui.screens."..screen)(...)
 
     if self.screen then
         self.screen.screenManager = self
