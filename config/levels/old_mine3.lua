@@ -1,6 +1,6 @@
 return {
     name = "Old Mine 3",
-    nextLevel = "stone_cave",
+    nextLevel = "stone_cave1",
     music = "mine_theme1",
 
     fallSpeed = 35,
