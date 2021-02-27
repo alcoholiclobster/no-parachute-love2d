@@ -1,6 +1,7 @@
 return {
     name = "Flesh Hell 1",
     nextLevel = "meat2",
+    music = "meat_theme",
 
     fallSpeed = 47,
     fogColor = {25, 10, 0},
@@ -11,7 +12,7 @@ return {
 
     sidePlanesCount = 60,
     sidePlanesRandomBrightness = true,
-    sidePlanesBrightness = 0.95,
+    sidePlanesBrightness = 0.9,
     sidePlanes = {
         {
             textures = {
@@ -21,7 +22,8 @@ return {
         },
         {
             textures = {
-                "levels/meat/side_planes/flesh",
+                "levels/meat/side_planes/flesh1",
+                "levels/meat/side_planes/flesh2",
             },
         },
     },
@@ -55,28 +57,40 @@ return {
             planes = {
                 { texture = "levels/meat/obstacles/fan", rotationSpeed = 1, },
                 { texture = "levels/meat/obstacles/fan_holder", position = {0, 0, -0.5} },
+                { texture = "levels/meat/obstacles/fan_holder2", position = {0, 0, -0.7} },
             },
         },
         meat_long_middle_thing = {
             planes = {
                 { texture = "levels/meat/obstacles/long_meat_middle_thing" },
+                { texture = "levels/meat/obstacles/long_meat_middle_thing2", position = {0, 0, -0.25}, decorative = true },
+            },
+        },
+        meat_decorative_corner_things2 = {
+            planes = {
+                { texture = "levels/meat/obstacles/meat_decorative_corner_things2" },
             },
         },
         meat_half_wall = {
             planes = {
-                { texture = "levels/meat/obstacles/meat_obstacle_half" },
+                { texture = "levels/meat/obstacles/meat_decorative_corner_things2", position = {0, 0, 1}, rotation = 180, decorative = true },
+                { texture = "levels/meat/obstacles/meat_obstacle_half3", position = {0, 0, 0} },
+                { texture = "levels/meat/obstacles/meat_obstacle_half3_2", position = {0, 0, -0.2}, decorative1 = true},
+                { texture = "levels/meat/obstacles/meat_obstacle_half2", position = {0, 0, -2} },
+                { texture = "levels/meat/obstacles/meat_obstacle_half", position = {0, 0, -4} },
+                { texture = "levels/meat/obstacles/meat_obstacle_half_2", position = {0, 0, -4.1}, decorative = true },
             },
         },
     },
 
     planes = {
-        { distance = 100, name = "stone_hole", rotation = 0 },
-        { distance = 20, name = "stone_small_hole", rotation = 0 },
-        { distance = 27, name = "stone_side_long_hole", rotation = 180 },
-        { distance = 25, name = "stone_small_hole", rotation = 180 },
-        { distance = 22, name = "stone_small_hole2", rotation = 180 },
-        { distance = 22, name = "stone_hole", rotation = 270 },
-        { distance = 12, name = "stone_breakable_wall", rotation = 0 },
+        -- { distance = 100, name = "stone_hole", rotation = 0 },
+        -- { distance = 20, name = "stone_small_hole", rotation = 0 },
+        -- { distance = 27, name = "stone_side_long_hole", rotation = 180 },
+        -- { distance = 25, name = "stone_small_hole", rotation = 180 },
+        -- { distance = 22, name = "stone_small_hole2", rotation = 180 },
+        -- { distance = 22, name = "stone_hole", rotation = 270 },
+        -- { distance = 12, name = "stone_breakable_wall", rotation = 0 },
         { distance = 30, name = "wall_hands", rotation = 90, tunnelShape = { rotationSpeed = 0.2 } },
         { distance = 5, name = "wall_hands", rotation = 180 },
         { distance = 6, name = "wall_hands", rotation = 90 },
