@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       # Build the applications
       - uses: nhartland/love-build@v1-beta2
+        id: love-build
         with:
          app_name: 'No Parachute'
          love_version: '11.3'
