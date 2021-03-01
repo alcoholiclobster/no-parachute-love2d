@@ -14,7 +14,7 @@ function TunnelShapeUpdate:update()
     for _, e in ipairs(self.pool) do
         local event = e.updateTunnelShapeEvent
         if event.rotationSpeed then
-            if event.rotationSpeed > 0 then
+            if event.rotationSpeed ~= 0 then
                 tunnelEnd:give("rotationSpeed", event.rotationSpeed)
             else
                 tunnelEnd:remove("rotationSpeed")
