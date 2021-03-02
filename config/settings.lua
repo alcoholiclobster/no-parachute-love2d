@@ -1,4 +1,16 @@
 return {
+    -- Sound
+    {
+        name = "music_volume",
+        readableName = "Music Volume",
+        values = { min = 0, max = 1, default = 0.5 },
+    },
+    {
+        name = "effects_volume",
+        readableName = "Effects Volume",
+        values = { min = 0, max = 1, default = 0.5 },
+    },
+
     -- Gameplay
     {
         name = "plane_fading",
