@@ -1,50 +1,28 @@
 local class = require("lib.middleclass")
 local Screen = require("ui.Screen")
-local buttons = require("ui.controls.buttons")
-local GameScreen = require("ui.screens.GameScreen")
-local IntroScreen = require("ui.screens.IntroScreen")
 local GameManager = require("core.GameManager")
-local assets = require("core.assets")
 local musicManager = require("utils.musicManager")
+local widgets = require("ui.widgets")
+local lz = require("utils.language").localize
+local assets = require "core.assets"
 
 local MainMenuScreen = class("MainMenuScreen", Screen)
 
-local howToPlayText = [[HOW TO PLAY:
-
-Use WASD or arrow keys to control player.
-Controller should probably work too (but not in menus).
-
-Avoid walls and don't die.
-
-Contact me:
-Email: bredikhin.nikita@gmail.com
-Twitter: @alcolobster
-]]
-
 function MainMenuScreen:initialize()
-    musicManager:play("menu_theme")
-
+    -- musicManager:play("menu_theme")
     self.gameManager = GameManager:new(require("config.levels.deep_forest1"), self, true)
 
-    self.levelsList = {}
+    self.buttons = {
+        { label = "main_menu_btn_play_story", },
+        { label = "main_menu_btn_play_daily_challenge", },
+        { label = "main_menu_btn_play_endless_mode", },
+        { label = "btn_settings", },
+        { label = "btn_exit_game", },
+    }
 
-    local levelName = "tutorial"
-    while levelName do
-        local config = require("config.levels."..levelName)
-        table.insert(self.levelsList, {
-            text = config.name,
-            level = levelName,
-        })
-        levelName = config.nextLevel
-    end
-end
+    self.highlightedButtonIndex = 1
 
-function MainMenuScreen:onShow()
-    love.window.setTitle("No Parachute")
-    love.mouse.setVisible(true)
-end
-
-function MainMenuScreen:onHide()
+    self.logoImage = assets.texture("logo")
 end
 
 function MainMenuScreen:update(deltaTime)
@@ -52,41 +30,34 @@ function MainMenuScreen:update(deltaTime)
 end
 
 function MainMenuScreen:draw()
-    local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-
-    love.graphics.clear(44/255, 27/255, 63/255, 1)
     self.gameManager:draw()
 
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.setFont(assets.font("Roboto-Bold", 48))
-    love.graphics.printf("No Parachute", 0, screenHeight * 0.1, screenWidth, "center", 0)
-
-    love.graphics.setFont(assets.font("Roboto-Bold", 16))
-    love.graphics.printf("DEVELOPMENT VERSION", 0, screenHeight * 0.1 + 60, screenWidth, "center", 0)
-
-    love.graphics.setFont(assets.font("Roboto-Regular", 16))
-    love.graphics.printf(howToPlayText, screenWidth * 0.1 + 250, screenHeight * 0.3 + 15, screenWidth, "left", 0)
-
-    local buttonWidth, buttonHeight = 200, 45
-    local buttonX, buttonY = screenWidth * 0.1, screenHeight * 0.3
-
-    if buttons.drawButton("Play Intro", buttonX, buttonY, buttonWidth, buttonHeight) then
-        self.screenManager:transition("IntroScreen")
+    local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
+    local btnX, btnY = screenWidth * 0.06, screenHeight * 0.5
+    local btnWidth, btnHeight = screenWidth * 0.8, screenHeight * 0.04
+    local btnSpace = screenHeight * 0.02
+    for i, buttonData in ipairs(self.buttons) do
+        widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, self.highlightedButtonIndex == i)
+        btnY = btnY + btnHeight + btnSpace
     end
 
-    buttonY = buttonY + buttonHeight + 30
+    local logoScale = screenHeight * 0.00225
+    local logoImageWidth = self.logoImage:getWidth()
+    local logoX = screenWidth * 0.5
+    local logoY = screenHeight * 0.25
+    love.graphics.draw(self.logoImage, logoX, logoY, 0, logoScale, logoScale, logoImageWidth * 0.5, self.logoImage:getHeight() * 0.5)
+end
 
-    for _, listItem in ipairs(self.levelsList) do
-        if buttons.drawButton(listItem.text, buttonX, buttonY, buttonWidth, buttonHeight) then
-            love.window.setTitle("No Parachute - " .. listItem.level)
-            self.screenManager:transition("GameScreen", listItem.level)
-        end
-        buttonY = buttonY + buttonHeight
-    end
+function MainMenuScreen:inputDown()
 
-    if buttons.drawButton("Exit to desktop", buttonX, screenHeight - buttonHeight * 2, buttonWidth, buttonHeight) then
-        love.event.quit(0)
-    end
+end
+
+function MainMenuScreen:inputUp()
+
+end
+
+function MainMenuScreen:inputSelect()
+
 end
 
 return MainMenuScreen

@@ -6,6 +6,7 @@ local mouseUtils = require("utils.mouse")
 local musicManager = require("utils.musicManager")
 local scheduler = require("utils.scheduler")
 local settings = require("core.settings")
+local languageUtils = require("utils.language")
 
 GLOBAL_DEBUG_ENABLED = true
 GLOBAL_HUD_DISABLED = false
@@ -19,6 +20,7 @@ function love.load(arg)
     console.log("love.load()")
 
     love.filesystem.setIdentity("no_parachute")
+    languageUtils.loadLanguage("ru")
 
     settings.load()
 

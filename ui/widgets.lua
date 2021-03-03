@@ -1,3 +1,5 @@
+local widgets = {}
+
 local assets = require("core.assets")
 local mouseUtils = require("utils.mouse")
 
@@ -17,22 +19,14 @@ local function drawShadowText(text, x, y, width, align)
     love.graphics.printf(text, x, y, width, align)
 end
 
-local function drawButton(text, x, y, width, height)
-    local mx, my = love.mouse.getPosition( )
-    local isMouseOver = mx > x and my > y and mx < x + width and my < y + height
-    if isMouseOver then
+function widgets.button(text, x, y, width, height, isHighlighted)
+    if isHighlighted then
         love.graphics.setColor(0.2, 0.5, 0.9, 1)
     else
         love.graphics.setColor(1, 1, 1, 1)
     end
-    love.graphics.setFont(assets.font("Roboto-Bold", 26))
+    love.graphics.setFont(assets.font("Roboto-Bold", math.floor(height)))
     drawShadowText(text, x, y + height * 0.5 - 15, width, "left")
-
-    if isMouseOver and mouseUtils.isMouseJustPressed() then
-        return true
-    end
 end
 
-return {
-    drawButton = drawButton,
-}
+return widgets
