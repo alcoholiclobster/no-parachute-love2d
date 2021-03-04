@@ -85,6 +85,10 @@ function LevelSelectionScreen:draw()
 end
 
 function LevelSelectionScreen:showBackgroundLevel(levelName)
+    if self.nextBackgroundLevelName == levelName or self.backgroundLevelName == levelName then
+        return
+    end
+
     local config = self.levelConfigs[levelName]
     if not config then
         return
