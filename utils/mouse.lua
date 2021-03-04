@@ -7,6 +7,10 @@ local function isMouseJustPressed()
     return isJustPressed
 end
 
+local function cancelClickEvent()
+    isJustPressed = false
+end
+
 local function update()
     if isJustPressed then
         isJustPressed = false
@@ -29,4 +33,5 @@ end
 return {
     isMouseJustPressed = isMouseJustPressed,
     update = update,
+    cancelClickEvent = cancelClickEvent,
 }

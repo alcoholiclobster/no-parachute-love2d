@@ -51,7 +51,7 @@ function love.load(arg)
     if args.fullscreen then
         love.window.setFullscreen(true)
     else
-        -- love.window.maximize()
+        love.window.maximize()
     end
 end
 

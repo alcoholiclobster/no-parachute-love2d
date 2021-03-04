@@ -4,22 +4,15 @@ local assets = require("core.assets")
 local mouseUtils = require("utils.mouse")
 
 local function drawShadowText(text, x, y, width, align)
-    local w = 1
+    local w = 2
     local r, g, b, a = love.graphics.getColor()
     love.graphics.setColor(0, 0, 0, a)
-    love.graphics.printf(text, x-w, y-w, width, align)
-    love.graphics.printf(text, x+w, y-w, width, align)
-    love.graphics.printf(text, x-w, y+w, width, align)
     love.graphics.printf(text, x+w, y+w, width, align)
-    love.graphics.printf(text, x+w, y, width, align)
-    love.graphics.printf(text, x-w, y, width, align)
-    love.graphics.printf(text, x, y+w, width, align)
-    love.graphics.printf(text, x, y-w, width, align)
     love.graphics.setColor(r, g, b, a)
     love.graphics.printf(text, x, y, width, align)
 end
 
-function widgets.button(text, x, y, width, height, isDisabled)
+function widgets.button(text, x, y, width, height, isDisabled, align)
     local mx, my = love.mouse.getPosition()
     local isHighlighted = mx > x and my > y and mx < x + width and my < y + height and not isDisabled
 
@@ -32,10 +25,15 @@ function widgets.button(text, x, y, width, height, isDisabled)
             love.graphics.setColor(1, 1, 1, 1)
         end
     end
-    love.graphics.setFont(assets.font("Roboto-Bold", math.floor(height)))
-    drawShadowText(text, x, y + height * 0.5 - 15, width, "left")
+    love.graphics.setFont(assets.font("Roboto-Regular", math.floor(height * 0.75)))
+    drawShadowText(text, x, y + height * 0.1, width, align or "left")
 
-    return isHighlighted and mouseUtils.isMouseJustPressed()
+    if isHighlighted and mouseUtils.isMouseJustPressed() then
+        mouseUtils.cancelClickEvent()
+        return true
+    else
+        return false
+    end
 end
 
 return widgets

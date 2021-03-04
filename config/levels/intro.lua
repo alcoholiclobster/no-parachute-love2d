@@ -1,5 +1,5 @@
 return {
-    name = "Tutorial",
+    name = "Intro",
     nextLevel = "tutorial",
 
     fallSpeed = 25,

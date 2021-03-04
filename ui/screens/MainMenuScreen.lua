@@ -17,6 +17,7 @@ function MainMenuScreen:initialize()
         { label = "main_menu_btn_play_daily_challenge" },
         { label = "main_menu_btn_play_endless_mode" },
         { label = "btn_settings" },
+        {},
         { label = "btn_exit_game", handler = "buttonHandlerExit" },
     }
 
@@ -33,28 +34,30 @@ function MainMenuScreen:draw()
     self.gameManager:draw()
 
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-    local btnX, btnY = screenWidth * 0.06, screenHeight * 0.5
-    local btnWidth, btnHeight = screenWidth * 0.8, screenHeight * 0.04
+    local btnX, btnY = screenWidth * 0.08, screenHeight * 0.5
+    local btnWidth, btnHeight = screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.04
     local btnSpace = screenHeight * 0.02
     for _, buttonData in ipairs(self.buttons) do
-        local isPressed = widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, not buttonData.handler)
-        btnY = btnY + btnHeight + btnSpace
+        if buttonData.label then
+            local isPressed = widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, not buttonData.handler)
 
-        if isPressed and buttonData.handler and self[buttonData.handler] then
-            self[buttonData.handler](self)
+            if isPressed and buttonData.handler and self[buttonData.handler] then
+                self[buttonData.handler](self)
+            end
         end
+
+        btnY = btnY + btnHeight + btnSpace
     end
 
     local logoScale = math.min(screenWidth * 0.003, screenHeight * 0.003)
-    local logoImageWidth = self.logoImage:getWidth()
-    local logoX = screenWidth * 0.05
+    local logoX = screenWidth * 0.25
     local logoY = screenHeight * 0.25
     love.graphics.setColor(1, 1, 1)
-    love.graphics.draw(self.logoImage, logoX, logoY, 0, logoScale, logoScale, 0, self.logoImage:getHeight() * 0.5)
+    love.graphics.draw(self.logoImage, logoX, logoY, 0, logoScale, logoScale, self.logoImage:getWidth() * 0.5, self.logoImage:getHeight() * 0.5)
 end
 
 function MainMenuScreen:buttonHandlerPlayStory()
-    self.screenManager:transition("GameScreen", "meat1")
+    self.screenManager:transition("LevelSelectionScreen")
 end
 
 function MainMenuScreen:buttonHandlerExit()

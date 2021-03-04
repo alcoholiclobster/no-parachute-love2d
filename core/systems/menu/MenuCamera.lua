@@ -8,18 +8,18 @@ local MenuCamera = Concord.system({
 })
 
 function MenuCamera:update(deltaTime)
-    local gameManager = self:getWorld().gameManager
     local target = self.cameraTargetPool[1]
     if not target then
         return
     end
-    target.position.value = maf.vec3(1.2 + math.sin(gameManager.time * 1.5) * 0.4, 0, target.position.value.z)
-    target.rotation.value = -0.2 + math.sin(gameManager.time) * 0.1
+    local time = love.timer.getTime() * 0.25
+    target.position.value = maf.vec3(1.2 + math.sin(time * 1.5) * 0.4, 0, target.position.value.z)
+    target.rotation.value = -0.2 + math.sin(time) * 0.1
 
     for _, e in ipairs(self.pool) do
         e.position.value.x = 0
         e.position.value.y = 0
-        e.position.value.z = target.position.value.z + 3 + math.cos(gameManager.time * 2) * 0.5
+        e.position.value.z = target.position.value.z + 3 + math.cos(time * 2) * 0.5
         e.rotation.value = 0.1
     end
 end
