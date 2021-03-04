@@ -20,7 +20,7 @@ function love.load(arg)
     console.log("love.load()")
 
     love.filesystem.setIdentity("no_parachute")
-    languageUtils.loadLanguage("ru")
+    languageUtils.loadLanguage("en")
 
     settings.load()
 
@@ -51,7 +51,7 @@ function love.load(arg)
     if args.fullscreen then
         love.window.setFullscreen(true)
     else
-        love.window.maximize()
+        -- love.window.maximize()
     end
 end
 

@@ -1,5 +1,5 @@
 local assets = require("core.assets")
-local buttons = require("ui.controls.buttons")
+local widgets = require("ui.widgets")
 local class = require("lib.middleclass")
 local GameManager = require("core.GameManager")
 local musicManager = require("utils.musicManager")
@@ -121,11 +121,11 @@ function GameScreen:draw()
 
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
-        if buttons.drawButton("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
+        if widgets.button("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
             self:restartLevel()
         end
         buttonY = buttonY + buttonHeight + 10
-        if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
+        if widgets.button("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
             self.screenManager:transition("MainMenuScreen")
         end
     elseif self.state == "pause" then
@@ -141,15 +141,15 @@ function GameScreen:draw()
 
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.5
-        if buttons.drawButton("Continue", buttonX, buttonY, buttonWidth, buttonHeight) then
+        if widgets.button("Continue", buttonX, buttonY, buttonWidth, buttonHeight) then
             self:setState("game")
         end
         buttonY = buttonY + buttonHeight + 10
-        if buttons.drawButton("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
+        if widgets.button("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
             self:restartLevel()
         end
         buttonY = buttonY + buttonHeight + 10
-        if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
+        if widgets.button("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
             self.screenManager:transition("MainMenuScreen")
         end
     elseif self.state == "finished" then
@@ -166,12 +166,12 @@ function GameScreen:draw()
         local buttonWidth, buttonHeight = 200, 50
         local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
         if self.levelConfig.nextLevel then
-            if buttons.drawButton("Next level", buttonX, buttonY, buttonWidth, buttonHeight) then
+            if widgets.button("Next level", buttonX, buttonY, buttonWidth, buttonHeight) then
                 self.screenManager:transition("GameScreen", self.levelConfig.nextLevel)
             end
         end
         buttonY = buttonY + buttonHeight + 10
-        if buttons.drawButton("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
+        if widgets.button("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
             self.screenManager:transition("MainMenuScreen")
         end
     end

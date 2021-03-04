@@ -19,14 +19,23 @@ local function drawShadowText(text, x, y, width, align)
     love.graphics.printf(text, x, y, width, align)
 end
 
-function widgets.button(text, x, y, width, height, isHighlighted)
+function widgets.button(text, x, y, width, height, isDisabled)
+    local mx, my = love.mouse.getPosition()
+    local isHighlighted = mx > x and my > y and mx < x + width and my < y + height and not isDisabled
+
     if isHighlighted then
         love.graphics.setColor(0.2, 0.5, 0.9, 1)
     else
-        love.graphics.setColor(1, 1, 1, 1)
+        if isDisabled then
+            love.graphics.setColor(0.5, 0.5, 0.5, 1)
+        else
+            love.graphics.setColor(1, 1, 1, 1)
+        end
     end
     love.graphics.setFont(assets.font("Roboto-Bold", math.floor(height)))
     drawShadowText(text, x, y + height * 0.5 - 15, width, "left")
+
+    return isHighlighted and mouseUtils.isMouseJustPressed()
 end
 
 return widgets

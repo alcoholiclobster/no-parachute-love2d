@@ -9,15 +9,15 @@ local assets = require "core.assets"
 local MainMenuScreen = class("MainMenuScreen", Screen)
 
 function MainMenuScreen:initialize()
-    -- musicManager:play("menu_theme")
+    musicManager:play("menu_theme")
     self.gameManager = GameManager:new(require("config.levels.deep_forest1"), self, true)
 
     self.buttons = {
-        { label = "main_menu_btn_play_story", },
-        { label = "main_menu_btn_play_daily_challenge", },
-        { label = "main_menu_btn_play_endless_mode", },
-        { label = "btn_settings", },
-        { label = "btn_exit_game", },
+        { label = "main_menu_btn_play_story", handler = "buttonHandlerPlayStory" },
+        { label = "main_menu_btn_play_daily_challenge" },
+        { label = "main_menu_btn_play_endless_mode" },
+        { label = "btn_settings" },
+        { label = "btn_exit_game", handler = "buttonHandlerExit" },
     }
 
     self.highlightedButtonIndex = 1
@@ -36,28 +36,29 @@ function MainMenuScreen:draw()
     local btnX, btnY = screenWidth * 0.06, screenHeight * 0.5
     local btnWidth, btnHeight = screenWidth * 0.8, screenHeight * 0.04
     local btnSpace = screenHeight * 0.02
-    for i, buttonData in ipairs(self.buttons) do
-        widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, self.highlightedButtonIndex == i)
+    for _, buttonData in ipairs(self.buttons) do
+        local isPressed = widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, not buttonData.handler)
         btnY = btnY + btnHeight + btnSpace
+
+        if isPressed and buttonData.handler and self[buttonData.handler] then
+            self[buttonData.handler](self)
+        end
     end
 
-    local logoScale = screenHeight * 0.00225
+    local logoScale = math.min(screenWidth * 0.003, screenHeight * 0.003)
     local logoImageWidth = self.logoImage:getWidth()
-    local logoX = screenWidth * 0.5
+    local logoX = screenWidth * 0.05
     local logoY = screenHeight * 0.25
-    love.graphics.draw(self.logoImage, logoX, logoY, 0, logoScale, logoScale, logoImageWidth * 0.5, self.logoImage:getHeight() * 0.5)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(self.logoImage, logoX, logoY, 0, logoScale, logoScale, 0, self.logoImage:getHeight() * 0.5)
 end
 
-function MainMenuScreen:inputDown()
-
+function MainMenuScreen:buttonHandlerPlayStory()
+    self.screenManager:transition("GameScreen", "meat1")
 end
 
-function MainMenuScreen:inputUp()
-
-end
-
-function MainMenuScreen:inputSelect()
-
+function MainMenuScreen:buttonHandlerExit()
+    love.event.quit()
 end
 
 return MainMenuScreen
