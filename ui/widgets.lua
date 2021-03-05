@@ -20,6 +20,11 @@ local function isPointWithinRect(x, y, rx, ry, rw, rh)
     return x > rx and y > ry and x < rx + rw and y < ry + rh
 end
 
+function widgets.label(text, x, y, width, height, isBold, align)
+    love.graphics.setFont(assets.font(isBold and "Roboto-Bold" or "Roboto-Regular", math.floor(height)))
+    drawShadowText(text, x, y + height * 0.1, width, align or "left")
+end
+
 function widgets.button(text, x, y, width, height, isDisabled, align)
     local mx, my = love.mouse.getPosition()
     local isHighlighted = isPointWithinRect(mx, my, x, y, width, height) and not isDisabled

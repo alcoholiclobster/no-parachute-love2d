@@ -8,6 +8,7 @@ local settings = require("core.settings")
 local SpeedEffect = require("ui.effects.SpeedEffect")
 local Tutorial = require("ui.Tutorial")
 local mathUtils = require("utils.math")
+local lz = require("utils.language").localize
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -86,19 +87,19 @@ function GameScreen:draw()
         love.graphics.setFont(assets.font("Roboto-Bold", 32))
         love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
         love.graphics.setFont(assets.font("Roboto-Bold", 14))
-        love.graphics.printf("PROGRESS", 0, screenHeight - 50, screenWidth, "center")
+        love.graphics.printf(lz("lbl_hud_progress"), 0, screenHeight - 50, screenWidth, "center")
 
         local score = tostring(math.ceil(self.playerScore))
         love.graphics.setFont(assets.font("Roboto-Bold", 14))
-        love.graphics.printf("SCORE", 0, 20, screenWidth, "center")
+        love.graphics.printf(lz("lbl_hud_score"), 0, 20, screenWidth, "center")
         love.graphics.setFont(assets.font("Roboto-Bold", 24))
         love.graphics.printf(score, 0, 40, screenWidth, "center")
 
-        local speed = tostring(self.playerSpeed).." kph"
+        local speed = tostring(self.playerSpeed).." "..lz("lbl_hud_speed_units")
         love.graphics.setFont(assets.font("Roboto-Bold", 32))
         love.graphics.printf(speed, 0, screenHeight - 90, screenWidth - 20, "right")
         love.graphics.setFont(assets.font("Roboto-Bold", 14))
-        love.graphics.printf("SPEED", 0, screenHeight - 50, screenWidth - 20, "right")
+        love.graphics.printf(lz("lbl_hud_speed"), 0, screenHeight - 50, screenWidth - 20, "right")
 
     elseif self.state == "dead" then
         local stateTime = love.timer.getTime() - self.stateChangedAt
@@ -108,70 +109,88 @@ function GameScreen:draw()
 
         local progress = tostring(math.floor(self.levelProgress * 100))
 
-        love.graphics.setColor(1, 1, 1, math.min(1, stateTime * 2))
-        love.graphics.setFont(assets.font("Roboto-Bold", 48))
-        love.graphics.printf("YOU DIED", 0, screenHeight * 0.3, screenWidth, "center")
+        -- Labels
+        love.graphics.setColor(178/255, 30/255, 32/255, math.min(1, stateTime * 2))
+        local labelX, labelY = 0, screenHeight * 0.2
+        local labelWidth, labelHeight = screenWidth, screenHeight * 0.12
+        widgets.label(lz("lbl_game_you_died"), labelX, labelY, labelWidth, labelHeight, true, "center")
 
-        love.graphics.setFont(assets.font("Roboto-Bold", 14))
-        love.graphics.printf("Progress: "..progress.."%", 0, screenHeight * 0.3 + 70, screenWidth, "center")
+        love.graphics.setColor(0.75, 0.75, 0.75, math.min(1, stateTime * 2))
+        labelY = labelY + labelHeight + screenHeight * 0.04
+        labelHeight = screenHeight * 0.025
+        widgets.label(lz("lbl_game_stats_progress", progress), labelX, labelY, labelWidth, labelHeight, false, "center")
 
+        labelY = labelY + labelHeight + screenHeight * 0.04
         local score = tostring(math.ceil(self.playerScore))
+        widgets.label(lz("lbl_game_stats_score", score), labelX, labelY, labelWidth, labelHeight, false, "center")
 
-        love.graphics.printf("Score: "..score, 0, screenHeight * 0.3 + 100, screenWidth, "center")
-
-        local buttonWidth, buttonHeight = 200, 50
-        local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
-        if widgets.button("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
+        -- Buttons
+        love.graphics.setColor(1, 1, 1, math.min(1, stateTime * 2))
+        local buttonX, buttonY = screenWidth * 0.4, screenHeight * 0.65
+        local buttonWidth, buttonHeight = screenWidth * 0.2, screenHeight * 0.04
+        if widgets.button(lz("btn_game_restart_level"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") or love.keyboard.isDown('r') then
             self:restartLevel()
         end
-        buttonY = buttonY + buttonHeight + 10
-        if widgets.button("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
+        buttonY = buttonY + buttonHeight * 1.5
+        if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
             self.screenManager:transition("MainMenuScreen")
         end
     elseif self.state == "pause" then
         love.graphics.setColor(0, 0, 0, 0.6)
         love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
+        -- Labels
         love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.setFont(assets.font("Roboto-Bold", 48))
-        love.graphics.printf("PAUSED", 0, screenHeight * 0.3, screenWidth, "center")
+        local labelX, labelY = 0, screenHeight * 0.2
+        local labelWidth, labelHeight = screenWidth, screenHeight * 0.12
+        widgets.label(lz("lbl_game_paused"), labelX, labelY, labelWidth, labelHeight, false, "center")
 
-        love.graphics.setFont(assets.font("Roboto-Bold", 16))
-        love.graphics.printf("Press ESC to continue", 0, screenHeight * 0.3 + 55, screenWidth, "center")
+        labelY = labelY + labelHeight + screenHeight * 0.01
+        labelHeight = screenHeight * 0.025
+        widgets.label(lz("lbl_game_paused_continue"), labelX, labelY, labelWidth, labelHeight, false, "center")
 
-        local buttonWidth, buttonHeight = 200, 50
-        local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.5
-        if widgets.button("Continue", buttonX, buttonY, buttonWidth, buttonHeight) then
+        -- Buttons
+        local buttonX, buttonY = screenWidth * 0.4, screenHeight * 0.65
+        local buttonWidth, buttonHeight = screenWidth * 0.2, screenHeight * 0.04
+        if widgets.button(lz("btn_game_paused_continue"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center")then
             self:setState("game")
         end
-        buttonY = buttonY + buttonHeight + 10
-        if widgets.button("Restart", buttonX, buttonY, buttonWidth, buttonHeight) then
+        buttonY = buttonY + buttonHeight * 1.5
+        if widgets.button(lz("btn_game_restart_level"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") or love.keyboard.isDown('r') then
             self:restartLevel()
         end
-        buttonY = buttonY + buttonHeight + 10
-        if widgets.button("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
+        buttonY = buttonY + buttonHeight * 1.5
+        if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
             self.screenManager:transition("MainMenuScreen")
         end
     elseif self.state == "finished" then
         love.graphics.setColor(0, 0, 0, 0.6)
         love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
+        -- Labels
+        love.graphics.setColor(130/255, 90/255, 150/255, 1)
+        local labelX, labelY = 0, screenHeight * 0.2
+        local labelWidth, labelHeight = screenWidth, screenHeight * 0.12
+        widgets.label(lz("lbl_game_level_complete"), labelX, labelY, labelWidth, labelHeight, true, "center")
+
         love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.printf("Level finished", 0, screenHeight * 0.3, screenWidth, "center")
+        labelY = labelY + labelHeight + screenHeight * 0.04
+        labelHeight = screenHeight * 0.025
+        widgets.label(lz("lbl_game_stats_time", self.timePassed), labelX, labelY, labelWidth, labelHeight, false, "center")
 
+        labelY = labelY + labelHeight + screenHeight * 0.04
         local score = tostring(math.ceil(self.playerScore))
-        love.graphics.printf("Score: "..score, 0, screenHeight * 0.3 + 70, screenWidth, "center")
-        love.graphics.printf("Time passed: "..tostring(self.timePassed), 0, screenHeight * 0.3 + 140, screenWidth, "center")
+        widgets.label(lz("lbl_game_stats_score", score), labelX, labelY, labelWidth, labelHeight, false, "center")
 
-        local buttonWidth, buttonHeight = 200, 50
-        local buttonX, buttonY = (screenWidth - buttonWidth) * 0.5, screenHeight * 0.7
-        if self.levelConfig.nextLevel then
-            if widgets.button("Next level", buttonX, buttonY, buttonWidth, buttonHeight) then
-                self.screenManager:transition("GameScreen", self.levelConfig.nextLevel)
-            end
+        -- Buttons
+        love.graphics.setColor(1, 1, 1, 1)
+        local buttonX, buttonY = screenWidth * 0.4, screenHeight * 0.65
+        local buttonWidth, buttonHeight = screenWidth * 0.2, screenHeight * 0.04
+        if widgets.button(lz("btn_game_next_level"), buttonX, buttonY, buttonWidth, buttonHeight, not self.levelConfig.nextLevel, "center") then
+            self.screenManager:transition("GameScreen", self.levelConfig.nextLevel)
         end
-        buttonY = buttonY + buttonHeight + 10
-        if widgets.button("Exit to menu", buttonX, buttonY, buttonWidth, buttonHeight) then
+        buttonY = buttonY + buttonHeight * 1.5
+        if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
             self.screenManager:transition("MainMenuScreen")
         end
     end
@@ -233,7 +252,7 @@ function GameScreen:handleKeyPress(key, ...)
 end
 
 function GameScreen:handleWindowFocus(isFocused)
-    if not isFocused then
+    if not isFocused and self.state == "game" then
         self:setState("pause")
     end
 end
