@@ -20,7 +20,7 @@ function love.load(arg)
     console.log("love.load()")
 
     love.filesystem.setIdentity("no_parachute")
-    languageUtils.loadLanguage("en")
+    languageUtils.loadLanguage("ru")
 
     settings.load()
 

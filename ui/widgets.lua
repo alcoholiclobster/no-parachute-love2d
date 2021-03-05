@@ -17,7 +17,7 @@ function widgets.button(text, x, y, width, height, isDisabled, align)
     local isHighlighted = mx > x and my > y and mx < x + width and my < y + height and not isDisabled
 
     if isHighlighted then
-        love.graphics.setColor(0.2, 0.5, 0.9, 1)
+        love.graphics.setColor(130/255, 90/255, 150/255, 1)
     else
         if isDisabled then
             love.graphics.setColor(0.5, 0.5, 0.5, 1)
@@ -25,7 +25,7 @@ function widgets.button(text, x, y, width, height, isDisabled, align)
             love.graphics.setColor(1, 1, 1, 1)
         end
     end
-    love.graphics.setFont(assets.font("Roboto-Regular", math.floor(height * 0.75)))
+    love.graphics.setFont(assets.font("Roboto-Bold", math.floor(height * 0.75)))
     drawShadowText(text, x, y + height * 0.1, width, align or "left")
 
     if isHighlighted and mouseUtils.isMouseJustPressed() then

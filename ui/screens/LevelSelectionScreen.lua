@@ -75,11 +75,11 @@ function LevelSelectionScreen:draw()
     end
 
     -- Back to menu screen button
-    if widgets.button(lz("btn_back"), screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.04) then
+    if widgets.button(lz("btn_back"), screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.05) then
         self.screenManager:transition("MainMenuScreen")
     end
     -- Play button
-    if widgets.button(lz("btn_level_selection_start_game", self.backgroundLevelName), screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.04, false, "right") then
+    if widgets.button(lz("btn_level_selection_start_game", self.backgroundLevelName), screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
         self.screenManager:transition("GameScreen", self.backgroundLevelName)
     end
 end

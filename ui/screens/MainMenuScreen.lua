@@ -31,12 +31,12 @@ function MainMenuScreen:update(deltaTime)
 end
 
 function MainMenuScreen:draw()
+    local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     self.gameManager:draw()
 
-    local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     local btnX, btnY = screenWidth * 0.08, screenHeight * 0.5
-    local btnWidth, btnHeight = screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.04
-    local btnSpace = screenHeight * 0.02
+    local btnWidth, btnHeight = screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.05
+    local btnSpace = screenHeight * 0.01
     for _, buttonData in ipairs(self.buttons) do
         if buttonData.label then
             local isPressed = widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, not buttonData.handler)
@@ -49,7 +49,7 @@ function MainMenuScreen:draw()
         btnY = btnY + btnHeight + btnSpace
     end
 
-    local logoScale = math.min(screenWidth * 0.003, screenHeight * 0.003)
+    local logoScale = math.min(screenWidth * 0.0025, screenHeight * 0.0025)
     local logoX = screenWidth * 0.25
     local logoY = screenHeight * 0.25
     love.graphics.setColor(1, 1, 1)
