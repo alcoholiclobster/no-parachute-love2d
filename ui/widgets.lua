@@ -3,6 +3,10 @@ local widgets = {}
 local assets = require("core.assets")
 local mouseUtils = require("utils.mouse")
 
+local clickSound = assets.sound("ui_click.wav")
+local hoverSound = assets.sound("ui_hover.wav")
+local lastHighlightedButton = false
+
 local function drawShadowText(text, x, y, width, align)
     local w = 2
     local r, g, b, a = love.graphics.getColor()
@@ -12,9 +16,20 @@ local function drawShadowText(text, x, y, width, align)
     love.graphics.printf(text, x, y, width, align)
 end
 
+local function isPointWithinRect(x, y, rx, ry, rw, rh)
+    return x > rx and y > ry and x < rx + rw and y < ry + rh
+end
+
 function widgets.button(text, x, y, width, height, isDisabled, align)
     local mx, my = love.mouse.getPosition()
-    local isHighlighted = mx > x and my > y and mx < x + width and my < y + height and not isDisabled
+    local isHighlighted = isPointWithinRect(mx, my, x, y, width, height) and not isDisabled
+    if isHighlighted and lastHighlightedButton ~= text then
+        hoverSound:stop()
+        hoverSound:play()
+        lastHighlightedButton = text
+    elseif not isHighlighted and lastHighlightedButton == text then
+        lastHighlightedButton = false
+    end
 
     if isHighlighted then
         love.graphics.setColor(130/255, 90/255, 150/255, 1)
@@ -30,6 +45,7 @@ function widgets.button(text, x, y, width, height, isDisabled, align)
 
     if isHighlighted and mouseUtils.isMouseJustPressed() then
         mouseUtils.cancelClickEvent()
+        clickSound:play()
         return true
     else
         return false

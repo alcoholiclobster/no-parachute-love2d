@@ -43,7 +43,7 @@ function ScreenManager:draw()
 end
 
 function ScreenManager:transition(name, ...)
-    if self.fadeProgress ~= 0 then
+    if self.fadeProgress ~= 0 and self.fadeScreen then
         return
     end
 
