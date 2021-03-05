@@ -15,7 +15,7 @@ return {
     lbl_game_you_died = "ВЫ РАЗБИЛИСЬ",
     lbl_game_stats_progress = "Прогресс: %s%%",
     lbl_game_stats_score = "Очки: %d",
-    lbl_game_stats_time = "Время: %d",
+    lbl_game_stats_time = "Время: %s",
     btn_game_restart_level = "НАЧАТЬ ЗАНОВО (R)",
     btn_game_exit_to_menu = "ВЫЙТИ В МЕНЮ",
     lbl_game_paused = "ПАУЗА",

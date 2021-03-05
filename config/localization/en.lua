@@ -15,7 +15,7 @@ return {
     lbl_game_you_died = "YOU DIED",
     lbl_game_stats_progress = "Progress: %s%%",
     lbl_game_stats_score = "Score: %d",
-    lbl_game_stats_time = "Time: %d",
+    lbl_game_stats_time = "Time: %s",
     btn_game_restart_level = "RESTART (R)",
     btn_game_exit_to_menu = "EXIT TO MENU",
     lbl_game_paused = "PAUSED",
