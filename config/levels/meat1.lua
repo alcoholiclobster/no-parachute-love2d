@@ -133,7 +133,7 @@ return {
         { distance = 6, name = "wall_hands", rotation = 90 },
         { distance = 3, name = "wall_hands", rotation = 0 },
         { distance = 8, name = "wall_hands", rotation = 270 },
-        { distance = 8, name = "old_door", rotation = 0 },
+        { distance = 8, name = "old_door", rotation = 270 },
         { distance = 10, name = "stone_breakable_wall", rotation = 0, switchSidePlanes = true, },
         { distance = 30, tunnelShape = { direction = {10, 0}, rotationSpeed = 0.2 },},
         { distance = 30, name = "meat_long_middle_thing" },

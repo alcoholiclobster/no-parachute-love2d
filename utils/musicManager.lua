@@ -12,8 +12,9 @@ function MusicManager:initialize()
     self.currentSong = nil
     self.nextSong = nil
     self.fadeInDelay = 0
+    self.fadeProgress = 0
 
-    self.maxVolume = 1
+    self.maxVolume = 0
     self.isSilenced = false
 
     love.audio.setEffect("silenced1", {type = "compressor"})
@@ -56,7 +57,7 @@ function MusicManager:_playNextSong()
         self.currentSong = nil
     else
         self.source = love.audio.newSource("assets/music/"..self.nextSong..".ogg", "stream")
-        self.source:setVolume(1)
+        self.source:setVolume(self.maxVolume)
         self.source:play()
         self.source:setLooping(true)
         self:setSilenced(self.isSilenced)
@@ -70,10 +71,11 @@ end
 
 function MusicManager:update(deltaTime)
     if self.nextSong then
-        local volume = self.source:getVolume() - deltaTime / fadeOutTime
-        if volume > 0 then
-            self.source:setVolume(volume)
+        self.fadeProgress = self.fadeProgress - deltaTime / fadeOutTime
+        if self.fadeProgress > 0 then
+            self.source:setVolume(math.min(self.maxVolume, self.fadeProgress))
         else
+            self.fadeProgress = 0
             self:_playNextSong()
         end
     else
@@ -82,8 +84,8 @@ function MusicManager:update(deltaTime)
             return
         end
         if self.source then
-            local volume = math.min(self.maxVolume, self.source:getVolume() + deltaTime / fadeInTime)
-            self.source:setVolume(volume)
+            self.fadeProgress = math.min(1, self.fadeProgress + deltaTime / fadeInTime)
+            self.source:setVolume(math.min(self.maxVolume, self.fadeProgress))
         end
     end
 end

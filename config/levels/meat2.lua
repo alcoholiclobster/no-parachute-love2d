@@ -30,6 +30,12 @@ return {
                 "levels/meat/side_planes/flesh_wide",
             },
         },
+        {
+            textures = {
+                "levels/meat/side_planes/flesh1",
+                "levels/meat/side_planes/flesh2",
+            },
+        },
     },
 
     planeTypes = {
@@ -51,7 +57,12 @@ return {
         },
         meat_half_wall = {
             planes = {
-                { texture = "levels/meat/obstacles/meat_obstacle_half" },
+                { texture = "levels/meat/obstacles/meat_decorative_corner_things2", position = {0, 0, 1}, rotation = 180, decorative = true },
+                { texture = "levels/meat/obstacles/meat_obstacle_half3", position = {0, 0, 0} },
+                { texture = "levels/meat/obstacles/meat_obstacle_half3_2", position = {0, 0, -0.2}, decorative1 = true},
+                { texture = "levels/meat/obstacles/meat_obstacle_half2", position = {0, 0, -2} },
+                { texture = "levels/meat/obstacles/meat_obstacle_half", position = {0, 0, -4} },
+                { texture = "levels/meat/obstacles/meat_obstacle_half_2", position = {0, 0, -4.1}, decorative = true },
             },
         },
         meat_small_transition_wall = {
@@ -109,11 +120,11 @@ return {
         { distance = 5, name = "meat_small_transition_wall", },
         { distance = 10, switchSidePlanes = true, tunnelShape = { direction = {0, 8}, rotationSpeed = 0.6 }, },
         { distance = 100, switchSidePlanes = true, tunnelShape = { direction = {0, 1}, rotationSpeed = 0.2 }, },
-        -- { distance = 50, name = "meat_big_holes", },
-        -- { distance = 60, name = "meat_big_holes", rotation = 90 },
-        -- { distance = 60, name = "meat_big_hole", rotation = 180 },
-        { distance = 60, name = "eye_ball", },
-        { distance = 60, name = "eye_ball", rotation = 180 },
+        { distance = 50, name = "meat_big_holes", },
+        { distance = 60, name = "meat_big_holes", rotation = 90 },
+        { distance = 60, name = "meat_big_hole", rotation = 180 },
+        -- { distance = 60, name = "eye_ball", },
+        -- { distance = 60, name = "eye_ball", rotation = 180 },
         { distance = 5000 },
     },
 }
