@@ -67,6 +67,7 @@ return {
         },
         meat_small_transition_wall = {
             planes = {
+                { texture = "levels/meat/obstacles/meat_decorative_corner_things2", position = {0, 0, 2}, decorative = true },
                 { texture = "levels/meat/obstacles/meat_small_transition_wall" },
                 { texture = "levels/meat/side_planes/flesh_small", position = {0, 0, -2}, rotation = 90 },
                 { texture = "levels/meat/side_planes/flesh_small", position = {0, 0, -4}, rotation = 0 },
@@ -76,7 +77,10 @@ return {
         },
         meat_big_holes = {
             planes = {
-                { texture = "levels/meat/obstacles/meat_big_holes" },
+                { texture = "levels/meat/obstacles/meat_big_deco_corner_things", position = {0, 0, 2}, decorative = true },
+                { texture = "levels/meat/obstacles/meat_big_holes3" },
+                { texture = "levels/meat/obstacles/meat_big_holes2", position = {0, 0, -2} },
+                { texture = "levels/meat/obstacles/meat_big_holes", position = {0, 0, -4} },
             }
         },
         meat_big_hole = {
@@ -96,6 +100,26 @@ return {
         meat_decorative_corner = {
             planes = {
                 { texture = "levels/meat/obstacles/meat_decorative_corner_things", decorative = true }
+            }
+        },
+        worm1_big = {
+            planes = {
+                { texture = "levels/meat/obstacles/worm1", rotationSpeed = 1 }
+            }
+        },
+        worm1_big_head = {
+            planes = {
+                { texture = "levels/meat/obstacles/worm1_head", rotationSpeed = 1 }
+            }
+        },
+        meat_big_hole_to_normal = {
+            planes = {
+                { texture = "levels/meat/obstacles/meat_big_holes_to_normal" },
+                { texture = "levels/meat/side_planes/flesh1", position = {0, 0, -2}, rotation = 90 },
+                { texture = "levels/meat/side_planes/flesh2", position = {0, 0, -4}, rotation = 0 },
+                { texture = "levels/meat/side_planes/flesh1", position = {0, 0, -6}, rotation = 180 },
+                { texture = "levels/meat/obstacles/meat_decorative_corner_things", position = {0, 0, -7}, decorative = true },
+                { texture = "levels/meat/side_planes/flesh2", position = {0, 0, -8}, rotation = 270 },
             }
         }
     },
@@ -121,10 +145,16 @@ return {
         { distance = 10, switchSidePlanes = true, tunnelShape = { direction = {0, 8}, rotationSpeed = 0.6 }, },
         { distance = 100, switchSidePlanes = true, tunnelShape = { direction = {0, 1}, rotationSpeed = 0.2 }, },
         { distance = 50, name = "meat_big_holes", },
-        { distance = 60, name = "meat_big_holes", rotation = 90 },
-        { distance = 60, name = "meat_big_hole", rotation = 180 },
+        { distance = 70, name = "meat_big_holes", rotation = 90 },
+        -- { distance = 30 },
+        { distance = 70, name = "worm1_big", position = {10, 10, 0}},
+        { distance = 40, name = "worm1_big", position = {-8, 8, 0}, rotation = 180},
+        { distance = 30, name = "worm1_big", position = {15, 15, 0}, rotation = 180},
+        { distance = 30, name = "worm1_big_head", position = {15, 0, 0}},
+        { distance = 40, name = "meat_big_hole_to_normal" },
+        { distance = 10, switchSidePlanes = true },
         -- { distance = 60, name = "eye_ball", },
         -- { distance = 60, name = "eye_ball", rotation = 180 },
-        { distance = 5000 },
+        { distance = 100 },
     },
 }
