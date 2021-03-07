@@ -225,6 +225,14 @@ return {
         { distance = 5, name = "meat_big_hole_to_normal" },
         { distance = 10, switchSidePlanes = true, tunnelShape = { direction = {0, 0}, rotationSpeed = 0 }, },
 
-        { distance = 100 },
+        { distance = 30, },
+        { distance = 1, name = "meat_long_thing1", rotation = 0, position = {0, -2, 0}},
+        { distance = 10, name = "meat_half_wall", rotation = 90, },
+        { distance = 20, name = "meat_long_thing1", rotation = 270, },
+        { distance = 15, name = "meat_half_wall", rotation = 270, },
+        { distance = 60, name = "meat_half_wall", rotation = 90, },
+        { distance = 17, name = "meat_half_wall", rotation = 270, },
+        { distance = 20, name = "meat_half_wall"},
+        { distance = 25, name = "meat_half_wall", rotation = 180 },
     },
 }
