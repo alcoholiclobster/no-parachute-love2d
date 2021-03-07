@@ -14,7 +14,7 @@ function MusicManager:initialize()
     self.fadeInDelay = 0
     self.fadeProgress = 0
 
-    self.maxVolume = 0
+    self.maxVolume = 1
     self.isSilenced = false
 
     love.audio.setEffect("silenced1", {type = "compressor"})

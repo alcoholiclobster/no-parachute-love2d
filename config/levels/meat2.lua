@@ -2,6 +2,7 @@ return {
     name = "Flesh Hell 2",
     nextLevel = nil,
     music = "meat_theme",
+    ambient = "worm",
 
     fallSpeed = 50,
     fogColor = {25, 10, 0},
