@@ -115,7 +115,6 @@ return {
         meat_big_obstacle_middle = {
             planes = {
                 { texture = "levels/meat/obstacles/meat_big_obstacle_middle" },
-                { texture = "levels/meat/obstacles/meat_big_obstacle_middle2", position = {0, 0, -0.1}, decorative = true }
             }
         },
         worm1_big = {
@@ -132,6 +131,23 @@ return {
             planes = {
                 { texture = "levels/meat/obstacles/worm_wall", position = {0, 0, 0} },
                 { texture = "levels/meat/obstacles/worm_wall", position = {0, 0, -2}, rotation = 90 }
+            }
+        },
+        worm_smoke = {
+            planes = {
+                { texture = "levels/meat/obstacles/worm_smoke", position = {0, 1, 0.1}, rotationSpeed = 0.2, velocity = {1, 0, 0}, decorative = true },
+                { texture = "levels/meat/obstacles/worm_smoke", position = {1, 0, -2.1}, rotationSpeed = -0.1, velocity = {-0.25, 0.5, 0}, decorative = true },
+            }
+        },
+        worm_smoke2 = {
+            planes = {
+                { texture = "levels/meat/obstacles/worm_smoke2", position = {0, 1, 0.1}, rotationSpeed = 0.2, velocity = {1, 0, 0}, decorative = true },
+                { texture = "levels/meat/obstacles/worm_smoke2", position = {1, 0, -2.1}, rotationSpeed = -0.1, velocity = {-0.25, 0.5, 0}, decorative = true },
+            }
+        },
+        worm_smoke_head = {
+            planes = {
+                { texture = "levels/meat/obstacles/worm_smoke", position = {0, 6, 0.1}, rotationSpeed = 0.2, velocity = {0, -6, 0}, moveDelay = 0.5, decorative = true },
             }
         },
         meat_big_hole_to_normal = {
@@ -154,26 +170,28 @@ return {
     },
 
     planes = {
-        { distance = 100, tunnelShape = { direction = {0, 2}, rotationSpeed = 2 },},
-        { distance = 1, name = "meat_half_wall" },
-        { distance = 1, name = "meat_decorative_corner", rotation = 180, },
-        { distance = 10, name = "meat_long_thing2", rotation = 90, },
-        { distance = 10, name = "meat_long_thing3" },
-        { distance = 10, name = "meat_long_thing2", rotation = 90 },
-        { distance = 10, name = "meat_long_thing3" },
-        { distance = 1, name = "meat_decorative_corner", rotation = 180, },
-        { distance = 10, name = "meat_long_thing1" },
-        { distance = 10, name = "meat_half_wall", rotation = 0 },
-        { distance = 10, name = "meat_long_thing2", rotation = 90 },
-        { distance = 10, name = "meat_long_thing3" },
-        { distance = 10, name = "meat_long_thing2", rotation = 0 },
-        { distance = 10, name = "meat_long_thing2", rotation = 180 },
-        { distance = 5, name = "meat_decorative_corner", rotation = 90, },
-        { distance = 1, name = "meat_decorative_corner", rotation = 270, },
+        { distance = 100 },
+        -- { distance = 100, tunnelShape = { direction = {0, 2}, rotationSpeed = 2 },},
+        -- { distance = 1, name = "meat_half_wall" },
+        -- { distance = 1, name = "meat_decorative_corner", rotation = 180, },
+        -- { distance = 10, name = "meat_long_thing2", rotation = 90, },
+        -- { distance = 10, name = "meat_long_thing3" },
+        -- { distance = 10, name = "meat_long_thing2", rotation = 90 },
+        -- { distance = 10, name = "meat_long_thing3" },
+        -- { distance = 1, name = "meat_decorative_corner", rotation = 180, },
+        -- { distance = 10, name = "meat_long_thing1" },
+        -- { distance = 10, name = "meat_half_wall", rotation = 0 },
+        -- { distance = 10, name = "meat_long_thing2", rotation = 90 },
+        -- { distance = 10, name = "meat_long_thing3" },
+        -- { distance = 10, name = "meat_long_thing2", rotation = 0 },
+        -- { distance = 10, name = "meat_long_thing2", rotation = 180 },
+        -- { distance = 5, name = "meat_decorative_corner", rotation = 90, },
+        -- { distance = 1, name = "meat_decorative_corner", rotation = 270, },
+
         { distance = 5, name = "meat_small_transition_wall", },
         { distance = 10, switchSidePlanes = true, tunnelShape = { direction = {0, 8}, rotationSpeed = 0.6 }, },
         { distance = 100, switchSidePlanes = true, tunnelShape = { direction = {0, 1}, rotationSpeed = 0.2 }, },
-        { distance = 50, name = "meat_big_holes", },
+        -- { distance = 50, name = "meat_big_holes", },
         { distance = 30, name = "meat_big_obstacle", },
         { distance = 30, name = "meat_big_obstacle_middle", },
         { distance = 10, name = "meat_big_obstacle", },
@@ -181,15 +199,22 @@ return {
         { distance = 10, switchSidePlanes = true},
 
         { distance = 150, name = "worm1_wall"},
+        { distance = 0, name = "worm_smoke", position = {-8, 8, 0 }},
+        { distance = 0, name = "worm_smoke2", position = {10, -10, 0 }},
         { distance = 1, name = "worm1_big", position = {10, 10, 0}},
 
         { distance = 40, name = "worm1_wall" },
+        { distance = 0, name = "worm_smoke", position = {9, 9, 0 }},
+        { distance = 0, name = "worm_smoke", position = {-10, -10, 0 }},
         { distance = 1, name = "worm1_big", position = {-8, 8, 0}, rotation = 180},
 
         { distance = 30, name = "worm1_wall" },
+        { distance = 0, name = "worm_smoke2", position = {-2, -9.5, 0 }},
+        { distance = 0, name = "worm_smoke", position = {-10, -2, 0 }},
         { distance = 1, name = "worm1_big", position = {15, 15, 0}, rotation = 180},
 
         { distance = 30, name = "worm1_wall" },
+        { distance = 0, name = "worm_smoke_head", position = {0, 11, 0 }},
         { distance = 1, name = "worm1_big_head", position = {15, 0, 0}},
 
         { distance = 40, name = "meat_big_hole_to_normal" },
