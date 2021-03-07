@@ -32,6 +32,11 @@ return {
         },
         {
             textures = {
+                "levels/meat/side_planes/flesh_wide2",
+            },
+        },
+        {
+            textures = {
                 "levels/meat/side_planes/flesh1",
                 "levels/meat/side_planes/flesh2",
             },
@@ -102,6 +107,17 @@ return {
                 { texture = "levels/meat/obstacles/meat_decorative_corner_things", decorative = true }
             }
         },
+        meat_big_obstacle = {
+            planes = {
+                { texture = "levels/meat/obstacles/meat_big_obstacle" }
+            }
+        },
+        meat_big_obstacle_middle = {
+            planes = {
+                { texture = "levels/meat/obstacles/meat_big_obstacle_middle" },
+                { texture = "levels/meat/obstacles/meat_big_obstacle_middle2", position = {0, 0, -0.1}, decorative = true }
+            }
+        },
         worm1_big = {
             planes = {
                 { texture = "levels/meat/obstacles/worm1", rotationSpeed = 1 }
@@ -112,6 +128,12 @@ return {
                 { texture = "levels/meat/obstacles/worm1_head", rotationSpeed = 1 }
             }
         },
+        worm1_wall = {
+            planes = {
+                { texture = "levels/meat/obstacles/worm_wall", position = {0, 0, 0} },
+                { texture = "levels/meat/obstacles/worm_wall", position = {0, 0, -2}, rotation = 90 }
+            }
+        },
         meat_big_hole_to_normal = {
             planes = {
                 { texture = "levels/meat/obstacles/meat_big_holes_to_normal" },
@@ -120,6 +142,13 @@ return {
                 { texture = "levels/meat/side_planes/flesh1", position = {0, 0, -6}, rotation = 180 },
                 { texture = "levels/meat/obstacles/meat_decorative_corner_things", position = {0, 0, -7}, decorative = true },
                 { texture = "levels/meat/side_planes/flesh2", position = {0, 0, -8}, rotation = 270 },
+            }
+        },
+        meat_big_hole_middle = {
+            planes = {
+                { texture = "levels/meat/obstacles/meat_big_holes_to_normal" },
+                { texture = "levels/meat/obstacles/meat_decorative_corner_things", position = {0, 0, -0.01}, decorative = true },
+                { texture = "levels/meat/obstacles/meat_wall", position = {0, 0, -0.02}, breakable = true },
             }
         }
     },
@@ -145,16 +174,27 @@ return {
         { distance = 10, switchSidePlanes = true, tunnelShape = { direction = {0, 8}, rotationSpeed = 0.6 }, },
         { distance = 100, switchSidePlanes = true, tunnelShape = { direction = {0, 1}, rotationSpeed = 0.2 }, },
         { distance = 50, name = "meat_big_holes", },
-        { distance = 70, name = "meat_big_holes", rotation = 90 },
-        -- { distance = 30 },
-        { distance = 70, name = "worm1_big", position = {10, 10, 0}},
-        { distance = 40, name = "worm1_big", position = {-8, 8, 0}, rotation = 180},
-        { distance = 30, name = "worm1_big", position = {15, 15, 0}, rotation = 180},
-        { distance = 30, name = "worm1_big_head", position = {15, 0, 0}},
+        { distance = 30, name = "meat_big_obstacle", },
+        { distance = 30, name = "meat_big_obstacle_middle", },
+        { distance = 10, name = "meat_big_obstacle", },
+        { distance = 40, name = "meat_big_hole_middle" },
+        { distance = 10, switchSidePlanes = true},
+
+        { distance = 150, name = "worm1_wall"},
+        { distance = 1, name = "worm1_big", position = {10, 10, 0}},
+
+        { distance = 40, name = "worm1_wall" },
+        { distance = 1, name = "worm1_big", position = {-8, 8, 0}, rotation = 180},
+
+        { distance = 30, name = "worm1_wall" },
+        { distance = 1, name = "worm1_big", position = {15, 15, 0}, rotation = 180},
+
+        { distance = 30, name = "worm1_wall" },
+        { distance = 1, name = "worm1_big_head", position = {15, 0, 0}},
+
         { distance = 40, name = "meat_big_hole_to_normal" },
         { distance = 10, switchSidePlanes = true },
-        -- { distance = 60, name = "eye_ball", },
-        -- { distance = 60, name = "eye_ball", rotation = 180 },
+
         { distance = 100 },
     },
 }
