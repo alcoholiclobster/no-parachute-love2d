@@ -28,7 +28,7 @@ function MainMenuScreen:initialize()
     self.logoImage = assets.texture("logo")
 
     self.settingsOverlay = nil
-    self:buttonHandlerSettings()
+    -- self:buttonHandlerSettings()
 end
 
 function MainMenuScreen:update(deltaTime)

@@ -1,4 +1,5 @@
 local class = require("lib.middleclass")
+local settings = require("core.settings")
 
 local MusicManager = class("MusicManager")
 
@@ -70,6 +71,8 @@ function MusicManager:_playNextSong()
 end
 
 function MusicManager:update(deltaTime)
+    self.maxVolume = settings.get("music_volume")
+
     if self.nextSong then
         self.fadeProgress = self.fadeProgress - deltaTime / fadeOutTime
         if self.fadeProgress > 0 then

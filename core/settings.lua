@@ -4,13 +4,27 @@ local settings = {}
 
 local settingsConfig = require("config.settings")
 local settingsState = {}
+local settingsHandlers = {}
 
 function settings.get(name)
     return settingsState[name]
 end
 
-function settings.set(name, value)
+function settings.set(name, value, omitSave)
+    local oldValue = settingsState[name]
     settingsState[name] = value
+
+    if settingsHandlers[name] then
+        settingsHandlers[name](value, oldValue)
+    end
+
+    if not omitSave then
+        love.filesystem.write("settings", bitser.dumps(settingsState))
+    end
+end
+
+function settings.addHandler(name, handler)
+    settingsHandlers[name] = handler
 end
 
 function settings.restoreDefaults()
@@ -35,7 +49,7 @@ function settings.load()
 
     settings.restoreDefaults()
     for k, v in pairs(state) do
-        settingsState[k] = v
+        settings.set(k, v, true)
     end
 
     if not love.filesystem.getInfo("settings") then

@@ -20,8 +20,14 @@ function love.load(arg)
     console.log("love.load()")
 
     love.filesystem.setIdentity("no_parachute")
-    languageUtils.loadLanguage("ru")
+    languageUtils.loadLanguage("en")
 
+    settings.addHandler("master_volume", function (value)
+        love.audio.setVolume(value)
+    end)
+    settings.addHandler("language", function (value)
+        languageUtils.loadLanguage(value)
+    end)
     settings.load()
 
     local parser = argparse()
