@@ -21,6 +21,7 @@ function love.load(arg)
 
     love.filesystem.setIdentity("no_parachute")
     languageUtils.loadLanguage("en")
+    love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
 
     settings.addHandler("window_mode", function (value)
         if value == "windowed" then
