@@ -22,5 +22,5 @@ return {
     lbl_game_paused_continue = "Press ESC to continue",
     btn_game_paused_continue = "CONTINUE",
     lbl_game_level_complete = "LEVEL COMPLETE",
-    btn_game_next_level = "NEXT LEVEL",
+    btn_game_next_level = "NEXT LEVEL (F)",
 }
