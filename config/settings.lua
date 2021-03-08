@@ -2,19 +2,19 @@ return {
     -- Sound
     {
         name = "music_volume",
-        readableName = "Music Volume",
+        label = "Music Volume",
         values = { min = 0, max = 1, default = 0.5 },
     },
     {
         name = "effects_volume",
-        readableName = "Effects Volume",
+        label = "Effects Volume",
         values = { min = 0, max = 1, default = 0.5 },
     },
 
     -- Gameplay
     {
         name = "plane_fading",
-        readableName = "Fade Objects In Front Of Camera",
+        label = "Fade Objects In Front Of Camera",
         values = {
             { name = "Disabled", value = false },
             { name = "Enabled", value = true, default = true },
@@ -22,7 +22,7 @@ return {
     },
     {
         name = "speed_lines",
-        readableName = "Speed Lines",
+        label = "Speed Lines",
         values = {
             { name = "Disabled", value = false },
             { name = "Enabled", value = true, default = true}
@@ -32,7 +32,7 @@ return {
     -- Graphics
     {
         name = "world_quality",
-        readableName = "World Quality",
+        label = "World Quality",
         values = {
             { name = "Low", value = 0.4 },
             { name = "Medium", value = 0.7 },
@@ -41,7 +41,7 @@ return {
     },
     {
         name = "particles_quality",
-        readableName = "Particles Count",
+        label = "Particles Count",
         values = {
             { name = "Disabled", value = 0 },
             { name = "Low", value = 0.25 },
@@ -51,7 +51,7 @@ return {
     },
     {
         name = "motion_blur",
-        readableName = "Motion Blur",
+        label = "Motion Blur",
         values = {
             { name = "Disabled", value = false },
             { name = "Enabled", value = true, default = true}
@@ -59,7 +59,7 @@ return {
     },
     {
         name = "decals",
-        readableName = "Decals",
+        label = "Decals",
         values = {
             { name = "Disabled", value = false },
             { name = "Enabled", value = true, default = true}

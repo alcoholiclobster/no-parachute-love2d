@@ -3,9 +3,15 @@ local lastMouseState = false
 local isJustPressed = false
 local isJustReleased = false
 
+local isMouseEnabled = true
+
 local mx, my = 0, 0
 
 local function isMouseJustPressed()
+    if not isMouseEnabled then
+        return false
+    end
+
     return isJustPressed
 end
 
@@ -15,6 +21,10 @@ end
 
 local function getPreviousMousePosition()
     return mx, my
+end
+
+local function setMouseEnabled(state)
+    isMouseEnabled = not not state
 end
 
 local function update()
@@ -44,4 +54,5 @@ return {
     update = update,
     cancelClickEvent = cancelClickEvent,
     getPreviousMousePosition = getPreviousMousePosition,
+    setMouseEnabled = setMouseEnabled,
 }

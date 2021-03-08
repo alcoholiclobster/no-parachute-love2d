@@ -4,7 +4,9 @@ local GameManager = require("core.GameManager")
 local musicManager = require("utils.musicManager")
 local widgets = require("ui.widgets")
 local lz = require("utils.language").localize
-local assets = require "core.assets"
+local assets = require("core.assets")
+local mouseUtils = require("utils.mouse")
+local SettingsOverlay = require("ui.SettingsOverlay")
 
 local MainMenuScreen = class("MainMenuScreen", Screen)
 
@@ -16,7 +18,7 @@ function MainMenuScreen:initialize()
         { label = "main_menu_btn_play_story", handler = "buttonHandlerPlayStory" },
         { label = "main_menu_btn_play_daily_challenge" },
         { label = "main_menu_btn_play_endless_mode" },
-        { label = "btn_settings" },
+        { label = "btn_settings", handler = "buttonHandlerSettings" },
         {},
         { label = "btn_exit_game", handler = "buttonHandlerExit" },
     }
@@ -24,6 +26,9 @@ function MainMenuScreen:initialize()
     self.highlightedButtonIndex = 1
 
     self.logoImage = assets.texture("logo")
+
+    self.settingsOverlay = nil
+    self:buttonHandlerSettings()
 end
 
 function MainMenuScreen:update(deltaTime)
@@ -31,6 +36,8 @@ function MainMenuScreen:update(deltaTime)
 end
 
 function MainMenuScreen:draw()
+    mouseUtils.setMouseEnabled(not self.settingsOverlay)
+
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     self.gameManager:draw()
 
@@ -54,6 +61,10 @@ function MainMenuScreen:draw()
     local logoY = screenHeight * 0.25
     love.graphics.setColor(1, 1, 1)
     love.graphics.draw(self.logoImage, logoX, logoY, 0, logoScale, logoScale, self.logoImage:getWidth() * 0.5, self.logoImage:getHeight() * 0.5)
+
+    if self.settingsOverlay then
+        self.settingsOverlay:draw()
+    end
 end
 
 function MainMenuScreen:buttonHandlerPlayStory()
@@ -62,6 +73,12 @@ end
 
 function MainMenuScreen:buttonHandlerExit()
     love.event.quit()
+end
+
+function MainMenuScreen:buttonHandlerSettings()
+    if not self.settingsOverlay then
+        self.settingsOverlay = SettingsOverlay:new()
+    end
 end
 
 return MainMenuScreen
