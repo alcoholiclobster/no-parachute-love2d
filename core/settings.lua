@@ -27,7 +27,7 @@ function settings.addHandler(name, handler)
     settingsHandlers[name] = handler
 end
 
-function settings.restoreDefaults()
+function settings.restoreDefaults(omitSave)
     for _, s in ipairs(settingsConfig) do
         local value = nil
         for _, v in ipairs(s.values) do
@@ -36,7 +36,11 @@ function settings.restoreDefaults()
             end
         end
 
-        settingsState[s.name] = value
+        settings.set(s.name, value, true)
+    end
+
+    if not omitSave then
+        love.filesystem.write("settings", bitser.dumps(settingsState))
     end
 end
 
