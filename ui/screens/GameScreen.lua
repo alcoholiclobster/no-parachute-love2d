@@ -9,6 +9,7 @@ local SpeedEffect = require("ui.effects.SpeedEffect")
 local Tutorial = require("ui.Tutorial")
 local mathUtils = require("utils.math")
 local lz = require("utils.language").localize
+local SettingsOverlay = require("ui.SettingsOverlay")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -29,6 +30,8 @@ function GameScreen:initialize(levelName)
     if self.levelConfig.enableTutorial then
         self.tutorial = Tutorial:new()
     end
+
+    self.settingsOverlay = nil
 end
 
 function GameScreen:onShow()
@@ -152,16 +155,27 @@ function GameScreen:draw()
         -- Buttons
         local buttonX, buttonY = screenWidth * 0.4, screenHeight * 0.65
         local buttonWidth, buttonHeight = screenWidth * 0.2, screenHeight * 0.04
-        if widgets.button(lz("btn_game_paused_continue"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center")then
+        if widgets.button(lz("btn_game_paused_continue"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center")then
             self:setState("game")
         end
         buttonY = buttonY + buttonHeight * 1.5
-        if widgets.button(lz("btn_game_restart_level"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") or love.keyboard.isDown('r') then
+        if widgets.button(lz("btn_game_restart_level"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") or (love.keyboard.isDown('r') and self.settingsOverlay) then
             self:restartLevel()
         end
         buttonY = buttonY + buttonHeight * 1.5
-        if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
+        if widgets.button(lz("btn_settings"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") then
+            self.settingsOverlay = SettingsOverlay:new()
+        end
+        buttonY = buttonY + buttonHeight * 1.5
+        if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") then
             self.screenManager:transition("MainMenuScreen")
+        end
+
+        if self.settingsOverlay then
+            self.settingsOverlay:draw()
+            if self.settingsOverlay.isClosed then
+                self.settingsOverlay = nil
+            end
         end
     elseif self.state == "finished" then
         love.graphics.setColor(0, 0, 0, 0.6)
