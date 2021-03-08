@@ -31,6 +31,13 @@ function love.load(arg)
             love.window.setFullscreen(true, "exclusive")
         end
     end)
+    settings.addHandler("vsync", function (value)
+        if value then
+            love.window.setVSync(-1)
+        else
+            love.window.setVSync(0)
+        end
+    end)
     settings.addHandler("master_volume", function (value)
         love.audio.setVolume(value)
     end)

@@ -45,4 +45,5 @@ return {
     lbl_settings_windowed = "Windowed",
     lbl_settings_borderless = "Borderless",
     lbl_settings_fullscreen = "Fullscreen",
+    lbl_settings_vsync = "VSync",
 }

@@ -65,6 +65,13 @@ return {
         }
     },
     {
+        name = "vsync",
+        values = {
+            { name = "lbl_settings_disabled", value = false },
+            { name = "lbl_settings_enabled", value = true, default = true}
+        }
+    },
+    {
         name = "world_quality",
         values = {
             { name = "lbl_settings_low", value = 0.4 },

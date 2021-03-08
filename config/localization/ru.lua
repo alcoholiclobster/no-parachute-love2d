@@ -45,4 +45,5 @@ return {
     lbl_settings_windowed = "В окне",
     lbl_settings_borderless = "Без рамки",
     lbl_settings_fullscreen = "Полный экран",
+    lbl_settings_vsync = "Верт. синхронизация",
 }
