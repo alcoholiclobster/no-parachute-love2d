@@ -23,4 +23,14 @@ return {
     btn_game_paused_continue = "ПРОДОЛЖИТЬ",
     lbl_game_level_complete = "УРОВЕНЬ ПРОЙДЕН",
     btn_game_next_level = "СЛЕДУЮЩИЙ УРОВЕНЬ (F)",
+
+    lbl_settings_music_volume = "Громкость музыки",
+    lbl_settings_effects_volume = "Громкость звуков",
+    lbl_settings_plane_fading = "Прозрачность препятствий",
+    lbl_settings_speed_lines = "Эффект скорости",
+    lbl_settings_world_quality = "Качество мира",
+    lbl_settings_particles_quality = "Качество частиц",
+    lbl_settings_motion_blur = "Размытие в движении",
+    lbl_settings_decals = "Декали",
+    btn_settings_close = "Сохранить и закрыть",
 }

@@ -36,8 +36,6 @@ function MainMenuScreen:update(deltaTime)
 end
 
 function MainMenuScreen:draw()
-    mouseUtils.setMouseEnabled(not self.settingsOverlay)
-
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     self.gameManager:draw()
 
@@ -46,7 +44,7 @@ function MainMenuScreen:draw()
     local btnSpace = screenHeight * 0.01
     for _, buttonData in ipairs(self.buttons) do
         if buttonData.label then
-            local isPressed = widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, not buttonData.handler)
+            local isPressed = widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, not buttonData.handler or self.settingsOverlay)
 
             if isPressed and buttonData.handler and self[buttonData.handler] then
                 self[buttonData.handler](self)
@@ -64,6 +62,9 @@ function MainMenuScreen:draw()
 
     if self.settingsOverlay then
         self.settingsOverlay:draw()
+        if self.settingsOverlay.isClosed then
+            self.settingsOverlay = nil
+        end
     end
 end
 

@@ -23,4 +23,14 @@ return {
     btn_game_paused_continue = "CONTINUE",
     lbl_game_level_complete = "LEVEL COMPLETE",
     btn_game_next_level = "NEXT LEVEL (F)",
+
+    lbl_settings_music_volume = "Music volume",
+    lbl_settings_effects_volume = "Sound volume",
+    lbl_settings_plane_fading = "Enable plane fading",
+    lbl_settings_speed_lines = "Enable speed lines",
+    lbl_settings_world_quality = "World quality",
+    lbl_settings_particles_quality = "Particles quality",
+    lbl_settings_motion_blur = "Enable motion blur",
+    lbl_settings_decals = "Enable decals",
+    btn_settings_close = "Save and close",
 }
