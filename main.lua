@@ -22,6 +22,15 @@ function love.load(arg)
     love.filesystem.setIdentity("no_parachute")
     languageUtils.loadLanguage("en")
 
+    settings.addHandler("window_mode", function (value)
+        if value == "windowed" then
+            love.window.setFullscreen(false)
+        elseif value == "borderless" then
+            love.window.setFullscreen(true, "desktop")
+        else
+            love.window.setFullscreen(true, "exclusive")
+        end
+    end)
     settings.addHandler("master_volume", function (value)
         love.audio.setVolume(value)
     end)
@@ -55,8 +64,6 @@ function love.load(arg)
     screenManager.fadeProgress = 0.5
 
     if args.fullscreen then
-        love.window.setFullscreen(true)
-    else
         love.window.maximize()
     end
 end

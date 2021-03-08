@@ -57,6 +57,14 @@ return {
 
     -- Graphics
     {
+        name = "window_mode",
+        values = {
+            { name = "lbl_settings_windowed", value = "windowed"},
+            { name = "lbl_settings_borderless", value = "borderless", default = true},
+            { name = "lbl_settings_fullscreen", value = "fullscreen"},
+        }
+    },
+    {
         name = "world_quality",
         values = {
             { name = "lbl_settings_low", value = 0.4 },

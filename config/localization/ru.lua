@@ -41,4 +41,8 @@ return {
     lbl_settings_language = "Язык интерфейса",
     lbl_settings_lang_english = "English",
     lbl_settings_lang_russian = "Русский",
+    lbl_settings_window_mode = "Режим экрана",
+    lbl_settings_windowed = "В окне",
+    lbl_settings_borderless = "Без рамки",
+    lbl_settings_fullscreen = "Полный экран",
 }

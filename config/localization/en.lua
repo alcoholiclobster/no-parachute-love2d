@@ -41,4 +41,8 @@ return {
     lbl_settings_language = "Language",
     lbl_settings_lang_english = "English",
     lbl_settings_lang_russian = "Russian",
+    lbl_settings_window_mode = "Window mode",
+    lbl_settings_windowed = "Windowed",
+    lbl_settings_borderless = "Borderless",
+    lbl_settings_fullscreen = "Fullscreen",
 }
