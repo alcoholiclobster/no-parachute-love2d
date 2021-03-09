@@ -168,8 +168,9 @@ Concord.component("camera", function(component, fov, distance)
     component.followDistance = 0
 end)
 
-Concord.component("sidePlane", function (component)
+Concord.component("sidePlane", function (component, id)
     component.typeIndex = 0
+    component.id = id or 1
 end)
 
 Concord.component("planeTextureColor", function(component, r, g, b, a)

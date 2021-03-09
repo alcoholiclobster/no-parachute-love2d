@@ -43,7 +43,7 @@ function GameInit:init()
             :give("size", maf.vec3(10 * mathUtils.sign(math.random() - 0.5), 10 * mathUtils.sign(math.random() - 0.5)))
             :give("rotation", direction*math.pi * 0.5)
             :give("drawable")
-            :give("sidePlane")
+            :give("sidePlane", i)
             :give("sidePlaneRespawnEvent")
             :give("color", brightness, brightness, brightness, 1)
     end

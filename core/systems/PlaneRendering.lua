@@ -57,8 +57,29 @@ vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
     return color / count;
 }]]
 
+local lodBlendEnabled = true
+local lodBlendStart = 0.25
+local lodBlendEnd = 0.5
+local lodDrawEveryPlane = 2
+local lodOmitSideDistance = 0.6
+
 local function render(e, camera)
-    local x, y, scale = renderingUtils.project(e.position.value, camera.position.value, camera.camera.fov)
+    local position = e.position.value:clone()
+    local lodAlpha = 1
+    local lodDistance = 0
+    if e.sidePlane and lodBlendEnabled then
+        lodDistance = (camera.position.value.z - position.z) / fogDistance
+        if lodDistance > lodBlendStart then
+            if e.sidePlane.id % lodDrawEveryPlane ~= 0 then
+                if lodDistance < lodBlendEnd then
+                    lodAlpha = (lodBlendEnd - lodDistance) / (lodBlendEnd - lodBlendStart)
+                else
+                    return
+                end
+            end
+        end
+    end
+    local x, y, scale = renderingUtils.project(position, camera.position.value, camera.camera.fov)
     if not x then
         return
     end
@@ -71,19 +92,21 @@ local function render(e, camera)
 
     local size = e.size.value * scale
     if e.sidePlane and e.texture then
-        local imageData = assets.textureImageData(e.texture.value)
-        local r, g, b = imageData:getPixel(0, 0)
-        if e.color then
-            r = r * e.color.r
-            g = g * e.color.g
-            b = b * e.color.b
-        end
-        love.graphics.setColor(
-            r, g, b, 1
-        )
+        if not lodBlendEnabled or lodDistance < lodOmitSideDistance or e.sidePlane.id % 3 ~= 0 then
+            local imageData = assets.textureImageData(e.texture.value)
+            local r, g, b = imageData:getPixel(0, 0)
+            if e.color then
+                r = r * e.color.r
+                g = g * e.color.g
+                b = b * e.color.b
+            end
+            love.graphics.setColor(
+                r, g, b, lodAlpha
+            )
 
-        local mul = (1/2*scale*10)*(e.size.value.x/10)
-        love.graphics.draw(assets.texture("plane_border"), 0, 0, 0, mul, mul, 4, 4)
+            local mul = (1/2*scale*10)*(e.size.value.x/10)
+            love.graphics.draw(assets.texture("plane_border"), 0, 0, 0, mul, mul, 4, 4)
+        end
     end
 
     if e.color then
@@ -91,10 +114,10 @@ local function render(e, camera)
             e.color.r,
             e.color.g,
             e.color.b,
-            e.color.a
+            e.color.a * lodAlpha
         )
     else
-        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.setColor(1, 1, 1, lodAlpha)
     end
 
     if e.fillMode then
