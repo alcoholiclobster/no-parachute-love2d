@@ -8,7 +8,7 @@ return {
     playerRotationMode = "none",
     playerRotationSpeed = 0,
 
-    sidePlanesCount = 80,
+    sidePlanesCount = 60,
     sidePlanes = {
         {
             textures = {

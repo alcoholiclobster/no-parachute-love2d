@@ -1,10 +1,25 @@
-local bitser = require("lib.bitser")
+local json = require("lib.json")
 
+local filename = "settings.json"
 local settings = {}
 
 local settingsConfig = require("config.settings")
 local settingsState = {}
 local settingsHandlers = {}
+
+local function deserialize(str)
+    -- bitser.loads
+    return json.decode(str)
+end
+
+local function serialize(t)
+    -- bitser.dumps
+    return json.encode(t)
+end
+
+function settings.save()
+    love.filesystem.write(filename, serialize(settingsState))
+end
 
 function settings.get(name)
     return settingsState[name]
@@ -19,7 +34,7 @@ function settings.set(name, value, omitSave)
     end
 
     if not omitSave then
-        love.filesystem.write("settings", bitser.dumps(settingsState))
+        settings.save()
     end
 end
 
@@ -40,24 +55,28 @@ function settings.restoreDefaults(omitSave)
     end
 
     if not omitSave then
-        love.filesystem.write("settings", bitser.dumps(settingsState))
+        settings.save()
     end
 end
 
 function settings.load()
     local state = {}
-    local settingsFileData = love.filesystem.read("settings")
+    local settingsFileData = love.filesystem.read(filename)
     if settingsFileData then
-        state = bitser.loads(settingsFileData)
+        state = deserialize(settingsFileData)
     end
 
-    settings.restoreDefaults()
+    -- Initialize with default settings
+    settings.restoreDefaults(true)
+
+    -- Replace default settings by settings from file
     for k, v in pairs(state) do
         settings.set(k, v, true)
     end
 
-    if not love.filesystem.getInfo("settings") then
-        love.filesystem.write("settings", bitser.dumps(settingsState))
+    -- If settings file does not exist, create it
+    if not love.filesystem.getInfo(filename) then
+        settings.save()
     end
 end
 
