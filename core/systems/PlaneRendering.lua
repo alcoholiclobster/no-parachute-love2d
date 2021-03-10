@@ -87,7 +87,7 @@ local function render(e, camera)
     love.graphics.translate(x, y)
     love.graphics.rotate(e.rotation.value)
 
-    local depth = mathUtils.clamp01((e.position.value.z - camera.position.value.z + 8) / -fogDistance)
+    local depth = mathUtils.clamp01((e.position.value.z - camera.position.value.z + 8) / (-fogDistance+8))
     planeShader:send("depth", depth)
 
     local size = e.size.value * scale

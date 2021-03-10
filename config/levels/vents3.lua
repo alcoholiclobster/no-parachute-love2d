@@ -1,4 +1,3 @@
-local level_64 = require "config.levels.level_64"
 return {
     name = "Vents 3",
     nextLevel = "meat1",
