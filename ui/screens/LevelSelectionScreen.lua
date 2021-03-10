@@ -83,7 +83,6 @@ function LevelSelectionScreen:draw()
     local itemWidth, itemHeight = panelWidth, panelHeight * 0.1
     -- Level Name
     local itemData = self.levelsList[self.selectedLevelIndex]
-    love.graphics.setColor(1, 1, 1, 0.9)
     love.graphics.setColor(165/255, 86/255, 125/255)
     widgets.label(itemData.label, itemX, itemY, itemWidth, itemHeight, true, "center")
 
@@ -102,7 +101,6 @@ function LevelSelectionScreen:draw()
         love.graphics.setColor(0.75, 0.75, 0.75)
         widgets.label(row.name, itemX, itemY, itemWidth, itemHeight, false, "left")
         love.graphics.setColor(1, 1, 1)
-        -- love.graphics.setColor(165/255, 86/255, 125/255)
         widgets.label(row.value, itemX, itemY, itemWidth, itemHeight, true, "right")
         itemY = itemY + itemHeight + panelHeight * 0.025
     end
@@ -129,18 +127,27 @@ function LevelSelectionScreen:draw()
     end
     btnHeight = screenHeight * 0.09
     btnY = btnY - btnHeight
+    love.graphics.setColor(165/255, 86/255, 125/255)
     if widgets.button("START GAME", btnX, btnY, btnWidth, btnHeight, false, "center") then
         self.screenManager:transition("GameScreen", itemData.name)
     end
 
     -- Arrows
+    --Left
     local arrowSize = panelHeight * 0.14
     itemX, itemY = panelX, panelY
     local arrowScale = arrowSize/self.arrowTextureWidth
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.draw(self.arrowTexture, itemX+2, itemY+2, 0, -arrowScale, arrowScale)
+
     if widgets.button(" ", itemX - arrowSize, itemY, arrowSize, arrowSize, false, "right") then
         self:selectPreviousLevel()
     end
     love.graphics.draw(self.arrowTexture, itemX, itemY, 0, -arrowScale, arrowScale)
+
+    -- Right
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.draw(self.arrowTexture, itemX + panelWidth+2, itemY+2, 0, arrowScale, arrowScale)
 
     if widgets.button(" ", itemX + panelWidth, itemY, arrowSize, arrowSize, false, "left") then
         self:selectNextLevel()
