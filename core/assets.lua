@@ -7,7 +7,7 @@ local fontsCache = {
 }
 local soundsCache = {}
 
-function assets.texture(name)
+function assets.texture(name, enableFiltering)
     if texturesCache[name] then
         return texturesCache[name]
     end
@@ -16,7 +16,9 @@ function assets.texture(name)
     local imageData = love.image.newImageData(path)
 
     local texture = love.graphics.newImage(imageData)
-    texture:setFilter("nearest", "nearest")
+    if not enableFiltering then
+        texture:setFilter("nearest", "nearest")
+    end
     texturesCache[name] = texture
 
     imageDataCache[texture] = imageData
