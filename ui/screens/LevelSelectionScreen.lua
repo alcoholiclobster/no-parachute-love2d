@@ -12,24 +12,50 @@ function LevelSelectionScreen:initialize()
     self.levelConfigs = {}
 
     local levelName = "intro"
+    local levelIndex = 1
     while levelName do
         local config = require("config.levels."..levelName)
         self.levelConfigs[levelName] = config
-        table.insert(self.levelsList, {
-            label = config.name,
-            name = levelName,
-            config = config,
+        local isLocked = levelIndex > 5
 
+        local label = lz(config.name)
+        if isLocked then
+            label = label:gsub("%S", "?")
+        end
+
+        -- Load stats
+        local stats = {
+            { name = "Highscore", value = "-"},
+            { name = "Best Time", value = "-"},
+            { name = "Deaths", value = "-"},
+            { name = "Limbs lost", value = "-"},
+        }
+        if not isLocked then
             stats = {
                 { name = "Highscore", value = "999 999 999"},
                 { name = "Best Time", value = "00:30"},
                 { name = "Deaths", value = "999"},
                 { name = "Limbs lost", value = "999"},
-            },
+            }
+        end
 
+        -- Load rating
+        local rating = 0
+        if not isLocked then
             rating = math.random(0, 3)
+        end
+
+        table.insert(self.levelsList, {
+            isLocked = isLocked,
+            label = label,
+            name = levelName,
+            config = config,
+            stats = stats,
+            rating = rating
         })
+
         levelName = config.nextLevel
+        levelIndex = levelIndex + 1
     end
 
     self.selectedLevelIndex = 1 -- TODO: Select last available level
@@ -72,6 +98,13 @@ function LevelSelectionScreen:draw()
         love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
     end
 
+    -- Selected level item
+    local itemData = self.levelsList[self.selectedLevelIndex]
+    if itemData.isLocked then
+        love.graphics.setColor(0, 0, 0, 0.5)
+        love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
+    end
+
     -- Selected level panel
     local panelWidth = screenWidth * 0.25
     local panelHeight = screenHeight * 0.6
@@ -84,7 +117,6 @@ function LevelSelectionScreen:draw()
     local itemX, itemY = panelX, panelY
     local itemWidth, itemHeight = panelWidth, panelHeight * 0.1
     -- Level Name
-    local itemData = self.levelsList[self.selectedLevelIndex]
     love.graphics.setColor(165/255, 86/255, 125/255)
     widgets.label(itemData.label, itemX, itemY, itemWidth, itemHeight, true, "center")
 
@@ -127,10 +159,14 @@ function LevelSelectionScreen:draw()
     if widgets.button(lz("btn_back"), btnX, btnY, btnWidth, btnHeight, false, "center") then
         self.screenManager:transition("MainMenuScreen")
     end
-    btnHeight = screenHeight * 0.09
+    btnHeight = panelHeight * 0.1
     btnY = btnY - btnHeight
     love.graphics.setColor(165/255, 86/255, 125/255)
-    if widgets.button("START GAME", btnX, btnY, btnWidth, btnHeight, false, "center") then
+    local startGameButtonLabel = "START GAME"
+    if itemData.isLocked then
+        startGameButtonLabel = "LEVEL LOCKED"
+    end
+    if widgets.button(startGameButtonLabel, btnX, btnY, btnWidth, btnHeight, itemData.isLocked, "center") then
         self.screenManager:transition("GameScreen", itemData.name)
     end
 
@@ -162,7 +198,9 @@ function LevelSelectionScreen:selectNextLevel()
         return
     end
     self.selectedLevelIndex = self.selectedLevelIndex + 1
-    self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
+    if not self.levelsList[self.selectedLevelIndex].isLocked then
+        self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
+    end
 end
 
 function LevelSelectionScreen:selectPreviousLevel()
@@ -170,7 +208,9 @@ function LevelSelectionScreen:selectPreviousLevel()
         return
     end
     self.selectedLevelIndex = self.selectedLevelIndex - 1
-    self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
+    if not self.levelsList[self.selectedLevelIndex].isLocked then
+        self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
+    end
 end
 
 function LevelSelectionScreen:showBackgroundLevel(levelName)
