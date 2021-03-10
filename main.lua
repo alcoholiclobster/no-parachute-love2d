@@ -50,8 +50,9 @@ function love.load(arg)
     local parser = argparse()
     parser:flag("--debug", "Run game in debug mode")
     parser:option("--level", "Force load game level")
+    parser:option("--screen", "Force display screen")
     parser:option("--fps", "Simulate frame rate")
-    parser:flag("--fullscreen", "Force fullscreen mode")
+    parser:flag("--maximize", "Force maximize window")
     parser:flag("--nohud", "Disable HUD")
     local args = parser:parse(arg)
 
@@ -66,12 +67,14 @@ function love.load(arg)
     if args.level then
         print("Force loading level "..tostring(args.level))
         screenManager:transition("GameScreen", args.level)
+    elseif args.screen then
+        screenManager:transition(args.screen)
     else
         screenManager:transition("MainMenuScreen")
     end
     screenManager.fadeProgress = 0.5
 
-    if args.fullscreen then
+    if args.maximize then
         love.window.maximize()
     end
 end
