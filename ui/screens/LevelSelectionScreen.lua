@@ -25,12 +25,14 @@ function LevelSelectionScreen:initialize()
                 { name = "Best Time", value = "00:30"},
                 { name = "Deaths", value = "999"},
                 { name = "Limbs lost", value = "999"},
-            }
+            },
+
+            rating = math.random(0, 3)
         })
         levelName = config.nextLevel
     end
 
-    self.selectedLevelIndex = 4 -- TODO: Select last available level
+    self.selectedLevelIndex = 1 -- TODO: Select last available level
 
     self.backgroundFade = 0
     self.backgroundLevelTransitionTime = 0.25
@@ -108,7 +110,7 @@ function LevelSelectionScreen:draw()
     itemY = itemY + panelHeight * 0.03
     itemWidth = panelWidth / 3 - panelWidth * 0.05
     for i = 1, 3 do
-        local isActive = i <= 2
+        local isActive = i <= itemData.rating
         if isActive then
             love.graphics.setColor(0, 0, 0, 0.9)
             love.graphics.draw(self.starTexture, itemX + 4, itemY + 2, 0, itemWidth/self.starTexture:getWidth())
