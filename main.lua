@@ -6,6 +6,7 @@ local mouseUtils = require("utils.mouse")
 local musicManager = require("utils.musicManager")
 local scheduler = require("utils.scheduler")
 local settings = require("core.settings")
+local storage = require("utils.storage")
 local languageUtils = require("utils.language")
 
 GLOBAL_DEBUG_ENABLED = true
@@ -22,6 +23,7 @@ function love.load(arg)
     love.filesystem.setIdentity("no_parachute")
     languageUtils.loadLanguage("en")
     love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
+    storage.load()
 
     settings.addHandler("window_mode", function (value)
         if value == "windowed" then
