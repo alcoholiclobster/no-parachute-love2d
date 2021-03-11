@@ -6,7 +6,7 @@ return {
     btn_exit_game = "ВЫЙТИ ИЗ ИГРЫ",
     btn_back = "НАЗАД",
     btn_level_selection_start_game = "НАЧАТЬ ИГРУ",
-    btn_level_selection_level_locked = "ЗАБЛОКИРОВАНО",
+    btn_level_selection_level_locked = "НЕДОСТУПНО",
     lbl_level_stats_highscore = "Лучший счёт",
     lbl_level_stats_best_time = "Лучшее время",
     lbl_level_stats_deaths = "Смертей",
