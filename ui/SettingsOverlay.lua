@@ -17,6 +17,7 @@ end
 
 function SettingsOverlay:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
+    love.graphics.setLineWidth(1)
     love.graphics.setColor(0, 0, 0, 0.9)
     love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 

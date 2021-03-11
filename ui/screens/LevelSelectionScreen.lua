@@ -145,12 +145,16 @@ function LevelSelectionScreen:draw()
 
     love.graphics.setLineWidth(itemHeight * 0.05)
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.line(itemX+2, itemY+2, itemX + itemWidth+2, itemY+2)
+    love.graphics.line(itemX+2, itemY+2, itemX + itemWidth* 0.45+2, itemY+2)
+    love.graphics.line(itemX+itemWidth*0.55+2, itemY+2, itemX + itemWidth+2, itemY+2)
     love.graphics.line(itemX+2, itemY + itemHeight * 1.4+2, itemX + itemWidth+2, itemY + itemHeight * 1.4+2)
 
     love.graphics.setColor(130/255, 90/255, 150/255, 1)
-    love.graphics.line(itemX, itemY, itemX + itemWidth, itemY)
+    love.graphics.line(itemX, itemY, itemX + itemWidth * 0.45, itemY)
+    love.graphics.line(itemX+itemWidth*0.55, itemY, itemX + itemWidth, itemY)
     love.graphics.line(itemX, itemY + itemHeight * 1.4, itemX + itemWidth, itemY + itemHeight * 1.4)
+
+    widgets.label(tostring(self.selectedLevelIndex), itemX+itemWidth*0.4, itemY-itemHeight*0.25, itemWidth*0.2, itemHeight*0.35, false, "center")
 
     itemY = itemY + itemHeight * 1.4 + panelHeight * 0.025
     itemHeight = panelHeight * 0.05
@@ -182,7 +186,7 @@ function LevelSelectionScreen:draw()
     if widgets.button(lz("btn_back"), btnX, btnY, btnWidth, btnHeight, false, "center") then
         self.screenManager:transition("MainMenuScreen")
     end
-    btnHeight = panelHeight * 0.1
+    -- btnHeight = panelHeight * 0.1
     btnY = btnY - btnHeight
     love.graphics.setColor(165/255, 86/255, 125/255)
     local startGameButtonLabel = lz("btn_level_selection_start_game")
@@ -195,8 +199,8 @@ function LevelSelectionScreen:draw()
 
     -- Arrows
     --Left
-    local arrowSize = panelHeight * 0.14
-    itemX, itemY = panelX, panelY
+    local arrowSize = panelHeight * 0.08
+    itemX, itemY = panelX, panelY + (panelHeight * 0.14 - arrowSize) / 2
     local arrowScale = arrowSize/self.arrowTextureWidth
     love.graphics.setColor(0, 0, 0)
     love.graphics.draw(self.arrowTexture, itemX+2, itemY+2, 0, -arrowScale, arrowScale)
