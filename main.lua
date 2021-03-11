@@ -10,7 +10,6 @@ local settings = require("utils.settings")
 local storage = require("utils.storage")
 local languageUtils = require("utils.language")
 local Steam = require("luasteam")
-local widgets = require "ui.widgets"
 
 GLOBAL_DEBUG_ENABLED = true
 GLOBAL_HUD_DISABLED = false
@@ -46,8 +45,8 @@ function love.load(arg)
     -- Love2D initalization
     love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
 
-    settings.load()
     languageUtils.loadLanguage()
+    settings.load()
 
     -- Initialize Steam
     local steamUserId = "local"
