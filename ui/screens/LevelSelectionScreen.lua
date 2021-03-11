@@ -14,7 +14,7 @@ function LevelSelectionScreen:initialize()
 
     local levelName = "intro"
     local levelIndex = 1
-    local lastCompletedLevelIndex = 1
+    local lastCompletedLevelIndex = 0
 
     while levelName do
         local config = require("config.levels."..levelName)
@@ -47,7 +47,22 @@ function LevelSelectionScreen:initialize()
         end
 
         -- Load rating
-        local rating = 0 -- TODO: Calculate rating based on highscore
+        local rating = 0
+        if isCompleted then
+            local highscore = storage.getLevelData(levelName, "highscore", 0)
+            if config.highscores then
+                for i, value in ipairs(config.highscores) do
+                    if value > highscore then
+                        break
+                    else
+                        rating = i
+                    end
+                end
+                rating = rating + 1
+            elseif highscore > 0 then
+                rating = 3
+            end
+        end
 
         table.insert(self.levelsList, {
             isCompleted = isCompleted,
