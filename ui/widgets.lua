@@ -7,6 +7,8 @@ local clickSound = assets.sound("ui_click.wav")
 local hoverSound = assets.sound("ui_hover.wav")
 local lastHighlightedButton = false
 
+local starTexture = assets.texture("star")
+
 local function drawShadowText(text, x, y, width, align)
     local w = 2
     local r, g, b, a = love.graphics.getColor()
@@ -23,6 +25,17 @@ end
 function widgets.label(text, x, y, width, height, isBold, align)
     love.graphics.setFont(assets.font(isBold and "Roboto-Bold" or "Roboto-Regular", math.floor(height)))
     drawShadowText(text, x, y + height * 0.1, width, align or "left")
+end
+
+function widgets.star(x, y, size, isCollected)
+    if isCollected then
+        love.graphics.setColor(0, 0, 0, 0.9)
+        love.graphics.draw(starTexture, x + 4, y + 2, 0, size/starTexture:getWidth())
+        love.graphics.setColor(1, 0.7, 0)
+    else
+        love.graphics.setColor(0, 0, 0, 0.5)
+    end
+    love.graphics.draw(starTexture, x, y, 0, size/starTexture:getWidth())
 end
 
 function widgets.button(text, x, y, width, height, isDisabled, align)

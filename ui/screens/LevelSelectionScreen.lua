@@ -16,6 +16,8 @@ function LevelSelectionScreen:initialize()
     local levelIndex = 1
     local lastCompletedLevelIndex = 0
 
+    self.earnedRating = 0
+    self.totalRating = 0
     while levelName do
         local config = require("config.levels."..levelName)
         self.levelConfigs[levelName] = config
@@ -63,6 +65,7 @@ function LevelSelectionScreen:initialize()
                 rating = 3
             end
         end
+        self.earnedRating = self.earnedRating + rating
 
         table.insert(self.levelsList, {
             isCompleted = isCompleted,
@@ -81,6 +84,8 @@ function LevelSelectionScreen:initialize()
         levelIndex = levelIndex + 1
     end
 
+    self.totalRating = #self.levelsList * 3
+
     self.selectedLevelIndex = math.min(#self.levelsList, lastCompletedLevelIndex + 1)
 
     self.backgroundFade = 0
@@ -89,7 +94,6 @@ function LevelSelectionScreen:initialize()
     self.nextBackgroundLevelName = nil
     self.gameManager = GameManager:new(self.levelConfigs[self.backgroundLevelName], self, true)
 
-    self.starTexture = assets.texture("star", true)
     self.arrowTexture = assets.texture("arrow", true)
     self.arrowTextureWidth = self.arrowTexture:getWidth()
 end
@@ -143,7 +147,7 @@ function LevelSelectionScreen:draw()
     love.graphics.setColor(165/255, 86/255, 125/255)
     widgets.label(itemData.label, itemX, itemY, itemWidth, itemHeight, true, "center")
 
-    love.graphics.setLineWidth(itemHeight * 0.05)
+    love.graphics.setLineWidth(itemHeight * 0.04)
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.line(itemX+2, itemY+2, itemX + itemWidth* 0.45+2, itemY+2)
     love.graphics.line(itemX+itemWidth*0.55+2, itemY+2, itemX + itemWidth+2, itemY+2)
@@ -154,7 +158,7 @@ function LevelSelectionScreen:draw()
     love.graphics.line(itemX+itemWidth*0.55, itemY, itemX + itemWidth, itemY)
     love.graphics.line(itemX, itemY + itemHeight * 1.4, itemX + itemWidth, itemY + itemHeight * 1.4)
 
-    widgets.label(tostring(self.selectedLevelIndex), itemX+itemWidth*0.4, itemY-itemHeight*0.25, itemWidth*0.2, itemHeight*0.35, false, "center")
+    widgets.label(tostring(self.selectedLevelIndex), itemX+itemWidth*0.4, itemY-itemHeight*0.25, itemWidth*0.2, itemHeight*0.35, true, "center")
 
     itemY = itemY + itemHeight * 1.4 + panelHeight * 0.025
     itemHeight = panelHeight * 0.05
@@ -169,15 +173,7 @@ function LevelSelectionScreen:draw()
     itemY = itemY + panelHeight * 0.03
     itemWidth = panelWidth / 3 - panelWidth * 0.05
     for i = 1, 3 do
-        local isActive = i <= itemData.rating
-        if isActive then
-            love.graphics.setColor(0, 0, 0, 0.9)
-            love.graphics.draw(self.starTexture, itemX + 4, itemY + 2, 0, itemWidth/self.starTexture:getWidth())
-            love.graphics.setColor(1, 0.7, 0)
-        else
-            love.graphics.setColor(0, 0, 0, 0.5)
-        end
-        love.graphics.draw(self.starTexture, itemX, itemY, 0, itemWidth/self.starTexture:getWidth())
+        widgets.star(itemX, itemY, itemWidth, i <= itemData.rating)
         itemX = itemX + itemWidth + panelWidth * 0.075
     end
     local btnWidth, btnHeight = panelWidth, screenHeight * 0.05
@@ -186,7 +182,7 @@ function LevelSelectionScreen:draw()
     if widgets.button(lz("btn_back"), btnX, btnY, btnWidth, btnHeight, false, "center") then
         self.screenManager:transition("MainMenuScreen")
     end
-    -- btnHeight = panelHeight * 0.1
+    btnHeight = panelHeight * 0.12
     btnY = btnY - btnHeight
     love.graphics.setColor(165/255, 86/255, 125/255)
     local startGameButtonLabel = lz("btn_level_selection_start_game")
@@ -218,6 +214,12 @@ function LevelSelectionScreen:draw()
         self:selectNextLevel()
     end
     love.graphics.draw(self.arrowTexture, itemX + panelWidth, itemY, 0, arrowScale, arrowScale)
+
+    -- Rating
+    local starSize = screenHeight * 0.04
+    widgets.star(screenWidth * 0.905, screenHeight * 0.05+starSize*0.17, starSize, true)
+    love.graphics.setColor(1, 1, 1)
+    widgets.label(self.earnedRating.."/"..self.totalRating, screenWidth * 0.7, screenHeight * 0.05, screenWidth * 0.2, starSize, false, "right")
 end
 
 function LevelSelectionScreen:selectNextLevel()
