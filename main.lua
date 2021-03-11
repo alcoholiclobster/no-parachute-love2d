@@ -1,3 +1,4 @@
+love.errorhandler = require("utils.errorhandler")
 local argparse = require("lib.argparse")
 local ScreenManager = require("ui.ScreenManager")
 local joystickManager = require("utils.joystickManager")
@@ -15,6 +16,7 @@ GLOBAL_HUD_DISABLED = false
 
 local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
+local debugNoSteam = false
 
 local steamUpdateInterval = 0.1
 local steamLastUpdatedAt = love.timer.getTime()
@@ -26,8 +28,13 @@ function love.load(arg)
 
     love.filesystem.setIdentity("no_parachute")
 
-    Steam.init()
-    local steamUserId = tostring(Steam.user.getSteamID())
+    local steamUserId = "offline"
+    if Steam.init() then
+        steamUserId = tostring(Steam.user.getSteamID())
+    elseif not debugNoSteam then
+        error("Steam must be running")
+        return
+    end
 
     languageUtils.loadLanguage("en")
     love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
@@ -114,6 +121,8 @@ function love.keypressed(key, ...)
         console.toggle()
     elseif key == "f11" then
         love.window.setFullscreen(not love.window.getFullscreen(), "exclusive")
+    elseif key == "r" and love.keyboard.isDown("ctrl") then
+        love.event.quit("restart")
     end
 end
 
