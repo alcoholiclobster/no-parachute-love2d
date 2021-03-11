@@ -5,7 +5,12 @@ return {
     btn_settings = "НАСТРОЙКИ",
     btn_exit_game = "ВЫЙТИ ИЗ ИГРЫ",
     btn_back = "НАЗАД",
-    btn_level_selection_start_game = "ИГРАТЬ",
+    btn_level_selection_start_game = "НАЧАТЬ ИГРУ",
+    btn_level_selection_level_locked = "ЗАБЛОКИРОВАНО",
+    lbl_level_stats_highscore = "Лучший счёт",
+    lbl_level_stats_best_time = "Лучшее время",
+    lbl_level_stats_deaths = "Смертей",
+    lbl_level_stats_limbs_lost = "Потеряно конечностей",
 
     lbl_hud_progress = "ПРОГРЕСС",
     lbl_hud_score = "ОЧКИ",
@@ -46,4 +51,7 @@ return {
     lbl_settings_borderless = "Без рамки",
     lbl_settings_fullscreen = "Полный экран",
     lbl_settings_vsync = "Верт. синхронизация",
+
+    lbl_game_finish_new_highscore = "Новый рекорд!",
+    lbl_game_finish_new_best_time = "Новый рекорд!"
 }

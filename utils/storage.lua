@@ -3,6 +3,7 @@ local bitser = require("lib.bitser")
 local storage = {}
 
 local saveFileName = "savedata"
+local isKeyHashingEnabled = true
 
 local saveData = false
 
@@ -32,6 +33,9 @@ function storage.set(key, value)
         print("WARNING: Failed to update game save data. Save data needs to be loaded first.")
         return
     end
+    if isKeyHashingEnabled then
+        key = love.data.hash("md5", key)
+    end
     saveData[key] = value
     save()
 end
@@ -39,6 +43,9 @@ end
 function storage.get(key, defaultValue)
     if type(key) ~= "string" then
         error("key must be string")
+    end
+    if isKeyHashingEnabled then
+        key = love.data.hash("md5", key)
     end
     if not saveData then
         print("WARNING: Failed to update game save data. Save data needs to be loaded first.")
@@ -71,6 +78,7 @@ function storage.load()
     else
         saveData = {}
     end
+    storage.set("last_loaded_at", os.time(os.date("!*t")))
 end
 
 return storage

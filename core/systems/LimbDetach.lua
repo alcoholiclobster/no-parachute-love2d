@@ -1,5 +1,6 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
+local storage = require("utils.storage")
 
 local LimbDetach = Concord.system({
     pool = {"attachToEntity", "deathEvent", "alive", "limb"}
@@ -45,6 +46,12 @@ function LimbDetach:update(deltaTime)
         -- Decrease character acceleration
         if e.attachToEntity.value.acceleration then
             e.attachToEntity.value.acceleration.value = e.attachToEntity.value.acceleration.value * 0.75
+        end
+
+        -- Counter
+        if e.attachToEntity.value.controlledByPlayer then
+            local levelName = self:getWorld().gameManager.ui.levelName
+            storage.setLevelData(levelName, "limbs_lost", storage.getLevelData(levelName, "limbs_lost", 0) + 1)
         end
     end
 end

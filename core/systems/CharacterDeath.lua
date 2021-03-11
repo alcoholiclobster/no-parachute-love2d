@@ -1,6 +1,7 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local mathUtils = require("utils.math")
+local storage = require("utils.storage")
 
 local CharacterDeath = Concord.system({
     pool = {"character", "velocity", "alive", "obstacleCollisionEvent"}
@@ -32,6 +33,8 @@ function CharacterDeath:update(deltaTime)
 
         -- UI
         if e.controlledByPlayer then
+            local levelName = self:getWorld().gameManager.ui.levelName
+            storage.setLevelData(levelName, "deaths", storage.getLevelData(levelName, "deaths", 0) + 1)
             self:getWorld().gameManager:triggerUI("showDeathScreen")
         end
     end

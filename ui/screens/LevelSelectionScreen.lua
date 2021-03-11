@@ -3,7 +3,8 @@ local Screen = require("ui.Screen")
 local widgets = require("ui.widgets")
 local GameManager = require("core.GameManager")
 local lz = require("utils.language").localize
-local assets = require "core.assets"
+local assets = require("core.assets")
+local storage = require("utils.storage")
 
 local LevelSelectionScreen = class("LevelSelectionScreen", Screen)
 
@@ -13,40 +14,44 @@ function LevelSelectionScreen:initialize()
 
     local levelName = "intro"
     local levelIndex = 1
+    local lastCompletedLevelIndex = 1
+
     while levelName do
         local config = require("config.levels."..levelName)
         self.levelConfigs[levelName] = config
-        local isLocked = levelIndex > 5
-
+        local isCompleted = storage.getLevelData(levelName, "is_completed", false)
+        local isUnlocked = levelIndex - 1 <= lastCompletedLevelIndex
         local label = lz(config.name)
-        if isLocked then
+        -- Hide locked level name
+        if not isUnlocked then
             label = label:gsub("%S", "?")
         end
 
         -- Load stats
         local stats = {
-            { name = "Highscore", value = "-"},
-            { name = "Best Time", value = "-"},
-            { name = "Deaths", value = "-"},
-            { name = "Limbs lost", value = "-"},
+            { name = "highscore"},
+            { name = "best_time"},
+            { name = "deaths"},
+            { name = "limbs_lost"},
         }
-        if not isLocked then
-            stats = {
-                { name = "Highscore", value = "999 999 999"},
-                { name = "Best Time", value = "00:30"},
-                { name = "Deaths", value = "999"},
-                { name = "Limbs lost", value = "999"},
-            }
+        for _, statsItem in ipairs(stats) do
+            statsItem.label = "lbl_level_stats_"..statsItem.name
+            statsItem.value = storage.getLevelData(levelName, statsItem.name, "-")
+
+            if statsItem.name == "best_time" and type(statsItem.value) == "number" then
+                local minutes = math.floor(statsItem.value / 60)
+                local seconds = statsItem.value % 60
+                local msec = math.floor((seconds - math.floor(seconds)) * 1000)
+                statsItem.value = string.format("%02d:%02d:%03d", minutes, seconds, msec)
+            end
         end
 
         -- Load rating
-        local rating = 0
-        if not isLocked then
-            rating = math.random(0, 3)
-        end
+        local rating = 0 -- TODO: Calculate rating based on highscore
 
         table.insert(self.levelsList, {
-            isLocked = isLocked,
+            isCompleted = isCompleted,
+            isUnlocked = isUnlocked,
             label = label,
             name = levelName,
             config = config,
@@ -55,10 +60,13 @@ function LevelSelectionScreen:initialize()
         })
 
         levelName = config.nextLevel
+        if isCompleted then
+            lastCompletedLevelIndex = levelIndex
+        end
         levelIndex = levelIndex + 1
     end
 
-    self.selectedLevelIndex = 1 -- TODO: Select last available level
+    self.selectedLevelIndex = math.min(#self.levelsList, lastCompletedLevelIndex + 1)
 
     self.backgroundFade = 0
     self.backgroundLevelTransitionTime = 0.25
@@ -100,7 +108,7 @@ function LevelSelectionScreen:draw()
 
     -- Selected level item
     local itemData = self.levelsList[self.selectedLevelIndex]
-    if itemData.isLocked then
+    if not itemData.isUnlocked then
         love.graphics.setColor(0, 0, 0, 0.5)
         love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
     end
@@ -133,7 +141,7 @@ function LevelSelectionScreen:draw()
     itemHeight = panelHeight * 0.05
     for _, row in ipairs(itemData.stats) do
         love.graphics.setColor(0.75, 0.75, 0.75)
-        widgets.label(row.name, itemX, itemY, itemWidth, itemHeight, false, "left")
+        widgets.label(lz(row.label), itemX, itemY, itemWidth, itemHeight, false, "left")
         love.graphics.setColor(1, 1, 1)
         widgets.label(row.value, itemX, itemY, itemWidth, itemHeight, true, "right")
         itemY = itemY + itemHeight + panelHeight * 0.025
@@ -162,11 +170,11 @@ function LevelSelectionScreen:draw()
     btnHeight = panelHeight * 0.1
     btnY = btnY - btnHeight
     love.graphics.setColor(165/255, 86/255, 125/255)
-    local startGameButtonLabel = "START GAME"
-    if itemData.isLocked then
-        startGameButtonLabel = "LEVEL LOCKED"
+    local startGameButtonLabel = lz("btn_level_selection_start_game")
+    if not itemData.isUnlocked then
+        startGameButtonLabel = lz("btn_level_selection_level_locked")
     end
-    if widgets.button(startGameButtonLabel, btnX, btnY, btnWidth, btnHeight, itemData.isLocked, "center") then
+    if widgets.button(startGameButtonLabel, btnX, btnY, btnWidth, btnHeight, not itemData.isUnlocked, "center") then
         self.screenManager:transition("GameScreen", itemData.name)
     end
 
@@ -198,7 +206,7 @@ function LevelSelectionScreen:selectNextLevel()
         return
     end
     self.selectedLevelIndex = self.selectedLevelIndex + 1
-    if not self.levelsList[self.selectedLevelIndex].isLocked then
+    if self.levelsList[self.selectedLevelIndex].isUnlocked then
         self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
     end
 end
@@ -208,7 +216,7 @@ function LevelSelectionScreen:selectPreviousLevel()
         return
     end
     self.selectedLevelIndex = self.selectedLevelIndex - 1
-    if not self.levelsList[self.selectedLevelIndex].isLocked then
+    if self.levelsList[self.selectedLevelIndex].isUnlocked then
         self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
     end
 end

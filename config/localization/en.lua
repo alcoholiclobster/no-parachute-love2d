@@ -5,7 +5,12 @@ return {
     btn_settings = "OPTIONS",
     btn_exit_game = "EXIT TO DESKTOP",
     btn_back = "BACK",
-    btn_level_selection_start_game = "PLAY SELECTED LEVEL",
+    btn_level_selection_start_game = "START GAME",
+    btn_level_selection_level_locked = "LEVEL IS LOCKED",
+    lbl_level_stats_highscore = "Highscore",
+    lbl_level_stats_best_time = "Best time",
+    lbl_level_stats_deaths = "Deaths",
+    lbl_level_stats_limbs_lost = "Limbs lost",
 
     lbl_hud_progress = "PROGRESS",
     lbl_hud_score = "SCORE",
@@ -46,4 +51,7 @@ return {
     lbl_settings_borderless = "Borderless",
     lbl_settings_fullscreen = "Fullscreen",
     lbl_settings_vsync = "VSync",
+
+    lbl_game_finish_new_highscore = "New highscore!",
+    lbl_game_finish_new_best_time = "New best time!",
 }

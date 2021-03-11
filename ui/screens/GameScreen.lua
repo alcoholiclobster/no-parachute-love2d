@@ -23,6 +23,7 @@ function GameScreen:initialize(levelName)
     self.playerScore = 0
     self.playerSpeed = 0
     self:setState("game")
+    self.isNewHighscore = false
 
     self.stateChangedAt = love.timer.getTime()
 
@@ -136,7 +137,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
-            self.screenManager:transition("MainMenuScreen")
+            self.screenManager:transition("LevelSelectionScreen")
         end
     elseif self.state == "pause" then
         love.graphics.setColor(0, 0, 0, 0.6)
@@ -168,7 +169,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") then
-            self.screenManager:transition("MainMenuScreen")
+            self.screenManager:transition("LevelSelectionScreen")
         end
 
         if self.settingsOverlay then
@@ -192,9 +193,22 @@ function GameScreen:draw()
         labelHeight = screenHeight * 0.025
         widgets.label(lz("lbl_game_stats_time", self.timePassed), labelX, labelY, labelWidth, labelHeight, false, "center")
 
+        if self.isNewBestTime then
+            labelY = labelY + labelHeight + screenHeight * 0.02
+            love.graphics.setColor(1, 0.65, 0)
+            widgets.label(lz("lbl_game_finish_new_best_time"), labelX, labelY, labelWidth, labelHeight * 0.8, false, "center")
+        end
+
+        love.graphics.setColor(1, 1, 1, 1)
         labelY = labelY + labelHeight + screenHeight * 0.04
         local score = tostring(math.ceil(self.playerScore))
         widgets.label(lz("lbl_game_stats_score", score), labelX, labelY, labelWidth, labelHeight, false, "center")
+
+        if self.isNewHighscore then
+            labelY = labelY + labelHeight + screenHeight * 0.02
+            love.graphics.setColor(1, 0.65, 0)
+            widgets.label(lz("lbl_game_finish_new_highscore"), labelX, labelY, labelWidth, labelHeight * 0.8, false, "center")
+        end
 
         -- Buttons
         love.graphics.setColor(1, 1, 1, 1)
@@ -205,7 +219,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
-            self.screenManager:transition("MainMenuScreen")
+            self.screenManager:transition("LevelSelectionScreen")
         end
     end
 end
@@ -226,14 +240,18 @@ function GameScreen:showDeathScreen()
     self:setState("dead")
 end
 
-function GameScreen:showFinishedScreen(timePassed)
+function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, isNewBestTime)
     self:setState("finished")
     self.timePassed = timePassed or 0
 
     local minutes = math.floor(self.timePassed / 60)
     local seconds = self.timePassed % 60
-
     self.timePassed = string.format("%02d:%02d", minutes, seconds)
+
+    self.playerScore = highscore
+
+    self.isNewHighscore = isNewHighscore
+    self.isNewBestTime = isNewBestTime
 end
 
 function GameScreen:update(deltaTime)
