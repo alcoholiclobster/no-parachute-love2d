@@ -82,4 +82,8 @@ function MainMenuScreen:buttonHandlerSettings()
     end
 end
 
+function MainMenuScreen:handleWindowResize(...)
+    self.gameManager:handleWindowResize(...)
+end
+
 return MainMenuScreen

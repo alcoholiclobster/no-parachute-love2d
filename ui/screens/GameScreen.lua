@@ -4,7 +4,7 @@ local class = require("lib.middleclass")
 local GameManager = require("core.GameManager")
 local musicManager = require("utils.musicManager")
 local Screen = require("ui.Screen")
-local settings = require("core.settings")
+local settings = require("utils.settings")
 local SpeedEffect = require("ui.effects.SpeedEffect")
 local Tutorial = require("ui.Tutorial")
 local mathUtils = require("utils.math")
@@ -291,6 +291,10 @@ end
 
 function GameScreen:handleKeyRelease(...)
     self.gameManager:handleKeyRelease(...)
+end
+
+function GameScreen:handleWindowResize(...)
+    self.gameManager:handleWindowResize(...)
 end
 
 return GameScreen

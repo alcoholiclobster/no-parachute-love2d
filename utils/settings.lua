@@ -25,11 +25,11 @@ function settings.get(name)
     return settingsState[name]
 end
 
-function settings.set(name, value, omitSave)
+function settings.set(name, value, omitSave, omitHandler)
     local oldValue = settingsState[name]
     settingsState[name] = value
 
-    if settingsHandlers[name] then
+    if settingsHandlers[name] and not omitHandler then
         settingsHandlers[name](value, oldValue)
     end
 
@@ -59,11 +59,12 @@ function settings.restoreDefaults(omitSave)
     end
 end
 
-function settings.load(path)
+function settings.conf(path)
     filename = path
 
     local state = {}
     local settingsFileData = love.filesystem.read(filename)
+    print(settingsFileData)
     if settingsFileData then
         state = deserialize(settingsFileData)
     end
@@ -73,12 +74,19 @@ function settings.load(path)
 
     -- Replace default settings by settings from file
     for k, v in pairs(state) do
-        settings.set(k, v, true)
+        settings.set(k, v, true, true)
     end
+end
 
+function settings.load()
     -- If settings file does not exist, create it
     if not love.filesystem.getInfo(filename) then
         settings.save()
+    end
+
+    -- Execute settings handlers
+    for name, handler in pairs(settingsHandlers) do
+        handler(settings.get(name))
     end
 end
 

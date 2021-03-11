@@ -1,5 +1,5 @@
 local Concord = require("lib.concord")
-local settings = require "core.settings"
+local settings = require "utils.settings"
 
 local BloodCameraCollision = Concord.system({
     pool = {"position", "bloodSpawnEvent"},

@@ -255,4 +255,8 @@ function LevelSelectionScreen:showBackgroundLevel(levelName)
     self.nextBackgroundLevelName = levelName
 end
 
+function LevelSelectionScreen:handleWindowResize(...)
+    self.gameManager:handleWindowResize(...)
+end
+
 return LevelSelectionScreen

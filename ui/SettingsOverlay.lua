@@ -2,7 +2,7 @@ local class = require("lib.middleclass")
 local mouseUtils = require("utils.mouse")
 local widgets = require("ui.widgets")
 local settingsItems = require("config.settings")
-local settings = require("core.settings")
+local settings = require("utils.settings")
 local lz = require("utils.language").localize
 
 local SettingsOverlay = class("SettingsOverlay")

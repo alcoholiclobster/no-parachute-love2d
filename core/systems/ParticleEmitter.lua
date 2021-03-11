@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local assets = require("core.assets")
-local settings = require "core.settings"
+local settings = require "utils.settings"
 
 local ParticleEmitter = Concord.system({
     pool = {"position", "particleEmitDelay", "particleEmitCount"}

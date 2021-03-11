@@ -1,6 +1,6 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
-local settings = require("core.settings")
+local settings = require("utils.settings")
 
 local ObstacleFadeOut = Concord.system({
     characterPool = {"controlledByPlayer", "position", "alive"},

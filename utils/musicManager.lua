@@ -1,5 +1,5 @@
 local class = require("lib.middleclass")
-local settings = require("core.settings")
+local settings = require("utils.settings")
 
 local MusicManager = class("MusicManager")
 

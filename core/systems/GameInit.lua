@@ -1,7 +1,7 @@
 local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local maf = require("lib.maf")
-local settings = require("core.settings")
+local settings = require("utils.settings")
 local musicManager = require("utils.musicManager")
 
 local GameInit = Concord.system({})

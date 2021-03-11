@@ -6,7 +6,7 @@ return {
     btn_exit_game = "EXIT TO DESKTOP",
     btn_back = "BACK",
     btn_level_selection_start_game = "START GAME",
-    btn_level_selection_level_locked = "LEVEL IS LOCKED",
+    btn_level_selection_level_locked = "LOCKED",
     lbl_level_stats_highscore = "Highscore",
     lbl_level_stats_best_time = "Best time",
     lbl_level_stats_deaths = "Deaths",

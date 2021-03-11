@@ -2,7 +2,7 @@ local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local renderingUtils = require("utils.rendering")
 local assets = require("core.assets")
-local settings = require "core.settings"
+local settings = require "utils.settings"
 
 local PlaneRendering = Concord.system({
     pool = {"position", "size", "rotation", "drawable"},
@@ -203,8 +203,7 @@ function PlaneRendering:draw()
     love.graphics.setShader()
 end
 
--- TODO: Move to main.lua
-function love.resize(w, h)
+function PlaneRendering:resize(w, h)
     blurShader:send("aspect_ratio", w / h)
     canvas = love.graphics.newCanvas()
 end

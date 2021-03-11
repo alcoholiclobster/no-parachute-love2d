@@ -6,10 +6,11 @@ local console = require("utils.console")
 local mouseUtils = require("utils.mouse")
 local musicManager = require("utils.musicManager")
 local scheduler = require("utils.scheduler")
-local settings = require("core.settings")
+local settings = require("utils.settings")
 local storage = require("utils.storage")
 local languageUtils = require("utils.language")
 local Steam = require("luasteam")
+local widgets = require "ui.widgets"
 
 GLOBAL_DEBUG_ENABLED = true
 GLOBAL_HUD_DISABLED = false
@@ -25,24 +26,7 @@ local screenManager
 
 function love.load(arg)
     console.log("love.load()")
-
-    love.filesystem.setIdentity("no_parachute")
-
-    local steamUserId = "offline"
-    if Steam.init() then
-        steamUserId = tostring(Steam.user.getSteamID())
-    elseif not debugNoSteam then
-        error("Steam must be running")
-        return
-    end
-
-    languageUtils.loadLanguage("en")
-    love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
-
-    love.filesystem.createDirectory(steamUserId)
-    storage.load(steamUserId.."/user_progress.bin")
-    settings.load(steamUserId.."/user_settings.json")
-
+    -- Parse command-line arguments
     local parser = argparse()
     parser:flag("--debug", "Run game in debug mode")
     parser:option("--level", "Force load game level")
@@ -54,12 +38,32 @@ function love.load(arg)
 
     GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
     GLOBAL_HUD_DISABLED = not not args.nohud
-    math.randomseed(os.time())
-
     debugSimulateFrameRate = tonumber(args.fps) or 0
 
-    screenManager = ScreenManager:new()
+    -- Lua initialization
+    math.randomseed(os.time())
 
+    -- Love2D initalization
+    love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
+
+    settings.load()
+    languageUtils.loadLanguage()
+
+    -- Initialize Steam
+    local steamUserId = "local"
+    if Steam.init() then
+        steamUserId = tostring(Steam.user.getSteamID())
+    elseif not debugNoSteam then
+        error("Steam must be running")
+        return
+    end
+
+    -- Load game saves
+    love.filesystem.createDirectory(steamUserId)
+    storage.load(steamUserId.."/user_progress.bin")
+
+    -- Initalize UI and show first screen
+    screenManager = ScreenManager:new()
     if args.level then
         print("Force loading level "..tostring(args.level))
         screenManager:transition("GameScreen", args.level)
@@ -68,14 +72,14 @@ function love.load(arg)
     else
         screenManager:transition("MainMenuScreen")
     end
-    screenManager.fadeProgress = 0.5
-
-    if args.maximize then
-        love.window.maximize()
-    end
 end
 
 function love.quit()
+    local x, y, display = love.window.getPosition()
+    settings.set("window_x", x)
+    settings.set("window_y", y)
+    settings.set("window_display", display)
+
     Steam.shutdown()
 end
 
@@ -121,7 +125,7 @@ function love.keypressed(key, ...)
         console.toggle()
     elseif key == "f11" then
         love.window.setFullscreen(not love.window.getFullscreen(), "exclusive")
-    elseif key == "r" and love.keyboard.isDown("ctrl") then
+    elseif key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
         love.event.quit("restart")
     end
 end
@@ -140,6 +144,12 @@ end
 
 function love.joystickremoved(joystick)
     joystickManager.remove(joystick)
+end
+
+function love.resize(width, height)
+    settings.set("window_width", width)
+    settings.set("window_height", height)
+    screenManager:emit("handleWindowResize", width, height)
 end
 
 function Steam.friends.onGameOverlayActivated(data)

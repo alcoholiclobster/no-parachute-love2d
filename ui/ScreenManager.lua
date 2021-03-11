@@ -50,6 +50,10 @@ function ScreenManager:transition(name, ...)
     self.fadeScreen = name
     self.fadeProgress = 0
     self.fadeScreenArgs = {...}
+
+    if not self.screen then
+        self.fadeProgress = 0.5
+    end
 end
 
 function ScreenManager:show(screen, ...)
