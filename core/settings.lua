@@ -1,6 +1,6 @@
 local json = require("lib.json")
 
-local filename = "settings.json"
+local filename = "user_settings.json"
 local settings = {}
 
 local settingsConfig = require("config.settings")
@@ -59,7 +59,9 @@ function settings.restoreDefaults(omitSave)
     end
 end
 
-function settings.load()
+function settings.load(path)
+    filename = path
+
     local state = {}
     local settingsFileData = love.filesystem.read(filename)
     if settingsFileData then

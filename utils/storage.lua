@@ -2,7 +2,8 @@ local bitser = require("lib.bitser")
 
 local storage = {}
 
-local saveFileName = "savedata"
+local saveFileName = "user_progress.bin"
+
 local isKeyHashingEnabled = true
 
 local saveData = false
@@ -71,7 +72,9 @@ function storage.getLevelData(levelId, key, defaultValue)
     return storage.get("level_"..levelId.."_"..key, defaultValue)
 end
 
-function storage.load()
+function storage.load(path)
+    saveFileName = path
+
     local saveFileData = love.filesystem.read(saveFileName)
     if saveFileData then
         saveData = deserialize(saveFileData)

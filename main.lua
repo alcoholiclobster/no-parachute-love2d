@@ -8,6 +8,7 @@ local scheduler = require("utils.scheduler")
 local settings = require("core.settings")
 local storage = require("utils.storage")
 local languageUtils = require("utils.language")
+local Steam = require("luasteam")
 
 GLOBAL_DEBUG_ENABLED = true
 GLOBAL_HUD_DISABLED = false
@@ -15,39 +16,25 @@ GLOBAL_HUD_DISABLED = false
 local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
 
+local steamUpdateInterval = 0.1
+local steamLastUpdatedAt = love.timer.getTime()
+
 local screenManager
 
 function love.load(arg)
     console.log("love.load()")
 
     love.filesystem.setIdentity("no_parachute")
+
+    Steam.init()
+    local steamUserId = tostring(Steam.user.getSteamID())
+
     languageUtils.loadLanguage("en")
     love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
-    storage.load()
 
-    settings.addHandler("window_mode", function (value)
-        if value == "windowed" then
-            love.window.setFullscreen(false)
-        elseif value == "borderless" then
-            love.window.setFullscreen(true, "desktop")
-        else
-            love.window.setFullscreen(true, "exclusive")
-        end
-    end)
-    settings.addHandler("vsync", function (value)
-        if value then
-            love.window.setVSync(-1)
-        else
-            love.window.setVSync(0)
-        end
-    end)
-    settings.addHandler("master_volume", function (value)
-        love.audio.setVolume(value)
-    end)
-    settings.addHandler("language", function (value)
-        languageUtils.loadLanguage(value)
-    end)
-    settings.load()
+    love.filesystem.createDirectory(steamUserId)
+    storage.load(steamUserId.."/user_progress.bin")
+    settings.load(steamUserId.."/user_settings.json")
 
     local parser = argparse()
     parser:flag("--debug", "Run game in debug mode")
@@ -81,7 +68,18 @@ function love.load(arg)
     end
 end
 
+function love.quit()
+    Steam.shutdown()
+end
+
 function love.update(deltaTime)
+    -- Update Steam integration
+    if love.timer.getTime() - steamLastUpdatedAt > steamUpdateInterval then
+        steamLastUpdatedAt = love.timer.getTime()
+        Steam.runCallbacks()
+    end
+
+    -- Don't update game if it's frozen
     if deltaTime > 0.5 then
         return
     end
@@ -134,3 +132,34 @@ end
 function love.joystickremoved(joystick)
     joystickManager.remove(joystick)
 end
+
+function Steam.friends.onGameOverlayActivated(data)
+    screenManager:emit("handleWindowFocus", not data.active)
+end
+
+-- Handle settings change
+settings.addHandler("window_mode", function (value)
+    if value == "windowed" then
+        love.window.setFullscreen(false)
+    elseif value == "borderless" then
+        love.window.setFullscreen(true, "desktop")
+    else
+        love.window.setFullscreen(true, "exclusive")
+    end
+end)
+
+settings.addHandler("vsync", function (value)
+    if value then
+        love.window.setVSync(-1)
+    else
+        love.window.setVSync(0)
+    end
+end)
+
+settings.addHandler("master_volume", function (value)
+    love.audio.setVolume(value)
+end)
+
+settings.addHandler("language", function (value)
+    languageUtils.loadLanguage(value)
+end)

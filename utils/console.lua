@@ -8,6 +8,8 @@ local visibleLines = 10
 
 local isVisible = false
 
+local font = love.graphics.newFont("assets/fonts/Roboto-Regular.ttf", 14)
+
 function console.log(...)
     local t = {...}
 
@@ -27,6 +29,7 @@ function console.draw()
 
     local x = 20
     local y = visibleLines * lineHeight + 20
+    love.graphics.setFont(font)
     love.graphics.setColor(0, 0, 0, 0.9)
     love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), visibleLines * lineHeight + 40)
 
