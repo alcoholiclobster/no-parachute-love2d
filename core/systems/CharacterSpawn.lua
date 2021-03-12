@@ -20,7 +20,7 @@ function CharacterSpawn:update(deltaTime)
         -- Character body
         local characterBody = Concord.entity(self:getWorld())
             :give("name", "character")
-            :give("position", maf.vec3(0, 0, -10))
+            :give("position", maf.vec3(0, 0, -8))
             :give("size", maf.vec3(conf.body.size.x, conf.body.size.y))
             :give("rotation", 0)
             :give("velocity", maf.vec3(0, 0, -gameManager.levelConfig.fallSpeed))

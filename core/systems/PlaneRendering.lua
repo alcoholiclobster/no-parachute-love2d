@@ -109,7 +109,7 @@ local function render(e, camera)
         local r, g, b = imageData:getPixel(0, 0)
         planeShader:send("bgcolor", {r, g, b, 1})
 
-        local border = (1-depth)*0.4
+        local border = 0.35
         if depth < 0.1 then
             border = (scale * 0.006)
         end
@@ -137,8 +137,7 @@ local function render(e, camera)
 
     if e.texture then
         local w, h = e.texture.width, e.texture.height
-        local scale = 1
-        love.graphics.draw(e.texture.value, 0, 0, 0, size.x/w * scale, size.y/h * scale, w * 0.5, h * 0.5)
+        love.graphics.draw(e.texture.value, 0, 0, 0, size.x/w, size.y/h, w * 0.5, h * 0.5)
     end
 end
 

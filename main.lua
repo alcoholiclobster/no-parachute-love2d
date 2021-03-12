@@ -204,12 +204,24 @@ end
 -----------------------
 
 settings.addHandler("window_mode", function (value)
+    if not isInitialized then
+        return
+    end
+
     if value == "windowed" then
-        love.window.setFullscreen(false)
+        love.window.updateMode(settings.get("window_width"), settings.get("window_height"), {
+            fullscreen = false,
+        })
     elseif value == "borderless" then
-        love.window.setFullscreen(true, "desktop")
+        love.window.updateMode(0, 0, {
+            fullscreen = true,
+            fullscreentype = "desktop",
+        })
     else
-        love.window.setFullscreen(true, "exclusive")
+        love.window.updateMode(0, 0, {
+            fullscreen = true,
+            fullscreentype = "exclusive",
+        })
     end
 end)
 

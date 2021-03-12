@@ -41,13 +41,13 @@ end
 function widgets.button(text, x, y, width, height, isDisabled, align)
     local mx, my = love.mouse.getPosition()
     local isHighlighted = isPointWithinRect(mx, my, x, y, width, height) and not isDisabled
-    if isHighlighted and lastHighlightedButton ~= text then
-        hoverSound:stop()
-        hoverSound:play()
-        lastHighlightedButton = text
-    elseif not isHighlighted and lastHighlightedButton == text then
-        lastHighlightedButton = false
-    end
+    -- if isHighlighted and lastHighlightedButton ~= text then
+    --     hoverSound:stop()
+    --     hoverSound:play()
+    --     lastHighlightedButton = text
+    -- elseif not isHighlighted and lastHighlightedButton == text then
+    --     lastHighlightedButton = false
+    -- end
 
     if isHighlighted then
         love.graphics.setColor(130/255, 90/255, 150/255, 1)

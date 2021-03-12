@@ -67,8 +67,8 @@ return {
     {
         name = "vsync",
         values = {
-            { name = "lbl_settings_disabled", value = false },
-            { name = "lbl_settings_enabled", value = true, default = true}
+            { name = "lbl_settings_disabled", value = false, default = true },
+            { name = "lbl_settings_enabled", value = true}
         }
     },
     {

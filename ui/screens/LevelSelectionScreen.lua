@@ -5,10 +5,15 @@ local GameManager = require("core.GameManager")
 local lz = require("utils.language").localize
 local assets = require("core.assets")
 local storage = require("utils.storage")
+local musicManager = require("utils.musicManager")
 
 local LevelSelectionScreen = class("LevelSelectionScreen", Screen)
 
-function LevelSelectionScreen:initialize()
+local debugUnlockedLevels = {}
+
+function LevelSelectionScreen:initialize(selectLevelName)
+    musicManager:play("menu_theme")
+
     self.levelsList = {}
     self.levelConfigs = {}
 
@@ -22,7 +27,7 @@ function LevelSelectionScreen:initialize()
         local config = require("config.levels."..levelName)
         self.levelConfigs[levelName] = config
         local isCompleted = storage.getLevelData(levelName, "is_completed", false)
-        local isUnlocked = levelIndex - 1 <= lastCompletedLevelIndex
+        local isUnlocked = levelIndex - 1 <= lastCompletedLevelIndex or debugUnlockedLevels[levelName]
         local label = lz(config.name)
         -- Hide locked level name
         if not isUnlocked then
@@ -87,6 +92,13 @@ function LevelSelectionScreen:initialize()
     self.totalRating = #self.levelsList * 3
 
     self.selectedLevelIndex = math.min(#self.levelsList, lastCompletedLevelIndex + 1)
+    if selectLevelName then
+        for index, v in ipairs(self.levelsList) do
+            if v.name == selectLevelName then
+                self.selectedLevelIndex = index
+            end
+        end
+    end
 
     self.backgroundFade = 0
     self.backgroundLevelTransitionTime = 0.25
@@ -220,6 +232,15 @@ function LevelSelectionScreen:draw()
     widgets.star(screenWidth * 0.905, screenHeight * 0.05+starSize*0.17, starSize, true)
     love.graphics.setColor(1, 1, 1)
     widgets.label(self.earnedRating.."/"..self.totalRating, screenWidth * 0.7, screenHeight * 0.05, screenWidth * 0.2, starSize, false, "right")
+
+    if GLOBAL_DEBUG_ENABLED then
+        if not itemData.isUnlocked then
+            if widgets.button("DEBUG_UNLOCK_LEVEL", screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.05) then
+                debugUnlockedLevels[itemData.name] = true
+                self.screenManager:transition("LevelSelectionScreen", itemData.name)
+            end
+        end
+    end
 end
 
 function LevelSelectionScreen:selectNextLevel()

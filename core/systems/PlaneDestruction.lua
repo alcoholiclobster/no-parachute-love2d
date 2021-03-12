@@ -2,6 +2,7 @@ local Concord = require("lib.concord")
 local mathUtils = require("utils.math")
 local maf = require("lib.maf")
 local assets = require("core.assets")
+local joystickManager = require("utils.joystickManager")
 
 local PlaneDestruction = Concord.system({
     pool = {"breakableObstacle", "obstacleHitByEntityEvent"}
@@ -14,13 +15,11 @@ local partsDirections = {
 }
 
 function PlaneDestruction:update(deltaTime)
-    local gameManager = self:getWorld().gameManager
+    local joystick = joystickManager.get()
     for _, e in ipairs(self.pool) do
         local entity = e.obstacleHitByEntityEvent.value
         if entity.velocity and entity.character then
-            local velocityIncrease = mathUtils.clamp01(entity.velocity.value.z / -gameManager.levelConfig.fallSpeed - 1)
-
-            if velocityIncrease > 0.1 then
+            if love.keyboard.isDown("space") or (joystick and joystick:isDown(1)) then
                 e.obstacleHitByEntityEvent.value:remove("obstacleCollisionEvent")
                 love.graphics.setCanvas(e.texture.value)
                 love.graphics.setBlendMode("multiply", "premultiplied")

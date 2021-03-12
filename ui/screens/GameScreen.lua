@@ -160,7 +160,7 @@ function GameScreen:draw()
             self:setState("game")
         end
         buttonY = buttonY + buttonHeight * 1.5
-        if widgets.button(lz("btn_game_restart_level"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") or (love.keyboard.isDown('r') and self.settingsOverlay) then
+        if widgets.button(lz("btn_game_restart_level"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") or (love.keyboard.isDown('r') and not self.settingsOverlay) then
             self:restartLevel()
         end
         buttonY = buttonY + buttonHeight * 1.5

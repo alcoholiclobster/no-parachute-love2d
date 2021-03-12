@@ -43,8 +43,12 @@ function love.conf(t)
     local windowMode = getSettingsValue("window_mode", "borderless")
     t.window.fullscreen = windowMode ~= "windowed"
     if windowMode == "borderless" then
+        t.window.width = 0
+        t.window.height = 0
         t.window.fullscreentype = "desktop"
     elseif windowMode == "fullscreen" then
+        t.window.width = 0
+        t.window.height = 0
         t.window.fullscreentype = "exclusive"
     end
 
