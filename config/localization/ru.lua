@@ -53,5 +53,8 @@ return {
     lbl_settings_vsync = "Верт. синхронизация",
 
     lbl_game_finish_new_highscore = "Новый рекорд!",
-    lbl_game_finish_new_best_time = "Новый рекорд!"
+    lbl_game_finish_new_best_time = "Новый рекорд!",
+
+    lbl_splash_press_any_button = "НАЖМИТЕ ЛЮБУЮ КНОПКУ",
+    lbl_splash_loading = "Подключение к Steam...",
 }

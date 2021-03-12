@@ -5,7 +5,6 @@ local musicManager = require("utils.musicManager")
 local widgets = require("ui.widgets")
 local lz = require("utils.language").localize
 local assets = require("core.assets")
-local mouseUtils = require("utils.mouse")
 local SettingsOverlay = require("ui.SettingsOverlay")
 
 local MainMenuScreen = class("MainMenuScreen", Screen)

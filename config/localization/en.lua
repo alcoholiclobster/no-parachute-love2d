@@ -54,4 +54,7 @@ return {
 
     lbl_game_finish_new_highscore = "New highscore!",
     lbl_game_finish_new_best_time = "New best time!",
+
+    lbl_splash_press_any_button = "PRESS ANY BUTTON",
+    lbl_splash_loading = "Connecting to Steam...",
 }

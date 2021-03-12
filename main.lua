@@ -7,12 +7,14 @@ local mouseUtils = require("utils.mouse")
 local musicManager = require("utils.musicManager")
 local scheduler = require("utils.scheduler")
 local settings = require("utils.settings")
-local storage = require("utils.storage")
 local languageUtils = require("utils.language")
 local Steam = require("luasteam")
+local storage = require("utils.storage")
 
 GLOBAL_DEBUG_ENABLED = true
 GLOBAL_HUD_DISABLED = false
+
+local isInitialized = false
 
 local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
@@ -23,35 +25,17 @@ local steamLastUpdatedAt = love.timer.getTime()
 
 local screenManager
 
-function love.load(arg)
-    console.overridePrint()
-    print("Game started")
+---------------------
+-- Local functions --
+---------------------
 
-    -- Parse command-line arguments
-    local parser = argparse()
-    parser:flag("--debug", "Run game in debug mode")
-    parser:option("--level", "Force load game level")
-    parser:option("--screen", "Force display screen")
-    parser:option("--fps", "Simulate frame rate")
-    parser:flag("--maximize", "Force maximize window")
-    parser:flag("--nohud", "Disable HUD")
-    local args = parser:parse(arg)
+local function completeInitialization()
+    if isInitialized then
+        return
+    end
 
-    GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
-    GLOBAL_HUD_DISABLED = not not args.nohud
-    debugSimulateFrameRate = tonumber(args.fps) or 0
-
-    -- Lua initialization
-    math.randomseed(os.time())
-
-    -- Love2D initalization
-    love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
-
-    languageUtils.loadLanguage()
-    settings.load()
-
-    local steamInitStartAt = love.timer.getTime()
     -- Initialize Steam
+    local steamInitStartAt = love.timer.getTime()
     local steamUserId = "local"
     if Steam.init() then
         steamUserId = tostring(Steam.user.getSteamID())
@@ -65,16 +49,58 @@ function love.load(arg)
     love.filesystem.createDirectory(steamUserId)
     storage.load(steamUserId.."/user_progress.bin")
 
+    screenManager:emit("handleInitializationFinish")
+    isInitialized = true
+end
+
+----------------------
+-- Love2d callbacks --
+----------------------
+
+function love.load(arg)
+    console.overridePrint()
+    print("Game started")
+
+    -- Parse command-line arguments
+    local parser = argparse()
+    parser:flag("--debug", "Run game in debug mode")
+    parser:option("--level", "Force load game level")
+    parser:option("--screen", "Force display screen")
+    parser:option("--fps", "Simulate frame rate")
+    parser:flag("--maximize", "Force maximize window")
+    parser:flag("--nohud", "Disable HUD")
+    parser:flag("--nosplash", "Skip splash screen")
+    local args = parser:parse(arg)
+
+    GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
+    GLOBAL_HUD_DISABLED = not not args.nohud
+    debugSimulateFrameRate = tonumber(args.fps) or 0
+    debugSkipSplash = not not args.nosplash
+
+    -- Lua initialization
+    math.randomseed(os.time())
+
+    -- Love2D initalization
+    love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
+
+    languageUtils.loadLanguage()
+    settings.load()
+
     -- Initalize UI and show first screen
     screenManager = ScreenManager:new()
     if args.level then
+        completeInitialization()
         print("Force load level", args.level)
         screenManager:transition("GameScreen", args.level)
     elseif args.screen then
         print("Force load screen", args.screen)
+        completeInitialization()
         screenManager:transition(args.screen)
-    else
+    elseif args.nosplash then
+        completeInitialization()
         screenManager:transition("MainMenuScreen")
+    else
+        screenManager:transition("SplashScreen")
     end
 end
 
@@ -88,8 +114,12 @@ function love.quit()
 end
 
 function love.update(deltaTime)
+    if not isInitialized and screenManager.fadeProgress < 0.01 then
+        completeInitialization()
+    end
+
     -- Update Steam integration
-    if love.timer.getTime() - steamLastUpdatedAt > steamUpdateInterval then
+    if isInitialized and love.timer.getTime() - steamLastUpdatedAt > steamUpdateInterval then
         steamLastUpdatedAt = love.timer.getTime()
         Steam.runCallbacks()
     end
@@ -138,6 +168,10 @@ function love.keyreleased(...)
     screenManager:emit("handleKeyRelease", ...)
 end
 
+function love.mousepressed(...)
+    screenManager:emit("handleMousePress", ...)
+end
+
 function love.focus(isFocused)
     screenManager:emit("handleWindowFocus", isFocused)
 end
@@ -160,7 +194,10 @@ function Steam.friends.onGameOverlayActivated(data)
     screenManager:emit("handleWindowFocus", not data.active)
 end
 
--- Handle settings change
+-----------------------
+-- Settings handlers --
+-----------------------
+
 settings.addHandler("window_mode", function (value)
     if value == "windowed" then
         love.window.setFullscreen(false)
