@@ -105,8 +105,8 @@ end
 
 function love.quit()
     local x, y, display = love.window.getPosition()
-    settings.set("window_x", x)
-    settings.set("window_y", y)
+    settings.set("window_x", math.max(1, x))
+    settings.set("window_y", math.max(1, y))
     settings.set("window_display", display)
 
     Steam.shutdown()
@@ -184,8 +184,10 @@ function love.joystickremoved(joystick)
 end
 
 function love.resize(width, height)
-    settings.set("window_width", width)
-    settings.set("window_height", height)
+    if settings.get("window_mode") == "windowed" then
+        settings.set("window_width", width)
+        settings.set("window_height", height)
+    end
     screenManager:emit("handleWindowResize", width, height)
 end
 

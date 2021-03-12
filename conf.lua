@@ -44,7 +44,7 @@ function love.conf(t)
     t.window.fullscreen = windowMode ~= "windowed"
     if windowMode == "borderless" then
         t.window.fullscreentype = "desktop"
-    else
+    elseif windowMode == "fullscreen" then
         t.window.fullscreentype = "exclusive"
     end
 
