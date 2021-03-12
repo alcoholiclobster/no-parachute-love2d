@@ -66,6 +66,10 @@ function SettingsOverlay:draw()
     if widgets.button(lz("btn_settings_close"), overlayX, overlayY + overlayHeight, overlayWidth, screenHeight * 0.05, false, "center") then
         self.isClosed = true
     end
+
+    if love.keyboard.isDown("escape") or love.keyboard.isDown("backspace") then
+        self.isClosed = true
+    end
 end
 
 return SettingsOverlay

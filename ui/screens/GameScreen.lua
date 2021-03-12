@@ -274,7 +274,7 @@ function GameScreen:handleKeyPress(key, ...)
         if self.state == "game" then
             self:setState("pause")
             musicManager:setSilenced(true)
-        elseif self.state == "pause" then
+        elseif self.state == "pause" and not self.settingsOverlay then
             self:setState("game")
             musicManager:setSilenced(false)
         end

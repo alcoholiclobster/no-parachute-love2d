@@ -280,4 +280,10 @@ function LevelSelectionScreen:handleWindowResize(...)
     self.gameManager:handleWindowResize(...)
 end
 
+function LevelSelectionScreen:handleKeyPress(key)
+    if key == "escape" or key == "backspace" then
+        self.screenManager:transition("MainMenuScreen")
+    end
+end
+
 return LevelSelectionScreen
