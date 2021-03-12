@@ -21,13 +21,27 @@ local fogColor = {0, 0, 0}
 local fogDistance = 100
 local planeShader = love.graphics.newShader[[
 uniform vec4 fogcolor = vec4(1, 0, 0, 1);
-uniform float depth = 1;
+uniform float depth = 0.0;
+uniform float border = 1.0;
+uniform vec4 bgcolor = vec4(98.0/255.0, 73.0/255.0, 69.0/255.0, 1.0);
 
 vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 {
-    vec4 texcolor = Texel(texture, texcoord);
+    vec2 coord = texcoord * (1.0+border)-border * 0.5;
+
+    vec2 borderStep = step(vec2(0, 0), coord) - step(vec2(1, 1), coord);
+    float borderMul = 1 - borderStep.x * borderStep.y;
+
+    vec4 texcolor = Texel(texture, coord);
+    texcolor.a = texcolor.a * vcolor.a;
+
+    if (borderMul > 0) {
+        texcolor.rgb = mix(texcolor.rgb, bgcolor.rgb, (1 - texcolor.a) * bgcolor.a);
+        texcolor.a += 1;
+    }
+
     texcolor.rgb = mix(texcolor.rgb * vcolor.rgb, fogcolor.rgb, depth);
-    return vec4(texcolor.rgb, texcolor.a * vcolor.a);
+    return vec4(texcolor.rgb, texcolor.a);
 }
 ]]
 
@@ -61,7 +75,6 @@ local lodBlendEnabled = true
 local lodBlendStart = 0.25
 local lodBlendEnd = 0.5
 local lodDrawEveryPlane = 2
-local lodOmitSideDistance = 0.6
 
 local function render(e, camera)
     local position = e.position.value:clone()
@@ -92,21 +105,19 @@ local function render(e, camera)
 
     local size = e.size.value * scale
     if e.sidePlane and e.texture then
-        if not lodBlendEnabled or lodDistance < lodOmitSideDistance or e.sidePlane.id % 3 ~= 0 then
-            local imageData = assets.textureImageData(e.texture.value)
-            local r, g, b = imageData:getPixel(0, 0)
-            if e.color then
-                r = r * e.color.r
-                g = g * e.color.g
-                b = b * e.color.b
-            end
-            love.graphics.setColor(
-                r, g, b, lodAlpha
-            )
+        local imageData = assets.textureImageData(e.texture.value)
+        local r, g, b = imageData:getPixel(0, 0)
+        planeShader:send("bgcolor", {r, g, b, 1})
 
-            local mul = (1/2*scale*10)*(e.size.value.x/10)
-            love.graphics.draw(assets.texture("plane_border"), 0, 0, 0, mul, mul, 4, 4)
+        local border = (1-depth)*0.4
+        if depth < 0.1 then
+            border = (scale * 0.006)
         end
+        planeShader:send("border", border)
+        size = size * (1 + border)
+    else
+        planeShader:send("bgcolor", {0, 0, 0, 0})
+        planeShader:send("border", 0)
     end
 
     if e.color then
@@ -126,7 +137,8 @@ local function render(e, camera)
 
     if e.texture then
         local w, h = e.texture.width, e.texture.height
-        love.graphics.draw(e.texture.value, 0, 0, 0, size.x/w, size.y/h, w * 0.5, h * 0.5)
+        local scale = 1
+        love.graphics.draw(e.texture.value, 0, 0, 0, size.x/w * scale, size.y/h * scale, w * 0.5, h * 0.5)
     end
 end
 

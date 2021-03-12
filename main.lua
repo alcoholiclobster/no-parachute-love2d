@@ -191,6 +191,10 @@ function love.resize(width, height)
     screenManager:emit("handleWindowResize", width, height)
 end
 
+---------------------
+-- Steam callbacks --
+---------------------
+
 function Steam.friends.onGameOverlayActivated(data)
     screenManager:emit("handleWindowFocus", not data.active)
 end

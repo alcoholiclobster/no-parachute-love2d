@@ -18,6 +18,7 @@ function assets.texture(name, enableFiltering)
     local texture = love.graphics.newImage(imageData)
     if not enableFiltering then
         texture:setFilter("nearest", "nearest")
+        texture:setWrap("repeat")
     end
     texturesCache[name] = texture
 
