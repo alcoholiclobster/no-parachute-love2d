@@ -24,7 +24,9 @@ local steamLastUpdatedAt = love.timer.getTime()
 local screenManager
 
 function love.load(arg)
-    console.log("love.load()")
+    console.overridePrint()
+    print("Game started")
+
     -- Parse command-line arguments
     local parser = argparse()
     parser:flag("--debug", "Run game in debug mode")
@@ -48,6 +50,7 @@ function love.load(arg)
     languageUtils.loadLanguage()
     settings.load()
 
+    local steamInitStartAt = love.timer.getTime()
     -- Initialize Steam
     local steamUserId = "local"
     if Steam.init() then
@@ -56,6 +59,7 @@ function love.load(arg)
         error("Steam must be running")
         return
     end
+    print("Steam initalization completed in", math.floor((love.timer.getTime() - steamInitStartAt) * 1000) / 1000, "s")
 
     -- Load game saves
     love.filesystem.createDirectory(steamUserId)
@@ -64,9 +68,10 @@ function love.load(arg)
     -- Initalize UI and show first screen
     screenManager = ScreenManager:new()
     if args.level then
-        print("Force loading level "..tostring(args.level))
+        print("Force load level", args.level)
         screenManager:transition("GameScreen", args.level)
     elseif args.screen then
+        print("Force load screen", args.screen)
         screenManager:transition(args.screen)
     else
         screenManager:transition("MainMenuScreen")

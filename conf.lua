@@ -31,7 +31,6 @@ function love.conf(t)
     t.window.title = "No Parachute"
     t.window.usedpiscale = false
     t.window.resizable = true
-    t.console = true
 
     -- Load settings
     t.window.x = getSettingsValue("window_x", nil)
