@@ -75,7 +75,6 @@ function love.load(arg)
     GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
     GLOBAL_HUD_DISABLED = not not args.nohud
     debugSimulateFrameRate = tonumber(args.fps) or 0
-    debugSkipSplash = not not args.nosplash
 
     -- Lua initialization
     math.randomseed(os.time())
