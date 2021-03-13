@@ -3,7 +3,8 @@ local mathUtils = require("utils.math")
 
 local CameraSpeedFOV = Concord.system({
     cameraPool = {"camera", "position"},
-    playerPool = {"score", "velocity", "controlledByPlayer"}
+    playerPool = {"score", "velocity", "controlledByPlayer"},
+    gameStatePool = {"gameState"},
 })
 
 function CameraSpeedFOV:update(deltaTime)
@@ -16,9 +17,10 @@ function CameraSpeedFOV:update(deltaTime)
         return
     end
 
-    local gameManager = self:getWorld().gameManager
+    local world = self:getWorld()
+    local gameManager = world.gameManager
     local velocity = playerCharacter.velocity.value
-    local velocityIncrease = mathUtils.clamp01((velocity.z / -gameManager.levelConfig.fallSpeed - 1) / 0.5)
+    local velocityIncrease = mathUtils.clamp01((velocity.z / -world.gameState.fallSpeed - 1) / 0.5)
 
     cameraEntity.camera.fov = 1 + velocityIncrease * 0.6
     cameraEntity.camera.followDistance = cameraEntity.camera.distanceFromPlayer - velocityIncrease * 2

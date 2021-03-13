@@ -80,9 +80,9 @@ function SoundEffects:update(deltaTime)
     if not playerCharacter then
         return
     end
-    local gameManager = self:getWorld().gameManager
+    local fallSpeed = self:getWorld().gameState.fallSpeed
     local velocity = playerCharacter.velocity.value
-    local velocityIncrease = velocity.z / -gameManager.levelConfig.fallSpeed
+    local velocityIncrease = velocity.z / -fallSpeed
     if velocityIncrease > 0 then
         self.windSound:setPitch(velocityIncrease * 0.75)
         self.windClothesSound:setPitch(velocityIncrease * 0.75)

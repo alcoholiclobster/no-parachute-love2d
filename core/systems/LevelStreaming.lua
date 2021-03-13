@@ -7,6 +7,7 @@ local LevelStreaming = Concord.system({
     pool = {"levelStreamer"},
     cameraPool = {"camera"},
     tunnelEndPool = {"tunnelEnd", "position", "rotation"},
+    playerCharactersPool = {"controlledByPlayer", "velocity", "alive"}
 })
 
 local function spawnPlane(world, plane, worldPosition, localPositionOffset, rotation)
@@ -147,6 +148,22 @@ function LevelStreaming:update(deltaTime)
                         s.direction and maf.vec3(s.direction[1], s.direction[2], 0),
                         s.offset and maf.vec3(s.offset[1], s.offset[2], 0),
                         s.rotationSpeed)
+            end
+
+            if nextObstacle.fogColor then
+                camera.camera.fogColor = {
+                    nextObstacle.fogColor[1] / 255,
+                    nextObstacle.fogColor[2] / 255,
+                    nextObstacle.fogColor[3] / 255,
+                    1
+                }
+            end
+
+            if nextObstacle.fallSpeed then
+                if self.playerCharactersPool[1] then
+                    self.playerCharactersPool[1].velocity.value.z = -nextObstacle.fallSpeed
+                end
+                self:getWorld().gameState.fallSpeed = nextObstacle.fallSpeed
             end
         end
     end

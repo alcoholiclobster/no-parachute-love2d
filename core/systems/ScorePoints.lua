@@ -6,17 +6,19 @@ local ScorePoints = Concord.system({
 })
 
 function ScorePoints:update(deltaTime)
-    local gameManager = self:getWorld().gameManager
+    local world = self:getWorld()
+    local gameManager = world.gameManager
+    local fallSpeed = world.gameState.fallSpeed
     local playerCharacter = self.pool[1]
     if not playerCharacter then
         return
     end
 
     local velocity = playerCharacter.velocity.value
-    local velocityIncrease = mathUtils.clamp01(velocity.z / -gameManager.levelConfig.fallSpeed - 1)
+    local velocityIncrease = mathUtils.clamp01(velocity.z / -fallSpeed - 1)
     local scoreIncrease = 100 * (1 + velocityIncrease * 2) * deltaTime
-    if velocity.z > -gameManager.levelConfig.fallSpeed + 1 then
-        scoreIncrease = 5000 * (velocity.z / -gameManager.levelConfig.fallSpeed - 1) * deltaTime
+    if velocity.z > -fallSpeed + 1 then
+        scoreIncrease = 5000 * (velocity.z / -fallSpeed - 1) * deltaTime
     end
 
     playerCharacter.score.value = playerCharacter.score.value + scoreIncrease

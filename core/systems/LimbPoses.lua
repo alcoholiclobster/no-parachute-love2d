@@ -15,11 +15,13 @@ local LimbPoses = Concord.system({
 local minVelocityMagnitude = 0.1
 
 function LimbPoses:update(deltaTime)
-    local gameManager = self:getWorld().gameManager
+    local world = self:getWorld()
+    local gameState = world.gameState
+    local gameManager = world.gameManager
 
     for _, e in ipairs(self.pool) do
         local velocity = e.attachToEntity.value.velocity.value
-        local velocityIncrease = mathUtils.clamp01(velocity.z / -gameManager.levelConfig.fallSpeed - 1)
+        local velocityIncrease = mathUtils.clamp01(velocity.z / -gameState.fallSpeed - 1)
 
         local moveDirection = e.attachToEntity.value.moveDirection.value--mathUtils.rotateVector2D(e.attachToEntity.value.velocity.value, -e.attachToEntity.value.rotation.value)
         local targetRotation = 0

@@ -17,7 +17,6 @@ local maxZ = 0
 
 local lastFrameCameraZ = 0
 
-local fogColor = {0, 0, 0}
 local clearColor = nil
 local fogDistance = 100
 local planeShader = love.graphics.newShader[[
@@ -123,7 +122,7 @@ local function render(e, camera)
         end
 
         if not isFogPlaneRendered then
-            love.graphics.setColor(fogColor[1], fogColor[2], fogColor[3])
+            love.graphics.setColor(camera.camera.fogColor[1], camera.camera.fogColor[2], camera.camera.fogColor[3])
             love.graphics.rectangle("fill", -size.x * 0.5, -size.y * 0.5, size.x, size.y)
             isFogPlaneRendered = true
         end
@@ -156,12 +155,8 @@ end
 function PlaneRendering:init()
     clearColor = nil
 
-    fogColor = self:getWorld().gameManager.levelConfig.fogColor or {0, 0, 0}
-    fogColor = {fogColor[1] / 255, fogColor[2] / 255, fogColor[3] / 255, 1}
-
     fogDistance = self:getWorld().gameManager.levelConfig.fogDistance or 100
     minZ = -fogDistance - 5
-    planeShader:sendColor("fogcolor", fogColor)
 
     blurShader:send("aspect_ratio", screenWidth / screenHeight)
 end
@@ -188,6 +183,9 @@ function PlaneRendering:draw()
             sortedGroups[index].count = sortedGroups[index].count + 1
         end
     end
+
+    local fogColor = camera.camera.fogColor
+    planeShader:send("fogcolor", camera.camera.fogColor)
 
     love.graphics.setCanvas(canvas)
     if clearColor then

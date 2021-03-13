@@ -53,14 +53,16 @@ function GameInit:init()
         :give("characterSpawnRequest", "player", true)
 
     -- Camera
+    local fogColor = levelConfig.fogColor or {0, 0, 0}
+    fogColor = {fogColor[1] / 255, fogColor[2] / 255, fogColor[3] / 255, 1}
     Concord.entity(world)
         :give("position", maf.vec3(0, 0, 0))
         :give("rotation", 0)
-        :give("camera")
+        :give("camera", fogColor)
 
-    Concord.entity(world)
-        :give("gameState")
-
+    local gameStateEntity = Concord.entity(world)
+        :give("gameState", levelConfig.fallSpeed)
+    world.gameState = gameStateEntity.gameState
 
     if not world.isMenuBackground then
         if levelConfig.music then

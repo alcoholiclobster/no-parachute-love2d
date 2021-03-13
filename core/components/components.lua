@@ -161,11 +161,12 @@ Concord.component("score", function(component, value)
     component.value = value or 1
 end)
 
-Concord.component("camera", function(component, fov, distance)
-    component.fov = fov or 1
-    component.distanceFromPlayer = distance or 8
+Concord.component("camera", function(component, fogColor)
+    component.fov = 1
+    component.distanceFromPlayer = 8
 
     component.followDistance = 0
+    component.fogColor = fogColor or {0, 0, 0}
 end)
 
 Concord.component("sidePlane", function (component, id)
@@ -186,8 +187,9 @@ Concord.component("tunnelEnd", function(component)
     component.direction = maf.vec3(0, 0, 0)
 end)
 
-Concord.component("gameState", function(component)
+Concord.component("gameState", function(component, fallSpeed)
     component.timePassed = 0
+    component.fallSpeed = fallSpeed or 10
 end)
 
 Concord.component("damageCooldown", function(component, time)
