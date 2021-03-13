@@ -17,7 +17,7 @@ function GameInit:init()
     levelConfig.totalHeight = levelConfig.totalHeight + 70
 
     -- Side walls planes
-    local count = math.floor(levelConfig.sidePlanesCount * settings.get("world_quality"))
+    local count = math.max(30, math.floor(levelConfig.sidePlanesCount * settings.get("world_quality")))
     local previousDirection = -1
     for i = 0, count - 1 do
         local z = -100 + i * 100 / count

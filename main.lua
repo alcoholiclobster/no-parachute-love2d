@@ -13,6 +13,7 @@ local storage = require("utils.storage")
 
 GLOBAL_DEBUG_ENABLED = true
 GLOBAL_HUD_DISABLED = false
+GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = false
 
 local isInitialized = false
 
@@ -73,6 +74,7 @@ function love.load(arg)
     local args = parser:parse(arg)
 
     GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
+    GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = GLOBAL_DEBUG_UNLOCK_ALL_LEVELS and GLOBAL_DEBUG_ENABLED
     GLOBAL_HUD_DISABLED = not not args.nohud
     debugSimulateFrameRate = tonumber(args.fps) or 0
 

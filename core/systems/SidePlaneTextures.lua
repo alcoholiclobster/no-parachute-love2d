@@ -34,6 +34,11 @@ function SidePlaneTextures:update()
             local texture = assets.texture(textureIndex)
             e:give("texture", texture)
              :give("size", maf.vec3(texture:getWidth() / 128 * 10, texture:getHeight() / 128 * 10))
+
+            local imageData = assets.textureImageData(texture)
+            local r, g, b = imageData:getPixel(0, 0)
+            e.sidePlane.borderColor = {r, g, b}
+
             if config.pattern then
                 levelStreamer.sidePlanePatternIndex = levelStreamer.sidePlanePatternIndex + 1
             end

@@ -74,8 +74,8 @@ return {
     {
         name = "world_quality",
         values = {
-            { name = "lbl_settings_low", value = 0.4 },
-            { name = "lbl_settings_medium", value = 0.7 },
+            { name = "lbl_settings_low", value = 0.5 },
+            { name = "lbl_settings_medium", value = 0.75 },
             { name = "lbl_settings_high", value = 1.0, default = true}
         },
     },

@@ -18,6 +18,7 @@ local maxZ = 0
 local lastFrameCameraZ = 0
 
 local fogColor = {0, 0, 0}
+local clearColor = nil
 local fogDistance = 100
 local planeShader = love.graphics.newShader[[
 uniform vec4 fogcolor = vec4(1, 0, 0, 1);
@@ -71,6 +72,8 @@ vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
     return color / count;
 }]]
 
+local isFogPlaneRendered = false
+
 local lodBlendEnabled = true
 local lodBlendStart = 0.25
 local lodBlendEnd = 0.5
@@ -105,16 +108,25 @@ local function render(e, camera)
 
     local size = e.size.value * scale
     if e.sidePlane and e.texture then
-        local imageData = assets.textureImageData(e.texture.value)
-        local r, g, b = imageData:getPixel(0, 0)
+        local r, g, b = e.sidePlane.borderColor[1], e.sidePlane.borderColor[2], e.sidePlane.borderColor[3]
         planeShader:send("bgcolor", {r, g, b, 1})
 
-        local border = 0.35
+        local border = 1.5
         if depth < 0.1 then
-            border = (scale * 0.006)
+            border = border + (1 - depth / 0.1)
         end
         planeShader:send("border", border)
         size = size * (1 + border)
+
+        if not clearColor then
+            clearColor = {r, g, b}
+        end
+
+        if not isFogPlaneRendered then
+            love.graphics.setColor(fogColor[1], fogColor[2], fogColor[3])
+            love.graphics.rectangle("fill", -size.x * 0.5, -size.y * 0.5, size.x, size.y)
+            isFogPlaneRendered = true
+        end
     else
         planeShader:send("bgcolor", {0, 0, 0, 0})
         planeShader:send("border", 0)
@@ -142,6 +154,8 @@ local function render(e, camera)
 end
 
 function PlaneRendering:init()
+    clearColor = nil
+
     fogColor = self:getWorld().gameManager.levelConfig.fogColor or {0, 0, 0}
     fogColor = {fogColor[1] / 255, fogColor[2] / 255, fogColor[3] / 255, 1}
 
@@ -176,10 +190,15 @@ function PlaneRendering:draw()
     end
 
     love.graphics.setCanvas(canvas)
-    love.graphics.clear(fogColor[1], fogColor[2], fogColor[3], 1)
+    if clearColor then
+        love.graphics.clear(clearColor[1], clearColor[2], clearColor[3], 1)
+    else
+        love.graphics.clear(fogColor[1], fogColor[2], fogColor[3], 1)
+    end
     love.graphics.setShader(planeShader)
     love.graphics.translate(screenWidth/2, screenHeight/2)
     love.graphics.rotate(camera.rotation.value)
+    isFogPlaneRendered = false
 
     for index = -minZ * depthPrecision, 0, -1 do
         local group = sortedGroups[index]

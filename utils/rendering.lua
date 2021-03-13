@@ -1,6 +1,6 @@
 local function project(pos, cam, fov)
     local z = pos.z - cam.z
-    if z > 0 then
+    if z > -1 then
         return
     end
 
