@@ -13,7 +13,7 @@ local storage = require("utils.storage")
 
 GLOBAL_DEBUG_ENABLED = true
 GLOBAL_HUD_DISABLED = false
-GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = false
+GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = true
 
 local isInitialized = false
 

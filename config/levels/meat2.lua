@@ -1,6 +1,6 @@
 return {
     name = "Flesh Hell 2",
-    nextLevel = nil,
+    nextLevel = "core",
     music = "meat_theme",
     ambient = "worm",
 
