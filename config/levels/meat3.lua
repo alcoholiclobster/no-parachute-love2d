@@ -23,6 +23,12 @@ return {
         },
         {
             textures = {
+                "levels/meat/side_planes/cave1",
+                "levels/meat/side_planes/cave2",
+            },
+        },
+        {
+            textures = {
                 "levels/core/side_planes/1",
                 "levels/core/side_planes/2",
             },
@@ -37,6 +43,7 @@ return {
 
     planes = {
         { distance = 200, name = "stone_breakable_wall", switchSidePlanes = true},
+        { distance = 100, name = "stone_breakable_wall", switchSidePlanes = true},
         { distance = 94, fogColor = {255, 200, 100}, fallSpeed = 80},
 
         { distance = 100, tunnelShape = { direction = {0, 0}, rotationSpeed = 1 }, },
