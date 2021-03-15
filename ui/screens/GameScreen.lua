@@ -204,6 +204,31 @@ function GameScreen:draw()
         local score = tostring(math.ceil(self.playerScore))
         widgets.label(lz("lbl_game_stats_score", score), labelX, labelY, labelWidth, labelHeight, false, "center")
 
+        labelY = labelY + labelHeight + screenHeight * 0.02
+        love.graphics.setColor(1, 1, 1)
+        local starX = screenWidth * 0.5 - labelHeight * 1.5
+        local starHeight = labelHeight
+
+        -- Calculate stars count
+        local rating = 0
+        if self.levelConfig.highscores then
+            for i, value in ipairs(self.levelConfig.highscores) do
+                if value > self.playerScore then
+                    break
+                else
+                    rating = i
+                end
+            end
+            rating = rating + 1
+        elseif self.playerScore > 0 then
+            rating = 3
+        end
+
+        for i = 1, 3 do
+            widgets.star(starX, labelY, starHeight, i <= rating, true)
+            starX = starX + starHeight
+        end
+
         if self.isNewHighscore then
             labelY = labelY + labelHeight + screenHeight * 0.02
             love.graphics.setColor(1, 0.65, 0)

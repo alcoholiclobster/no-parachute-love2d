@@ -8,8 +8,9 @@ local hoverSound = assets.sound("ui_hover.wav")
 local lastHighlightedButton = false
 
 local starCollectedTexture = assets.texture("star")
-local starIconTexture = assets.texture("star_icon")
 local starNotCollectedTexture = assets.texture("star_not_collected")
+local starIconTexture = assets.texture("star_icon")
+local starNotCollectedIconTexture = assets.texture("star_icon_not_collected")
 local starMaskTexture = assets.texture("star_mask")
 
 local function drawShadowText(text, x, y, width, align)
@@ -37,6 +38,8 @@ function widgets.star(x, y, size, isCollected, isIcon)
         if isIcon then
             texture = starIconTexture
         end
+    elseif isIcon then
+        texture = starNotCollectedIconTexture
     end
 
     love.graphics.setColor(1, 1, 1, 1)
