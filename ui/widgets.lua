@@ -10,6 +10,7 @@ local lastHighlightedButton = false
 local starCollectedTexture = assets.texture("star")
 local starIconTexture = assets.texture("star_icon")
 local starNotCollectedTexture = assets.texture("star_not_collected")
+local starMaskTexture = assets.texture("star_mask")
 
 local function drawShadowText(text, x, y, width, align)
     local w = 2
@@ -37,24 +38,18 @@ function widgets.star(x, y, size, isCollected, isIcon)
             texture = starIconTexture
         end
     end
-    -- if isCollected then
-    --     love.graphics.setColor(1, 0.7, 0)
-    -- else
-    --     love.graphics.setColor(0.1, 0.1, 0.1, 1)
-    -- end
-    -- love.graphics.draw(texture, x, y, 0, size/texture:getWidth())
 
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.draw(texture, x, y, 0, size/texture:getWidth())
 
-    -- if isCollected then
-    --     love.graphics.setColor(1, 0.7, 0)
-    -- else
-    --     love.graphics.setColor(0.15, 0.15, 0.15)
-    -- end
-    -- local offset = size * 0.15
-    -- love.graphics.draw(texture, x + offset * 0.5, y + offset * 0.5, 0, (size - offset)/texture:getWidth())
+    local mx, my = love.mouse.getPosition()
+    local isHighlighted = isPointWithinRect(mx, my, x, y, size, size)
+    if isHighlighted and not isIcon then
+        love.graphics.setColor(1, 1, 1, 0.4)
+        love.graphics.draw(starMaskTexture, x, y, 0, size/texture:getWidth())
+    end
 
+    return isHighlighted
 end
 
 function widgets.button(text, x, y, width, height, isDisabled, align)

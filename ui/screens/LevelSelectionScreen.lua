@@ -55,10 +55,12 @@ function LevelSelectionScreen:initialize(selectLevelName)
 
         -- Load rating
         local rating = 0
+        local ratingItems = {0, 0, 0}
         if isCompleted then
             local highscore = storage.getLevelData(levelName, "highscore", 0)
             if config.highscores then
                 for i, value in ipairs(config.highscores) do
+                    ratingItems[i + 1] = value
                     if value > highscore then
                         break
                     else
@@ -79,7 +81,8 @@ function LevelSelectionScreen:initialize(selectLevelName)
             name = levelName,
             config = config,
             stats = stats,
-            rating = rating
+            rating = rating,
+            ratingItems = ratingItems,
         })
 
         levelName = config.nextLevel
@@ -185,10 +188,34 @@ function LevelSelectionScreen:draw()
     -- Stars
     itemY = itemY + panelHeight * 0.055
     itemWidth = panelWidth / 3 - panelWidth * 0.05
+    local highlightedRatingItem = nil
     for i = 1, 3 do
-        widgets.star(itemX, itemY, itemWidth, i <= itemData.rating)
+        if widgets.star(itemX, itemY, itemWidth, i <= itemData.rating) then
+            highlightedRatingItem = i
+        end
         itemX = itemX + itemWidth + panelWidth * 0.075
     end
+
+    if highlightedRatingItem then
+        itemWidth = panelWidth
+        itemHeight = panelHeight * 0.05
+        itemX = panelX + panelWidth * 1.05
+
+        love.graphics.setColor(0.75, 0.75, 0.75)
+        widgets.label(lz("lbl_level_stats_rating_requirements")..":", itemX, itemY, itemWidth, itemHeight, false, "left")
+        itemY = itemY + itemHeight + screenHeight * 0.01
+
+        love.graphics.setColor(1, 1, 1)
+        local value = itemData.ratingItems[highlightedRatingItem]
+        local label
+        if value ~= 0 then
+            label = lz("lbl_level_stats_rating_requirements_score", value)
+        else
+            label = lz("lbl_level_stats_rating_requirements_complete")
+        end
+        widgets.label(label, itemX, itemY, itemWidth, itemHeight, true, "left")
+    end
+
     local btnWidth, btnHeight = panelWidth, screenHeight * 0.05
     local btnX, btnY = panelX + (panelWidth - btnWidth) / 2, panelY + panelHeight - btnHeight
     -- Panel buttons

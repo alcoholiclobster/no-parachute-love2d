@@ -11,6 +11,9 @@ return {
     lbl_level_stats_best_time = "Лучшее время",
     lbl_level_stats_deaths = "Смертей",
     lbl_level_stats_limbs_lost = "Потеряно конечностей",
+    lbl_level_stats_rating_requirements = "Требования",
+    lbl_level_stats_rating_requirements_score = "Счёт: %d",
+    lbl_level_stats_rating_requirements_complete = "Пройти уровень",
 
     lbl_hud_progress = "ПРОГРЕСС",
     lbl_hud_score = "ОЧКИ",

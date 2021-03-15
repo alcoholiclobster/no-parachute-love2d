@@ -11,6 +11,9 @@ return {
     lbl_level_stats_best_time = "Best time",
     lbl_level_stats_deaths = "Deaths",
     lbl_level_stats_limbs_lost = "Limbs lost",
+    lbl_level_stats_rating_requirements = "Requirements",
+    lbl_level_stats_rating_requirements_score = "Score: %d",
+    lbl_level_stats_rating_requirements_complete = "Complete level",
 
     lbl_hud_progress = "PROGRESS",
     lbl_hud_score = "SCORE",
