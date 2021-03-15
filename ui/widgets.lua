@@ -7,7 +7,9 @@ local clickSound = assets.sound("ui_click.wav")
 local hoverSound = assets.sound("ui_hover.wav")
 local lastHighlightedButton = false
 
-local starTexture = assets.texture("star")
+local starCollectedTexture = assets.texture("star")
+local starIconTexture = assets.texture("star_icon")
+local starNotCollectedTexture = assets.texture("star_not_collected")
 
 local function drawShadowText(text, x, y, width, align)
     local w = 2
@@ -27,15 +29,32 @@ function widgets.label(text, x, y, width, height, isBold, align)
     drawShadowText(text, x, y + height * 0.1, width, align or "left")
 end
 
-function widgets.star(x, y, size, isCollected)
+function widgets.star(x, y, size, isCollected, isIcon)
+    local texture = starNotCollectedTexture
     if isCollected then
-        love.graphics.setColor(0, 0, 0, 0.9)
-        love.graphics.draw(starTexture, x + 4, y + 2, 0, size/starTexture:getWidth())
-        love.graphics.setColor(1, 0.7, 0)
-    else
-        love.graphics.setColor(0, 0, 0, 0.5)
+        texture = starCollectedTexture
+        if isIcon then
+            texture = starIconTexture
+        end
     end
-    love.graphics.draw(starTexture, x, y, 0, size/starTexture:getWidth())
+    -- if isCollected then
+    --     love.graphics.setColor(1, 0.7, 0)
+    -- else
+    --     love.graphics.setColor(0.1, 0.1, 0.1, 1)
+    -- end
+    -- love.graphics.draw(texture, x, y, 0, size/texture:getWidth())
+
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(texture, x, y, 0, size/texture:getWidth())
+
+    -- if isCollected then
+    --     love.graphics.setColor(1, 0.7, 0)
+    -- else
+    --     love.graphics.setColor(0.15, 0.15, 0.15)
+    -- end
+    -- local offset = size * 0.15
+    -- love.graphics.draw(texture, x + offset * 0.5, y + offset * 0.5, 0, (size - offset)/texture:getWidth())
+
 end
 
 function widgets.button(text, x, y, width, height, isDisabled, align)

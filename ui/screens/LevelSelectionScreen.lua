@@ -182,7 +182,8 @@ function LevelSelectionScreen:draw()
         itemY = itemY + itemHeight + panelHeight * 0.025
     end
 
-    itemY = itemY + panelHeight * 0.03
+    -- Stars
+    itemY = itemY + panelHeight * 0.055
     itemWidth = panelWidth / 3 - panelWidth * 0.05
     for i = 1, 3 do
         widgets.star(itemX, itemY, itemWidth, i <= itemData.rating)
@@ -229,7 +230,7 @@ function LevelSelectionScreen:draw()
 
     -- Rating
     local starSize = screenHeight * 0.04
-    widgets.star(screenWidth * 0.905, screenHeight * 0.05+starSize*0.17, starSize, true)
+    widgets.star(screenWidth * 0.905, screenHeight * 0.05+starSize*0.17, starSize, true, true)
     love.graphics.setColor(1, 1, 1)
     widgets.label(self.earnedRating.."/"..self.totalRating, screenWidth * 0.7, screenHeight * 0.05, screenWidth * 0.2, starSize, false, "right")
 end
