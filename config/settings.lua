@@ -3,7 +3,7 @@ return {
     {
         name = "language",
         values = {
-            { name = "lbl_settings_lang_english", value = "en", default = true},
+            { name = "lbl_settings_lang_english", value = "en"},
             { name = "lbl_settings_lang_russian", value = "ru"},
         }
     },

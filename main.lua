@@ -84,8 +84,10 @@ function love.load(arg)
     -- Love2D initalization
     love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
 
-    languageUtils.loadLanguage()
     settings.load()
+    if not settings.get("language") then
+        settings.set("language", languageUtils.getSystemLanguage())
+    end
 
     -- Initalize UI and show first screen
     screenManager = ScreenManager:new()

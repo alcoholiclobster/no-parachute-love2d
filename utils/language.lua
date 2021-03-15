@@ -1,3 +1,4 @@
+local currentLanguageName = nil
 local currentLanguage = {}
 
 return {
@@ -15,5 +16,21 @@ return {
             name = "en"
         end
         currentLanguage = require("config.localization."..name)
+        currentLanguageName = name
+    end,
+
+    getCurrentLanguage = function ()
+        return currentLanguageName
+    end,
+
+    getSystemLanguage = function ()
+        local osLocale = string.sub(os.getenv("LANG"), 0, 5)
+        local languageName = "en"
+
+        if osLocale == "ru_RU" then
+            return "ru"
+        end
+
+        return languageName
     end,
 }
