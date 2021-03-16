@@ -45,8 +45,23 @@ return {
     },
 
     planeTypes = {
+        meat_breakable_wall = {
+            planes = {{ texture = "levels/meat/obstacles/meat_wall", breakable = true }},
+        },
         stone_breakable_wall = {
             planes = {{ texture = "levels/meat/obstacles/stone_obstacle_breakable", breakable = true }},
+        },
+        stone_side_long_hole = {
+            planes = {
+                { texture = "levels/meat/obstacles/stone_obstacle3", },
+                { texture = "levels/meat/obstacles/web1", decorative = true, position = {0, 0, 2} },
+                { texture = "levels/meat/obstacles/web2", decorative = true, position = {0, 0, 4} },
+            },
+        },
+        stone_long_obstacle = {
+            planes = {
+                { texture = "levels/meat/obstacles/stone_obstacle5", },
+            },
         },
 
         projectile_rock = {
@@ -62,8 +77,28 @@ return {
     },
 
     planes = {
-        { distance = 200, name = "stone_breakable_wall", switchSidePlanes = true},
-        { distance = 100, name = "stone_breakable_wall", switchSidePlanes = true},
+        { distance = 100, name = "meat_breakable_wall", switchSidePlanes = true},
+        { distance = 60, name = "stone_side_long_hole", },
+        { distance = 10, name = "stone_side_long_hole", },
+        { distance = 10, name = "stone_side_long_hole", },
+        { distance = 5, name = "stone_long_obstacle", rotation = 0, },
+        { distance = 5, name = "stone_side_long_hole", },
+        { distance = 10, name = "stone_side_long_hole", },
+        { distance = 10, name = "stone_side_long_hole", },
+        { distance = 5, name = "stone_long_obstacle", rotation = 180, },
+        { distance = 5, name = "stone_side_long_hole", },
+        { distance = 10, name = "stone_side_long_hole", },
+        { distance = 50, name = "stone_side_long_hole", rotation = 180,  },
+        { distance = 10, name = "stone_side_long_hole", rotation = 180, },
+        { distance = 10, name = "stone_side_long_hole", rotation = 180, },
+        { distance = 10, name = "stone_side_long_hole", rotation = 180, },
+        { distance = 5, name = "stone_long_obstacle", rotation = 0, },
+        { distance = 5, name = "stone_side_long_hole", rotation = 180, },
+        { distance = 30, name = "stone_long_obstacle", rotation = 0, },
+        { distance = 10, name = "stone_long_obstacle", rotation = 270, },
+        { distance = 30, name = "stone_long_obstacle", rotation = 180, },
+        { distance = 20, name = "stone_long_obstacle", rotation = 90, },
+        { distance = 30, name = "stone_breakable_wall", switchSidePlanes = true},
         { distance = 94, fogColor = {255, 200, 100}, fallSpeed = 80},
 
         { distance = 50, name = "projectile_rock", position = {-3.5, -3.5, 0} },

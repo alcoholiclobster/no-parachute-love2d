@@ -19,7 +19,7 @@ local isInitialized = false
 
 local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
-local debugNoSteam = true
+local debugNoSteam = false
 
 local steamUpdateInterval = 0.1
 local steamLastUpdatedAt = love.timer.getTime()
