@@ -1,5 +1,7 @@
 local Concord = require("lib.concord")
 local assets = require("core.assets")
+local settings = require "config.settings"
+local musicManager = require("utils.musicManager")
 
 local SoundEffects = Concord.system({
     obstaclesPassedPlayerPool = {"obstaclePassedPlayerEvent"},
@@ -8,6 +10,10 @@ local SoundEffects = Concord.system({
     limgDamagePool = {"damageEvent", "limb"},
     obstacleHitPool = {"controlledByPlayer", "character", "obstacleCollisionEvent"},
     obstacleBreakPool = {"breakableObstacle", "obstacleHitByEntityEvent"},
+    playMusicEventPool = {"playMusicEvent"},
+    stopMusicEventPool = {"stopMusicEvent"},
+    playAmbientEventPool = {"playAmbientEvent"},
+    stopAmbientEventPool = {"stopAmbientEvent"},
 })
 
 local soundInstances = {}
@@ -130,6 +136,36 @@ function SoundEffects:update(deltaTime)
         sound:setPitch(0.4 + math.random() * 0.6)
 
         obstacleBreakLastPlayedAt = time
+    end
+
+    if #self.stopMusicEventPool > 0 then
+        musicManager:stop()
+    end
+
+    if #self.stopMusicEventPool > 0 then
+        musicManager:stop()
+    end
+
+    if #self.stopAmbientEventPool > 0 then
+        if self.ambientSound then
+            self.ambientSound:stop()
+        end
+    end
+
+    if #self.playAmbientEventPool > 0 then
+        local name = self.playAmbientEventPool[1].playAmbientEvent.name
+        if self.ambientSound then
+            self.ambientSound:stop()
+        end
+
+        self.ambientSound = assets.sound("ambient/"..name..".wav")
+        self.ambientSound:play()
+        self.ambientSound:setLooping(true)
+    end
+
+    if #self.playMusicEventPool > 0 then
+        local name = self.playMusicEventPool[1].playMusicEvent.name
+        musicManager:play(name)
     end
 end
 

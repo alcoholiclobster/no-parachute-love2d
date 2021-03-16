@@ -2,9 +2,8 @@ return {
     name = "Meat 3",
     nextLevel = nil,
     music = "meat_theme",
-    ambient = "worm",
 
-    fallSpeed = 55,
+    fallSpeed = 52,
     fogColor = {25, 10, 0},
     fogDistance = 50,
     playerRotationMode = "sinusoid",
@@ -17,7 +16,6 @@ return {
     sidePlanes = {
         {
             textures = {
-                "levels/meat/side_planes/flesh1",
                 "levels/meat/side_planes/flesh2",
             },
         },
@@ -36,12 +34,6 @@ return {
         {
             textures = {
                 "levels/core/side_planes/wide1",
-            },
-        },
-        {
-            textures = {
-                "levels/core/side_planes/1",
-                "levels/core/side_planes/2",
             },
         },
         {
@@ -95,12 +87,12 @@ return {
         { distance = 100, tunnelShape = { direction = {-5, 0}, rotationSpeed = 4 }, },
         { distance = 100, tunnelShape = { direction = {0, 0}, rotationSpeed = -2 }, },
         { distance = 100, switchSidePlanes = true, name = "wall" },
-        { distance = 97, fogColor = {255, 255, 255}, fallSpeed = 20},
+        { distance = 97, fogColor = {255, 255, 255}, fallSpeed = 20, emit = { name = "stopMusicEvent" }},
+        { distance = 1, emit = { name = "playAmbientEvent", args = {"core"} }},
         { distance = 200 },
-        { distance = 100, switchSidePlanes = true, name = "white_wall" },
-        { distance = 97, fogColor = {255, 200, 100}, fallSpeed = 120},
-        { distance = 300, switchSidePlanes = true, },
-        { distance = 97, fogColor = {0, 0, 0}, fallSpeed = 100},
+        { distance = 100, name = "white_wall", switchSidePlanes = true },
+        { distance = 97, fogColor = {0, 0, 0}, fallSpeed = 120, emit = { name = "stopAmbientEvent" }},
+        { distance = 1, emit = { name = "playMusicEvent", args = {"meat_theme"} }},
         { distance = 200, },
     },
 }

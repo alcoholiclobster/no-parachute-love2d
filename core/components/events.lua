@@ -34,3 +34,17 @@ Concord.component("updateTunnelShapeEvent", function(component, direction, offse
     component.offset = offset
     component.rotationSpeed = rotationSpeed
 end)
+
+Concord.component("stopMusicEvent", function(component)
+end)
+
+Concord.component("stopAmbientEvent", function(component)
+end)
+
+Concord.component("playMusicEvent", function(component, name)
+    component.name = name
+end)
+
+Concord.component("playAmbientEvent", function(component, name)
+    component.name = name
+end)

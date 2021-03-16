@@ -8,6 +8,10 @@ local cleanupComponents = {
     "sidePlaneRespawnEvent",
     "obstacleHitByEntityEvent",
     "obstaclePassedPlayerEvent",
+    "playMusicEvent",
+    "stopMusicEvent",
+    "playAmbientEvent",
+    "stopAmbientEvent",
 }
 
 local pools = {}

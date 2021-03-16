@@ -165,6 +165,16 @@ function LevelStreaming:update(deltaTime)
                 end
                 self:getWorld().gameState.fallSpeed = nextObstacle.fallSpeed
             end
+
+            if nextObstacle.emit then
+                local eventEntity = Concord.entity(world)
+
+                if nextObstacle.emit.args then
+                    eventEntity:give(nextObstacle.emit.name, unpack(nextObstacle.emit.args))
+                else
+                    eventEntity:give(nextObstacle.emit.name)
+                end
+            end
         end
     end
 end
