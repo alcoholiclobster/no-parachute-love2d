@@ -54,22 +54,21 @@ function LevelSelectionScreen:initialize(selectLevelName)
         end
 
         -- Load rating
-        local rating = 0
         local ratingItems = {0, 0, 0}
+        if config.highscores then
+            for i, value in ipairs(config.highscores) do
+                ratingItems[i + 1] = value
+            end
+        end
+
+        local rating = 0
         if isCompleted then
             local highscore = storage.getLevelData(levelName, "highscore", 0)
-            if config.highscores then
-                for i, value in ipairs(config.highscores) do
-                    ratingItems[i + 1] = value
-                    if value > highscore then
-                        break
-                    else
-                        rating = i
-                    end
+
+            for i = 1, 3 do
+                if highscore >= ratingItems[i] then
+                    rating = i
                 end
-                rating = rating + 1
-            elseif highscore > 0 then
-                rating = 3
             end
         end
         self.earnedRating = self.earnedRating + rating
@@ -208,10 +207,10 @@ function LevelSelectionScreen:draw()
         love.graphics.setColor(1, 1, 1)
         local value = itemData.ratingItems[highlightedRatingItem]
         local label
-        if value ~= 0 then
-            label = lz("lbl_level_stats_rating_requirements_score", value)
-        else
+        if value == 0 then
             label = lz("lbl_level_stats_rating_requirements_complete")
+        else
+            label = lz("lbl_level_stats_rating_requirements_score", value)
         end
         widgets.label(label, itemX, itemY, itemWidth, itemHeight, true, "left")
     end
