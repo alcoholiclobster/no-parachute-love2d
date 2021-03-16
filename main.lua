@@ -19,7 +19,7 @@ local isInitialized = false
 
 local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
-local debugNoSteam = false
+local debugNoSteam = true
 
 local steamUpdateInterval = 0.1
 local steamLastUpdatedAt = love.timer.getTime()
@@ -35,16 +35,19 @@ local function completeInitialization()
         return
     end
 
-    -- Initialize Steam
-    local steamInitStartAt = love.timer.getTime()
     local steamUserId = "local"
-    if Steam.init() then
-        steamUserId = tostring(Steam.user.getSteamID())
-    elseif not debugNoSteam then
-        error("Steam must be running")
-        return
-    end
-    print("Steam initalization completed in", math.floor((love.timer.getTime() - steamInitStartAt) * 1000) / 1000, "s")
+
+    -- Initialize Steam
+    pcall(function ()
+        local steamInitStartAt = love.timer.getTime()
+        if not debugNoSteam and Steam.init() then
+            steamUserId = tostring(Steam.user.getSteamID())
+        elseif not debugNoSteam then
+            error("Steam must be running")
+            return
+        end
+        print("Steam initalization completed in", math.floor((love.timer.getTime() - steamInitStartAt) * 1000) / 1000, "s")
+    end)
 
     -- Load game saves
     love.filesystem.createDirectory(steamUserId)
@@ -70,12 +73,14 @@ function love.load(arg)
     parser:option("--fps", "Simulate frame rate")
     parser:flag("--maximize", "Force maximize window")
     parser:flag("--nohud", "Disable HUD")
+    parser:flag("--nosteam", "Allow running without Steam")
     parser:flag("--nosplash", "Skip splash screen")
     local args = parser:parse(arg)
 
     GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
     GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = GLOBAL_DEBUG_UNLOCK_ALL_LEVELS and GLOBAL_DEBUG_ENABLED
     GLOBAL_HUD_DISABLED = not not args.nohud
+    debugNoSteam = debugNoSteam or not not args.nosteam
     debugSimulateFrameRate = tonumber(args.fps) or 0
 
     -- Lua initialization
