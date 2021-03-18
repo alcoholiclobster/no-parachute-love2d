@@ -1,9 +1,9 @@
 local class = require("lib.middleclass")
-local IntroScene = require("ui.intro.IntroScene")
+local BaseScene = require("ui.cutscenes.BaseScene")
 local scheduler = require("utils.scheduler")
 local assets = require("core.assets")
 
-local Scene3 = class("Scene3", IntroScene)
+local Scene3 = class("Scene3", BaseScene)
 
 function Scene3:initialize()
     local this = self
@@ -37,7 +37,7 @@ function Scene3:process()
 
     scheduler.wait(2.5)
     -- self.introManager:changeScene("Scene4")
-    self.introManager:startGame()
+    self.cutscene:startGame()
 end
 
 function Scene3:update(deltaTime)
@@ -61,7 +61,7 @@ function Scene3:update(deltaTime)
     end
 
     -- self.characterSpeedX = self.characterSpeedX + 1 * deltaTime
-    self.characterSpeedY = self.characterSpeedY + 14 * deltaTime
+    self.characterSpeedY = self.characterSpeedY + 54 * deltaTime
     self.characterX = self.characterX + self.characterSpeedX * deltaTime
     self.characterY = self.characterY + self.characterSpeedY * deltaTime
 end

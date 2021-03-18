@@ -1,10 +1,10 @@
 local class = require("lib.middleclass")
-local IntroScene = require("ui.intro.IntroScene")
+local BaseScene = require("ui.cutscenes.BaseScene")
 local scheduler = require("utils.scheduler")
 local assets = require("core.assets")
 local mathUtils = require("utils.math")
 
-local Scene3 = class("Scene3", IntroScene)
+local Scene3 = class("Scene3", BaseScene)
 
 function Scene3:initialize()
     local this = self

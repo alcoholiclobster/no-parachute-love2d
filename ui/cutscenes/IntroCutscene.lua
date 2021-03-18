@@ -1,8 +1,9 @@
 local class = require("lib.middleclass")
 
-local IntroManager = class("IntroManager")
+local IntroCutscene = class("IntroCutscene")
 
-function IntroManager:initialize()
+function IntroCutscene:initialize(uiScreen)
+    self.screen = uiScreen
     self.scene = nil
 
     self.sceneWidth = 128
@@ -13,13 +14,13 @@ function IntroManager:initialize()
     self:changeScene("Scene1")
 end
 
-function IntroManager:update(deltaTime)
+function IntroCutscene:update(deltaTime)
     if self.scene then
         self.scene:update(deltaTime)
     end
 end
 
-function IntroManager:draw()
+function IntroCutscene:draw()
     if self.scene then
         love.graphics.setCanvas(self.canvas)
         self.scene:draw()
@@ -33,7 +34,7 @@ function IntroManager:draw()
     end
 end
 
-function IntroManager:changeScene(sceneName)
+function IntroCutscene:changeScene(sceneName)
     if self.scene then
         self.scene:onHide()
     end
@@ -42,15 +43,15 @@ function IntroManager:changeScene(sceneName)
         self.scene = nil
         return
     end
-    local sceneClass = require("ui.intro.scenes."..sceneName)
+    local sceneClass = require("ui.cutscenes.intro."..sceneName)
     self.scene = sceneClass:new()
     self.scene.width = self.sceneWidth
     self.scene.height = self.sceneHeight
-    self.scene.introManager = self
+    self.scene.cutscene = self
 end
 
-function IntroManager:startGame()
+function IntroCutscene:startGame()
     self.screen:startGame()
 end
 
-return IntroManager
+return IntroCutscene

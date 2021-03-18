@@ -229,7 +229,7 @@ function LevelSelectionScreen:draw()
         startGameButtonLabel = lz("btn_level_selection_level_locked")
     end
     if widgets.button(startGameButtonLabel, btnX, btnY, btnWidth, btnHeight, not itemData.isUnlocked, "center") then
-        self.screenManager:transition("GameScreen", itemData.name)
+        self.screenManager:transition("PreGameScreen", itemData.name)
     end
 
     -- Arrows

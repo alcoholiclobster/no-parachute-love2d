@@ -1,9 +1,9 @@
 local class = require("lib.middleclass")
-local IntroScene = require("ui.intro.IntroScene")
+local BaseScene = require("ui.cutscenes.BaseScene")
 local scheduler = require("utils.scheduler")
 local assets = require("core.assets")
 
-local Scene1 = class("Scene1", IntroScene)
+local Scene1 = class("Scene1", BaseScene)
 
 function Scene1:initialize()
     local this = self
@@ -26,7 +26,7 @@ function Scene1:process()
     self.line = self.line + 1
     scheduler.wait(3)
 
-    self.introManager:changeScene("Scene2")
+    self.cutscene:changeScene("Scene2")
 end
 
 function Scene1:update(deltaTime)

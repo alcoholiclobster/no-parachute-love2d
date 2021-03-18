@@ -1,5 +1,5 @@
 return {
-    name = "Intro",
+    name = "The Jump",
     nextLevel = "tutorial",
 
     fallSpeed = 25,
@@ -7,6 +7,8 @@ return {
     fogDistance = 90,
     playerRotationMode = "none",
     playerRotationSpeed = 0,
+
+    cutscene = "IntroCutscene",
 
     sidePlanesCount = 60,
     sidePlanes = {
