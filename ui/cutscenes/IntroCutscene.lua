@@ -1,4 +1,5 @@
 local class = require("lib.middleclass")
+local widgets = require("ui.widgets")
 
 local IntroCutscene = class("IntroCutscene")
 
@@ -12,6 +13,8 @@ function IntroCutscene:initialize(uiScreen)
     self.canvas = love.graphics.newCanvas(self.sceneWidth, self.sceneHeight)
     self.canvas:setFilter("nearest", "nearest")
     self:changeScene("Scene1")
+
+    self.text = nil
 end
 
 function IntroCutscene:update(deltaTime)
@@ -31,7 +34,16 @@ function IntroCutscene:draw()
         local imageWidth = height * 0.8
         local imageHeight = height * 0.8
         love.graphics.draw(self.canvas, width / 2 - imageWidth / 2, height / 2 - imageHeight / 2, 0, 1 / self.sceneWidth * imageWidth)
+
+        if self.text then
+            local textY = height / 2 + imageHeight / 2
+            widgets.label(self.text, 0, textY, width, (height - textY) * 0.5, true, "center")
+        end
     end
+end
+
+function IntroCutscene:setText(text)
+    self.text = text
 end
 
 function IntroCutscene:changeScene(sceneName)

@@ -60,4 +60,6 @@ return {
 
     lbl_splash_press_any_button = "PRESS ANY BUTTON",
     lbl_splash_loading = "Connecting to Steam...",
+
+    lbl_intro_press_to_jump = "PRESS %s TO JUMP",
 }

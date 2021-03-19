@@ -60,4 +60,6 @@ return {
 
     lbl_splash_press_any_button = "НАЖМИТЕ ЛЮБУЮ КНОПКУ",
     lbl_splash_loading = "Подключение к Steam...",
+
+    lbl_intro_press_to_jump = "НАЖМИТЕ %s, ЧТОБЫ ПРЫГНУТЬ",
 }

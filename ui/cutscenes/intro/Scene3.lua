@@ -36,7 +36,6 @@ function Scene3:process()
     self.isPlaneMoving = true
 
     scheduler.wait(2.5)
-    -- self.introManager:changeScene("Scene4")
     self.cutscene:startGame()
 end
 

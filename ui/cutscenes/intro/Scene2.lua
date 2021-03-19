@@ -2,6 +2,7 @@ local class = require("lib.middleclass")
 local BaseScene = require("ui.cutscenes.BaseScene")
 local scheduler = require("utils.scheduler")
 local assets = require("core.assets")
+local lz = require("utils.language").localize
 
 local Scene2 = class("Scene1", BaseScene)
 
@@ -21,10 +22,10 @@ end
 
 function Scene2:process()
     scheduler.wait(2)
-    self.line = 1
+    self.cutscene:setText(lz("lbl_intro_press_to_jump", "F"))
     scheduler.wait(1)
     while true do
-        if not self.isJumping and love.keyboard.isDown("x") then
+        if not self.isJumping and love.keyboard.isDown("f") then
             self.isJumping = true
             self.line = 0
             self.gravity = 250
@@ -33,6 +34,8 @@ function Scene2:process()
         end
         scheduler.wait(0)
     end
+
+    self.cutscene:setText()
 
     while true do
         if self.fade > 0.9 then
