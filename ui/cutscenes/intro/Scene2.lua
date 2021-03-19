@@ -83,10 +83,6 @@ function Scene2:draw()
     love.graphics.draw(assets.texture("cutscenes/intro/scene2_character"), 0, characterY)
     love.graphics.draw(assets.texture("cutscenes/intro/scene2_plane_part"), 0, 0)
 
-    if self.line == 1 then
-        love.graphics.draw(assets.texture("cutscenes/intro/press_x_to_jump"), 0, 0)
-    end
-
     if self.fade > 0 then
         love.graphics.setColor(0, 0, 0, self.fade)
         love.graphics.rectangle("fill", 0, 0, self.width, self.height)

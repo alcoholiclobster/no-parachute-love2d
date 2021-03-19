@@ -56,7 +56,7 @@ function Scene3:update(deltaTime)
     end
 
     if self.isPlaneMoving then
-        self.planeSpeed = self.planeSpeed + 10 * deltaTime
+        self.planeSpeed = self.planeSpeed + 30 * deltaTime
         self.planeOffset = self.planeOffset + deltaTime * self.planeSpeed
     end
 
