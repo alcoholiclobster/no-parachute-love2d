@@ -37,8 +37,12 @@ function PreGameScreen:onHide()
 end
 
 function PreGameScreen:handleKeyPress(key, ...)
-    if self.cutscene and key == "escape" then
-        self.screenManager:transition("MainMenuScreen")
+    if self.cutscene then
+        if key == "enter" or key == "space" then
+            self:startGame()
+        elseif key == "escape" then
+            self.screenManager:transition("MainMenuScreen")
+        end
     end
 end
 
