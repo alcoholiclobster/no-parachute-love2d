@@ -2,13 +2,17 @@ local class = require("lib.middleclass")
 local BaseScene = require("ui.cutscenes.BaseScene")
 local scheduler = require("utils.scheduler")
 local assets = require("core.assets")
+local musicManager = require("utils.musicManager")
 
 local Scene1 = class("Scene1", BaseScene)
 
-function Scene1:initialize()
+function Scene1:initialize(cutscene)
+    BaseScene.initialize(self, cutscene)
+
     local this = self
     self.thread = scheduler.createThread(function () this:process() end)
 
+    musicManager:play("intro")
     self.planeTexture = assets.texture("cutscenes/intro/plane")
 end
 
@@ -25,7 +29,7 @@ function Scene1:process()
     self.planeTexture = assets.texture("cutscenes/intro/plane")
     scheduler.wait(1)
 
-    self.cutscene:changeScene("Scene2")
+    self.cutscene:changeScene("intro.Scene2")
 end
 
 function Scene1:update(deltaTime)

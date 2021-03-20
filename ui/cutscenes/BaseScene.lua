@@ -1,17 +1,21 @@
 local class = require("lib.middleclass")
 
-local IntroScene = class("IntroScene")
+local BaseScene = class("BaseScene")
 
-function IntroScene:initialize()
+function BaseScene:initialize(cutscene)
+    self.cutscene = cutscene
+end
+
+function BaseScene:update(deltaTime)
 
 end
 
-function IntroScene:update(deltaTime)
+function BaseScene:draw()
 
 end
 
-function IntroScene:draw()
+function BaseScene:onHide()
 
 end
 
-return IntroScene
+return BaseScene

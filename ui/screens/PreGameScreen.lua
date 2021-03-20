@@ -32,7 +32,7 @@ end
 
 function PreGameScreen:onHide()
     if self.cutscene then
-        self.cutscene:changeScene()
+        self.cutscene:onHide()
     end
 end
 

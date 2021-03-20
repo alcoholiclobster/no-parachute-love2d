@@ -5,7 +5,9 @@ local assets = require("core.assets")
 
 local Scene3 = class("Scene3", BaseScene)
 
-function Scene3:initialize()
+function Scene3:initialize(cutscene)
+    BaseScene.initialize(self, cutscene)
+
     local this = self
     self.thread = scheduler.createThread(function () this:process() end)
 
@@ -34,6 +36,10 @@ function Scene3:process()
 
     self.isDoorMoving = true
     self.isPlaneMoving = true
+
+    self.doorSound = assets.sound("plane_door.wav")
+    scheduler.wait(0.3)
+    self.doorSound:play()
 
     scheduler.wait(2.5)
     self.cutscene:startGame()

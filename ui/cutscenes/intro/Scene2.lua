@@ -6,7 +6,9 @@ local lz = require("utils.language").localize
 
 local Scene2 = class("Scene1", BaseScene)
 
-function Scene2:initialize()
+function Scene2:initialize(cutscene)
+    BaseScene.initialize(self, cutscene)
+
     local this = self
     self.thread = scheduler.createThread(function () this:process() end)
 
@@ -18,12 +20,14 @@ function Scene2:initialize()
 
     self.isJumping = false
     self.fade = 0
+
+    self.cutscene.planeSound:setVolume(1)
 end
 
 function Scene2:process()
-    scheduler.wait(2)
-    self.cutscene:setText(lz("lbl_intro_press_to_jump", "F"))
     scheduler.wait(1)
+    self.cutscene:setText(lz("lbl_intro_press_to_jump", "F"))
+    scheduler.wait(0.2)
     while true do
         if not self.isJumping and love.keyboard.isDown("f") then
             self.isJumping = true
@@ -39,7 +43,8 @@ function Scene2:process()
 
     while true do
         if self.fade > 0.9 then
-            self.cutscene:changeScene("Scene3")
+            self.cutscene.planeSound:setVolume(0.4)
+            self.cutscene:changeScene("intro.Scene3")
         end
         scheduler.wait(0)
     end

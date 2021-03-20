@@ -1,6 +1,7 @@
 return {
     name = "The Jump",
     nextLevel = "tutorial",
+    music = "intro",
 
     fallSpeed = 25,
     fogColor = {124, 213, 255},
