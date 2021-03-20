@@ -175,6 +175,12 @@ function LevelStreaming:update(deltaTime)
                     eventEntity:give(nextObstacle.emit.name)
                 end
             end
+
+            if nextObstacle.showText then
+                self:getWorld().gameManager.ui:showText(nextObstacle.showText.label, nextObstacle.showText.duration)
+            elseif nextObstacle.hideText then
+                self:getWorld().gameManager.ui:hideText()
+            end
         end
     end
 end

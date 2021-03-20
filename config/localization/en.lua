@@ -62,4 +62,7 @@ return {
     lbl_splash_loading = "Connecting to Steam...",
 
     lbl_intro_press_to_jump = "PRESS %s TO JUMP",
+    lbl_tutorial_movement = "Use WASD or arrows to move",
+    lbl_tutorial_speedup = "Use SPACE to break walls and fall faster",
+    lbl_tutorial_avoid = "Avoid obstacles to survive",
 }

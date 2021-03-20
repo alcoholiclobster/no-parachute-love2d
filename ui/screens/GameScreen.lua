@@ -28,8 +28,10 @@ function GameScreen:initialize(levelName)
 
     self.speedEffect = SpeedEffect:new()
     self.settingsOverlay = nil
-    self.currentText = "Press F to open your parachute"
-    self.currentTextDuration = 30
+
+    self.currentText = nil
+    self.currentTextShowTime = 0
+    self.currentTextDuration = 0
 end
 
 function GameScreen:onShow()
@@ -96,7 +98,13 @@ function GameScreen:draw()
         love.graphics.printf(lz("lbl_hud_speed"), 0, screenHeight - 50, screenWidth - 20, "right")
 
         if self.currentText then
-            love.graphics.setColor(1, 1, 1)
+            local alpha = 1
+            if self.currentTextTime < 0.5 then
+                alpha = self.currentTextTime / 0.5
+            elseif self.currentTextTime > self.currentTextDuration - 1 then
+                alpha = self.currentTextDuration - self.currentTextTime
+            end
+            love.graphics.setColor(1, 1, 1, alpha)
             widgets.label(lz(self.currentText), screenWidth * 0.2, screenHeight * 0.15, screenWidth * 0.6, screenHeight * 0.05, true, "center")
         end
     elseif self.state == "dead" then
@@ -273,6 +281,18 @@ function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, is
     self.isNewBestTime = isNewBestTime
 end
 
+function GameScreen:showText(text, duration)
+    self.currentText = text or nil
+    self.currentTextTime = 0
+    self.currentTextDuration = duration or 0
+end
+
+function GameScreen:hideText()
+    if self.currentText then
+        self.currentTextTime = math.max(self.currentTextTime, self.currentTextDuration - 1)
+    end
+end
+
 function GameScreen:update(deltaTime)
     if self.state ~= "pause" then
         if love.keyboard.isDown("z") then
@@ -286,10 +306,10 @@ function GameScreen:update(deltaTime)
             self.speedEffect:update(deltaTime)
         end
 
-        if self.currentTextDuration > 0 then
-            self.currentTextDuration = self.currentTextDuration - deltaTime
-            if self.currentTextDuration < 0 then
-                self.currentTextDuration = 0
+        if self.currentText then
+            self.currentTextTime = self.currentTextTime + deltaTime
+            if self.currentTextTime > self.currentTextDuration then
+                self.currentTextTime = self.currentTextDuration
                 self.currentText = nil
             end
         end

@@ -62,4 +62,7 @@ return {
     lbl_splash_loading = "Подключение к Steam...",
 
     lbl_intro_press_to_jump = "НАЖМИТЕ %s, ЧТОБЫ ПРЫГНУТЬ",
+    lbl_tutorial_movement = "Используйте WASD или стрелки для движения",
+    lbl_tutorial_speedup = "Нажмите пробел, чтобы разрушать стены и ускоряться",
+    lbl_tutorial_avoid = "Избегайте препятствий, чтобы выжить",
 }
