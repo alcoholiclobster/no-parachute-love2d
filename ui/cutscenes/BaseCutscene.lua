@@ -35,8 +35,8 @@ function BaseCutscene:draw()
         love.graphics.draw(self.canvas, width / 2 - imageWidth / 2, height / 2 - imageHeight / 2, 0, 1 / self.sceneWidth * imageWidth)
 
         if self.text then
-            local textY = height / 2 + imageHeight / 2
-            widgets.label(self.text, 0, textY, width, (height - textY) * 0.5, true, "center")
+            local textY = height / 2 + imageHeight / 2 + height * 0.01
+            widgets.label(self.text, 0, textY, width, (height - textY) * 0.6, true, "center")
         end
     end
 end

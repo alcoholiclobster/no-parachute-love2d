@@ -23,9 +23,13 @@ function ScreenManager:update(deltaTime)
         self.fadeProgress = self.fadeProgress + deltaTime / self.fadeOutTime
         if self.fadeProgress > 1 then
             self.fadeProgress = 1
-            self:show(self.fadeScreen, unpack(self.fadeScreenArgs))
+            local fadeScreen = self.fadeScreen
+            local args = self.fadeScreenArgs
+
             self.fadeScreen = nil
             self.fadeScreenArgs = {}
+
+            self:show(fadeScreen, unpack(args))
         end
     elseif not self.fadeScreen and self.fadeProgress > 0 then
         self.fadeProgress = self.fadeProgress - deltaTime / self.fadeInTime

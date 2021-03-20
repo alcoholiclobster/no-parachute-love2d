@@ -5,8 +5,6 @@ return {
     music = "forest_theme1",
     ambient = "forest",
 
-    enableTutorial = true,
-
     fallSpeed = 25,
     fogColor = {0, 5, 10},
     fogDistance = 70,

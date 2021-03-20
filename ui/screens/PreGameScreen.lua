@@ -15,6 +15,8 @@ function PreGameScreen:onShow()
     if self.levelConfig.cutscene then
         local cutsceneClass = require("ui.cutscenes."..self.levelConfig.cutscene)
         self.cutscene = cutsceneClass:new(self)
+    else
+        self:startGame()
     end
 end
 

@@ -6,7 +6,6 @@ local musicManager = require("utils.musicManager")
 local Screen = require("ui.Screen")
 local settings = require("utils.settings")
 local SpeedEffect = require("ui.effects.SpeedEffect")
-local Tutorial = require("ui.Tutorial")
 local mathUtils = require("utils.math")
 local lz = require("utils.language").localize
 local SettingsOverlay = require("ui.SettingsOverlay")
@@ -28,11 +27,9 @@ function GameScreen:initialize(levelName)
     self.stateChangedAt = love.timer.getTime()
 
     self.speedEffect = SpeedEffect:new()
-    if self.levelConfig.enableTutorial then
-        self.tutorial = Tutorial:new()
-    end
-
     self.settingsOverlay = nil
+    self.currentText = "Press F to open your parachute"
+    self.currentTextDuration = 30
 end
 
 function GameScreen:onShow()
@@ -40,9 +37,6 @@ function GameScreen:onShow()
 end
 
 function GameScreen:onHide()
-    if self.tutorial then
-        self.tutorial:destroy()
-    end
     self.gameManager:destroy()
 end
 
@@ -74,10 +68,6 @@ function GameScreen:draw()
         return
     end
 
-    if self.tutorial then
-        self.tutorial:draw()
-    end
-
     love.graphics.setColor(1, 1, 1, 1)
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     if self.state == "game" then
@@ -105,6 +95,10 @@ function GameScreen:draw()
         love.graphics.setFont(assets.font("Roboto-Bold", 14))
         love.graphics.printf(lz("lbl_hud_speed"), 0, screenHeight - 50, screenWidth - 20, "right")
 
+        if self.currentText then
+            love.graphics.setColor(1, 1, 1)
+            widgets.label(lz(self.currentText), screenWidth * 0.2, screenHeight * 0.15, screenWidth * 0.6, screenHeight * 0.05, true, "center")
+        end
     elseif self.state == "dead" then
         local stateTime = love.timer.getTime() - self.stateChangedAt
 
@@ -290,6 +284,14 @@ function GameScreen:update(deltaTime)
         self.gameManager:update(deltaTime)
         if settings.get("speed_lines") then
             self.speedEffect:update(deltaTime)
+        end
+
+        if self.currentTextDuration > 0 then
+            self.currentTextDuration = self.currentTextDuration - deltaTime
+            if self.currentTextDuration < 0 then
+                self.currentTextDuration = 0
+                self.currentText = nil
+            end
         end
     end
 end
