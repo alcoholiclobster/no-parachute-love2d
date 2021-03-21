@@ -62,6 +62,10 @@ return {
     lbl_splash_loading = "Подключение к Steam...",
 
     lbl_intro_press_to_jump = "НАЖМИТЕ %s, ЧТОБЫ ПРЫГНУТЬ",
+    lbl_intro_parachute_prompt = "Нажмите F, чтобы раскрыть парашют",
+    lbl_intro_parachute_missing = "Ой! Кажется, у вас его нет...",
+    lbl_intro_cave = "Пещера внизу выглядит как ваш последний шанс!",
+
     lbl_tutorial_movement = "Используйте WASD или стрелки для движения",
     lbl_tutorial_speedup = "Нажмите пробел, чтобы разрушать стены и ускоряться",
     lbl_tutorial_avoid = "Избегайте препятствий, чтобы выжить",

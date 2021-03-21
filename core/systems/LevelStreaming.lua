@@ -189,6 +189,10 @@ function LevelStreaming:update(deltaTime)
             if type(nextObstacle.togglePlayerSpeedUp) == "boolean" and player then
                 player.controlledByPlayer.isInputSpeedUpEnabled = nextObstacle.togglePlayerSpeedUp
             end
+
+            if nextObstacle.showParachutePrompt then
+                self:getWorld().gameManager.ui:showParachutePrompt()
+            end
         end
     end
 end

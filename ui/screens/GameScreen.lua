@@ -32,6 +32,13 @@ function GameScreen:initialize(levelName)
     self.currentText = nil
     self.currentTextShowTime = 0
     self.currentTextDuration = 0
+
+    self.isWaitingForParachuteKey = false
+    self.isHudEnabled = true
+
+    if self.levelConfig.disableHud then
+        self.isHudEnabled = false
+    end
 end
 
 function GameScreen:onShow()
@@ -77,26 +84,27 @@ function GameScreen:draw()
             self.speedEffect:draw()
         end
 
-        local progress = tostring(math.floor(self.levelProgress * 100)).."%"
+        if self.isHudEnabled then
+            local progress = tostring(math.floor(self.levelProgress * 100)).."%"
 
-        love.graphics.setColor(1, 1, 1, 0.75)
-        love.graphics.setFont(assets.font("Roboto-Bold", 32))
-        love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
-        love.graphics.setFont(assets.font("Roboto-Bold", 14))
-        love.graphics.printf(lz("lbl_hud_progress"), 0, screenHeight - 50, screenWidth, "center")
+            love.graphics.setColor(1, 1, 1, 0.75)
+            love.graphics.setFont(assets.font("Roboto-Bold", 32))
+            love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
+            love.graphics.setFont(assets.font("Roboto-Bold", 14))
+            love.graphics.printf(lz("lbl_hud_progress"), 0, screenHeight - 50, screenWidth, "center")
 
-        local score = tostring(math.ceil(self.playerScore))
-        love.graphics.setFont(assets.font("Roboto-Bold", 14))
-        love.graphics.printf(lz("lbl_hud_score"), 0, 20, screenWidth, "center")
-        love.graphics.setFont(assets.font("Roboto-Bold", 24))
-        love.graphics.printf(score, 0, 40, screenWidth, "center")
+            local score = tostring(math.ceil(self.playerScore))
+            love.graphics.setFont(assets.font("Roboto-Bold", 14))
+            love.graphics.printf(lz("lbl_hud_score"), 0, 20, screenWidth, "center")
+            love.graphics.setFont(assets.font("Roboto-Bold", 24))
+            love.graphics.printf(score, 0, 40, screenWidth, "center")
 
-        local speed = tostring(self.playerSpeed).." "..lz("lbl_hud_speed_units")
-        love.graphics.setFont(assets.font("Roboto-Bold", 32))
-        love.graphics.printf(speed, 0, screenHeight - 90, screenWidth - 20, "right")
-        love.graphics.setFont(assets.font("Roboto-Bold", 14))
-        love.graphics.printf(lz("lbl_hud_speed"), 0, screenHeight - 50, screenWidth - 20, "right")
-
+            local speed = tostring(self.playerSpeed).." "..lz("lbl_hud_speed_units")
+            love.graphics.setFont(assets.font("Roboto-Bold", 32))
+            love.graphics.printf(speed, 0, screenHeight - 90, screenWidth - 20, "right")
+            love.graphics.setFont(assets.font("Roboto-Bold", 14))
+            love.graphics.printf(lz("lbl_hud_speed"), 0, screenHeight - 50, screenWidth - 20, "right")
+        end
         if self.currentText then
             local alpha = 1
             if self.currentTextTime < 0.5 then
@@ -105,7 +113,7 @@ function GameScreen:draw()
                 alpha = self.currentTextDuration - self.currentTextTime
             end
             love.graphics.setColor(1, 1, 1, alpha)
-            widgets.label(lz(self.currentText), screenWidth * 0.2, screenHeight * 0.15, screenWidth * 0.6, screenHeight * 0.05, true, "center")
+            widgets.label(self.currentText, screenWidth * 0.2, screenHeight * 0.15, screenWidth * 0.6, screenHeight * 0.05, true, "center")
         end
     elseif self.state == "dead" then
         local stateTime = love.timer.getTime() - self.stateChangedAt
@@ -282,9 +290,25 @@ function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, is
 end
 
 function GameScreen:showText(text, duration)
-    self.currentText = text or nil
+    if type(text) == "string" then
+        text = lz(text)
+    else
+        text = nil
+    end
+    if text == self.currentText then
+        return
+    end
+    self.currentText = text
     self.currentTextTime = 0
     self.currentTextDuration = duration or 0
+end
+
+function GameScreen:showParachutePrompt()
+    if self.isWaitingForParachuteKey then
+        return
+    end
+    self:showText(lz("lbl_intro_parachute_prompt"), 999)
+    self.isWaitingForParachuteKey = true
 end
 
 function GameScreen:hideText()
@@ -312,6 +336,13 @@ function GameScreen:update(deltaTime)
                 self.currentTextTime = self.currentTextDuration
                 self.currentText = nil
             end
+        end
+
+        if self.isWaitingForParachuteKey and love.keyboard.isDown("f") then
+            self.isWaitingForParachuteKey = false
+            self:showText(lz("lbl_intro_parachute_missing"), 5)
+
+            musicManager:stop()
         end
     end
 end
