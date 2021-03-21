@@ -1,6 +1,6 @@
 return {
     name = "Meat 3",
-    nextLevel = "ending",
+    nextLevel = "ending1",
     music = "meat_theme",
 
     fallSpeed = 52,
