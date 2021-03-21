@@ -32,8 +32,8 @@ return {
 
     planes = {
         { distance = 1 },
-        { distance = 150, showText = { label = "Use WASD or arrows to move", duration = 30 } },
-        { distance = 150, hideText = true },
+        { distance = 150, showText = { label = "Use WASD or arrows to move", duration = 30 }, togglePlayerMovement = false },
+        { distance = 150, hideText = true, togglePlayerMovement = true, togglePlayerSpeedUp = false },
         { distance = 1000 },
     },
 }

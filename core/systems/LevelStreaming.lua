@@ -95,6 +95,7 @@ function LevelStreaming:update(deltaTime)
     local camera = self.cameraPool[1]
     local levelStreamerEntity = self.pool[1]
     local tunnelEnd = self.tunnelEndPool[1]
+    local player = self.playerCharactersPool[1]
     if not levelStreamerEntity or not camera then
         return
     end
@@ -160,8 +161,8 @@ function LevelStreaming:update(deltaTime)
             end
 
             if nextObstacle.fallSpeed then
-                if self.playerCharactersPool[1] then
-                    self.playerCharactersPool[1].velocity.value.z = -nextObstacle.fallSpeed
+                if player then
+                    player.velocity.value.z = -nextObstacle.fallSpeed
                 end
                 self:getWorld().gameState.fallSpeed = nextObstacle.fallSpeed
             end
@@ -180,6 +181,13 @@ function LevelStreaming:update(deltaTime)
                 self:getWorld().gameManager.ui:showText(nextObstacle.showText.label, nextObstacle.showText.duration)
             elseif nextObstacle.hideText then
                 self:getWorld().gameManager.ui:hideText()
+            end
+
+            if type(nextObstacle.togglePlayerMovement) == "boolean" and player then
+                player.controlledByPlayer.isInputMovementEnabled = nextObstacle.togglePlayerMovement
+            end
+            if type(nextObstacle.togglePlayerSpeedUp) == "boolean" and player then
+                player.controlledByPlayer.isInputSpeedUpEnabled = nextObstacle.togglePlayerSpeedUp
             end
         end
     end

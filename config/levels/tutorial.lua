@@ -80,7 +80,7 @@ return {
     },
 
     planes = {
-        { name = "decorative1", distance = 50, rotation = 0 },
+        { name = "decorative1", distance = 50, rotation = 0, togglePlayerSpeedUp = false },
         { name = "decorative2", distance = 50, rotation = 90 },
         { name = "decorative1", distance = 50, rotation = 180 },
         { name = "decorative2", distance = 30, rotation = 0 },
@@ -91,7 +91,7 @@ return {
         { name = "obstacle1", distance = 10, rotation = 180 },
 
         { name = "decorative1", distance = 100, rotation = 0 },
-        { distance = 20, showText = { label = "lbl_tutorial_speedup", duration = 6 } },
+        { distance = 20, showText = { label = "lbl_tutorial_speedup", duration = 6 }, togglePlayerSpeedUp = true },
         { name = "breakable1", distance = 50, rotation = 0 },
         { name = "obstacle6", distance = 50, rotation = 180 },
         { name = "decorative2", distance = 45, rotation = 0, hideText = true },
