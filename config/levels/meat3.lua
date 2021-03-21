@@ -155,10 +155,10 @@ return {
         { distance = 100, switchSidePlanes = true, name = "wall" },
 
         { distance = 97, fogColor = {255, 255, 255}, fallSpeed = 20, emit = { name = "stopMusicEvent" }},
-        { distance = 1, emit = { name = "playAmbientEvent", args = {"core"} }},
+        { distance = 1, emit = { name = "playAmbientEvent", args = {"core"} }, togglePlayerSpeedUp = false},
         { distance = 200 },
         { distance = 100, name = "white_wall", switchSidePlanes = true },
-        { distance = 97, fogColor = {0, 0, 0}, fallSpeed = 120, emit = { name = "stopAmbientEvent" }},
+        { distance = 97, fogColor = {0, 0, 0}, fallSpeed = 120, emit = { name = "stopAmbientEvent" }, togglePlayerSpeedUp = true },
         { distance = 1, emit = { name = "playMusicEvent", args = {"meat_theme"} }},
         { distance = 150, },
     },
