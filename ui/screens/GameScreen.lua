@@ -356,6 +356,10 @@ function GameScreen:handleKeyPress(key, ...)
             self:setState("game")
             musicManager:setSilenced(false)
         end
+    elseif key == "r" then
+        if self.state == "game" then
+            self:restartLevel()
+        end
     else
         self.gameManager:handleKeyPress(key, ...)
     end
