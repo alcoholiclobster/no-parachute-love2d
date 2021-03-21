@@ -21,6 +21,11 @@ Concord.component("rotationSpeed", function(component, value)
     component.value = value or 0
 end)
 
+Concord.component("controlledByPlayer", function (component)
+    component.isInputSpeedUpEnabled = true
+    component.isInputMovementEnabled = true
+end)
+
 Concord.component("fillMode", function(component, mode)
     component.value = mode or "line"
 end)

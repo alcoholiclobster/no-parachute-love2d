@@ -2,7 +2,6 @@ local Concord = require("lib.concord")
 
 Concord.component("drawable")
 Concord.component("obstaclePlane")
-Concord.component("controlledByPlayer")
 Concord.component("controlledByAI")
 Concord.component("character")
 Concord.component("alive")

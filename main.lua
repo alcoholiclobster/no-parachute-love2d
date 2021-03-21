@@ -38,16 +38,23 @@ local function completeInitialization()
     local steamUserId = "local"
 
     -- Initialize Steam
-    pcall(function ()
+    local success = pcall(function ()
         local steamInitStartAt = love.timer.getTime()
         if not debugNoSteam and Steam.init() then
             steamUserId = tostring(Steam.user.getSteamID())
         elseif not debugNoSteam then
             error("Steam must be running")
-            return
         end
         print("Steam initalization completed in", math.floor((love.timer.getTime() - steamInitStartAt) * 1000) / 1000, "s")
     end)
+    if not success then
+        if debugNoSteam then
+            print("Failed to connect to steam")
+        else
+            love.window.showMessageBox("Steam initialization error", "Failed to connect to Steam. Make sure that Steam client is running.", "error")
+            -- love.event.quit()
+        end
+    end
 
     -- Load game saves
     love.filesystem.createDirectory(steamUserId)
