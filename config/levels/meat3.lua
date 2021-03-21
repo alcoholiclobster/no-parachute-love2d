@@ -1,6 +1,6 @@
 return {
     name = "Meat 3",
-    nextLevel = nil,
+    nextLevel = "ending",
     music = "meat_theme",
 
     fallSpeed = 52,
@@ -10,7 +10,7 @@ return {
     playerRotationSpeed = 0.3,
     playerRotationChangeSpeed = 0.01,
 
-    sidePlanesCount = 80,
+    sidePlanesCount = 70,
     sidePlanesRandomBrightness = false,
     sidePlanesBrightness = 0.99,
     sidePlanes = {
