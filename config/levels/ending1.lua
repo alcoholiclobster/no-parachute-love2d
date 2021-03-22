@@ -1,6 +1,6 @@
 return {
-    name = "Getting Out",
-    nextLevel = nil,
+    name = "Getting Out 1",
+    nextLevel = "ending2",
     music = "ending_theme",
 
     fallSpeed = 55,
@@ -48,6 +48,12 @@ return {
                 "levels/vents/decorative2",
                 "levels/vents/decorative3",
             }
+        },
+        {
+            textures = {
+                "levels/stone_cave/side_plane2",
+                "levels/stone_cave/side_plane3",
+            },
         },
     },
 
@@ -153,6 +159,37 @@ return {
                 { texture = "levels/vents/middle_door", position = {0, 0, -0.5}, velocity = {-8, 0, 0}, moveDelay = 1, },
             },
         },
+        vents_middle_small_hole = {
+            planes = {
+                { texture = "levels/vents/middle_small_hole", position = {0, 0, 0} },
+            },
+        },
+        vents_corner_hole = {
+            planes = {
+                { texture = "levels/vents/fan_holder", position = {-0.5, 0, 2}},
+                { texture = "levels/vents/corner_hole" },
+                { texture = "levels/vents/small_fan", position = {-2.96875, -3.125, -0.5}, rotationSpeed = -16, },
+            },
+        },
+        vents_middle_wide_door = {
+            planes = {
+                { texture = "levels/vents/middle_wide_door_frame" },
+                { texture = "levels/vents/middle_wide_door_left", position = {0, 0, -0.5}, velocity = {-4, 0, 0}, moveDelay = 1, },
+                { texture = "levels/vents/middle_wide_door_right", position = {0, 0, -0.5}, velocity = {4, 0, 0}, moveDelay = 1, },
+            },
+        },
+        fan_part1 = {
+            planes = {
+                { texture = "levels/vents/fan", rotationSpeed = 6, },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
+            },
+        },
+
+        fan_part2 = {
+            planes = {
+                { texture = "levels/vents/fan", rotationSpeed = 6, },
+            },
+        },
     },
 
     planes = {
@@ -172,7 +209,7 @@ return {
         { distance = 30, name = "meat_wall" },
         { distance = 1, switchSidePlanes = true },
 
-        { distance = 150, name = "worm1_wall"},
+        { distance = 70, name = "worm1_wall"},
         { distance = 0, name = "worm_smoke", position = {-8, 8, 0 }},
         { distance = 0, name = "worm_smoke2", position = {10, -10, 0 }},
         { distance = 1, name = "worm1_big", position = {10, 10, 0}},
@@ -192,7 +229,45 @@ return {
         { distance = 1, name = "meat_wall", switchSidePlanes = true, },
         { distance = 10, tunnelShape = { direction = {0, 0}, rotationSpeed = 0 }, },
 
-        { distance = 95, name = "vents_middle_door", switchSidePlanes = true, },
-        { distance = 100, },
+        { distance = 50, name = "meat_long_middle_thing", rotation = 90},
+
+        { distance = 45, name = "vents_middle_door", switchSidePlanes = true, },
+
+        { distance = 40, name = "vents_middle_small_hole" },
+        { distance = 30, name = "fan_part1" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 4, name = "fan_part2" },
+        { distance = 20, },
+        { distance = 50, name = "vents_corner_hole", rotation = 0, },
+        { distance = 35, name = "vents_corner_hole", rotation = 180, },
+        { distance = 42, name = "vents_corner_hole", rotation = 0, },
+        { distance = 25, name = "vents_middle_long_stick", rotation = 90, },
+        { distance = 30, name = "vents_corner_hole", rotation = 180, },
+        { distance = 42, name = "vents_corner_hole", rotation = 0, },
+        { distance = 25, name = "vents_middle_small_hole", },
+        { distance = 25, name = "vents_corner_hole", rotation = 180, },
+        { distance = 45, name = "vents_corner_hole", rotation = 0, },
+        { distance = 60, name = "vents_middle_wide_door", rotation = 0, },
+        { distance = 30, name = "vents_middle_wide_door", rotation = 0, },
+        { distance = 30, name = "vents_middle_wide_door", rotation = 0, switchSidePlanes = true, },
     }
 }

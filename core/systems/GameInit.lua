@@ -49,8 +49,19 @@ function GameInit:init()
     end
 
     -- Spawn player
-    Concord.entity(world)
+    local playerSpawnRequest = Concord.entity(world)
         :give("characterSpawnRequest", "player", true)
+
+    local distance = 0
+    for _, p in ipairs(levelConfig.planes) do
+        if p.distance then
+            distance = distance + p.distance
+        end
+        if p.debugSpawnHere then
+            playerSpawnRequest:give("position", maf.vec3(0, 0, -distance))
+            break
+        end
+    end
 
     -- Camera
     local fogColor = levelConfig.fogColor or {0, 0, 0}

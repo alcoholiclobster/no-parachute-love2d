@@ -17,10 +17,15 @@ function CharacterSpawn:update(deltaTime)
             error("Unknown character type \""..tostring(e.characterSpawnRequest.characterType).."\"")
         end
 
+        local spawnPosition = maf.vec3(0, 0, 0)
+        if e.position then
+            spawnPosition = e.position.value:clone()
+        end
+
         -- Character body
         local characterBody = Concord.entity(self:getWorld())
             :give("name", "character")
-            :give("position", maf.vec3(0, 0, -8))
+            :give("position", maf.vec3(0, 0, -8) + spawnPosition)
             :give("size", maf.vec3(conf.body.size.x, conf.body.size.y))
             :give("rotation", 0)
             :give("velocity", maf.vec3(0, 0, -self:getWorld().gameState.fallSpeed))
