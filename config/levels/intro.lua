@@ -1,3 +1,11 @@
+local groundPlanes = {
+    textures = {
+        "levels/sky/side_plane1",
+        "levels/sky/side_plane2"
+    },
+    pattern = {},
+}
+
 return {
     name = "The Jump",
     nextLevel = "tutorial",
@@ -38,12 +46,16 @@ return {
         },
         ground = {
             planes = {
-                { texture = "levels/sky/ground", },
+                { texture = "levels/sky/ground1", },
+                { texture = "levels/sky/ground2", position = {0, 0, 1}},
+                { texture = "levels/sky/ground3", position = {0, 0, 2}},
+                { texture = "levels/sky/ground4", position = {0, 0, 2.75}},
+                { texture = "levels/sky/ground5", position = {0, 0, 3.25}},
                 { texture = "levels/tutorial/side_plane1", position = {0, 0, -1}, decorative = true},
                 { texture = "levels/tutorial/side_plane1", position = {0, 0, -2}, decorative = true},
                 { texture = "levels/tutorial/side_plane2", position = {0, 0, -4}, decorative = true},
                 { texture = "levels/tutorial/side_plane3", position = {0, 0, -6}, decorative = true},
-                { texture = "levels/tutorial/side_plane4", position = {0, 0, -8}, decorative = true},
+                { texture = "levels/sky/side_plane4", position = {0, 0, -8}, decorative = true},
             },
         },
         obstacle1 = {
@@ -101,13 +113,11 @@ return {
 
     planes = {
         { distance = 1, togglePlayerMovement = false, togglePlayerSpeedUp = false, togglePlayerScore = false, },
-        { name = "cloud", distance = 50 },
-        { name = "cloud", distance = 50, rotation = 180 },
-        { name = "cloud", distance = 100, rotation = 90, showParachutePrompt = true },
+        { distance = 200, showParachutePrompt = true },
         { distance = 120, showText = { label = "lbl_intro_parachute_missing", duration = 5 }, emit = { name = "stopMusicEvent" } },
         { name = "ground", distance = 170 },
         { switchSidePlanes = true , distance = 10 },
         { distance = 20, showText = { label = "lbl_intro_cave", duration = 5 } },
-        { emit = { name = "playMusicEvent", args = {"forest_theme1"} }, distance = 60 },
+        { emit = { name = "playMusicEvent", args = {"forest_theme1"} }, distance = 60, togglePlayerMovement = true },
     },
 }

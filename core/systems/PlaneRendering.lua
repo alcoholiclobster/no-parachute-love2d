@@ -107,18 +107,23 @@ local function render(e, camera)
 
     local size = e.size.value * scale
     if e.sidePlane and e.texture then
-        local r, g, b = e.sidePlane.borderColor[1], e.sidePlane.borderColor[2], e.sidePlane.borderColor[3]
-        planeShader:send("bgcolor", {r, g, b, 1})
+        local r, g, b, a = e.sidePlane.borderColor[1], e.sidePlane.borderColor[2], e.sidePlane.borderColor[3], e.sidePlane.borderColor[4]
+        planeShader:send("bgcolor", {r, g, b, a})
 
         local border = 1.5
         if depth < 0.1 then
             border = border + (1 - depth / 0.1)
         end
+        border = border * a
         planeShader:send("border", border)
         size = size * (1 + border)
 
         if not clearColor then
-            clearColor = {r, g, b}
+            if a > 0 then
+                clearColor = {r, g, b}
+            else
+                clearColor = {camera.camera.fogColor[1], camera.camera.fogColor[2], camera.camera.fogColor[3]}
+            end
         end
 
         if not isFogPlaneRendered then

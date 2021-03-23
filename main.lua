@@ -11,9 +11,9 @@ local languageUtils = require("utils.language")
 local Steam = require("luasteam")
 local storage = require("utils.storage")
 
-GLOBAL_DEBUG_ENABLED = true
+GLOBAL_DEBUG_ENABLED = false
 GLOBAL_HUD_DISABLED = false
-GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = true
+GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = false
 
 local isInitialized = false
 
