@@ -55,7 +55,7 @@ return {
         },
         {
             textures = {
-                "levels/sky/side_plane1",
+                "levels/sky/side_plane2",
             },
         },
     },
