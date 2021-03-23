@@ -50,7 +50,7 @@ function GameInit:init()
 
     -- Spawn player
     local playerSpawnRequest = Concord.entity(world)
-        :give("characterSpawnRequest", "player", true)
+        :give("characterSpawnRequest", GLOBAL_HIDE_PLAYER and "player_transparent" or "player", true)
 
     local distance = 0
     for _, p in ipairs(levelConfig.planes) do

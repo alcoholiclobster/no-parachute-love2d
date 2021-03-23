@@ -14,6 +14,7 @@ local storage = require("utils.storage")
 GLOBAL_DEBUG_ENABLED = false
 GLOBAL_HUD_DISABLED = false
 GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = false
+GLOBAL_HIDE_PLAYER = false
 
 local isInitialized = false
 
