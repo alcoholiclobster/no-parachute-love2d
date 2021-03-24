@@ -8,9 +8,8 @@ function EndingCutscene:initialize(uiScreen)
     BaseCutscene.initialize(self, uiScreen)
     self.planeSound = assets.sound("plane.wav")
     self.planeSound:setLooping(true)
-    self.planeSound:play()
     self.planeSound:setVolume(0.4)
-    self:changeScene("ending.Scene1")
+    self:changeScene("ending.Scene0")
 end
 
 function EndingCutscene:onHide()
