@@ -1,6 +1,7 @@
 local class = require("lib.middleclass")
 local BaseCutscene = require("ui.cutscenes.BaseCutscene")
 local assets = require("core.assets")
+local widgets = require("ui.widgets")
 
 local EndingCutscene = class("EndingCutscene", BaseCutscene)
 

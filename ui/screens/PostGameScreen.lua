@@ -37,12 +37,12 @@ function PostGameScreen:onHide()
 end
 
 function PostGameScreen:handleCutsceneFinish()
-    self.screenManager:transition("MainMenuScreen")
+    self.screenManager:transition("CreditsScreen")
 end
 
 function PostGameScreen:handleKeyPress(key, ...)
     if self.cutscene then
-        if key == "escape" then
+        if key == "return" then
             self.screenManager:transition("MainMenuScreen")
         end
     end

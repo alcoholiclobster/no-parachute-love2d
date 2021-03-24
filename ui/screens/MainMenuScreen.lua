@@ -15,9 +15,8 @@ function MainMenuScreen:initialize()
 
     self.buttons = {
         { label = "main_menu_btn_play_story", handler = "buttonHandlerPlayStory" },
-        { label = "main_menu_btn_play_daily_challenge" },
-        { label = "main_menu_btn_play_endless_mode" },
         { label = "btn_settings", handler = "buttonHandlerSettings" },
+        { label = "main_menu_btn_credits", handler = "buttonHandlerCredits"},
         {},
         { label = "btn_exit_game", handler = "buttonHandlerExit" },
     }
@@ -79,6 +78,10 @@ function MainMenuScreen:buttonHandlerSettings()
     if not self.settingsOverlay then
         self.settingsOverlay = SettingsOverlay:new()
     end
+end
+
+function MainMenuScreen:buttonHandlerCredits()
+    self.screenManager:transition("CreditsScreen")
 end
 
 function MainMenuScreen:handleWindowResize(...)

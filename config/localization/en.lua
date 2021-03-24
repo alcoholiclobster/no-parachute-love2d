@@ -2,6 +2,7 @@ return {
     main_menu_btn_play_story = "PLAY STORY",
     main_menu_btn_play_daily_challenge = "PLAY DAILY CHALLENGE",
     main_menu_btn_play_endless_mode = "PLAY ENDLESS MODE",
+    main_menu_btn_credits = "CREDITS",
     btn_settings = "OPTIONS",
     btn_exit_game = "EXIT TO DESKTOP",
     btn_back = "BACK",
@@ -69,4 +70,20 @@ return {
     lbl_tutorial_movement = "Use WASD or arrows to move",
     lbl_tutorial_speedup = "Use SPACE to break walls and fall faster",
     lbl_tutorial_avoid = "Avoid obstacles to survive",
+
+    lbl_credis = [["No Parachute"
+
+A game by Nikita Bredikhin
+twitter.com/iamwherry
+
+
+
+MUSIC/SFX
+"Mega Music Collection Royalty Free Bundle" from fanatical.com
+freesound.org
+
+
+SPECIAL THANKS
+LÖVE framework developers and community
+love2d.org]]
 }

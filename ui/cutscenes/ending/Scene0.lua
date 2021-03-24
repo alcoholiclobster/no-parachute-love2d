@@ -2,6 +2,7 @@ local class = require("lib.middleclass")
 local BaseScene = require("ui.cutscenes.BaseScene")
 local scheduler = require("utils.scheduler")
 local assets = require("core.assets")
+local musicManager = require("utils.musicManager")
 
 local Scene0 = class("Scene0", BaseScene)
 
@@ -17,6 +18,8 @@ function Scene0:onHide()
 end
 
 function Scene0:process()
+    musicManager:play("final_theme")
+
     scheduler.wait(2)
 
     self.cutscene:changeScene("ending.Scene1")

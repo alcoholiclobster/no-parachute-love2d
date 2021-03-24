@@ -40,7 +40,7 @@ end
 
 function PreGameScreen:handleKeyPress(key, ...)
     if self.cutscene then
-        if key == "enter" or key == "space" then
+        if key == "return" or key == "space" then
             self:startGame()
         elseif key == "escape" then
             self.screenManager:transition("MainMenuScreen")

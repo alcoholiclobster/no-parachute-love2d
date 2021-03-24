@@ -156,8 +156,8 @@ return {
         { name = "mine_side_wood2_green", distance = 20, rotation = 0 },
 
         { distance = 50, name = "mine_breakable1", switchSidePlanes = true},
-        { distance = 97, fogColor = {124, 213, 255} },
+        { distance = 97, fogColor = {124, 213, 255}, emit = { name = "stopMusicEvent" } },
         { distance = 150, switchSidePlanes = true},
-        { distance = 100, switchSidePlanes = true },
+        { distance = 100, switchSidePlanes = true, emit = { name = "playMusicEvent", args = {"final_theme"} } },
     }
 }

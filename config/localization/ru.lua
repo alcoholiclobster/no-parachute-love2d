@@ -2,6 +2,7 @@ return {
     main_menu_btn_play_story = "КАМПАНИЯ",
     main_menu_btn_play_daily_challenge = "ЕЖЕДНЕВНОЕ ИСПЫТАНИЕ",
     main_menu_btn_play_endless_mode = "БЕСКОНЕЧНЫЙ РЕЖИМ",
+    main_menu_btn_credits = "ОБ АВТОРАХ",
     btn_settings = "НАСТРОЙКИ",
     btn_exit_game = "ВЫЙТИ ИЗ ИГРЫ",
     btn_back = "НАЗАД",
@@ -69,4 +70,20 @@ return {
     lbl_tutorial_movement = "Используйте WASD или стрелки для движения",
     lbl_tutorial_speedup = "Нажмите пробел, чтобы разрушать стены и ускоряться",
     lbl_tutorial_avoid = "Избегайте препятствий, чтобы выжить",
+
+    lbl_credis = [["No Parachute"
+
+Разработчик: Никита Бредихин
+twitter.com/iamwherry
+
+
+
+МУЗЫКА/ЗВУКИ
+"Mega Music Collection Royalty Free Bundle" от fanatical.com
+freesound.org
+
+
+СПЕЦИАЛЬНАЯ БЛАГОДАРНОСТЬ
+Разработчикам и коммьюнити фрейморка LÖVE
+love2d.org]]
 }

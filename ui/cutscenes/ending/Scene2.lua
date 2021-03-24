@@ -48,7 +48,7 @@ function Scene2:process()
     scheduler.wait(0.3)
     self.doorSound:play()
 
-    scheduler.wait(5)
+    scheduler.wait(3)
     self.cutscene:stop()
 end
 
@@ -76,7 +76,7 @@ function Scene2:update(deltaTime)
     self.characterX = self.characterX + self.characterSpeedX * deltaTime
     self.characterY = self.characterY + self.characterSpeedY * deltaTime
 
-    if self.characterY < 35 then
+    if self.characterY < 37 then
         if self.gravity ~= 0 then
             self.hitSound:play()
         end
