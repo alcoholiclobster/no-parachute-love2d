@@ -10,7 +10,9 @@ local PlaneRendering = Concord.system({
 })
 
 local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-local canvas = love.graphics.newCanvas()
+local renderScale = 0.25
+local canvas = love.graphics.newCanvas(screenWidth * renderScale, screenHeight * renderScale)
+canvas:setFilter("nearest", "nearest")
 local depthPrecision = 4
 local minZ = -100
 local maxZ = 0
@@ -94,7 +96,7 @@ local function render(e, camera)
             end
         end
     end
-    local x, y, scale = renderingUtils.project(position, camera.position.value, camera.camera.fov)
+    local x, y, scale = renderingUtils.project(position, camera.position.value, camera.camera.fov, renderScale)
     if not x then
         return
     end
@@ -199,7 +201,7 @@ function PlaneRendering:draw()
         love.graphics.clear(fogColor[1], fogColor[2], fogColor[3], 1)
     end
     love.graphics.setShader(planeShader)
-    love.graphics.translate(screenWidth/2, screenHeight/2)
+    love.graphics.translate(canvas:getWidth()/2, canvas:getHeight()/2)
     love.graphics.rotate(camera.rotation.value)
     isFogPlaneRendered = false
 
@@ -232,13 +234,13 @@ function PlaneRendering:draw()
     if settings.get("motion_blur") then
         love.graphics.setShader(blurShader)
     end
-    love.graphics.draw(canvas)
+    love.graphics.draw(canvas, 0, 0, 0, 1/renderScale)
     love.graphics.setShader()
 end
 
 function PlaneRendering:resize(w, h)
     blurShader:send("aspect_ratio", w / h)
-    canvas = love.graphics.newCanvas()
+    canvas = love.graphics.newCanvas(w * renderScale, h * renderScale)
 end
 
 return PlaneRendering
