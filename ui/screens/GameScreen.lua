@@ -47,6 +47,7 @@ end
 
 function GameScreen:onHide()
     self.gameManager:destroy()
+    love.mouse.setVisible(true)
 end
 
 function GameScreen:setSpeedEffectAmount(amount)
@@ -276,6 +277,10 @@ function GameScreen:showDeathScreen()
 end
 
 function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, isNewBestTime)
+    if self.levelConfig.finishCutscene then
+        self.screenManager:transition("PostGameScreen", self.levelName)
+        return
+    end
     self:setState("finished")
     self.timePassed = timePassed or 0
 

@@ -1,6 +1,8 @@
 return {
     name = "Test level",
 
+    finishCutscene = "EndingCutscene",
+
     fallSpeed = 25,
     fogColor = {0, 5, 10},
     fogDistance = 70,
@@ -32,8 +34,5 @@ return {
 
     planes = {
         { distance = 1 },
-        { distance = 150, showText = { label = "Use WASD or arrows to move", duration = 30 }, togglePlayerMovement = false },
-        { distance = 150, hideText = true, togglePlayerMovement = true, togglePlayerSpeedUp = false },
-        { distance = 1000 },
     },
 }

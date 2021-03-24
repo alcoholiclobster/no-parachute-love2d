@@ -10,6 +10,8 @@ return {
     playerRotationSpeed = -0.3,
     playerRotationChangeSpeed = 0.012,
 
+    finishCutscene = "EndingCutscene",
+
     sidePlanesCount = 80,
     sidePlanesRandomBrightness = false,
     sidePlanesBrightness = 0.99,

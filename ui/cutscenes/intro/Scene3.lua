@@ -42,7 +42,7 @@ function Scene3:process()
     self.doorSound:play()
 
     scheduler.wait(2.5)
-    self.cutscene:startGame()
+    self.cutscene:stop()
 end
 
 function Scene3:update(deltaTime)

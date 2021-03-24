@@ -64,8 +64,11 @@ function BaseCutscene:changeScene(sceneName)
     self.scene.height = self.sceneHeight
 end
 
-function BaseCutscene:startGame()
-    self.screen:startGame()
+function BaseCutscene:stop()
+    self:onFinish()
+end
+
+function BaseCutscene:onFinish()
 end
 
 return BaseCutscene
