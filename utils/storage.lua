@@ -1,11 +1,9 @@
 local bitser = require("lib.bitser")
 
 local storage = {}
-
+local keyHandlers = {}
 local saveFileName = "user_progress.bin"
-
 local isKeyHashingEnabled = true
-
 local saveData = false
 
 local function deserialize(str)
@@ -26,6 +24,14 @@ local function save()
     love.filesystem.write(saveFileName, serialize(saveData))
 end
 
+function storage.addKeyHandler(key, handler)
+    if not keyHandlers[key] then
+        keyHandlers[key] = {}
+    end
+
+    table.insert(keyHandlers[key], handler)
+end
+
 function storage.set(key, value)
     if type(key) ~= "string" then
         error("key must be string")
@@ -34,11 +40,19 @@ function storage.set(key, value)
         print("WARNING: Failed to update game save data. Save data needs to be loaded first.")
         return
     end
+    local origKey = key
     if isKeyHashingEnabled then
         key = love.data.hash("md5", key)
     end
+    local oldValue = saveData[key]
     saveData[key] = value
     save()
+
+    if keyHandlers[origKey] then
+        for _, handler in ipairs(keyHandlers[origKey]) do
+            handler(value, oldValue)
+        end
+    end
 end
 
 function storage.get(key, defaultValue)

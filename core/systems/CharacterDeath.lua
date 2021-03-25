@@ -35,6 +35,7 @@ function CharacterDeath:update(deltaTime)
         if e.controlledByPlayer then
             local levelName = self:getWorld().gameManager.ui.levelName
             storage.setLevelData(levelName, "deaths", storage.getLevelData(levelName, "deaths", 0) + 1)
+            storage.set("total_deaths", storage.get("total_deaths", 0) + 1)
             self:getWorld().gameManager:triggerUI("showDeathScreen")
         end
     end

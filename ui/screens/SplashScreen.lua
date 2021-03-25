@@ -10,6 +10,7 @@ local ignoredKeys = {
     ["capslock"] = true,
     ["rshift"] = true,
     ["lshift"] = true,
+    ["tab"] = true,
     ["rctrl"] = true,
     ["lctrl"] = true,
     ["ralt"] = true,

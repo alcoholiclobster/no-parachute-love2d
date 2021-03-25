@@ -52,6 +52,7 @@ function LimbDetach:update(deltaTime)
         if e.attachToEntity.value.controlledByPlayer then
             local levelName = self:getWorld().gameManager.ui.levelName
             storage.setLevelData(levelName, "limbs_lost", storage.getLevelData(levelName, "limbs_lost", 0) + 1)
+            storage.set("total_limbs_lost", storage.get("total_limbs_lost", 0) + 1)
         end
     end
 end

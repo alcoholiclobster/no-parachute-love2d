@@ -1,11 +1,14 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local storage = require("utils.storage")
+local achievements = require "utils.achievements"
+local rating = require("utils.rating")
 
 local LevelFinish = Concord.system({
     charactersPool = {"character", "position", "controlledByPlayer", "velocity", "moveDirection", "levelProgress", "score"},
     cameraPool = {"camera"},
     gameStatePool = {"gameState"},
+    limbsPool = {"limb", "attachToEntity"},
 })
 
 function LevelFinish:update(deltaTime)
@@ -36,6 +39,23 @@ function LevelFinish:update(deltaTime)
             if bestTime == 0 or timePassed < bestTime then
                 isNewBestTime = true
                 storage.setLevelData(levelName, "best_time", timePassed)
+            end
+
+            local aliveLimbsCount = 0
+            for _, limb in ipairs(self.limbsPool) do
+                if limb.alive then
+                    aliveLimbsCount = aliveLimbsCount + 1
+                end
+            end
+
+            if aliveLimbsCount == 0 then
+                achievements.set("complete_without_limbs")
+            end
+
+            -- Check total rating achievement
+            local rating, totalRating = rating.calculateTotalRating()
+            if rating >= totalRating then
+                achievements.set("collect_all_stars")
             end
 
             self:getWorld().gameManager:triggerUI("showFinishedScreen", self.gameStatePool[1].gameState.timePassed, newScore, newScore > savedHighscore, isNewBestTime)

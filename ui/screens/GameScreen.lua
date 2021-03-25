@@ -9,6 +9,7 @@ local SpeedEffect = require("ui.effects.SpeedEffect")
 local mathUtils = require("utils.math")
 local lz = require("utils.language").localize
 local SettingsOverlay = require("ui.SettingsOverlay")
+local rating = require("utils.rating")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -221,19 +222,7 @@ function GameScreen:draw()
         local starHeight = labelHeight
 
         -- Calculate stars count
-        local rating = 0
-        if self.levelConfig.highscores then
-            for i, value in ipairs(self.levelConfig.highscores) do
-                if value > self.playerScore then
-                    break
-                else
-                    rating = i
-                end
-            end
-            rating = rating + 1
-        elseif self.playerScore > 0 then
-            rating = 3
-        end
+        local rating = rating.calculateLevelRating(self.levelConfig, self.playerScore)
 
         for i = 1, 3 do
             widgets.star(starX, labelY, starHeight, i <= rating, true)

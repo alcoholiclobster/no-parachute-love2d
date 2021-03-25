@@ -10,6 +10,7 @@ local settings = require("utils.settings")
 local languageUtils = require("utils.language")
 local Steam = require("luasteam")
 local storage = require("utils.storage")
+local achievements = require("utils.achievements")
 
 GLOBAL_DEBUG_ENABLED = false
 GLOBAL_HUD_DISABLED = false
@@ -26,6 +27,8 @@ local steamUpdateInterval = 0.1
 local steamLastUpdatedAt = love.timer.getTime()
 
 local screenManager
+
+local t = 0
 
 ---------------------
 -- Local functions --
@@ -60,6 +63,12 @@ local function completeInitialization()
     -- Load game saves
     love.filesystem.createDirectory(steamUserId)
     storage.load(steamUserId.."/user_progress.bin")
+
+    -- Init achievements
+    if success then
+        Steam.userStats.requestCurrentStats()
+    end
+    achievements.init()
 
     screenManager:emit("handleInitializationFinish")
     isInitialized = true
@@ -138,6 +147,7 @@ function love.update(deltaTime)
     if isInitialized and love.timer.getTime() - steamLastUpdatedAt > steamUpdateInterval then
         steamLastUpdatedAt = love.timer.getTime()
         Steam.runCallbacks()
+        achievements.update()
     end
 
     -- Don't update game if it's frozen
@@ -177,6 +187,10 @@ function love.keypressed(key, ...)
         love.window.setFullscreen(not love.window.getFullscreen(), "exclusive")
     elseif key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
         love.event.quit("restart")
+    elseif GLOBAL_DEBUG_ENABLED and key == "k" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
+        Steam.userStats.resetAllStats(true)
+        Steam.userStats.storeStats()
+        print("Achievements reset")
     end
 end
 
@@ -214,6 +228,10 @@ end
 
 function Steam.friends.onGameOverlayActivated(data)
     screenManager:emit("handleWindowFocus", not data.active)
+end
+
+function Steam.userStats.onUserStatsReceived(data)
+    print("Steam achievements loaded")
 end
 
 -----------------------
