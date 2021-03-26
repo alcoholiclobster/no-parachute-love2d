@@ -1,4 +1,5 @@
 return {
-    versionNumber = 2,
-    versionName = "alpha-2",
+    lostLimbScorePenalty = 500,
+    scorePerSecond = 200,
+    additionalSpeedMultiplier = 3,
 }

@@ -1,5 +1,5 @@
 local Concord = require("lib.concord")
-local mathUtils = require("utils.math")
+local gameConfig = require("config.game")
 
 local ScorePoints = Concord.system({
     pool = {"score", "velocity", "controlledByPlayer", "alive"}
@@ -17,11 +17,11 @@ function ScorePoints:update(deltaTime)
     local speed = playerCharacter.velocity.value.z
     local speedMultiplier = 1
     if -speed > fallSpeed then
-        speedMultiplier = 1 + ((-speed) / fallSpeed - 1) * 3
+        speedMultiplier = 1 + ((-speed) / fallSpeed - 1) * gameConfig.additionalSpeedMultiplier
     elseif -speed < fallSpeed then
         speedMultiplier = -speed / fallSpeed
     end
-    local score = 100 * speedMultiplier
+    local score = gameConfig.scorePerSecond * speedMultiplier
 
     playerCharacter.score.value = playerCharacter.score.value + score * deltaTime
 

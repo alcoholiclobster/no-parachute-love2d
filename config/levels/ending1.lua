@@ -3,6 +3,11 @@ return {
     nextLevel = "ending2",
     music = "ending_theme",
 
+    highscores = {
+        4400,
+        5600,
+    },
+
     fallSpeed = 55,
     fogColor = {25, 10, 0},
     fogDistance = 90,
@@ -180,14 +185,14 @@ return {
         },
         fan_part1 = {
             planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 6, },
+                { texture = "levels/vents/fan", rotationSpeed = 6, rotation = -30},
                 { texture = "levels/vents/fan_holder", position = {0, 0, -0.5} },
             },
         },
 
         fan_part2 = {
             planes = {
-                { texture = "levels/vents/fan", rotationSpeed = 6, },
+                { texture = "levels/vents/fan", rotationSpeed = 6, rotation = -30},
             },
         },
     },
@@ -234,15 +239,7 @@ return {
         { distance = 45, name = "vents_middle_door", switchSidePlanes = true, },
 
         { distance = 40, name = "vents_middle_small_hole" },
-        { distance = 30, name = "fan_part1" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
-        { distance = 4, name = "fan_part2" },
+        { distance = 40, name = "fan_part1" },
         { distance = 4, name = "fan_part2" },
         { distance = 4, name = "fan_part2" },
         { distance = 4, name = "fan_part2" },

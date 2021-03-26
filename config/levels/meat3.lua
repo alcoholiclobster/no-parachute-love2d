@@ -3,6 +3,11 @@ return {
     nextLevel = "ending1",
     music = "meat_theme",
 
+    highscores = {
+        6200,
+        7900,
+    },
+
     fallSpeed = 52,
     fogColor = {25, 10, 0},
     fogDistance = 60,

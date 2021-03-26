@@ -13,6 +13,8 @@ local rating = require("utils.rating")
 
 local GameScreen = class("GameScreen", Screen)
 
+local playedCutscenes = {}
+
 function GameScreen:initialize(levelName)
     assert(type(levelName) == "string", "Level not specified")
     self.levelConfig = require("config.levels."..levelName)
@@ -243,6 +245,10 @@ function GameScreen:draw()
             self.screenManager:transition("GameScreen", self.levelConfig.nextLevel)
         end
         buttonY = buttonY + buttonHeight * 1.5
+        if widgets.button(lz("btn_game_restart_level"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") or (love.keyboard.isDown('r') and not self.settingsOverlay) then
+            self:restartLevel()
+        end
+        buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
             self.screenManager:transition("LevelSelectionScreen")
         end
@@ -266,7 +272,8 @@ function GameScreen:showDeathScreen()
 end
 
 function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, isNewBestTime)
-    if self.levelConfig.finishCutscene then
+    if self.levelConfig.finishCutscene and not playedCutscenes[self.levelConfig.finishCutscene] then
+        playedCutscenes[self.levelConfig.finishCutscene] = true
         self.screenManager:transition("PostGameScreen", self.levelName)
         return
     end

@@ -4,6 +4,11 @@ return {
     music = "meat_theme",
     ambient = "worm",
 
+    highscores = {
+        3950,
+        5700,
+    },
+
     fallSpeed = 50,
     fogColor = {25, 10, 0},
     fogDistance = 90,

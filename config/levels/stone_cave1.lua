@@ -3,6 +3,11 @@ return {
     nextLevel = "stone_cave2",
     music = "stone_cave",
 
+    highscores = {
+        4250,
+        7000,
+    },
+
     fallSpeed = 35,
     fogColor = {25, 10, 10},
     fogDistance = 55,

@@ -3,6 +3,11 @@ return {
     nextLevel = "old_mine3",
     music = "mine_theme1",
 
+    highscores = {
+        4900,
+        8000,
+    },
+
     fallSpeed = 35,
     fogColor = {0, 0, 0},
     fogDistance = 60,

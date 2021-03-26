@@ -3,6 +3,11 @@ return {
     nextLevel = nil,
     music = "ending_theme",
 
+    highscores = {
+        4000,
+        5100,
+    },
+
     fallSpeed = 57,
     fogColor = {0, 0, 0},
     fogDistance = 90,

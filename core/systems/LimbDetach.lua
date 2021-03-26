@@ -2,6 +2,7 @@ local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local storage = require("utils.storage")
 local settings = require("utils.settings")
+local gameConfig = require("config.game")
 
 local LimbDetach = Concord.system({
     pool = {"attachToEntity", "deathEvent", "alive", "limb"}
@@ -51,6 +52,11 @@ function LimbDetach:update(deltaTime)
         -- Decrease character acceleration
         if e.attachToEntity.value.acceleration then
             e.attachToEntity.value.acceleration.value = e.attachToEntity.value.acceleration.value * 0.75
+        end
+
+        -- Score penalty
+        if e.attachToEntity.value.score then
+            e.attachToEntity.value.score.value = math.max(0, e.attachToEntity.value.score.value - gameConfig.lostLimbScorePenalty)
         end
 
         -- Counter

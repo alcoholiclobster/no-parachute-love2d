@@ -6,8 +6,8 @@ return {
     ambient = "forest",
 
     highscores = {
-        2147,
-        2728,
+        3750,
+        6700,
     },
 
     fallSpeed = 30,

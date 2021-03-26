@@ -29,10 +29,12 @@ return {
     },
 
     planeTypes = {
-
+        obstacle_half_plane = {
+            planes = { { texture = "levels/deep_forest/obstacle_plane6", }},
+        },
     },
 
     planes = {
-        { distance = 200 },
+        { distance = 100, name = "obstacle_half_plane" },
     },
 }

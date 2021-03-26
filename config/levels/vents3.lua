@@ -3,6 +3,11 @@ return {
     nextLevel = "meat1",
     music = "vents_theme",
 
+    highscores = {
+        5250,
+        7000,
+    },
+
     fallSpeed = 45,
     fogColor = {15, 0, 0},
     fogDistance = 70,
@@ -225,7 +230,7 @@ return {
         -- Fans
         { distance = 36, name = "fan", rotation = 0, },
         { distance = 20, name = "middle_wide_hole", rotation = 0, },
-        { distance = 20, name = "fan2", rotation = 90, },
+        { distance = 20, name = "fan", rotation = 90, },
         { distance = 60, },
         { distance = 30, name = "middle_wide_door", rotation = 0, },
         { distance = 7, name = "middle_wide_door", rotation = 90, },

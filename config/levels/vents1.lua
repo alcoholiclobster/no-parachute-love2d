@@ -3,6 +3,11 @@ return {
     nextLevel = "vents2",
     music = "vents_theme",
 
+    highscores = {
+        5300,
+        7700,
+    },
+
     fallSpeed = 40,
     fogColor = {15, 0, 0},
     fogDistance = 70,

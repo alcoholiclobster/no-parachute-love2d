@@ -5,6 +5,11 @@ return {
     music = "forest_theme2",
     ambient = "forest",
 
+    highscores = {
+        5300,
+        9000,
+    },
+
     fallSpeed = 30,
     fogColor = {0, 5, 10},
     fogDistance = 60,
