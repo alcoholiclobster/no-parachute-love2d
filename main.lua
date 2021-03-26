@@ -12,6 +12,8 @@ local Steam = require("luasteam")
 local storage = require("utils.storage")
 local achievements = require("utils.achievements")
 
+local disableCommandLineArgs = true
+
 GLOBAL_DEBUG_ENABLED = false
 GLOBAL_HUD_DISABLED = false
 GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = false
@@ -85,13 +87,15 @@ function love.load(arg)
     -- Parse command-line arguments
     local parser = argparse()
     parser:flag("--debug", "Run game in debug mode")
-    parser:option("--level", "Force load game level")
-    parser:option("--screen", "Force display screen")
-    parser:option("--fps", "Simulate frame rate")
-    parser:flag("--maximize", "Force maximize window")
-    parser:flag("--nohud", "Disable HUD")
-    parser:flag("--nosteam", "Allow running without Steam")
-    parser:flag("--nosplash", "Skip splash screen")
+    if not disableCommandLineArgs then
+        parser:option("--level", "Force load game level")
+        parser:option("--screen", "Force display screen")
+        parser:option("--fps", "Simulate frame rate")
+        parser:flag("--maximize", "Force maximize window")
+        parser:flag("--nohud", "Disable HUD")
+        parser:flag("--nosteam", "Allow running without Steam")
+        parser:flag("--nosplash", "Skip splash screen")
+    end
     local args = parser:parse(arg)
 
     GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug

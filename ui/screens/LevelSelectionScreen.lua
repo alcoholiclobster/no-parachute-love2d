@@ -102,7 +102,7 @@ function LevelSelectionScreen:initialize(selectLevelName)
             end
         end
     end
-    if lastSelectedLevelIndex then
+    if lastSelectedLevelIndex and lastSelectedLevelIndex <= lastCompletedLevelIndex then
         self.selectedLevelIndex = lastSelectedLevelIndex
     end
 
