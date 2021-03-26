@@ -147,7 +147,7 @@ function LevelSelectionScreen:draw()
     end
 
     -- Selected level panel
-    local panelWidth = screenWidth * 0.25
+    local panelWidth = math.max(screenWidth * 0.25, screenHeight * 0.5)
     local panelHeight = screenHeight * 0.6
     local panelX = screenWidth * 0.08
     local panelY = (screenHeight - panelHeight) / 2

@@ -142,8 +142,8 @@ function GameScreen:draw()
 
         -- Buttons
         love.graphics.setColor(1, 1, 1, math.min(1, stateTime * 2))
-        local buttonX, buttonY = screenWidth * 0.4, screenHeight * 0.65
-        local buttonWidth, buttonHeight = screenWidth * 0.2, screenHeight * 0.04
+        local buttonX, buttonY = screenWidth * 0.35, screenHeight * 0.65
+        local buttonWidth, buttonHeight = screenWidth * 0.3, screenHeight * 0.04
         if widgets.button(lz("btn_game_restart_level"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") or love.keyboard.isDown('r') then
             self:restartLevel()
         end
@@ -166,8 +166,8 @@ function GameScreen:draw()
         widgets.label(lz("lbl_game_paused_continue"), labelX, labelY, labelWidth, labelHeight, false, "center")
 
         -- Buttons
-        local buttonX, buttonY = screenWidth * 0.4, labelY + labelHeight + screenHeight * 0.1
-        local buttonWidth, buttonHeight = screenWidth * 0.2, screenHeight * 0.04
+        local buttonX, buttonY = screenWidth * 0.35, labelY + labelHeight + screenHeight * 0.1
+        local buttonWidth, buttonHeight = screenWidth * 0.3, screenHeight * 0.04
         if widgets.button(lz("btn_game_paused_continue"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center")then
             self:setState("game")
         end
@@ -237,8 +237,8 @@ function GameScreen:draw()
 
         -- Buttons
         love.graphics.setColor(1, 1, 1, 1)
-        local buttonX, buttonY = screenWidth * 0.3, screenHeight * 0.65
-        local buttonWidth, buttonHeight = screenWidth * 0.4, screenHeight * 0.04
+        local buttonX, buttonY = screenWidth * 0.35, screenHeight * 0.65
+        local buttonWidth, buttonHeight = screenWidth * 0.3, screenHeight * 0.04
         if widgets.button(lz("btn_game_next_level"), buttonX, buttonY, buttonWidth, buttonHeight, not self.levelConfig.nextLevel, "center") or (love.keyboard.isDown('f') and self.levelConfig.nextLevel) then
             self.screenManager:transition("GameScreen", self.levelConfig.nextLevel)
         end

@@ -20,8 +20,8 @@ function SettingsOverlay:draw()
     love.graphics.setColor(0, 0, 0, 0.9)
     love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
-    local overlayWidth = screenWidth * 0.5
-    local overlayHeight = overlayWidth * 0.7
+    local overlayWidth = screenWidth * 0.55
+    local overlayHeight = overlayWidth * 0.75
     local overlayX = (screenWidth - overlayWidth) / 2
     local overlayY = (screenHeight - overlayHeight) / 2
 
@@ -41,10 +41,10 @@ function SettingsOverlay:draw()
         for _, valueItem in ipairs(item.values) do
             if settings.get(item.name) == valueItem.value then
                 love.graphics.setColor(130/255, 90/255, 150/255, 0.5)
-                love.graphics.rectangle("fill", x+5, y, w-10, h)
+                love.graphics.rectangle("fill", x+5, y, w-screenWidth*0.004, h)
             end
             love.graphics.setColor(0.5, 0.5, 0.5)
-            love.graphics.rectangle("line", x+5, y, w-10, h)
+            love.graphics.rectangle("line", x+5, y, w-screenWidth*0.004, h)
             if widgets.button(lz(valueItem.name), x, y + h * 0.15, w, h * 0.6, false, "center") then
                 settings.set(item.name, valueItem.value)
             end
