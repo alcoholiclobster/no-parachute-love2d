@@ -56,17 +56,17 @@ return {
         },
     },
     {
-        name = "speed_lines",
-        values = {
-            { name = "lbl_settings_disabled", value = false },
-            { name = "lbl_settings_enabled", value = true, default = true}
-        },
-    },
-    {
         name = "character_transparency",
         values = {
             { name = "lbl_settings_disabled", value = false, default = true },
             { name = "lbl_settings_enabled", value = true }
+        },
+    },
+    {
+        name = "speed_lines",
+        values = {
+            { name = "lbl_settings_disabled", value = false },
+            { name = "lbl_settings_enabled", value = true, default = true}
         },
     },
 

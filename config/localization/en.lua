@@ -59,6 +59,8 @@ return {
     lbl_settings_difficulty_peaceful = "Peaceful",
     lbl_settings_difficulty_easy = "Easy",
     lbl_settings_difficulty_normal = "Normal",
+    lbl_settings_character_transparency = "Transparent character",
+    lbl_settings_apply_warning = "Some settings apply only after level restart",
 
     lbl_game_finish_new_highscore = "New highscore!",
     lbl_game_finish_new_best_time = "New best time!",

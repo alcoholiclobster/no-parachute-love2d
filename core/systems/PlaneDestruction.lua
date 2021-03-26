@@ -16,12 +16,11 @@ local partsDirections = {
 
 function PlaneDestruction:update(deltaTime)
     local joystick = joystickManager.get()
-    local fallSpeed = self:getWorld().gameState.fallSpeed
 
     for _, e in ipairs(self.pool) do
         local entity = e.obstacleHitByEntityEvent.value
         if entity.velocity and entity.character then
-            local velocityIncrease = mathUtils.clamp01(entity.velocity.value.z / -fallSpeed - 1)
+            local velocityIncrease = mathUtils.clamp01(entity.velocity.value.z / entity.character.fallSpeed - 1)
             if love.keyboard.isDown("space") or (joystick and joystick:isDown(1)) or velocityIncrease > 0.05 then
                 e.obstacleHitByEntityEvent.value:remove("obstacleCollisionEvent")
                 love.graphics.setCanvas(e.texture.value)

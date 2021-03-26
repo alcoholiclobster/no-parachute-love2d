@@ -16,7 +16,8 @@ function CharacterFallSpeed:update(deltaTime)
     end
 
     for _, e in ipairs(self.pool) do
-        e.velocity.value.z = e.velocity.value.z + (targetVelocity - e.velocity.value.z) * deltaTime * 5
+        e.character.fallSpeed = targetVelocity
+        e.velocity.value.z = e.velocity.value.z + (e.character.fallSpeed - e.velocity.value.z) * deltaTime * 5
     end
 end
 

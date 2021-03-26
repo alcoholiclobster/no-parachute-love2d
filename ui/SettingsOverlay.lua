@@ -62,6 +62,12 @@ function SettingsOverlay:draw()
         end
     end
 
+    love.graphics.setColor(1, 1, 1, 0.5)
+    if widgets.label(lz("lbl_settings_apply_warning"), overlayX, overlayY + overlayHeight * 0.94, overlayWidth, screenHeight * 0.02, false, "center") then
+        self.isClosed = true
+    end
+
+    love.graphics.setColor(1, 1, 1)
     if widgets.button(lz("btn_settings_close"), overlayX, overlayY + overlayHeight, overlayWidth, screenHeight * 0.05, false, "center") then
         self.isClosed = true
     end

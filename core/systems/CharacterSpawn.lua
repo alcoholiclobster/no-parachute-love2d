@@ -2,13 +2,13 @@ local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local assets = require("core.assets")
 local charactersConfig = require("config.characters")
+local settings = require("utils.settings")
 
 local CharacterSpawn = Concord.system({
     pool = {"characterSpawnRequest"}
 })
 
 function CharacterSpawn:update(deltaTime)
-    local gameManager = self:getWorld().gameManager
     for _, e in ipairs(self.pool) do
         e:destroy()
 
@@ -23,6 +23,7 @@ function CharacterSpawn:update(deltaTime)
         end
 
         -- Character body
+        local isCharacterTransparent = not not settings.get("character_transparency") and not self:getWorld().isMenuBackground
         local characterBody = Concord.entity(self:getWorld())
             :give("name", "character")
             :give("position", maf.vec3(0, 0, -8) + spawnPosition)
@@ -41,9 +42,13 @@ function CharacterSpawn:update(deltaTime)
             :give("alive")
             :give("score", 0)
 
+        if isCharacterTransparent then
+            characterBody:give("color", 1, 1, 1, 0.5)
+        end
+
         -- Limbs
         for limbName, limbConf in pairs(conf.limbs) do
-            Concord.entity(self:getWorld())
+            local limb = Concord.entity(self:getWorld())
                 :give("name", limbName)
                 :give("position")
                 :give("size", maf.vec3(limbConf.size.x, limbConf.size.y))
@@ -65,6 +70,10 @@ function CharacterSpawn:update(deltaTime)
                 :give("alive")
                 :give("limb")
                 :give("health", 20)
+
+            if isCharacterTransparent  then
+                limb:give("color", 1, 1, 1, 0.4)
+            end
         end
 
         if e.characterSpawnRequest.controlledByPlayer then

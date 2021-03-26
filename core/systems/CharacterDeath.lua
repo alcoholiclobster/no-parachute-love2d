@@ -4,7 +4,8 @@ local mathUtils = require("utils.math")
 local storage = require("utils.storage")
 
 local CharacterDeath = Concord.system({
-    pool = {"character", "velocity", "alive", "obstacleCollisionEvent"}
+    pool = {"character", "velocity", "alive", "obstacleCollisionEvent"},
+    limbsPool = {"limb", "alive", "attachToEntity"}
 })
 
 function CharacterDeath:update(deltaTime)
@@ -14,6 +15,10 @@ function CharacterDeath:update(deltaTime)
         end
 
         e:remove("alive")
+        e:give("color", 1, 1, 1, 1)
+        for _, limb in ipairs(self.limbsPool) do
+            limb:give("color", 1, 1, 1, 1)
+        end
 
         local obstacle = e.obstacleCollisionEvent.value
 

@@ -200,3 +200,7 @@ end)
 Concord.component("damageCooldown", function(component, time)
     component.time = time or 1
 end)
+
+Concord.component("character", function (component)
+    component.fallSpeed = 10
+end)

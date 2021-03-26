@@ -59,6 +59,8 @@ return {
     lbl_settings_difficulty_peaceful = "Сверхлёгкий",
     lbl_settings_difficulty_easy = "Лёгкий",
     lbl_settings_difficulty_normal = "Нормальный",
+    lbl_settings_character_transparency = "Прозрачный персонаж",
+    lbl_settings_apply_warning = "Некоторые настройки применятся только после перезапуска уровня",
 
     lbl_game_finish_new_highscore = "Новый рекорд!",
     lbl_game_finish_new_best_time = "Новый рекорд!",
