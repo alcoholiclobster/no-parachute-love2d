@@ -1,5 +1,5 @@
 return {
-    name = "Meat 3",
+    name = "Flesh Hell 2",
     nextLevel = "ending1",
     music = "meat_theme",
 

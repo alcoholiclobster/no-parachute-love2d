@@ -1,5 +1,5 @@
 return {
-    name = "Getting Out 1",
+    name = "Deep Way Up 1",
     nextLevel = "ending2",
     music = "ending_theme",
 

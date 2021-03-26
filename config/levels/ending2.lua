@@ -1,5 +1,5 @@
 return {
-    name = "Getting Out 2",
+    name = "Deep Way Up 2",
     nextLevel = nil,
     music = "ending_theme",
 

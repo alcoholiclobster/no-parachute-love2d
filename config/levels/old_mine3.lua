@@ -125,12 +125,12 @@ return {
         { name = "middle_bridge", distance = 20, rotation = 180 },
         { name = "middle_bridge", distance = 20, rotation = 270 },
 
-        {name = "minecart", distance = 20, rotation = 180 },
-        {name = "minecart", distance = 20, rotation = 270 },
-        {name = "side_wood1", distance = 10, rotation = 0 },
-        {name = "middle_bridge", distance = 10, rotation = 0 },
-        {name = "minecart", distance = 20, rotation = 90 },
-        {name = "middle_hole", distance = 15, rotation = 0 },
+        { name = "minecart", distance = 20, rotation = 180 },
+        { name = "minecart", distance = 20, rotation = 270 },
+        { name = "side_wood1", distance = 10, rotation = 0 },
+        { name = "middle_bridge", distance = 10, rotation = 0 },
+        { name = "minecart", distance = 20, rotation = 90 },
+        { name = "middle_hole", distance = 15, rotation = 0 },
 
         { distance = 20, tunnelShape = { direction = {8, 8}, rotationSpeed = 0.75 } },
         { distance = 40, tunnelShape = { direction = {11, 0} }, name = "side_wood2" },
@@ -140,20 +140,15 @@ return {
 
         {name = "middle_hole", distance = 5, rotation = 90 },
 
-        {name = "minecart", distance = 20, rotation = 270 },
+        { name = "minecart", distance = 20, rotation = 270 },
 
-        {name = "middle_hole", distance = 15, rotation = 0 },
-        {name = "middle_hole", distance = 5, rotation = 90 },
+        { name = "middle_hole", distance = 20, rotation = 0 },
+        { name = "middle_hole", distance = 5, rotation = 90 },
 
-        {name = "minecart", distance = 20, rotation = 0 },
-
-        {name = "middle_hole", distance = 15, rotation = 0 },
-        {name = "middle_hole", distance = 5, rotation = 90 },
-
-        {name = "minecart", distance = 15, rotation = 180 },
-        {name = "corner_hole", distance = 25, rotation = 0 },
-        {name = "middle_bridge", distance = 15, rotation = 0 },
-        {name = "corner_hole", distance = 20, rotation = 90 },
+        { name = "minecart", distance = 15, rotation = 180 },
+        { name = "corner_hole", distance = 25, rotation = 0 },
+        { name = "middle_bridge", distance = 15, rotation = 0 },
+        { name = "corner_hole", distance = 20, rotation = 90 },
 
         { name = "side_wood1", distance = 30, rotation = 0 },
 
