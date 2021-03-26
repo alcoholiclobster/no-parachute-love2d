@@ -1,4 +1,12 @@
 return {
+    {
+        name = "difficulty",
+        values = {
+            { name = "lbl_settings_difficulty_peaceful", value = "peaceful" },
+            { name = "lbl_settings_difficulty_easy", value = "easy" },
+            { name = "lbl_settings_difficulty_normal", value = "normal", default = true },
+        },
+    },
     -- Language
     {
         name = "language",
@@ -52,6 +60,13 @@ return {
         values = {
             { name = "lbl_settings_disabled", value = false },
             { name = "lbl_settings_enabled", value = true, default = true}
+        },
+    },
+    {
+        name = "character_transparency",
+        values = {
+            { name = "lbl_settings_disabled", value = false, default = true },
+            { name = "lbl_settings_enabled", value = true }
         },
     },
 

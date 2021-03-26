@@ -55,6 +55,10 @@ return {
     lbl_settings_borderless = "Без рамки",
     lbl_settings_fullscreen = "Полный экран",
     lbl_settings_vsync = "Верт. синхронизация",
+    lbl_settings_difficulty = "Уровень сложности",
+    lbl_settings_difficulty_peaceful = "Сверхлёгкий",
+    lbl_settings_difficulty_easy = "Лёгкий",
+    lbl_settings_difficulty_normal = "Нормальный",
 
     lbl_game_finish_new_highscore = "Новый рекорд!",
     lbl_game_finish_new_best_time = "Новый рекорд!",

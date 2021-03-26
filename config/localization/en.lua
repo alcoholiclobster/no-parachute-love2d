@@ -55,6 +55,10 @@ return {
     lbl_settings_borderless = "Borderless",
     lbl_settings_fullscreen = "Fullscreen",
     lbl_settings_vsync = "VSync",
+    lbl_settings_difficulty = "Game difficulty",
+    lbl_settings_difficulty_peaceful = "Peaceful",
+    lbl_settings_difficulty_easy = "Easy",
+    lbl_settings_difficulty_normal = "Normal",
 
     lbl_game_finish_new_highscore = "New highscore!",
     lbl_game_finish_new_best_time = "New best time!",

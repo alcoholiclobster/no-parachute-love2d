@@ -1,7 +1,7 @@
 return {
     name = "Test level",
 
-    finishCutscene = "EndingCutscene",
+    -- finishCutscene = "EndingCutscene",
 
     fallSpeed = 25,
     fogColor = {0, 5, 10},
@@ -33,6 +33,6 @@ return {
     },
 
     planes = {
-        { distance = 1 },
+        { distance = 200 },
     },
 }

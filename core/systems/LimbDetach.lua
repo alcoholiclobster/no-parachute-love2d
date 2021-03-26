@@ -1,12 +1,17 @@
 local Concord = require("lib.concord")
 local maf = require("lib.maf")
 local storage = require("utils.storage")
+local settings = require("utils.settings")
 
 local LimbDetach = Concord.system({
     pool = {"attachToEntity", "deathEvent", "alive", "limb"}
 })
 
 function LimbDetach:update(deltaTime)
+    if settings.get("difficulty") == "peaceful" then
+        return
+    end
+
     for _, e in ipairs(self.pool) do
         -- Spawn detached limb
         local velocityX = (math.random() - 0.5) * 4

@@ -14,17 +14,19 @@ function ScorePoints:update(deltaTime)
         return
     end
 
-    local velocity = playerCharacter.velocity.value
-    local velocityIncrease = mathUtils.clamp01(velocity.z / -fallSpeed - 1)
-    local scoreIncrease = 100 * (1 + velocityIncrease * 2) * deltaTime
-    if velocity.z > -fallSpeed + 1 then
-        scoreIncrease = 5000 * (velocity.z / -fallSpeed - 1) * deltaTime
+    local speed = playerCharacter.velocity.value.z
+    local speedMultiplier = 1
+    if -speed > fallSpeed then
+        speedMultiplier = 1 + ((-speed) / fallSpeed - 1) * 3
+    elseif -speed < fallSpeed then
+        speedMultiplier = -speed / fallSpeed
     end
+    local score = 100 * speedMultiplier
 
-    playerCharacter.score.value = playerCharacter.score.value + scoreIncrease
+    playerCharacter.score.value = playerCharacter.score.value + score * deltaTime
 
     gameManager:triggerUI("updateScore", playerCharacter.score.value)
-    gameManager:triggerUI("updateSpeed", playerCharacter.velocity.value.z + math.sin(love.timer.getTime() * 0.4) * 0.1)
+    gameManager:triggerUI("updateSpeed", speed + math.sin(love.timer.getTime() * 0.4) * 0.1)
 end
 
 return ScorePoints
