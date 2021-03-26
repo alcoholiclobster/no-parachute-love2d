@@ -7,8 +7,8 @@ return {
     fogColor = {25, 10, 10},
     fogDistance = 55,
     playerRotationMode = "sinusoid",
-    playerRotationSpeed = 0.2,
-    playerRotationChangeSpeed = 0.02,
+    playerRotationSpeed = 0.25,
+    playerRotationChangeSpeed = 0.015,
 
     sidePlanesCount = 65,
     sidePlanesRandomBrightness = true,

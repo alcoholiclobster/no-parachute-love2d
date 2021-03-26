@@ -7,7 +7,7 @@ return {
     fogColor = {15, 0, 0},
     fogDistance = 70,
     playerRotationMode = "constant",
-    playerRotationSpeed = -15,
+    playerRotationSpeed = -12,
 
     sidePlanesCount = 60,
     sidePlanes = {

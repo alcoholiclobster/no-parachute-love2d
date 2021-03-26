@@ -313,10 +313,12 @@ end
 
 function GameScreen:update(deltaTime)
     if self.state ~= "pause" then
-        if love.keyboard.isDown("z") then
-            deltaTime = deltaTime * 0.25
-        elseif love.keyboard.isDown("x") then
-            deltaTime = deltaTime * 4
+        if GLOBAL_DEBUG_ENABLED then
+            if love.keyboard.isDown("z") then
+                deltaTime = deltaTime * 0.25
+            elseif love.keyboard.isDown("x") then
+                deltaTime = deltaTime * 4
+            end
         end
 
         self.gameManager:update(deltaTime)

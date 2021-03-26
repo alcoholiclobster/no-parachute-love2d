@@ -6,8 +6,9 @@ return {
     fallSpeed = 40,
     fogColor = {15, 0, 0},
     fogDistance = 70,
-    playerRotationMode = "constant",
-    playerRotationSpeed = -15,
+    playerRotationMode = "sinusoid",
+    playerRotationSpeed = 0.25,
+    playerRotationChangeSpeed = 0.015,
 
     sidePlanesCount = 60,
     sidePlanes = {
