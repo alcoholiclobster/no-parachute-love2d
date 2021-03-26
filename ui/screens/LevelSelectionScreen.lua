@@ -10,6 +10,7 @@ local musicManager = require("utils.musicManager")
 local LevelSelectionScreen = class("LevelSelectionScreen", Screen)
 
 local debugUnlockedLevels = {}
+local lastSelectedLevelIndex = nil
 
 function LevelSelectionScreen:initialize(selectLevelName)
     musicManager:play("menu_theme")
@@ -100,6 +101,9 @@ function LevelSelectionScreen:initialize(selectLevelName)
                 self.selectedLevelIndex = index
             end
         end
+    end
+    if lastSelectedLevelIndex then
+        self.selectedLevelIndex = lastSelectedLevelIndex
     end
 
     self.backgroundFade = 0
@@ -266,6 +270,7 @@ function LevelSelectionScreen:selectNextLevel()
         return
     end
     self.selectedLevelIndex = self.selectedLevelIndex + 1
+    lastSelectedLevelIndex = self.selectedLevelIndex
     if self.levelsList[self.selectedLevelIndex].isUnlocked then
         self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
     end
@@ -276,6 +281,7 @@ function LevelSelectionScreen:selectPreviousLevel()
         return
     end
     self.selectedLevelIndex = self.selectedLevelIndex - 1
+    lastSelectedLevelIndex = self.selectedLevelIndex
     if self.levelsList[self.selectedLevelIndex].isUnlocked then
         self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
     end
