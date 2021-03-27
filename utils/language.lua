@@ -24,11 +24,15 @@ return {
     end,
 
     getSystemLanguage = function ()
-        local osLocale = string.sub(os.getenv("LANG"), 0, 5)
         local languageName = "en"
 
-        if osLocale == "ru_RU" then
-            return "ru"
+        local langString = os.getenv("LANG")
+        if langString then
+            local osLocale = string.sub(langString, 0, 5)
+
+            if osLocale == "ru_RU" then
+                return "ru"
+            end
         end
 
         return languageName
