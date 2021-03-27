@@ -11,6 +11,7 @@ function SettingsOverlay:initialize()
     self.spaceItems = {
         language = true,
         music_volume = true,
+        speed_lines = true,
     }
 end
 
