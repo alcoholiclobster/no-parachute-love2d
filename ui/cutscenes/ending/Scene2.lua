@@ -93,14 +93,14 @@ function Scene2:draw()
 
     local planeX = math.cos(love.timer.getTime() * 1.5) * 3 + 3 + self.planeOffset
     local planeY = math.sin(love.timer.getTime() * 4) * 2
-    love.graphics.draw(assets.texture("cutscenes/intro/Scene3_door_bg"), planeX, planeY)
+    love.graphics.draw(assets.texture("cutscenes/intro/scene3_door_bg"), planeX, planeY)
 
     if self.isDoorMoving then
         love.graphics.draw(assets.texture("cutscenes/ending/character"), self.characterX, self.characterY, self.characterRotation, 1, 1, 8, 8)
     end
 
-    love.graphics.draw(assets.texture("cutscenes/intro/Scene3_door"), planeX + 16 - 16 * self.doorProgress, planeY)
-    love.graphics.draw(assets.texture("cutscenes/intro/Scene3_plane"), planeX, planeY)
+    love.graphics.draw(assets.texture("cutscenes/intro/scene3_door"), planeX + 16 - 16 * self.doorProgress, planeY)
+    love.graphics.draw(assets.texture("cutscenes/intro/scene3_plane"), planeX, planeY)
 
     if not self.isDoorMoving then
         self.characterRotation = math.floor(self.time * 3 * 5) / 5

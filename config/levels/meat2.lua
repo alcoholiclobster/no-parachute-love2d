@@ -6,7 +6,7 @@ return {
 
     highscores = {
         3950,
-        5700,
+        5350,
     },
 
     fallSpeed = 50,
