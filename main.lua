@@ -33,14 +33,20 @@ local function completeInitialization()
 
     -- Initialize Steam
     local success = pcall(function ()
+        if GameEnv.disableSteam then
+            error("Steam disabled")
+        end
+
         local steamInitStartAt = love.timer.getTime()
-        if not GameEnv.disableSteam and Steam.init() then
+        if Steam.init() then
             steamUserId = tostring(Steam.user.getSteamID())
         elseif not GameEnv.disableSteam then
             error("Steam must be running")
         end
+
         print("Steam initalization completed in", math.floor((love.timer.getTime() - steamInitStartAt) * 1000) / 1000, "s")
     end)
+
     if not success then
         if GameEnv.disableSteam then
             print("Failed to connect to steam")
@@ -57,8 +63,8 @@ local function completeInitialization()
     -- Init achievements
     if success then
         Steam.userStats.requestCurrentStats()
+        achievements.init()
     end
-    achievements.init()
 
     screenManager:emit("handleInitializationFinish")
     isInitialized = true

@@ -1,6 +1,8 @@
 local Steam = require("luasteam")
 local storage = require("utils.storage")
 
+local isInitialized = false
+
 local achievements = {}
 local syncInterval = 90
 local lastSyncAt = 0
@@ -9,6 +11,10 @@ local isSyncRequired = false
 local cache = {}
 
 function achievements.set(name)
+    if not isInitialized then
+        return
+    end
+
     if cache[name] then
         return
     end
@@ -26,6 +32,10 @@ function achievements.set(name)
 end
 
 function achievements.update()
+    if not isInitialized then
+        return
+    end
+
     if isSyncRequired and love.timer.getTime() - lastSyncAt > syncInterval then
         lastSyncAt = love.timer.getTime()
         isSyncRequired = false
@@ -35,6 +45,11 @@ function achievements.update()
 end
 
 function achievements.init()
+    if isInitialized then
+        return
+    end
+    isInitialized = true
+
     storage.addKeyHandler("level_tutorial_is_completed", function (value)
         if value then
             achievements.set("complete_tutorial")
