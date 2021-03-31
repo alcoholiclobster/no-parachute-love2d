@@ -1,3 +1,5 @@
+GameEnv = {}
+
 local settings = require("utils.settings")
 
 local function fixDpiAwareness()
@@ -26,7 +28,16 @@ function love.conf(t)
     love.filesystem.setIdentity("no_parachute")
     t.identity = "no_parachute"
 
+    -- Load env.lua
+    local env = love.filesystem.load("env.lua")
+    if env then
+        GameEnv = env()
+        GameEnv.loaded = true
+    end
+
     settings.conf("game_settings.json")
+
+    t.console = not not GameEnv.enableConsole
 
     t.window.title = "No Parachute"
     t.window.usedpiscale = false

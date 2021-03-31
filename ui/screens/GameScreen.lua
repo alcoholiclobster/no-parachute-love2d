@@ -77,7 +77,7 @@ end
 function GameScreen:draw()
     self.gameManager:draw()
 
-    if GLOBAL_HUD_DISABLED then
+    if GameEnv.disableHud then
         return
     end
 
@@ -320,7 +320,7 @@ end
 
 function GameScreen:update(deltaTime)
     if self.state ~= "pause" then
-        if GLOBAL_DEBUG_ENABLED then
+        if GameEnv.enableDebugMode then
             if love.keyboard.isDown("z") then
                 deltaTime = deltaTime * 0.25
             elseif love.keyboard.isDown("x") then

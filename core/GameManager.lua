@@ -64,7 +64,7 @@ function GameManager:initialize(levelConfig, uiScreen, isMenuBackground)
     self.world:addSystem(require("core.systems.Decals"))
     self.world:addSystem(require("core.systems.PlaneRendering"))
     self.world:addSystem(require("core.systems.ScorePoints"))
-    if GLOBAL_DEBUG_ENABLED then
+    if GameEnv.enableDebugMode then
         self.world:addSystem(require("core.systems.debug.DebugSpeed"))
         self.world:addSystem(require("core.systems.debug.DebugCollisions"))
         self.world:addSystem(require("core.systems.debug.DebugInfo"))

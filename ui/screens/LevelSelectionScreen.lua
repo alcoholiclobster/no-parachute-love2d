@@ -28,7 +28,7 @@ function LevelSelectionScreen:initialize(selectLevelName)
         local config = require("config.levels."..levelName)
         self.levelConfigs[levelName] = config
         local isCompleted = storage.getLevelData(levelName, "is_completed", false)
-        local isUnlocked = levelIndex - 1 <= lastCompletedLevelIndex or debugUnlockedLevels[levelName] or GLOBAL_DEBUG_UNLOCK_ALL_LEVELS
+        local isUnlocked = levelIndex - 1 <= lastCompletedLevelIndex or debugUnlockedLevels[levelName] or GameEnv.unlockLevels
         local label = lz(config.name)
         -- Hide locked level name
         if not isUnlocked then

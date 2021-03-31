@@ -12,25 +12,13 @@ local Steam = require("luasteam")
 local storage = require("utils.storage")
 local achievements = require("utils.achievements")
 
-local disableCommandLineArgs = true
-
-GLOBAL_DEBUG_ENABLED = false
-GLOBAL_HUD_DISABLED = false
-GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = false
-GLOBAL_HIDE_PLAYER = false
-
 local isInitialized = false
 
-local debugSimulateFrameRate = 30
 local debugUpdateDelay = 0
-local debugNoSteam = false
-
 local steamUpdateInterval = 0.1
 local steamLastUpdatedAt = love.timer.getTime()
 
 local screenManager
-
-local t = 0
 
 ---------------------
 -- Local functions --
@@ -46,15 +34,15 @@ local function completeInitialization()
     -- Initialize Steam
     local success = pcall(function ()
         local steamInitStartAt = love.timer.getTime()
-        if not debugNoSteam and Steam.init() then
+        if not GameEnv.disableSteam and Steam.init() then
             steamUserId = tostring(Steam.user.getSteamID())
-        elseif not debugNoSteam then
+        elseif not GameEnv.disableSteam then
             error("Steam must be running")
         end
         print("Steam initalization completed in", math.floor((love.timer.getTime() - steamInitStartAt) * 1000) / 1000, "s")
     end)
     if not success then
-        if debugNoSteam then
+        if GameEnv.disableSteam then
             print("Failed to connect to steam")
         else
             love.window.showMessageBox("Steam initialization error", "Failed to connect to Steam. Make sure that Steam client is running.", "error")
@@ -86,23 +74,13 @@ function love.load(arg)
 
     -- Parse command-line arguments
     local parser = argparse()
-    parser:flag("--debug", "Run game in debug mode")
-    if not disableCommandLineArgs then
+    if GameEnv.enableCommandLineArgs then
         parser:option("--level", "Force load game level")
         parser:option("--screen", "Force display screen")
-        parser:option("--fps", "Simulate frame rate")
         parser:flag("--maximize", "Force maximize window")
-        parser:flag("--nohud", "Disable HUD")
-        parser:flag("--nosteam", "Allow running without Steam")
         parser:flag("--nosplash", "Skip splash screen")
     end
     local args = parser:parse(arg)
-
-    GLOBAL_DEBUG_ENABLED = GLOBAL_DEBUG_ENABLED or args.debug
-    GLOBAL_DEBUG_UNLOCK_ALL_LEVELS = GLOBAL_DEBUG_UNLOCK_ALL_LEVELS and GLOBAL_DEBUG_ENABLED
-    GLOBAL_HUD_DISABLED = not not args.nohud
-    debugNoSteam = debugNoSteam or not not args.nosteam
-    debugSimulateFrameRate = tonumber(args.fps) or 0
 
     -- Lua initialization
     math.randomseed(os.time())
@@ -164,9 +142,9 @@ function love.update(deltaTime)
     screenManager:update(deltaTime)
     musicManager:update(deltaTime)
 
-    if GLOBAL_DEBUG_ENABLED and debugSimulateFrameRate > 0 then
+    if GameEnv.simulateFrameRate then
         debugUpdateDelay = debugUpdateDelay + deltaTime
-        if debugUpdateDelay > (1000 / debugSimulateFrameRate) / 1000 then
+        if debugUpdateDelay > 1 / GameEnv.simulateFrameRate then
             screenManager:emit("update", debugUpdateDelay)
             debugUpdateDelay = 0
         end
@@ -185,13 +163,13 @@ end
 function love.keypressed(key, ...)
     screenManager:emit("handleKeyPress", key, ...)
 
-    if key == "`" and GLOBAL_DEBUG_ENABLED then
+    if key == "`" and GameEnv.enableGameConsole then
         console.toggle()
     elseif key == "f11" then
         love.window.setFullscreen(not love.window.getFullscreen(), "exclusive")
     elseif key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
         love.event.quit("restart")
-    elseif GLOBAL_DEBUG_ENABLED and key == "k" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
+    elseif GameEnv.enableDebugMode and key == "k" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
         Steam.userStats.resetAllStats(true)
         Steam.userStats.storeStats()
         print("Achievements reset")
