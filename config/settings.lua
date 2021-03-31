@@ -111,7 +111,7 @@ return {
         },
     },
     {
-        name = "decals",
+        name = "blood",
         values = {
             { name = "lbl_settings_disabled", value = false },
             { name = "lbl_settings_enabled", value = true, default = true}

@@ -9,7 +9,7 @@ local Decals = Concord.system({
 function Decals:update()
     for _, e in ipairs(self.pool) do
         local entity = e.deferredDecal.entity
-        if settings.get("decals") and entity.texture.value:type() == "Canvas" then
+        if settings.get("blood") and entity.texture.value:type() == "Canvas" then
             local texture = assets.texture("effects/"..e.deferredDecal.name)
             local textureWidth = texture:getWidth()
             local textureHeight = texture:getHeight()

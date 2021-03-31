@@ -1,5 +1,5 @@
 local Concord = require("lib.concord")
-local settings = require "utils.settings"
+local settings = require("utils.settings")
 
 local BloodCameraCollision = Concord.system({
     pool = {"position", "bloodSpawnEvent"},
@@ -8,7 +8,7 @@ local BloodCameraCollision = Concord.system({
 
 function BloodCameraCollision:update(deltaTime)
     local camera = self.cameraPool[1]
-    if not camera then
+    if not camera or not settings.get("blood") then
         return
     end
 

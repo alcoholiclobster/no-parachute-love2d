@@ -173,7 +173,7 @@ function love.keypressed(key, ...)
         console.toggle()
     elseif key == "f11" then
         love.window.setFullscreen(not love.window.getFullscreen(), "exclusive")
-    elseif key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
+    elseif GameEnv.enableDebugMode and key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
         love.event.quit("restart")
     elseif GameEnv.enableDebugMode and key == "k" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
         Steam.userStats.resetAllStats(true)

@@ -40,7 +40,7 @@ return {
     lbl_settings_world_quality = "Качество мира",
     lbl_settings_particles_quality = "Качество частиц",
     lbl_settings_motion_blur = "Размытие в движении",
-    lbl_settings_decals = "Декали",
+    lbl_settings_blood = "Эффекты крови",
     btn_settings_close = "Сохранить и закрыть",
     lbl_settings_disabled = "Выкл.",
     lbl_settings_enabled = "Вкл.",

@@ -40,7 +40,7 @@ return {
     lbl_settings_world_quality = "World quality",
     lbl_settings_particles_quality = "Particles quality",
     lbl_settings_motion_blur = "Motion blur",
-    lbl_settings_decals = "Decals",
+    lbl_settings_blood = "Blood effects",
     btn_settings_close = "Save and close",
     lbl_settings_disabled = "Disabled",
     lbl_settings_enabled = "Enabled",
