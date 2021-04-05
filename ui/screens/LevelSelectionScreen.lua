@@ -233,7 +233,7 @@ function LevelSelectionScreen:draw()
         startGameButtonLabel = lz("btn_level_selection_level_locked")
     end
     if widgets.button(startGameButtonLabel, btnX, btnY, btnWidth, btnHeight, not itemData.isUnlocked, "center") then
-        self.screenManager:transition("PreGameScreen", itemData.name)
+        self:startLevel()
     end
 
     -- Arrows
@@ -263,6 +263,13 @@ function LevelSelectionScreen:draw()
     widgets.star(screenWidth * 0.905, screenHeight * 0.05+starSize*0.17, starSize, true, true)
     love.graphics.setColor(1, 1, 1)
     widgets.label(self.earnedRating.."/"..self.totalRating, screenWidth * 0.7, screenHeight * 0.05, screenWidth * 0.2, starSize, false, "right")
+end
+
+function LevelSelectionScreen:startLevel()
+    local selectedLevel = self.levelsList[self.selectedLevelIndex]
+    if selectedLevel then
+        self.screenManager:transition("PreGameScreen", selectedLevel.name)
+    end
 end
 
 function LevelSelectionScreen:selectNextLevel()
@@ -307,6 +314,12 @@ end
 function LevelSelectionScreen:handleKeyPress(key)
     if key == "escape" or key == "backspace" then
         self.screenManager:transition("MainMenuScreen")
+    elseif key == "right" or key == "d" then
+        self:selectNextLevel()
+    elseif key == "left" or key == "a" then
+        self:selectPreviousLevel()
+    elseif key == "return" then
+        self:startLevel()
     end
 end
 
