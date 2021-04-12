@@ -15,6 +15,7 @@ function MainMenuScreen:initialize()
 
     self.buttons = {
         { label = "main_menu_btn_play_story", handler = "buttonHandlerPlayStory" },
+        { label = "main_menu_btn_play_endless_mode", handler = "buttonHandlerPlayEndlessMode" },
         { label = "btn_settings", handler = "buttonHandlerSettings" },
         { label = "main_menu_btn_credits", handler = "buttonHandlerCredits"},
         {},
@@ -68,6 +69,10 @@ end
 
 function MainMenuScreen:buttonHandlerPlayStory()
     self.screenManager:transition("LevelSelectionScreen")
+end
+
+function MainMenuScreen:buttonHandlerPlayEndlessMode()
+    self.screenManager:transition("GameScreen", "endless")
 end
 
 function MainMenuScreen:buttonHandlerExit()

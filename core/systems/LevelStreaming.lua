@@ -104,7 +104,7 @@ function LevelStreaming:update(deltaTime)
     local world = self:getWorld()
     local levelConfig = world.gameManager.levelConfig
 
-    if levelStreamer.lastIndex < #levelConfig.planes then
+    if levelStreamer.lastIndex < #levelConfig.planes or levelConfig.endless then
         local nextObstacle = levelConfig.planes[levelStreamer.lastIndex + 1]
         local nextObstacleZ = levelStreamer.lastZ - nextObstacle.distance
         if camera.position.value.z - 100 < nextObstacleZ then

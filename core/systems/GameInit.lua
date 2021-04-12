@@ -10,11 +10,18 @@ function GameInit:init()
     local world = self:getWorld()
     local levelConfig = world.gameManager.levelConfig
 
-    levelConfig.totalHeight = 0
-    for i, p in ipairs(levelConfig.planes) do
-        levelConfig.totalHeight = levelConfig.totalHeight + p.distance
+    if levelConfig.randomize then
+        levelConfig.randomize()
     end
-    levelConfig.totalHeight = levelConfig.totalHeight + 70
+
+    if not levelConfig.totalHeight then
+        levelConfig.totalHeight = 0
+
+        for i, p in ipairs(levelConfig.planes) do
+            levelConfig.totalHeight = levelConfig.totalHeight + p.distance
+        end
+        levelConfig.totalHeight = levelConfig.totalHeight + 70
+    end
 
     -- Side walls planes
     local count = math.max(30, math.floor(levelConfig.sidePlanesCount * settings.get("world_quality")))
