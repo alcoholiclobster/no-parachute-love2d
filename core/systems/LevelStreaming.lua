@@ -161,9 +161,9 @@ function LevelStreaming:update(deltaTime)
             end
 
             if nextObstacle.fallSpeed then
-                if player then
-                    player.velocity.value.z = math.max(player.velocity.value.z, -nextObstacle.fallSpeed)
-                end
+                -- if player then
+                --     player.velocity.value.z = math.max(player.velocity.value.z, -nextObstacle.fallSpeed)
+                -- end
                 self:getWorld().gameState.fallSpeed = nextObstacle.fallSpeed
             end
 

@@ -33,7 +33,11 @@ local levelConfig = {
         obstacle5 = {
             difficulty = 0.82,
             planes = {{ texture = "levels/endless/obstacles/5" }}
-        }
+        },
+        obstacle6 = {
+            difficulty = 0.36,
+            planes = {{ texture = "levels/endless/obstacles/6" }}
+        },
     },
 }
 
@@ -108,11 +112,16 @@ local sidePlanesVariants = {
     },
 }
 
-local function generateSidePlanes()
+local function generateSidePlanes(seed, index)
+    math.randomseed(seed + index)
     return sidePlanesVariants[math.random(1, #sidePlanesVariants)]
 end
 
-local function randomize()
+local function randomize(seed)
+    if not seed then
+        seed = 5--os.time()
+    end
+
     local baseFallSpeed = 30
 
     levelConfig.fallSpeed = baseFallSpeed
@@ -120,7 +129,7 @@ local function randomize()
     levelConfig.endless = true
 
     levelConfig.sidePlanes = {
-        generateSidePlanes()
+        generateSidePlanes(seed, 1)
     }
 
     -- Random planes
@@ -140,6 +149,8 @@ local function randomize()
         if planesCache[index] then
             return planesCache[index]
         end
+
+        math.randomseed(seed + index)
 
         local plane = { distance = 100 }
         if true then
