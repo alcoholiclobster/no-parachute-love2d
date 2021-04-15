@@ -19,12 +19,20 @@ local levelConfig = {
             planes = {{ texture = "levels/endless/obstacles/1" }}
         },
         obstacle2 = {
-            difficulty = 0.75,
+            difficulty = 0.72,
             planes = {{ texture = "levels/endless/obstacles/2" }}
         },
         obstacle3 = {
             difficulty = 0.5,
             planes = {{ texture = "levels/endless/obstacles/3" }}
+        },
+        obstacle4 = {
+            difficulty = 0.85,
+            planes = {{ texture = "levels/endless/obstacles/4" }}
+        },
+        obstacle5 = {
+            difficulty = 0.82,
+            planes = {{ texture = "levels/endless/obstacles/5" }}
         }
     },
 }
@@ -105,7 +113,9 @@ local function generateSidePlanes()
 end
 
 local function randomize()
-    levelConfig.fallSpeed = 90
+    local baseFallSpeed = 30
+
+    levelConfig.fallSpeed = baseFallSpeed
     levelConfig.totalHeight = math.huge
     levelConfig.endless = true
 
@@ -119,29 +129,45 @@ local function randomize()
         table.insert(planeTypeNames, name)
     end
     levelConfig.planes = {}
+
+    -- Generation
+    local lastIndex = 0
+    local totalDistance = 0
     local planesCache = {
         { distance = 100 }
     }
+    local function getPlane(index)
+        if planesCache[index] then
+            return planesCache[index]
+        end
+
+        local plane = { distance = 100 }
+        if true then
+            local distanceMultiplier = 1 + mathUtils.clamp01(1 - totalDistance * 0.000001) * 0.5
+            print(distanceMultiplier)
+            plane.name = planeTypeNames[math.random(1, #planeTypeNames)]
+            local difficulty = levelConfig.planeTypes[plane.name].difficulty
+            plane.distance = mathUtils.lerp(levelConfig.fallSpeed * 0.3, levelConfig.fallSpeed * 1, difficulty) * distanceMultiplier
+            plane.rotation = math.random(0, 3) * 90
+
+            plane.fallSpeed = baseFallSpeed + totalDistance * 0.00001
+        end
+
+        -- if math.random() > 0.1 then
+        --     plane.switchSidePlanes = true
+        --     table.insert(levelConfig.sidePlanes, generateSidePlanes())
+        -- end
+
+        planesCache[index] = plane
+
+        return plane
+    end
     local mt = {
-        __index  = function (t, index)
-            if planesCache[index] then
-                return planesCache[index]
+        __index  = function (_, index)
+            local plane = getPlane(index)
+            if index > lastIndex then
+                totalDistance = totalDistance + plane.distance
             end
-
-            local plane = { distance = 100 }
-            if true then
-                plane.name = planeTypeNames[math.random(1, #planeTypeNames)]
-                local difficulty = levelConfig.planeTypes[plane.name].difficulty
-                plane.distance = mathUtils.lerp(levelConfig.fallSpeed * 0.3, levelConfig.fallSpeed * 1, difficulty)
-                plane.rotation = math.random(0, 3) * 90
-            end
-
-            -- if math.random() > 0.1 then
-            --     plane.switchSidePlanes = true
-            --     table.insert(levelConfig.sidePlanes, generateSidePlanes())
-            -- end
-
-            planesCache[index] = plane
 
             return plane
         end,
