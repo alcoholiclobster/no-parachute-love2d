@@ -6,9 +6,6 @@ local levelConfig = {
     fogColor = {0, 0, 0},
     fogDistance =  90,
 
-    playerRotationMode = "constant",
-    playerRotationSpeed = -12,
-
     sidePlanesRandomBrightness = true,
     sidePlanesCount = 70,
     sidePlanes = {},
@@ -117,10 +114,28 @@ local function generateSidePlanes(seed, index)
     return sidePlanesVariants[math.random(1, #sidePlanesVariants)]
 end
 
+local function getRandomObstacleName(planeTypeNames, maxDifficulty)
+    if not maxDifficulty then
+        return planeTypeNames[math.random(1, #planeTypeNames)]
+    end
+
+    local matchingItems = {}
+    for _, name in ipairs(planeTypeNames) do
+        local difficulty = levelConfig.planeTypes[name].difficulty
+        if difficulty <= maxDifficulty then
+            table.insert(matchingItems, name)
+        end
+    end
+
+    return matchingItems[math.random(1, #matchingItems)]
+end
+
 local function randomize(seed)
     if not seed then
-        seed = 5--os.time()
+        seed = os.time()
     end
+
+    math.randomseed(seed)
 
     local baseFallSpeed = 30
 
@@ -128,6 +143,8 @@ local function randomize(seed)
     levelConfig.totalHeight = math.huge
     levelConfig.endless = true
 
+    levelConfig.playerRotationMode = "constant"
+    levelConfig.playerRotationSpeed = math.random() > 0.5 and 12 or -12
     levelConfig.sidePlanes = {
         generateSidePlanes(seed, 1)
     }
@@ -143,8 +160,11 @@ local function randomize(seed)
     local lastIndex = 0
     local totalDistance = 0
     local planesCache = {
-        { distance = 100 }
+        { distance = 80 }
     }
+    local currentFallSpeed = levelConfig.fallSpeed
+    local easySpaceIn = 10
+    local maxDifficulty = 0.5
     local function getPlane(index)
         if planesCache[index] then
             return planesCache[index]
@@ -153,15 +173,33 @@ local function randomize(seed)
         math.randomseed(seed + index)
 
         local plane = { distance = 100 }
-        if true then
+
+        if easySpaceIn <= 0 then
+            easySpaceIn = math.random(5, 15)
+            plane.distance = math.random(10, 50) + currentFallSpeed
+
+            if maxDifficulty then
+                maxDifficulty = maxDifficulty + 0.2
+                if maxDifficulty >= 1 then
+                    maxDifficulty = nil
+                end
+            end
+        else
             local distanceMultiplier = 1 + mathUtils.clamp01(1 - totalDistance * 0.000001) * 0.5
-            print(distanceMultiplier)
-            plane.name = planeTypeNames[math.random(1, #planeTypeNames)]
+            plane.name = getRandomObstacleName(planeTypeNames, maxDifficulty)
+            if not plane then
+                print("[ERROR] No plane name")
+                return { distance = 100 }
+            end
             local difficulty = levelConfig.planeTypes[plane.name].difficulty
-            plane.distance = mathUtils.lerp(levelConfig.fallSpeed * 0.3, levelConfig.fallSpeed * 1, difficulty) * distanceMultiplier
+            local distance = levelConfig.fallSpeed * 1.2
+            plane.distance = mathUtils.lerp(distance * 0.3, distance * 1, difficulty) * distanceMultiplier
             plane.rotation = math.random(0, 3) * 90
 
-            plane.fallSpeed = baseFallSpeed + totalDistance * 0.00001
+            currentFallSpeed = baseFallSpeed + totalDistance * 0.00001
+            plane.fallSpeed = currentFallSpeed
+
+            easySpaceIn = easySpaceIn - 1
         end
 
         -- if math.random() > 0.1 then
