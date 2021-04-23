@@ -35,6 +35,18 @@ local levelConfig = {
             difficulty = 0.36,
             planes = {{ texture = "levels/endless/obstacles/6" }}
         },
+        breakable = {
+            excludeFromRandomGeneration = true,
+            difficulty = 1,
+            spaceAfter = 100,
+            planes = {{ texture = "levels/endless/obstacles/breakable", breakable = true} }
+        },
+        obstacle7 = {
+            difficulty = 0.9,
+            planes = {
+                { texture = "levels/endless/obstacles/7", rotationSpeed = 3,}
+            }
+        },
     },
 }
 
@@ -151,8 +163,10 @@ local function randomize(seed)
 
     -- Random planes
     local planeTypeNames = {}
-    for name in pairs(levelConfig.planeTypes) do
-        table.insert(planeTypeNames, name)
+    for name, planeConfig in pairs(levelConfig.planeTypes) do
+        if not planeConfig.excludeFromRandomGeneration then
+            table.insert(planeTypeNames, name)
+        end
     end
     levelConfig.planes = {}
 
@@ -163,8 +177,10 @@ local function randomize(seed)
         { distance = 80 }
     }
     local currentFallSpeed = levelConfig.fallSpeed
+    local breakablePlaneIn = 2
     local easySpaceIn = 10
     local maxDifficulty = 0.5
+    local forceEmptySpace = false
     local function getPlane(index)
         if planesCache[index] then
             return planesCache[index]
@@ -174,9 +190,21 @@ local function randomize(seed)
 
         local plane = { distance = 100 }
 
-        if easySpaceIn <= 0 then
+        if forceEmptySpace and forceEmptySpace > 0 then
+            plane.distance = forceEmptySpace
+            forceEmptySpace = false
+        elseif easySpaceIn <= 0 then
             easySpaceIn = math.random(5, 15)
             plane.distance = math.random(10, 50) + currentFallSpeed
+
+            breakablePlaneIn = breakablePlaneIn - 1
+            if breakablePlaneIn <= 0 then
+                breakablePlaneIn = 3
+                plane.name = "breakable"
+                table.insert(levelConfig.sidePlanes, generateSidePlanes(seed, index))
+                plane.switchSidePlanes = true
+                forceEmptySpace = math.random(20, 60) + currentFallSpeed
+            end
 
             if maxDifficulty then
                 maxDifficulty = maxDifficulty + 0.2
@@ -191,13 +219,17 @@ local function randomize(seed)
                 print("[ERROR] No plane name")
                 return { distance = 100 }
             end
-            local difficulty = levelConfig.planeTypes[plane.name].difficulty
+            local planeConfig = levelConfig.planeTypes[plane.name]
             local distance = levelConfig.fallSpeed * 1.2
-            plane.distance = mathUtils.lerp(distance * 0.3, distance * 1, difficulty) * distanceMultiplier
+            plane.distance = mathUtils.lerp(distance * 0.3, distance * 1, planeConfig.difficulty) * distanceMultiplier
             plane.rotation = math.random(0, 3) * 90
 
             currentFallSpeed = baseFallSpeed + totalDistance * 0.00001
             plane.fallSpeed = currentFallSpeed
+
+            if planeConfig.spaceAfter then
+                forceEmptySpace = planeConfig.spaceAfter
+            end
 
             easySpaceIn = easySpaceIn - 1
         end
