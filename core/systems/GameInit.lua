@@ -10,10 +10,6 @@ function GameInit:init()
     local world = self:getWorld()
     local levelConfig = world.gameManager.levelConfig
 
-    if levelConfig.randomize then
-        levelConfig.randomize()
-    end
-
     if not levelConfig.totalHeight then
         levelConfig.totalHeight = 0
 

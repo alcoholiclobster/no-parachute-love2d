@@ -143,6 +143,7 @@ local function getRandomObstacleName(planeTypeNames, maxDifficulty)
 end
 
 local function randomize(seed)
+    print(seed)
     if not seed then
         seed = os.time()
     end
@@ -257,6 +258,7 @@ local function randomize(seed)
     setmetatable(levelConfig.planes, mt)
 end
 
+randomize()
 levelConfig.randomize = randomize
 
 return levelConfig

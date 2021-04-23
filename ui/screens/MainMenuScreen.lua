@@ -73,6 +73,7 @@ function MainMenuScreen:buttonHandlerPlayStory()
 end
 
 function MainMenuScreen:buttonHandlerPlayEndlessMode()
+    require("config.levels.endless").randomize()
     self.screenManager:transition("GameScreen", "endless")
 end
 

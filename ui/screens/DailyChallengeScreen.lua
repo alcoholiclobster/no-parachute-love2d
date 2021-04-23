@@ -3,91 +3,64 @@ local Screen = require("ui.Screen")
 local widgets = require("ui.widgets")
 local GameManager = require("core.GameManager")
 local lz = require("utils.language").localize
+local Steam = require("luasteam")
 
 local DailyChallengeScreen = class("DailyChallengeScreen", Screen)
 
+local startDay = 18739
+
 function DailyChallengeScreen:initialize()
-    self.levelsList = {}
-    self.levelConfigs = {}
+    local secondsInDay = 60 * 60 * 24
+    local dayNumber = math.floor(os.time() / secondsInDay)
+    local secondsCurrentDay = os.time() - dayNumber * secondsInDay
+    print(math.floor(secondsCurrentDay / (60 * 60)))
 
-    local levelName = "intro"
-    while levelName do
-        local config = require("config.levels."..levelName)
-        self.levelConfigs[levelName] = config
-        table.insert(self.levelsList, {
-            text = config.name,
-            level = levelName,
-        })
-        levelName = config.nextLevel
-    end
+    local seed = dayNumber + 1337
 
-    self.backgroundFade = 0
-    self.backgroundLevelTransitionTime = 0.25
-    self.backgroundLevelName = "meat1" -- TODO: Select last available level
-    self.nextBackgroundLevelName = nil
-    self.gameManager = GameManager:new(self.levelConfigs[self.backgroundLevelName], self, true)
+    local endlessLevel = require("config.levels.endless")
+    endlessLevel.randomize(seed)
+    self.gameManager = GameManager:new(endlessLevel, self, true)
 
-    -- print(os.time())
-    -- Steam.userStats.findOrCreateLeaderboard("dev_lb", "Descending", "Numeric", function (data)
-    --     print("leaderboard ", data.leaderboardFound, data.steamLeaderboard)
+    self.entries = {}
 
-    --     Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "ForceUpdate", math.random(1, 10), "hihi", function (data)
-    --         print("uploaded ", data.success, data.globalRankNew)
-    --     end)
+    Steam.userStats.findOrCreateLeaderboard("daily_"..tostring(seed), "Descending", "Numeric", function (data)
+        Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "ForceUpdate", math.random(1, 10), "hihi", function (data)
+            print("uploaded ", data.success, data.globalRankNew)
+        end)
 
-    --     Steam.userStats.downloadLeaderboardEntries(data.steamLeaderboard, "Global", 1, 10, function (items)
-    --         print("Entries ", #items)
-    --         for _, item in ipairs(items) do
-    --             print(item.globalRank, Steam.friends.getFriendPersonaName(item.steamIDUser), item.score)
-    --         end
-    --     end)
-    -- end)
+        Steam.userStats.downloadLeaderboardEntries(data.steamLeaderboard, "Global", 1, 10, function (items)
+            for _, item in ipairs(items) do
+                table.insert(self.entries, {
+                    rank = item.globalRank,
+                    name = Steam.friends.getFriendPersonaName(item.steamIDUser),
+                    score = item.score,
+                })
+            end
+        end)
+    end)
 end
 
 function DailyChallengeScreen:update(deltaTime)
     self.gameManager:update(deltaTime)
-
-    if self.nextBackgroundLevelName then
-        self.backgroundFade = self.backgroundFade + deltaTime / self.backgroundLevelTransitionTime
-        if self.backgroundFade > 1 then
-            self.backgroundFade = 1
-            self.backgroundLevelName = self.nextBackgroundLevelName
-            self.gameManager:destroy()
-            self.gameManager = GameManager:new(self.levelConfigs[self.backgroundLevelName], self, true)
-            self.nextBackgroundLevelName = nil
-        end
-    else
-        self.backgroundFade = math.max(0, self.backgroundFade - deltaTime / self.backgroundLevelTransitionTime)
-    end
 end
 
 function DailyChallengeScreen:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
     self.gameManager:draw()
-    if self.backgroundFade > 0 then
-        love.graphics.setColor(0, 0, 0, self.backgroundFade)
-        love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
-    end
 
-    local btnX, btnY = screenWidth * 0.08, screenHeight * 0.1
-    local btnWidth, btnHeight = screenWidth * 0.5, screenHeight * 0.03
-    local btnSpace = screenHeight * 0.01
+    local secondsInDay = 60 * 60 * 24
+    local dayNumber = math.floor(os.time() / secondsInDay)
+    local secondsLeft = secondsInDay - (os.time() - dayNumber * secondsInDay)
+    local timeLeft = string.format("%.2d:%.2d:%.2d", secondsLeft/(60*60), secondsLeft/60%60, secondsLeft%60)
+    love.graphics.setColor(1, 1, 1)
+    widgets.label("Day: "..tostring(dayNumber - startDay)..". Time left: "..timeLeft, screenWidth * 0.1, screenHeight * 0.1, screenWidth * 0.8, screenHeight * 0.05, false, "left")
 
-    -- Level selection buttons
-    for i, levelInfo in ipairs(self.levelsList) do
-        local x = btnX
-        if levelInfo.level == self.backgroundLevelName then
-            if levelInfo.level == self.nextBackgroundLevelName then
-                x = x + btnWidth * 0.02 * self.backgroundFade
-            else
-                x = x + btnWidth * 0.02 * (1-self.backgroundFade)
-            end
-        end
-        if widgets.button(i..". "..levelInfo.text, x, btnY, btnWidth, btnHeight) then
-            self:showBackgroundLevel(levelInfo.level)
-        end
-        btnY = btnY + btnHeight + btnSpace
+    local h = screenHeight * 0.04
+    local y = screenHeight * 0.1 + screenHeight * 0.08
+    for i, item in ipairs(self.entries) do
+        widgets.label(item.rank..". "..item.name.." - "..item.score, screenWidth * 0.1, y, screenWidth * 0.8, h, false, "left")
+        y = y + h * 1.5
     end
 
     -- Back to menu screen button
@@ -98,19 +71,6 @@ function DailyChallengeScreen:draw()
     if widgets.button(lz("btn_level_selection_start_game", self.backgroundLevelName), screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
         self.screenManager:transition("GameScreen", self.backgroundLevelName)
     end
-end
-
-function DailyChallengeScreen:showBackgroundLevel(levelName)
-    if self.nextBackgroundLevelName == levelName or self.backgroundLevelName == levelName then
-        return
-    end
-
-    local config = self.levelConfigs[levelName]
-    if not config then
-        return
-    end
-
-    self.nextBackgroundLevelName = levelName
 end
 
 return DailyChallengeScreen
