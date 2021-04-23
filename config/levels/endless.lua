@@ -174,7 +174,7 @@ local function randomize(seed)
     local lastIndex = 0
     local totalDistance = 0
     local planesCache = {
-        { distance = 80 }
+        { distance = 80, tunnelShape = { direction = {0, 0}, rotationSpeed = math.random() * 0.8 - 0.4 } }
     }
     local currentFallSpeed = levelConfig.fallSpeed
     local breakablePlaneIn = 2
@@ -196,6 +196,7 @@ local function randomize(seed)
         elseif easySpaceIn <= 0 then
             easySpaceIn = math.random(5, 15)
             plane.distance = math.random(10, 50) + currentFallSpeed
+            plane.tunnelShape = { direction = {0, 0}, rotationSpeed = math.random() * 0.4 - 0.2 }
 
             breakablePlaneIn = breakablePlaneIn - 1
             if breakablePlaneIn <= 0 then
