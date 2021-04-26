@@ -1,4 +1,4 @@
-local Steam = require("luasteam")
+-- local Steam = require("luasteam")
 local storage = require("utils.storage")
 
 local isInitialized = false
@@ -20,15 +20,15 @@ function achievements.set(name)
     end
     cache[name] = true
 
-    Steam.userStats.setAchievement(name)
+    -- Steam.userStats.setAchievement(name)
 
-    if love.timer.getTime() - lastSyncAt > syncInterval then
-        Steam.userStats.storeStats()
-        lastSyncAt = love.timer.getTime()
-        print("Store Steam stats")
-    else
-        isSyncRequired = true
-    end
+    -- if love.timer.getTime() - lastSyncAt > syncInterval then
+    --     Steam.userStats.storeStats()
+    --     lastSyncAt = love.timer.getTime()
+    --     print("Store Steam stats")
+    -- else
+    --     isSyncRequired = true
+    -- end
 end
 
 function achievements.update()
@@ -39,8 +39,8 @@ function achievements.update()
     if isSyncRequired and love.timer.getTime() - lastSyncAt > syncInterval then
         lastSyncAt = love.timer.getTime()
         isSyncRequired = false
-        Steam.userStats.storeStats()
-        print("Store Steam stats")
+        -- Steam.userStats.storeStats()
+        -- print("Store Steam stats")
     end
 end
 

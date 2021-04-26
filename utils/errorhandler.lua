@@ -38,11 +38,9 @@ local function handler(msg)
 	local function draw()
 		local pos = 70
 		love.graphics.clear(0, 0, 0)
-        love.graphics.setFont(font1)
         love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.printf("No Parachute has crashed!", 70, pos, love.graphics.getWidth(), "left")
         pos = pos + 50
-        love.graphics.setFont(font2)
         love.graphics.setColor(0.8, 0.8, 0.8)
         love.graphics.printf(msg, 70, pos, love.graphics.getWidth(), "left")
 		love.graphics.present()

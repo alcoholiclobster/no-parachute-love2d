@@ -25,34 +25,13 @@ local ignoredKeys = {
 function SplashScreen:initialize()
     self.logoImage = assets.texture("logo")
     self.isInitializationFinished = false
-
-    self.backgroundEffect = love.graphics.newShader([[
-        extern float screenWidth;
-        extern float screenHeight;
-        vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 pixel_coords)
-        {
-            vec4 texel = mix(
-                vec4(137.0/255.0, 70.0/255.0, 103.0/255.0, 1),
-                vec4(130.0/255.0, 90.0/255.0, 150.0/255.0, 1),
-                pixel_coords.x / screenWidth
-            );
-            texel = mix(texel, vec4(71.0/255.0, 60.0/255.0, 111.0/255.0, 1.0), pixel_coords.y / screenHeight);
-            return texel;
-        }
-    ]])
 end
 
 function SplashScreen:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-    -- self.backgroundEffect:send("time", love.timer.getTime())
-    self.backgroundEffect:send("screenWidth", screenWidth)
-    self.backgroundEffect:send("screenHeight", screenHeight)
 
     love.graphics.clear(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
-    love.graphics.setShader(self.backgroundEffect)
-    love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
-    love.graphics.setShader()
 
     local logoScale = math.min(screenWidth * 0.004, screenHeight * 0.004)
     local logoX = screenWidth * 0.5

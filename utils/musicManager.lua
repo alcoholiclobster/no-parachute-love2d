@@ -18,8 +18,8 @@ function MusicManager:initialize()
     self.maxVolume = 1
     self.isSilenced = false
 
-    love.audio.setEffect("silenced1", {type = "compressor"})
-    love.audio.setEffect("silenced2", {type = "reverb"})
+    -- love.audio.setEffect("silenced1", {type = "compressor"})
+    -- love.audio.setEffect("silenced2", {type = "reverb"})
 end
 
 function MusicManager:play(name)
@@ -57,7 +57,7 @@ function MusicManager:_playNextSong()
     if self.nextSong == "__stop" then
         self.currentSong = nil
     else
-        self.source = love.audio.newSource("assets/music/"..self.nextSong..".ogg", "stream")
+        self.source = love.audio.newSource("assets/music/"..self.nextSong..".ogg", "static")
         self.source:setVolume(self.maxVolume)
         self.source:play()
         self.source:setLooping(true)

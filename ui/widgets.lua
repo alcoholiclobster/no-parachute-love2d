@@ -27,7 +27,6 @@ local function isPointWithinRect(x, y, rx, ry, rw, rh)
 end
 
 function widgets.label(text, x, y, width, height, isBold, align)
-    love.graphics.setFont(assets.font(isBold and "Roboto-Bold" or "Roboto-Regular", math.floor(height)))
     drawShadowText(text, x, y + height * 0.1, width, align or "left")
 end
 
@@ -75,7 +74,6 @@ function widgets.button(text, x, y, width, height, isDisabled, align)
             love.graphics.setColor(1, 1, 1, 1)
         end
     end
-    love.graphics.setFont(assets.font("Roboto-Bold", math.floor(height * 0.75)))
     drawShadowText(text, x, y + height * 0.1, width, align or "left")
 
     if isHighlighted and mouseUtils.isMouseJustPressed() then

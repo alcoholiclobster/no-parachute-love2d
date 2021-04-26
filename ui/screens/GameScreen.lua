@@ -92,21 +92,15 @@ function GameScreen:draw()
             local progress = tostring(math.floor(self.levelProgress * 100)).."%"
 
             love.graphics.setColor(1, 1, 1, 0.75)
-            love.graphics.setFont(assets.font("Roboto-Bold", 32))
             love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
-            love.graphics.setFont(assets.font("Roboto-Bold", 14))
             love.graphics.printf(lz("lbl_hud_progress"), 0, screenHeight - 50, screenWidth, "center")
 
             local score = tostring(math.ceil(self.playerScore))
-            love.graphics.setFont(assets.font("Roboto-Bold", 14))
             love.graphics.printf(lz("lbl_hud_score"), 0, 20, screenWidth, "center")
-            love.graphics.setFont(assets.font("Roboto-Bold", 24))
             love.graphics.printf(score, 0, 40, screenWidth, "center")
 
             local speed = tostring(self.playerSpeed).." "..lz("lbl_hud_speed_units")
-            love.graphics.setFont(assets.font("Roboto-Bold", 32))
             love.graphics.printf(speed, 0, screenHeight - 90, screenWidth - 20, "right")
-            love.graphics.setFont(assets.font("Roboto-Bold", 14))
             love.graphics.printf(lz("lbl_hud_speed"), 0, screenHeight - 50, screenWidth - 20, "right")
         end
         if self.currentText then

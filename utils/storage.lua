@@ -1,17 +1,17 @@
-local bitser = require("lib.bitser")
+local json = require("lib.json")
 
 local storage = {}
 local keyHandlers = {}
 local saveFileName = "user_progress.bin"
-local isKeyHashingEnabled = true
+local isKeyHashingEnabled = false
 local saveData = false
 
 local function deserialize(str)
-    return bitser.loads(str)
+    return {}
 end
 
 local function serialize(t)
-    return bitser.dumps(t)
+    return ""
 end
 
 local function save()
@@ -42,7 +42,6 @@ function storage.set(key, value)
     end
     local origKey = key
     if isKeyHashingEnabled then
-        key = love.data.hash("md5", key)
     end
     local oldValue = saveData[key]
     saveData[key] = value
@@ -60,7 +59,6 @@ function storage.get(key, defaultValue)
         error("key must be string")
     end
     if isKeyHashingEnabled then
-        key = love.data.hash("md5", key)
     end
     if not saveData then
         print("WARNING: Failed to update game save data. Save data needs to be loaded first.")

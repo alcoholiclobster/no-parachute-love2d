@@ -41,7 +41,6 @@ function console.draw()
     end
 
     local y = visibleLines * lineHeight + 20
-    love.graphics.setFont(font)
     love.graphics.setColor(0, 0, 0, 0.9)
     love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), visibleLines * lineHeight + 40)
 

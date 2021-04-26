@@ -1,5 +1,4 @@
 love.errorhandler = require("utils.errorhandler")
-local argparse = require("lib.argparse")
 local ScreenManager = require("ui.ScreenManager")
 local joystickManager = require("utils.joystickManager")
 local console = require("utils.console")
@@ -8,7 +7,7 @@ local musicManager = require("utils.musicManager")
 local scheduler = require("utils.scheduler")
 local settings = require("utils.settings")
 local languageUtils = require("utils.language")
-local Steam = require("luasteam")
+local Steam = {}
 local storage = require("utils.storage")
 local achievements = require("utils.achievements")
 
@@ -19,6 +18,18 @@ local steamUpdateInterval = 0.1
 local steamLastUpdatedAt = love.timer.getTime()
 
 local screenManager
+
+love.audio.newSource = function ()
+    return {
+        play = function () end,
+        stop = function () end,
+        setVolume = function () end,
+        setLooping = function () end,
+        setEffect = function () end,
+        isPlaying = function () return false end,
+        setPitch = function () end,
+    }
+end
 
 ---------------------
 -- Local functions --
@@ -31,40 +42,8 @@ local function completeInitialization()
 
     local steamUserId = "local"
 
-    -- Initialize Steam
-    local success = pcall(function ()
-        if GameEnv.disableSteam then
-            error("Steam disabled")
-        end
-
-        local steamInitStartAt = love.timer.getTime()
-        if Steam.init() then
-            steamUserId = tostring(Steam.user.getSteamID())
-        elseif not GameEnv.disableSteam then
-            error("Steam must be running")
-        end
-
-        print("Steam initalization completed in", math.floor((love.timer.getTime() - steamInitStartAt) * 1000) / 1000, "s")
-    end)
-
-    if not success then
-        if GameEnv.disableSteam then
-            print("Failed to connect to steam")
-        else
-            love.window.showMessageBox("Steam initialization error", "Failed to connect to Steam. Make sure that Steam client is running.", "error")
-            -- love.event.quit()
-        end
-    end
-
-    -- Load game saves
     love.filesystem.createDirectory(steamUserId)
     storage.load(steamUserId.."/user_progress.bin")
-
-    -- Init achievements
-    if success then
-        Steam.userStats.requestCurrentStats()
-        achievements.init()
-    end
 
     screenManager:emit("handleInitializationFinish")
     isInitialized = true
@@ -75,46 +54,16 @@ end
 ----------------------
 
 function love.load(arg)
+    GameEnv.unlockLevels = true
     console.overridePrint()
     print("Game started")
-
-    -- Parse command-line arguments
-    local parser = argparse()
-    if GameEnv.enableCommandLineArgs then
-        parser:option("--level", "Force load game level")
-        parser:option("--screen", "Force display screen")
-        parser:flag("--maximize", "Force maximize window")
-        parser:flag("--nosplash", "Skip splash screen")
-    end
-    local args = parser:parse(arg)
 
     -- Lua initialization
     math.randomseed(os.time())
 
-    -- Love2D initalization
-    love.window.setIcon(love.image.newImageData("assets/window_icon.png"))
-
-    settings.load()
-    if not settings.get("language") then
-        settings.set("language", languageUtils.getSystemLanguage())
-    end
-
     -- Initalize UI and show first screen
     screenManager = ScreenManager:new()
-    if args.level then
-        completeInitialization()
-        print("Force load level", args.level)
-        screenManager:transition("GameScreen", args.level)
-    elseif args.screen then
-        print("Force load screen", args.screen)
-        completeInitialization()
-        screenManager:transition(args.screen)
-    elseif args.nosplash then
-        completeInitialization()
-        screenManager:transition("MainMenuScreen")
-    else
-        screenManager:transition("SplashScreen")
-    end
+    screenManager:show("SplashScreen")
 end
 
 function love.quit()
@@ -122,8 +71,6 @@ function love.quit()
     settings.set("window_x", math.max(1, x))
     settings.set("window_y", math.max(1, y))
     settings.set("window_display", display)
-
-    Steam.shutdown()
 end
 
 function love.update(deltaTime)
@@ -134,7 +81,6 @@ function love.update(deltaTime)
     -- Update Steam integration
     if isInitialized and love.timer.getTime() - steamLastUpdatedAt > steamUpdateInterval then
         steamLastUpdatedAt = love.timer.getTime()
-        Steam.runCallbacks()
         achievements.update()
     end
 
@@ -176,8 +122,6 @@ function love.keypressed(key, ...)
     elseif GameEnv.enableDebugMode and key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
         love.event.quit("restart")
     elseif GameEnv.enableDebugMode and key == "k" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
-        Steam.userStats.resetAllStats(true)
-        Steam.userStats.storeStats()
         print("Achievements reset")
     end
 end
@@ -203,10 +147,6 @@ function love.joystickremoved(joystick)
 end
 
 function love.resize(width, height)
-    if settings.get("window_mode") == "windowed" then
-        settings.set("window_width", width)
-        settings.set("window_height", height)
-    end
     screenManager:emit("handleWindowResize", width, height)
 end
 
@@ -214,52 +154,6 @@ end
 -- Steam callbacks --
 ---------------------
 
-function Steam.friends.onGameOverlayActivated(data)
-    screenManager:emit("handleWindowFocus", not data.active)
-end
-
-function Steam.userStats.onUserStatsReceived(data)
-    print("Steam achievements loaded")
-end
-
 -----------------------
 -- Settings handlers --
 -----------------------
-
-settings.addHandler("window_mode", function (value)
-    if not isInitialized then
-        return
-    end
-
-    if value == "windowed" then
-        love.window.updateMode(settings.get("window_width"), settings.get("window_height"), {
-            fullscreen = false,
-        })
-    elseif value == "borderless" then
-        love.window.updateMode(0, 0, {
-            fullscreen = true,
-            fullscreentype = "desktop",
-        })
-    else
-        love.window.updateMode(0, 0, {
-            fullscreen = true,
-            fullscreentype = "exclusive",
-        })
-    end
-end)
-
-settings.addHandler("vsync", function (value)
-    if value then
-        love.window.setVSync(-1)
-    else
-        love.window.setVSync(0)
-    end
-end)
-
-settings.addHandler("master_volume", function (value)
-    love.audio.setVolume(value)
-end)
-
-settings.addHandler("language", function (value)
-    languageUtils.loadLanguage(value)
-end)

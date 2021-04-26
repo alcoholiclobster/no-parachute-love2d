@@ -7,6 +7,15 @@ local settingsConfig = require("config.settings")
 local settingsState = {}
 local settingsHandlers = {}
 
+local defaultSettings = {}
+for _, v in ipairs(settingsConfig) do
+    for _, k in ipairs(v.values) do
+        if k.default then
+            defaultSettings[v.name] = k.value
+        end
+    end
+end
+
 local function deserialize(str)
     -- bitser.loads
     return json.decode(str)
@@ -22,7 +31,7 @@ function settings.save()
 end
 
 function settings.get(name)
-    return settingsState[name]
+    return settingsState[name] or defaultSettings[name]
 end
 
 function settings.set(name, value, omitSave, omitHandler)
@@ -80,9 +89,6 @@ end
 
 function settings.load()
     -- If settings file does not exist, create it
-    if not love.filesystem.getInfo(filename) then
-        settings.save()
-    end
 
     -- Execute settings handlers
     for name, handler in pairs(settingsHandlers) do

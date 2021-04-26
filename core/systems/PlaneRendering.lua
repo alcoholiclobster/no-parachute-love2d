@@ -19,58 +19,6 @@ local lastFrameCameraZ = 0
 
 local clearColor = nil
 local fogDistance = 100
-local planeShader = love.graphics.newShader[[
-uniform vec4 fogcolor = vec4(1, 0, 0, 1);
-uniform float depth = 0.0;
-uniform float border = 1.0;
-uniform vec4 bgcolor = vec4(98.0/255.0, 73.0/255.0, 69.0/255.0, 1.0);
-
-vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
-{
-    vec2 coord = texcoord * (1.0+border)-border * 0.5;
-
-    vec2 borderStep = step(vec2(0, 0), coord) - step(vec2(1, 1), coord);
-    float borderMul = 1 - borderStep.x * borderStep.y;
-
-    vec4 texcolor = Texel(texture, coord);
-    texcolor.a = texcolor.a * vcolor.a;
-
-    if (borderMul > 0) {
-        texcolor.rgb = mix(texcolor.rgb, bgcolor.rgb, (1 - texcolor.a) * bgcolor.a);
-        texcolor.a += 1;
-    }
-
-    texcolor.rgb = mix(texcolor.rgb * vcolor.rgb, fogcolor.rgb, depth);
-    return vec4(texcolor.rgb, texcolor.a);
-}
-]]
-
-local blurShader = love.graphics.newShader[[
-uniform float aspect_ratio = 0.0;
-uniform float blur_level = 0.0;
-float blur_radius = 1.0;
-int blur_steps = 12;
-
-vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
-{
-    vec2 pos = texcoord;
-    pos.x *= aspect_ratio;
-
-    vec2 dir = pos - vec2(0.5 * aspect_ratio, 0.5);
-    float blur_amount = clamp(pow(length(dir) + 0.1, 3.5), 0.0, 1.0);
-
-    vec4 color = vec4(0.0);
-
-    dir = normalize(dir) * blur_amount / 128.0 * blur_radius * blur_level;
-    float count = 0.0;
-    for (int i = 0; i < blur_steps; i++)
-    {
-        color += Texel(texture, texcoord - i * dir);
-        count += 1.0;
-    }
-    return color / count;
-}]]
-
 local isFogPlaneRendered = false
 
 local lodBlendEnabled = true
@@ -103,19 +51,16 @@ local function render(e, camera)
     love.graphics.rotate(e.rotation.value)
 
     local depth = mathUtils.clamp01((e.position.value.z - camera.position.value.z + 8) / (-fogDistance+8))
-    planeShader:send("depth", depth)
 
     local size = e.size.value * scale
     if e.sidePlane and e.texture then
         local r, g, b, a = e.sidePlane.borderColor[1], e.sidePlane.borderColor[2], e.sidePlane.borderColor[3], e.sidePlane.borderColor[4]
-        planeShader:send("bgcolor", {r, g, b, a})
 
         local border = 1.5
         if depth < 0.1 then
             border = border + (1 - depth / 0.1)
         end
         border = border * a
-        planeShader:send("border", border)
         size = size * (1 + border)
 
         if not clearColor then
@@ -131,9 +76,6 @@ local function render(e, camera)
             love.graphics.rectangle("fill", -size.x * 0.5, -size.y * 0.5, size.x, size.y)
             isFogPlaneRendered = true
         end
-    else
-        planeShader:send("bgcolor", {0, 0, 0, 0})
-        planeShader:send("border", 0)
     end
 
     if e.color then
@@ -162,8 +104,6 @@ function PlaneRendering:init()
 
     fogDistance = self:getWorld().gameManager.levelConfig.fogDistance or 100
     minZ = -fogDistance - 5
-
-    blurShader:send("aspect_ratio", screenWidth / screenHeight)
 end
 
 function PlaneRendering:draw()
@@ -190,7 +130,6 @@ function PlaneRendering:draw()
     end
 
     local fogColor = camera.camera.fogColor
-    planeShader:send("fogcolor", camera.camera.fogColor)
 
     love.graphics.setCanvas(canvas)
     if clearColor then
@@ -198,7 +137,6 @@ function PlaneRendering:draw()
     else
         love.graphics.clear(fogColor[1], fogColor[2], fogColor[3], 1)
     end
-    love.graphics.setShader(planeShader)
     love.graphics.translate(screenWidth/2, screenHeight/2)
     love.graphics.rotate(camera.rotation.value)
     isFogPlaneRendered = false
@@ -217,27 +155,14 @@ function PlaneRendering:draw()
         end
     end
 
-    love.graphics.setShader()
     love.graphics.setCanvas()
 
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.origin(1, 1, 1, 1)
-    if not self.overrideBlurLevel then
-        local cameraSpeed = mathUtils.clamp01((lastFrameCameraZ - camera.position.value.z) / 0.1)
-        lastFrameCameraZ = camera.position.value.z
-        blurShader:send("blur_level", cameraSpeed)
-    else
-        blurShader:send("blur_level", self.overrideBlurLevel)
-    end
-    if settings.get("motion_blur") then
-        love.graphics.setShader(blurShader)
-    end
     love.graphics.draw(canvas)
-    love.graphics.setShader()
 end
 
 function PlaneRendering:resize(w, h)
-    blurShader:send("aspect_ratio", w / h)
     canvas = love.graphics.newCanvas()
 end
 

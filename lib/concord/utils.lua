@@ -26,11 +26,6 @@ function Utils.loadNamespace(pathOrFiles, namespace)
    end
 
    if (type(pathOrFiles) == "string") then
-       local info = love.filesystem.getInfo(pathOrFiles) -- luacheck: ignore
-       if (info == nil or info.type ~= "directory") then
-            error("bad argument #1 to 'loadNamespace' (path '"..pathOrFiles.."' not found)", 2)
-       end
-
        local files = love.filesystem.getDirectoryItems(pathOrFiles)
 
        for _, file in ipairs(files) do
