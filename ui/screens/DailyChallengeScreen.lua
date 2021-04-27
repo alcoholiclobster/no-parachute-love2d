@@ -89,7 +89,7 @@ function DailyChallengeScreen:draw()
         self.screenManager:transition("MainMenuScreen")
     end
     -- Play button
-    if widgets.button(lz("lbl_endless_start_challenge"), screenWidth * (0.5 - 0.15), screenHeight - screenHeight * 0.12, screenWidth * 0.3, screenHeight * 0.08, false, "center") then
+    if widgets.button(lz("lbl_endless_start_challenge"), screenWidth * (0.5 - 0.2), screenHeight - screenHeight * 0.12, screenWidth * 0.4, screenHeight * 0.08, false, "center") then
         self.screenManager:transition("GameScreen", "endless")
     end
 end
