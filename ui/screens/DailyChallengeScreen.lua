@@ -3,7 +3,6 @@ local Screen = require("ui.Screen")
 local widgets = require("ui.widgets")
 local GameManager = require("core.GameManager")
 local lz = require("utils.language").localize
-local Steam = require("luasteam")
 local LeaderboardView = require("ui.LeaderboardView")
 
 local DailyChallengeScreen = class("DailyChallengeScreen", Screen)
@@ -12,8 +11,7 @@ local startDay = 18739
 
 function DailyChallengeScreen:initialize()
     local secondsInDay = 60 * 60 * 24
-    local dayNumber = math.floor(os.time() / secondsInDay) + 1
-    local secondsCurrentDay = os.time() - dayNumber * secondsInDay
+    local dayNumber = math.floor(os.time() / secondsInDay)
 
     local previousDaySeed = (dayNumber - 1) + 1337
     self.seed = dayNumber + 1337
@@ -54,23 +52,6 @@ function DailyChallengeScreen:initialize()
     self.yesterdayLeaderboard.y = 0.2
     self.yesterdayLeaderboard.width = 0.25
     self.yesterdayLeaderboard.height = 0.6
-    -- self.entries = {}
-
-    -- Steam.userStats.findOrCreateLeaderboard("daily_"..tostring(self.seed), "Descending", "Numeric", function (data)
-    --     Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "ForceUpdate", math.random(1, 10), "hihi", function (data)
-    --         print("uploaded ", data.success, data.globalRankNew)
-    --     end)
-
-    --     Steam.userStats.downloadLeaderboardEntries(data.steamLeaderboard, "Global", 1, 10, function (items)
-    --         for _, item in ipairs(items) do
-    --             table.insert(self.entries, {
-    --                 rank = item.globalRank,
-    --                 name = Steam.friends.getFriendPersonaName(item.steamIDUser),
-    --                 score = item.score,
-    --             })
-    --         end
-    --     end)
-    -- end)
 end
 
 function DailyChallengeScreen:update(deltaTime)
@@ -108,7 +89,7 @@ function DailyChallengeScreen:draw()
         self.screenManager:transition("MainMenuScreen")
     end
     -- Play button
-    if widgets.button(lz("btn_level_selection_start_game", "endless"), screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
+    if widgets.button(lz("btn_level_selection_start_game", "endless"), screenWidth * (0.5 - 0.15), screenHeight - screenHeight * 0.12, screenWidth * 0.3, screenHeight * 0.08, false, "center") then
         self.screenManager:transition("GameScreen", "endless")
     end
 end

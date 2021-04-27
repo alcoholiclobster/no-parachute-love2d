@@ -10,6 +10,7 @@ local mathUtils = require("utils.math")
 local lz = require("utils.language").localize
 local SettingsOverlay = require("ui.SettingsOverlay")
 local rating = require("utils.rating")
+local Steam = require("luasteam")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -42,6 +43,8 @@ function GameScreen:initialize(levelName)
     if self.levelConfig.disableHud then
         self.isHudEnabled = false
     end
+
+    self.globalRank = 0
 end
 
 function GameScreen:onShow()
@@ -144,11 +147,18 @@ function GameScreen:draw()
         love.graphics.setColor(0.75, 0.75, 0.75, math.min(1, stateTime * 2))
         labelY = labelY + labelHeight + screenHeight * 0.04
         labelHeight = screenHeight * 0.025
-        widgets.label(lz("lbl_game_stats_progress", progress), labelX, labelY, labelWidth, labelHeight, false, "center")
+        if self.levelName ~= "endless" then
+            widgets.label(lz("lbl_game_stats_progress", progress), labelX, labelY, labelWidth, labelHeight, false, "center")
+        end
 
         labelY = labelY + labelHeight + screenHeight * 0.04
         local score = tostring(math.ceil(self.playerScore))
         widgets.label(lz("lbl_game_stats_score", score), labelX, labelY, labelWidth, labelHeight, false, "center")
+
+        if self.globalRank and self.globalRank > 0 then
+            labelY = labelY + labelHeight + screenHeight * 0.04
+            widgets.label("Global rank: "..tostring(self.globalRank), labelX, labelY, labelWidth, labelHeight, false, "center")
+        end
 
         -- Buttons
         love.graphics.setColor(1, 1, 1, math.min(1, stateTime * 2))
@@ -277,6 +287,19 @@ end
 
 function GameScreen:showDeathScreen()
     self:setState("dead")
+    self.globalRank = 0
+    if self.levelName == "endless" and GameEnv.endlessForceSeed then
+        local score = tostring(math.ceil(self.playerScore))
+
+        Steam.userStats.findOrCreateLeaderboard("daily_"..GameEnv.endlessForceSeed, "Descending", "Numeric", function (data)
+            Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "KeepBest", score, "hihi", function (data)
+                print("Uploaded new score", score, data.globalRankNew)
+                if data.success then
+                    self.globalRank = data.globalRankNew
+                end
+            end)
+        end)
+    end
 end
 
 function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, isNewBestTime)

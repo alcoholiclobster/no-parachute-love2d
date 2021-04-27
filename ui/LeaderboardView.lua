@@ -24,6 +24,7 @@ function LeaderboardView:initialize(options)
     self.height = 1
 
     self.limitCount = options.limit or 15
+    self.isLoadingCompleted = false
 
     if type(options.type) == "string" then
         self.leaderboardType = options.type
@@ -40,6 +41,7 @@ function LeaderboardView:initialize(options)
     -- end
 
     local function handleEntriesDownload(items)
+        self.isLoadingCompleted = true
         for _, item in ipairs(items) do
             table.insert(self.entries, {
                 rank = item.globalRank,
@@ -64,6 +66,7 @@ function LeaderboardView:initialize(options)
     Steam.userStats.findOrCreateLeaderboard(self.leaderboardName, "Descending", "Numeric", function (data, err)
         if err then
             print("Failed to find leaderboard "..tostring(self.leaderboardName)..": "..tostring(err))
+            self.isLoadingCompleted = true
             return
         end
         self.leaderboardId = data.steamLeaderboard
@@ -79,11 +82,6 @@ function LeaderboardView:initialize(options)
 end
 
 function LeaderboardView:draw()
-    if not self.leaderboardId then
-        -- TODO: Draw loading spinner
-        return
-    end
-
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     local x, y, width, height = self.x * screenWidth, self.y * screenHeight, self.width * screenWidth, self.height * screenHeight
 
@@ -103,6 +101,13 @@ function LeaderboardView:draw()
 
     itemY = itemY + itemHeight * 1.4 + height * 0.025
     itemHeight = (height - itemY) / (self.limitCount + 1)
+
+    if not self.isLoadingCompleted then
+        love.graphics.setColor(0.7, 0.7, 0.7)
+        widgets.label("Loading...", itemX, itemY, itemWidth, itemHeight, true, "center")
+        return
+    end
+
     for i = 1, self.limitCount do
         local row = self.entries[i]
             if row then
