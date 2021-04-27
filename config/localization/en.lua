@@ -1,10 +1,10 @@
 return {
-    main_menu_btn_play_story = "PLAY STORY",
-    main_menu_btn_play_daily_challenge = "PLAY DAILY CHALLENGE",
-    main_menu_btn_play_endless_mode = "PLAY ENDLESS MODE",
+    main_menu_btn_play_story = "STORY",
+    main_menu_btn_play_daily_challenge = "DAILY CHALLENGE",
+    main_menu_btn_play_endless_mode = "ENDLESS MODE",
     main_menu_btn_credits = "CREDITS",
     btn_settings = "OPTIONS",
-    btn_exit_game = "EXIT TO DESKTOP",
+    btn_exit_game = "EXIT",
     btn_back = "BACK",
     btn_level_selection_start_game = "START GAME",
     btn_level_selection_level_locked = "LOCKED",
@@ -76,6 +76,13 @@ return {
     lbl_tutorial_movement = "Use WASD or arrows to move",
     lbl_tutorial_speedup = "Use SPACE to break walls and fall faster",
     lbl_tutorial_avoid = "Avoid obstacles to survive",
+
+    lbl_endless_day_ends = "Level changes in %s",
+    lbl_endless_lb_today_global = "Daily rating (global)",
+    lbl_endless_lb_today_friends = "Daily rating (friends)",
+    lbl_endless_lb_yesterday_global = "Yesterday rating",
+    lbl_endless_dead_rank = "Your rating: %s",
+    lbl_endless_start_challenge = "START CHALLENGE",
 
     lbl_credis = [["No Parachute"
 

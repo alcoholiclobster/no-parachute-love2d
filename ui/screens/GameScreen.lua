@@ -157,7 +157,7 @@ function GameScreen:draw()
 
         if self.globalRank and self.globalRank > 0 then
             labelY = labelY + labelHeight + screenHeight * 0.04
-            widgets.label("Global rank: "..tostring(self.globalRank), labelX, labelY, labelWidth, labelHeight, false, "center")
+            widgets.label(lz("lbl_endless_dead_rank", tostring(self.globalRank)), labelX, labelY, labelWidth, labelHeight, false, "center")
         end
 
         -- Buttons

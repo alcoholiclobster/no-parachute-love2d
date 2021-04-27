@@ -23,7 +23,7 @@ function DailyChallengeScreen:initialize()
     self.globalLeaderboard = LeaderboardView:new({
         name = "daily_"..tostring(self.seed),
         type = "Global",
-        title = "Today Global",
+        title = lz("lbl_endless_lb_today_global"),
         limit = 15,
     })
     self.globalLeaderboard.x = 0.05
@@ -34,7 +34,7 @@ function DailyChallengeScreen:initialize()
     self.friendsLeaderboard = LeaderboardView:new({
         name = "daily_"..tostring(self.seed),
         type = "Friends",
-        title = "Today Friends",
+        title = lz("lbl_endless_lb_today_friends"),
         limit = 15,
     })
     self.friendsLeaderboard.x = self.globalLeaderboard.x + self.globalLeaderboard.width + 0.05
@@ -45,7 +45,7 @@ function DailyChallengeScreen:initialize()
     self.yesterdayLeaderboard = LeaderboardView:new({
         name = "daily_"..tostring(previousDaySeed),
         type = "Global",
-        title = "Yesterday Global",
+        title = lz("lbl_endless_lb_yesterday_global"),
         limit = 20,
     })
     self.yesterdayLeaderboard.x = self.friendsLeaderboard.x + self.friendsLeaderboard.width + 0.05
@@ -71,7 +71,7 @@ function DailyChallengeScreen:draw()
     local secondsLeft = secondsInDay - (os.time() - dayNumber * secondsInDay)
     local timeLeft = string.format("%.2d:%.2d:%.2d", secondsLeft/(60*60), secondsLeft/60%60, secondsLeft%60)
     love.graphics.setColor(1, 1, 1)
-    widgets.label("Day: "..tostring(dayNumber - startDay)..". Time left: "..timeLeft, screenWidth * 0.05, screenHeight * 0.07, screenWidth * 0.8, screenHeight * 0.05, false, "left")
+    widgets.label(lz("lbl_endless_day_ends", timeLeft), screenWidth * 0.05, screenHeight * 0.07, screenWidth * 0.8, screenHeight * 0.05, false, "left")
 
     -- local h = screenHeight * 0.04
     -- local y = screenHeight * 0.1 + screenHeight * 0.08
@@ -85,11 +85,11 @@ function DailyChallengeScreen:draw()
     self.yesterdayLeaderboard:draw()
 
     -- Back to menu screen button
-    if widgets.button(lz("btn_back"), screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.05) then
+    if widgets.button(lz("btn_back"), screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * 0.2, screenHeight * 0.05) then
         self.screenManager:transition("MainMenuScreen")
     end
     -- Play button
-    if widgets.button(lz("btn_level_selection_start_game", "endless"), screenWidth * (0.5 - 0.15), screenHeight - screenHeight * 0.12, screenWidth * 0.3, screenHeight * 0.08, false, "center") then
+    if widgets.button(lz("lbl_endless_start_challenge"), screenWidth * (0.5 - 0.15), screenHeight - screenHeight * 0.12, screenWidth * 0.3, screenHeight * 0.08, false, "center") then
         self.screenManager:transition("GameScreen", "endless")
     end
 end

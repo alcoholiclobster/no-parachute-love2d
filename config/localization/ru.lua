@@ -77,6 +77,13 @@ return {
     lbl_tutorial_speedup = "Нажмите пробел, чтобы разрушать стены и ускоряться",
     lbl_tutorial_avoid = "Избегайте препятствий, чтобы выжить",
 
+    lbl_endless_day_ends = "Новый уровень через %s",
+    lbl_endless_lb_today_global = "Топ дня (глобальный)",
+    lbl_endless_lb_today_friends = "Топ дня (друзья)",
+    lbl_endless_lb_yesterday_global = "Вчерашний топ",
+    lbl_endless_dead_rank = "Позиция в рейтинге: %s",
+    lbl_endless_start_challenge = "НАЧАТЬ ИСПЫТАНИЕ",
+
     lbl_credis = [["No Parachute"
 
 Разработчик: Никита Бредихин
