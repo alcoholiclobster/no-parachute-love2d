@@ -143,7 +143,6 @@ local function getRandomObstacleName(planeTypeNames, maxDifficulty)
 end
 
 local function randomize(seed)
-    print(seed)
     if not seed then
         seed = os.time()
     end
@@ -175,7 +174,7 @@ local function randomize(seed)
     local lastIndex = 0
     local totalDistance = 0
     local planesCache = {
-        { distance = 80, tunnelShape = { direction = {0, 0}, rotationSpeed = math.random() * 0.8 - 0.4 } }
+        { distance = 80, tunnelShape = { direction = {math.random() * 6 - 3, math.random() * 6 - 3} }}
     }
     local currentFallSpeed = levelConfig.fallSpeed
     local breakablePlaneIn = 2
@@ -193,11 +192,11 @@ local function randomize(seed)
 
         if forceEmptySpace and forceEmptySpace > 0 then
             plane.distance = forceEmptySpace
+            plane.tunnelShape = { direction = {0, 0}, rotationSpeed = 0 }
             forceEmptySpace = false
         elseif easySpaceIn <= 0 then
             easySpaceIn = math.random(5, 15)
             plane.distance = math.random(10, 50) + currentFallSpeed
-            plane.tunnelShape = { direction = {0, 0}, rotationSpeed = math.random() * 0.4 - 0.2 }
 
             breakablePlaneIn = breakablePlaneIn - 1
             if breakablePlaneIn <= 0 then
@@ -206,6 +205,8 @@ local function randomize(seed)
                 table.insert(levelConfig.sidePlanes, generateSidePlanes(seed, index))
                 plane.switchSidePlanes = true
                 forceEmptySpace = math.random(20, 60) + currentFallSpeed
+            else
+                forceEmptySpace = 5
             end
 
             if maxDifficulty then
@@ -234,6 +235,12 @@ local function randomize(seed)
             end
 
             easySpaceIn = easySpaceIn - 1
+
+            if easySpaceIn <= 0 then
+                plane.tunnelShape = {
+                    direction = {math.random() * 6 - 3, math.random() * 6 - 3},
+                }
+            end
         end
 
         -- if math.random() > 0.1 then

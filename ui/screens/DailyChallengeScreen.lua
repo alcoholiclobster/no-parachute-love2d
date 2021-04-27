@@ -15,15 +15,15 @@ function DailyChallengeScreen:initialize()
     local secondsCurrentDay = os.time() - dayNumber * secondsInDay
     print(math.floor(secondsCurrentDay / (60 * 60)))
 
-    local seed = dayNumber + 1337
+    self.seed = dayNumber + 1337
 
+    GameEnv.endlessForceSeed = self.seed
     local endlessLevel = require("config.levels.endless")
-    endlessLevel.randomize(seed)
-    self.gameManager = GameManager:new(endlessLevel, self, true)
+    self.gameManager = GameManager:new(endlessLevel, self, true, self.seed)
 
     self.entries = {}
 
-    Steam.userStats.findOrCreateLeaderboard("daily_"..tostring(seed), "Descending", "Numeric", function (data)
+    Steam.userStats.findOrCreateLeaderboard("daily_"..tostring(self.seed), "Descending", "Numeric", function (data)
         Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "ForceUpdate", math.random(1, 10), "hihi", function (data)
             print("uploaded ", data.success, data.globalRankNew)
         end)
@@ -68,8 +68,8 @@ function DailyChallengeScreen:draw()
         self.screenManager:transition("MainMenuScreen")
     end
     -- Play button
-    if widgets.button(lz("btn_level_selection_start_game", self.backgroundLevelName), screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
-        self.screenManager:transition("GameScreen", self.backgroundLevelName)
+    if widgets.button(lz("btn_level_selection_start_game", "endless"), screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
+        self.screenManager:transition("GameScreen", "endless")
     end
 end
 

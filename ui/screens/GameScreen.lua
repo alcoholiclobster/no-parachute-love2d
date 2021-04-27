@@ -61,6 +61,14 @@ function GameScreen:restartLevel()
     self.screenManager:transition("GameScreen", self.levelName)
 end
 
+function GameScreen:exitToMenu()
+    if self.levelName == "endless" then
+        self.screenManager:transition("MainMenuScreen")
+    else
+        self.screenManager:transition("LevelSelectionScreen")
+    end
+end
+
 function GameScreen:setState(newState)
     self.state = newState
     self.stateChangedAt = love.timer.getTime()
@@ -151,7 +159,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
-            self.screenManager:transition("LevelSelectionScreen")
+            self:exitToMenu()
         end
     elseif self.state == "pause" then
         love.graphics.setColor(0, 0, 0, 0.6)
@@ -183,7 +191,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") then
-            self.screenManager:transition("LevelSelectionScreen")
+            self:exitToMenu()
         end
 
         if self.settingsOverlay then
@@ -250,7 +258,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
-            self.screenManager:transition("LevelSelectionScreen")
+            self:exitToMenu()
         end
     end
 end

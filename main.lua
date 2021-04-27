@@ -56,6 +56,8 @@ local function completeInitialization()
         end
     end
 
+    GameEnv.isSteamInitialized = success
+
     -- Load game saves
     love.filesystem.createDirectory(steamUserId)
     storage.load(steamUserId.."/user_progress.bin")
