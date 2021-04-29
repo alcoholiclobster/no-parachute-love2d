@@ -80,9 +80,11 @@ end
 
 local function spawnLevelPlane(world, planeConfig, worldPosition, localPosition, rotation, index)
     for i, plane in ipairs(planeConfig.planes) do
-        local entity = spawnPlane(world, plane, worldPosition, localPosition, rotation)
-        entity:give("name", "plane_"..index.."_"..i)
-        entity:give("planeSpawnEvent")
+        if plane.chance and math.random() < plane.chance or not plane.chance then
+            local entity = spawnPlane(world, plane, worldPosition, localPosition, rotation)
+            entity:give("name", "plane_"..index.."_"..i)
+            entity:give("planeSpawnEvent")
+        end
     end
 end
 

@@ -17,11 +17,19 @@ local levelConfig = {
         },
         obstacle2 = {
             difficulty = 0.72,
-            planes = {{ texture = "levels/endless/obstacles/2" }}
+            planes = {
+                { texture = "levels/endless/obstacles/2" },
+                { texture = "levels/vents/fan_holder", position = {0, 0, 5}, chance = 0.35 },
+            }
         },
         obstacle3 = {
             difficulty = 0.5,
-            planes = {{ texture = "levels/endless/obstacles/3" }}
+            planes = {
+                { texture = "levels/endless/obstacles/3" },
+                { texture = "levels/vents/fan_holder", position = {3.5, 0, 2}, chance = 0.5 },
+                { texture = "levels/vents/fan_holder", position = {-3.5, 0, 2}, chance = 0.5 },
+                { texture = "levels/vents/long_stick", position = {-3.5, 0, 4}, rotation = 90, chance = 0.25 },
+            }
         },
         obstacle4 = {
             difficulty = 0.85,
@@ -29,11 +37,17 @@ local levelConfig = {
         },
         obstacle5 = {
             difficulty = 0.82,
-            planes = {{ texture = "levels/endless/obstacles/5" }}
+            planes = {{ texture = "levels/endless/obstacles/5" }},
+            { texture = "levels/vents/fan_holder", position = {3.5, 0, 2}, chance = 0.5 },
+            { texture = "levels/vents/fan_holder", position = {-3.5, 0, 2}, chance = 0.5 },
         },
         obstacle6 = {
             difficulty = 0.36,
-            planes = {{ texture = "levels/endless/obstacles/6" }}
+            planes = {
+                { texture = "levels/endless/obstacles/6" },
+                { texture = "levels/vents/long_stick", position = {0, 0, 3}, chance = 0.15 },
+                { texture = "levels/vents/fan_holder", position = {0, 0, 5}, chance = 0.25 },
+            }
         },
         breakable = {
             excludeFromRandomGeneration = true,
@@ -44,7 +58,16 @@ local levelConfig = {
         obstacle7 = {
             difficulty = 0.9,
             planes = {
-                { texture = "levels/endless/obstacles/7", rotationSpeed = 3,}
+                { texture = "levels/endless/obstacles/7", rotationSpeed = 3,},
+                { texture = "levels/vents/fan_holder", position = {0, 0, 1} },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -2} },
+            }
+        },
+        obstacle8 = {
+            difficulty = 0.4,
+            planes = {
+                { texture = "levels/vents/long_stick", position = {0, 0, 0}, rotation = 90 },
+                { texture = "levels/vents/fan_holder", position = {0, 0, 5}, rotation = 90, chance = 0.5 },
             }
         },
     },
