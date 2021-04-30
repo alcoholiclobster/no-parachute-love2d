@@ -52,6 +52,8 @@ function DailyChallengeScreen:initialize()
     self.yesterdayLeaderboard.y = 0.2
     self.yesterdayLeaderboard.width = 0.25
     self.yesterdayLeaderboard.height = 0.6
+
+    self.isReloading = false
 end
 
 function DailyChallengeScreen:update(deltaTime)
@@ -69,16 +71,14 @@ function DailyChallengeScreen:draw()
     local secondsInDay = 60 * 60 * 24
     local dayNumber = math.floor(os.time() / secondsInDay)
     local secondsLeft = secondsInDay - (os.time() - dayNumber * secondsInDay)
+    if secondsLeft <= 0 and not self.isReloading then
+        secondsLeft = 0
+        self.isReloading = true
+        self.screenManager:transition("DailyChallengeScreen")
+    end
     local timeLeft = string.format("%.2d:%.2d:%.2d", secondsLeft/(60*60), secondsLeft/60%60, secondsLeft%60)
     love.graphics.setColor(1, 1, 1)
     widgets.label(lz("lbl_endless_day_ends", timeLeft), screenWidth * 0.05, screenHeight * 0.07, screenWidth * 0.8, screenHeight * 0.05, false, "left")
-
-    -- local h = screenHeight * 0.04
-    -- local y = screenHeight * 0.1 + screenHeight * 0.08
-    -- for i, item in ipairs(self.entries) do
-    --     widgets.label(item.rank..". "..item.name.." - "..item.score, screenWidth * 0.1, y, screenWidth * 0.8, h, false, "left")
-    --     y = y + h * 1.5
-    -- end
 
     self.globalLeaderboard:draw()
     self.friendsLeaderboard:draw()

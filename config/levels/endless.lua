@@ -3,7 +3,6 @@ local mathUtils = require("utils.math")
 local levelConfig = {
     name = "Endless",
 
-    fogColor = {0, 0, 0},
     fogDistance =  90,
 
     sidePlanesRandomBrightness = true,
@@ -20,7 +19,15 @@ local levelConfig = {
             planes = {
                 { texture = "levels/endless/obstacles/2" },
                 { texture = "levels/vents/fan_holder", position = {0, 0, 5}, chance = 0.35 },
-            }
+            },
+            variants = {"obstacle2", "obstacle2_1"},
+        },
+        obstacle2_1 = {
+            excludeFromRandomGeneration = true,
+            planes = {
+                { texture = "levels/vents/half_hole", rotation = 180 },
+                { texture = "levels/vents/fan_holder", position = {0, 0, 5}, chance = 0.35 },
+            },
         },
         obstacle3 = {
             difficulty = 0.5,
@@ -45,20 +52,38 @@ local levelConfig = {
             difficulty = 0.36,
             planes = {
                 { texture = "levels/endless/obstacles/6" },
+                { texture = "levels/endless/obstacles/6_sign", position = {0, 0, 0.2}, chance = 0.1 },
                 { texture = "levels/vents/long_stick", position = {0, 0, 3}, chance = 0.15 },
                 { texture = "levels/vents/fan_holder", position = {0, 0, 5}, chance = 0.25 },
-            }
+            },
+            variants = {"obstacle6", "obstacle6_1"},
         },
-        breakable = {
+        obstacle6_1 = {
             excludeFromRandomGeneration = true,
-            difficulty = 1,
-            spaceAfter = 100,
-            planes = {{ texture = "levels/endless/obstacles/breakable", breakable = true} }
+            planes = {{ texture = "levels/old_mine/obstacle8_1", }},
         },
         obstacle7 = {
             difficulty = 0.9,
             planes = {
                 { texture = "levels/endless/obstacles/7", rotationSpeed = 3,},
+                { texture = "levels/vents/fan_holder", position = {0, 0, 1} },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -2} },
+            },
+            variants = {"obstacle7", "obstacle7_2", "obstacle7_3"}
+        },
+        obstacle7_2 = {
+            excludeFromRandomGeneration = true,
+            planes = {
+                { texture = "levels/endless/obstacles/7", rotationSpeed = -3,},
+                { texture = "levels/vents/fan_holder", position = {0, 0, 1} },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -2} },
+                { texture = "levels/vents/fan_holder", position = {0, 0, -2}, rotation = 90 },
+            }
+        },
+        obstacle7_3 = {
+            excludeFromRandomGeneration = true,
+            planes = {
+                { texture = "levels/endless/obstacles/7", rotationSpeed = 4,},
                 { texture = "levels/vents/fan_holder", position = {0, 0, 1} },
                 { texture = "levels/vents/fan_holder", position = {0, 0, -2} },
             }
@@ -70,7 +95,26 @@ local levelConfig = {
                 { texture = "levels/vents/fan_holder", position = {0, 0, 5}, rotation = 90, chance = 0.5 },
             }
         },
+
+        breakable1 = {
+            excludeFromRandomGeneration = true,
+            difficulty = 1,
+            spaceAfter = 100,
+            planes = {{ texture = "levels/endless/obstacles/breakable", breakable = true} }
+        },
+        breakable2 = {
+            excludeFromRandomGeneration = true,
+            difficulty = 1,
+            spaceAfter = 100,
+            planes = {{ texture = "levels/old_mine/obstacle9", breakable = true} }
+        }
     },
+}
+
+local breakableVariants = {"breakable1", "breakable2"}
+
+local planeVariants = {
+    -- breakable = { "breakable2" }
 }
 
 local sidePlanesVariants = {
@@ -177,6 +221,7 @@ local function randomize(seed)
     levelConfig.fallSpeed = baseFallSpeed
     levelConfig.totalHeight = math.huge
     levelConfig.endless = true
+    levelConfig.fogColor = {0, 0, 0}
 
     levelConfig.playerRotationMode = "constant"
     levelConfig.playerRotationSpeed = math.random() > 0.5 and 12 or -12
@@ -186,9 +231,14 @@ local function randomize(seed)
 
     -- Random planes
     local planeTypeNames = {}
+    local minDifficulty = 1
     for name, planeConfig in pairs(levelConfig.planeTypes) do
         if not planeConfig.excludeFromRandomGeneration then
             table.insert(planeTypeNames, name)
+
+            if planeConfig.difficulty < minDifficulty then
+                minDifficulty = planeConfig.difficulty
+            end
         end
     end
     levelConfig.planes = {}
@@ -202,7 +252,8 @@ local function randomize(seed)
     local currentFallSpeed = levelConfig.fallSpeed
     local breakablePlaneIn = 2
     local easySpaceIn = 10
-    local maxDifficulty = 0.5
+    local maxDifficulty = minDifficulty
+    local planesToMaxDifficulty = 20
     local forceEmptySpace = false
     local function getPlane(index)
         if planesCache[index] then
@@ -224,33 +275,29 @@ local function randomize(seed)
             breakablePlaneIn = breakablePlaneIn - 1
             if breakablePlaneIn <= 0 then
                 breakablePlaneIn = 3
-                plane.name = "breakable"
+                plane.name = breakableVariants[math.random(1, #breakableVariants)]
                 table.insert(levelConfig.sidePlanes, generateSidePlanes(seed, index))
                 plane.switchSidePlanes = true
                 forceEmptySpace = math.random(20, 60) + currentFallSpeed
             else
                 forceEmptySpace = 5
             end
-
-            if maxDifficulty then
-                maxDifficulty = maxDifficulty + 0.2
-                if maxDifficulty >= 1 then
-                    maxDifficulty = nil
-                end
-            end
         else
-            local distanceMultiplier = 1 + mathUtils.clamp01(1 - totalDistance * 0.000001) * 0.5
+            local distanceMultiplier = 1 + (1 - maxDifficulty)
             plane.name = getRandomObstacleName(planeTypeNames, maxDifficulty)
             if not plane then
                 print("[ERROR] No plane name")
                 return { distance = 100 }
             end
             local planeConfig = levelConfig.planeTypes[plane.name]
+            if planeConfig.variants then
+                plane.name = planeConfig.variants[math.random(1, #planeConfig.variants)]
+            end
             local distance = levelConfig.fallSpeed * 1.2
             plane.distance = mathUtils.lerp(distance * 0.3, distance * 1, planeConfig.difficulty) * distanceMultiplier
             plane.rotation = math.random(0, 3) * 90
 
-            currentFallSpeed = baseFallSpeed + totalDistance * 0.00001
+            currentFallSpeed = baseFallSpeed + totalDistance * 0.00002
             plane.fallSpeed = currentFallSpeed
 
             if planeConfig.spaceAfter then
@@ -263,6 +310,13 @@ local function randomize(seed)
                 plane.tunnelShape = {
                     direction = {math.random() * 6 - 3, math.random() * 6 - 3},
                 }
+            end
+
+            if maxDifficulty < 1 then
+                maxDifficulty = maxDifficulty + (1 - minDifficulty) / planesToMaxDifficulty
+                if maxDifficulty >= 1 then
+                    maxDifficulty = 1
+                end
             end
         end
 
