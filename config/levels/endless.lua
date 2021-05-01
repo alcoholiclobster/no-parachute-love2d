@@ -18,7 +18,7 @@ local levelConfig = {
             difficulty = 0.72,
             planes = {
                 { texture = "levels/endless/obstacles/2" },
-                { texture = "levels/vents/fan_holder", position = {0, 0, 5}, chance = 0.35 },
+                { texture = "levels/vents/fan_holder", position = {0, 0, 1}, chance = 0.35 },
             },
             variants = {"obstacle2", "obstacle2_1"},
         },
@@ -26,7 +26,7 @@ local levelConfig = {
             excludeFromRandomGeneration = true,
             planes = {
                 { texture = "levels/vents/half_hole", rotation = 180 },
-                { texture = "levels/vents/fan_holder", position = {0, 0, 5}, chance = 0.35 },
+                { texture = "levels/vents/fan_holder", position = {0, 0, 1}, chance = 0.35 },
             },
         },
         obstacle3 = {
@@ -83,7 +83,7 @@ local levelConfig = {
         obstacle7_3 = {
             excludeFromRandomGeneration = true,
             planes = {
-                { texture = "levels/endless/obstacles/7", rotationSpeed = 4,},
+                { texture = "levels/endless/obstacles/7_2", rotationSpeed = 4, },
                 { texture = "levels/vents/fan_holder", position = {0, 0, 1} },
                 { texture = "levels/vents/fan_holder", position = {0, 0, -2} },
             }
@@ -147,13 +147,6 @@ local sidePlanesVariants = {
             "levels/meat/side_planes/cave1",
             "levels/meat/side_planes/cave2",
         },
-    },
-    {
-        textures = {
-            "levels/frozen/side_planes/1",
-            "levels/frozen/side_planes/2",
-            "levels/frozen/side_planes/3",
-        }
     },
     {
         textures = {
