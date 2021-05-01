@@ -20,13 +20,19 @@ local levelConfig = {
                 { texture = "levels/endless/obstacles/2" },
                 { texture = "levels/vents/fan_holder", position = {0, 0, 1}, chance = 0.35 },
             },
-            variants = {"obstacle2", "obstacle2_1"},
+            variants = {"obstacle2", "obstacle2_1", "obstacle2_2"},
         },
         obstacle2_1 = {
             excludeFromRandomGeneration = true,
             planes = {
                 { texture = "levels/vents/half_hole", rotation = 180 },
                 { texture = "levels/vents/fan_holder", position = {0, 0, 1}, chance = 0.35 },
+            },
+        },
+        obstacle2_2 = {
+            excludeFromRandomGeneration = true,
+            planes = {
+                { texture = "levels/tutorial/obstacle_plane6", rotation = 180 },
             },
         },
         obstacle3 = {
