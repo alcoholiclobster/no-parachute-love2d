@@ -15,6 +15,8 @@ function MainMenuScreen:initialize()
 
     self.buttons = {
         { label = "main_menu_btn_play_story", handler = "buttonHandlerPlayStory" },
+        { label = "main_menu_btn_play_endless_mode", handler = "buttonHandlerPlayEndlessMode" },
+        { label = "main_menu_btn_play_daily_challenge", handler = GameEnv.isSteamInitialized and "buttonHandlerPlayDailyChallenge" or false },
         { label = "btn_settings", handler = "buttonHandlerSettings" },
         { label = "main_menu_btn_credits", handler = "buttonHandlerCredits"},
         {},
@@ -68,6 +70,15 @@ end
 
 function MainMenuScreen:buttonHandlerPlayStory()
     self.screenManager:transition("LevelSelectionScreen")
+end
+
+function MainMenuScreen:buttonHandlerPlayEndlessMode()
+    GameEnv.endlessForceSeed = nil
+    self.screenManager:transition("GameScreen", "endless")
+end
+
+function MainMenuScreen:buttonHandlerPlayDailyChallenge()
+    self.screenManager:transition("DailyChallengeScreen")
 end
 
 function MainMenuScreen:buttonHandlerExit()
