@@ -103,10 +103,12 @@ function GameScreen:draw()
             local progress = tostring(math.floor(self.levelProgress * 100)).."%"
 
             love.graphics.setColor(1, 1, 1, 0.75)
-            love.graphics.setFont(assets.font("Roboto-Bold", 32))
-            love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
-            love.graphics.setFont(assets.font("Roboto-Bold", 14))
-            love.graphics.printf(lz("lbl_hud_progress"), 0, screenHeight - 50, screenWidth, "center")
+            if self.levelName ~= "endless" then
+                love.graphics.setFont(assets.font("Roboto-Bold", 32))
+                love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
+                love.graphics.setFont(assets.font("Roboto-Bold", 14))
+                love.graphics.printf(lz("lbl_hud_progress"), 0, screenHeight - 50, screenWidth, "center")
+            end
 
             local score = tostring(math.ceil(self.playerScore))
             love.graphics.setFont(assets.font("Roboto-Bold", 14))
