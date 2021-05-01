@@ -26,7 +26,7 @@ function DailyChallengeScreen:initialize()
         title = lz("lbl_endless_lb_today_global"),
         limit = 15,
     })
-    self.globalLeaderboard.x = 0.05
+    self.globalLeaderboard.x = 0.075
     self.globalLeaderboard.y = 0.2
     self.globalLeaderboard.width = 0.25
     self.globalLeaderboard.height = 0.6
@@ -78,20 +78,24 @@ function DailyChallengeScreen:draw()
     end
     local timeLeft = string.format("%.2d:%.2d:%.2d", secondsLeft/(60*60), secondsLeft/60%60, secondsLeft%60)
     love.graphics.setColor(1, 1, 1)
-    widgets.label(lz("lbl_endless_day_ends", timeLeft), screenWidth * 0.05, screenHeight * 0.07, screenWidth * 0.8, screenHeight * 0.05, false, "left")
+    widgets.label(lz("lbl_endless_day_ends", timeLeft), screenWidth * 0.1, screenHeight * 0.07, screenWidth * 0.8, screenHeight * 0.05, false, "center")
 
     self.globalLeaderboard:draw()
     self.friendsLeaderboard:draw()
     self.yesterdayLeaderboard:draw()
 
     -- Back to menu screen button
-    if widgets.button(lz("btn_back"), screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * 0.2, screenHeight * 0.05) then
+    if widgets.button(lz("btn_back"), screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * 0.1, screenHeight * 0.05) then
         self.screenManager:transition("MainMenuScreen")
     end
     -- Play button
-    if widgets.button(lz("lbl_endless_start_challenge"), screenWidth * (0.5 - 0.2), screenHeight - screenHeight * 0.12, screenWidth * 0.4, screenHeight * 0.08, false, "center") then
+    if widgets.button(lz("lbl_endless_start_challenge"), screenWidth * 0.2, screenHeight - screenHeight * 0.12, screenWidth * 0.6, screenHeight * 0.08, false, "center") then
         self.screenManager:transition("GameScreen", "endless")
     end
+end
+
+function DailyChallengeScreen:handleWindowResize(...)
+    self.gameManager:handleWindowResize(...)
 end
 
 return DailyChallengeScreen

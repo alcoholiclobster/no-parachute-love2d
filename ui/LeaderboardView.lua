@@ -87,7 +87,7 @@ function LeaderboardView:draw()
     local x, y, width, height = self.x * screenWidth, self.y * screenHeight, self.width * screenWidth, self.height * screenHeight
 
     local itemX, itemY = x, y
-    local itemWidth, itemHeight = width, height * 0.065
+    local itemWidth, itemHeight = width, height * 0.05
     love.graphics.setColor(165/255, 86/255, 125/255)
     widgets.label(self.title, itemX, itemY, itemWidth, itemHeight, true, "center")
 

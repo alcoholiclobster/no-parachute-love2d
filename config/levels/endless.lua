@@ -113,11 +113,70 @@ local levelConfig = {
 
 local breakableVariants = {"breakable1", "breakable2"}
 
-local planeVariants = {
-    -- breakable = { "breakable2" }
+local musicVariants = {
+    "forest_theme1",
+    "forest_theme2",
+    "mine_theme1",
+    "stone_cave",
+    "vents_theme",
+    "meat_theme",
 }
 
 local sidePlanesVariants = {
+    {
+        textures = {
+            "levels/stone_cave/side_plane2",
+        },
+    },
+    {
+        textures = {
+            "levels/stone_cave/side_plane3",
+        },
+    },
+    {
+        textures = {
+            "levels/stone_cave/side_plane1",
+        },
+    },
+    {
+        textures = {
+            "levels/stone_cave/side_plane4",
+            "levels/stone_cave/side_plane3",
+            "levels/stone_cave/side_plane2",
+            "levels/stone_cave/side_plane1",
+            "levels/meat/side_planes/cave1",
+            "levels/meat/side_planes/cave2",
+        },
+    },
+    {
+        textures = {
+            "levels/frozen/side_planes/1",
+            "levels/frozen/side_planes/2",
+            "levels/frozen/side_planes/3",
+        }
+    },
+    {
+        textures = {
+            "levels/gears/decorative1",
+            "levels/gears/decorative3",
+        },
+        pattern = { 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2 },
+    },
+    {
+        textures = {
+            "levels/gears/decorative2",
+            "levels/gears/decorative3",
+        },
+        pattern = { 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2 },
+    },
+    {
+        textures = {
+            "levels/gears/decorative1",
+            "levels/gears/decorative2",
+            "levels/gears/decorative3",
+        },
+        pattern = { 1, 1, 1, 1, 1, 3, 2, 2, 2, 2, 2, 3 },
+    },
     {
         textures = {
             "levels/vents/decorative1",
@@ -163,11 +222,6 @@ local sidePlanesVariants = {
             "levels/old_mine/wall1",
             "levels/old_mine/wall2",
             "levels/old_mine/wall3",
-        }
-    },
-    {
-        textures = {
-            "levels/old_mine/wall4",
         }
     },
     {
@@ -222,6 +276,7 @@ local function randomize(seed)
     levelConfig.totalHeight = math.huge
     levelConfig.endless = true
     levelConfig.fogColor = {0, 0, 0}
+    levelConfig.music = musicVariants[math.random(1, #musicVariants)]
 
     levelConfig.playerRotationMode = "constant"
     levelConfig.playerRotationSpeed = math.random() > 0.5 and 12 or -12
@@ -319,11 +374,6 @@ local function randomize(seed)
                 end
             end
         end
-
-        -- if math.random() > 0.1 then
-        --     plane.switchSidePlanes = true
-        --     table.insert(levelConfig.sidePlanes, generateSidePlanes())
-        -- end
 
         planesCache[index] = plane
 
