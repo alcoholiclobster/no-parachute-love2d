@@ -319,6 +319,15 @@ function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, is
 
     self.isNewHighscore = isNewHighscore
     self.isNewBestTime = isNewBestTime
+
+    local levelName = self.levelName
+    Steam.userStats.findOrCreateLeaderboard(levelName, "Descending", "Numeric", function (data)
+        Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "KeepBest", highscore, "hihi", function (data)
+            if data.success then
+                print("Uploaded new score for level", levelName, highscore, data.globalRankNew)
+            end
+        end)
+    end)
 end
 
 function GameScreen:showText(text, duration)

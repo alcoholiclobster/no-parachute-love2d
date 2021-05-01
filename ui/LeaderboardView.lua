@@ -1,6 +1,7 @@
 local class = require("lib.middleclass")
 local Steam = require("luasteam")
 local widgets = require("ui.widgets")
+local lz = require("utils.language").localize
 
 local LeaderboardView = class("LeaderboardView")
 
@@ -104,7 +105,7 @@ function LeaderboardView:draw()
 
     if not self.isLoadingCompleted then
         love.graphics.setColor(0.7, 0.7, 0.7)
-        widgets.label("Loading...", itemX, itemY, itemWidth, itemHeight, true, "center")
+        widgets.label(lz("lbl_leaderboard_loading"), itemX, itemY, itemWidth, itemHeight, true, "center")
         return
     end
 

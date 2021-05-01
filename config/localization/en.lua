@@ -1,7 +1,7 @@
 return {
     main_menu_btn_play_story = "STORY",
     main_menu_btn_play_daily_challenge = "DAILY CHALLENGE",
-    main_menu_btn_play_endless_mode = "ENDLESS MODE",
+    main_menu_btn_play_endless_mode = "ENDLESS LEVEL",
     main_menu_btn_credits = "CREDITS",
     btn_settings = "OPTIONS",
     btn_exit_game = "EXIT",
@@ -83,6 +83,9 @@ return {
     lbl_endless_lb_yesterday_global = "Yesterday rating",
     lbl_endless_dead_rank = "Your rating: %s",
     lbl_endless_start_challenge = "START CHALLENGE",
+
+    lbl_leaderboard_friends = "Friends Rating",
+    lbl_leaderboard_loading = "Loading...",
 
     lbl_credis = [["No Parachute"
 

@@ -6,6 +6,7 @@ local lz = require("utils.language").localize
 local assets = require("core.assets")
 local storage = require("utils.storage")
 local musicManager = require("utils.musicManager")
+local LeaderboardView = require("ui.LeaderboardView")
 
 local LevelSelectionScreen = class("LevelSelectionScreen", Screen)
 
@@ -114,6 +115,8 @@ function LevelSelectionScreen:initialize(selectLevelName)
 
     self.arrowTexture = assets.texture("arrow", true)
     self.arrowTextureWidth = self.arrowTexture:getWidth()
+
+    self:toggleLeaderboards()
 end
 
 function LevelSelectionScreen:update(deltaTime)
@@ -263,6 +266,11 @@ function LevelSelectionScreen:draw()
     widgets.star(screenWidth * 0.905, screenHeight * 0.05+starSize*0.17, starSize, true, true)
     love.graphics.setColor(1, 1, 1)
     widgets.label(self.earnedRating.."/"..self.totalRating, screenWidth * 0.7, screenHeight * 0.05, screenWidth * 0.2, starSize, false, "right")
+
+    -- Leaderboards
+    if self.leaderboardView then
+        self.leaderboardView:draw()
+    end
 end
 
 function LevelSelectionScreen:startLevel()
@@ -280,6 +288,7 @@ function LevelSelectionScreen:selectNextLevel()
     lastSelectedLevelIndex = self.selectedLevelIndex
     if self.levelsList[self.selectedLevelIndex].isUnlocked then
         self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
+        self:reloadLeaderboards()
     end
 end
 
@@ -291,6 +300,7 @@ function LevelSelectionScreen:selectPreviousLevel()
     lastSelectedLevelIndex = self.selectedLevelIndex
     if self.levelsList[self.selectedLevelIndex].isUnlocked then
         self:showBackgroundLevel(self.levelsList[self.selectedLevelIndex].name)
+        self:reloadLeaderboards()
     end
 end
 
@@ -320,6 +330,34 @@ function LevelSelectionScreen:handleKeyPress(key)
         self:selectPreviousLevel()
     elseif key == "return" then
         self:startLevel()
+    end
+end
+
+function LevelSelectionScreen:toggleLeaderboards()
+    if not self.leaderboardView then
+        local selectedLevel = self.levelsList[self.selectedLevelIndex]
+        if not selectedLevel then
+            return
+        end
+        self.leaderboardView = LeaderboardView:new({
+            name = selectedLevel.name,
+            type = "Friends",
+            title = lz("lbl_leaderboard_friends"),
+            limit = 15,
+        })
+        self.leaderboardView.x = 0.67
+        self.leaderboardView.y = 0.2
+        self.leaderboardView.width = 0.25
+        self.leaderboardView.height = 0.6
+    else
+        self.leaderboardView = nil
+    end
+end
+
+function LevelSelectionScreen:reloadLeaderboards()
+    if self.leaderboardView then
+        self:toggleLeaderboards()
+        self:toggleLeaderboards()
     end
 end
 
