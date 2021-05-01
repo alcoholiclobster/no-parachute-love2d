@@ -64,7 +64,6 @@ function settings.conf(path)
 
     local state = {}
     local settingsFileData = love.filesystem.read(filename)
-    print(settingsFileData)
     if settingsFileData then
         state = deserialize(settingsFileData)
     end

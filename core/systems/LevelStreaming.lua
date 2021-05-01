@@ -80,9 +80,11 @@ end
 
 local function spawnLevelPlane(world, planeConfig, worldPosition, localPosition, rotation, index)
     for i, plane in ipairs(planeConfig.planes) do
-        local entity = spawnPlane(world, plane, worldPosition, localPosition, rotation)
-        entity:give("name", "plane_"..index.."_"..i)
-        entity:give("planeSpawnEvent")
+        if plane.chance and math.random() < plane.chance or not plane.chance then
+            local entity = spawnPlane(world, plane, worldPosition, localPosition, rotation)
+            entity:give("name", "plane_"..index.."_"..i)
+            entity:give("planeSpawnEvent")
+        end
     end
 end
 
@@ -104,7 +106,7 @@ function LevelStreaming:update(deltaTime)
     local world = self:getWorld()
     local levelConfig = world.gameManager.levelConfig
 
-    if levelStreamer.lastIndex < #levelConfig.planes then
+    if levelStreamer.lastIndex < #levelConfig.planes or levelConfig.endless then
         local nextObstacle = levelConfig.planes[levelStreamer.lastIndex + 1]
         local nextObstacleZ = levelStreamer.lastZ - nextObstacle.distance
         if camera.position.value.z - 100 < nextObstacleZ then
@@ -161,9 +163,9 @@ function LevelStreaming:update(deltaTime)
             end
 
             if nextObstacle.fallSpeed then
-                if player then
-                    player.velocity.value.z = -nextObstacle.fallSpeed
-                end
+                -- if player then
+                --     player.velocity.value.z = math.max(player.velocity.value.z, -nextObstacle.fallSpeed)
+                -- end
                 self:getWorld().gameState.fallSpeed = nextObstacle.fallSpeed
             end
 

@@ -1,7 +1,7 @@
 return {
     main_menu_btn_play_story = "КАМПАНИЯ",
     main_menu_btn_play_daily_challenge = "ЕЖЕДНЕВНОЕ ИСПЫТАНИЕ",
-    main_menu_btn_play_endless_mode = "БЕСКОНЕЧНЫЙ РЕЖИМ",
+    main_menu_btn_play_endless_mode = "БЕСКОНЕЧНЫЙ УРОВЕНЬ",
     main_menu_btn_credits = "ОБ АВТОРАХ",
     btn_settings = "НАСТРОЙКИ",
     btn_exit_game = "ВЫЙТИ ИЗ ИГРЫ",
@@ -76,6 +76,16 @@ return {
     lbl_tutorial_movement = "Используйте WASD или стрелки для движения",
     lbl_tutorial_speedup = "Нажмите пробел, чтобы разрушать стены и ускоряться",
     lbl_tutorial_avoid = "Избегайте препятствий, чтобы выжить",
+
+    lbl_endless_day_ends = "Новый уровень через %s",
+    lbl_endless_lb_today_global = "Топ дня (глобальный)",
+    lbl_endless_lb_today_friends = "Топ дня (друзья)",
+    lbl_endless_lb_yesterday_global = "Вчерашний топ",
+    lbl_endless_dead_rank = "Позиция в рейтинге: %s",
+    lbl_endless_start_challenge = "НАЧАТЬ ИСПЫТАНИЕ",
+
+    lbl_leaderboard_friends = "Рекорды друзей",
+    lbl_leaderboard_loading = "Загрузка...",
 
     lbl_credis = [["No Parachute"
 

@@ -10,6 +10,7 @@ local mathUtils = require("utils.math")
 local lz = require("utils.language").localize
 local SettingsOverlay = require("ui.SettingsOverlay")
 local rating = require("utils.rating")
+local Steam = require("luasteam")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -42,6 +43,8 @@ function GameScreen:initialize(levelName)
     if self.levelConfig.disableHud then
         self.isHudEnabled = false
     end
+
+    self.globalRank = 0
 end
 
 function GameScreen:onShow()
@@ -59,6 +62,14 @@ end
 
 function GameScreen:restartLevel()
     self.screenManager:transition("GameScreen", self.levelName)
+end
+
+function GameScreen:exitToMenu()
+    if self.levelName == "endless" then
+        self.screenManager:transition("MainMenuScreen")
+    else
+        self.screenManager:transition("LevelSelectionScreen")
+    end
 end
 
 function GameScreen:setState(newState)
@@ -92,10 +103,12 @@ function GameScreen:draw()
             local progress = tostring(math.floor(self.levelProgress * 100)).."%"
 
             love.graphics.setColor(1, 1, 1, 0.75)
-            love.graphics.setFont(assets.font("Roboto-Bold", 32))
-            love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
-            love.graphics.setFont(assets.font("Roboto-Bold", 14))
-            love.graphics.printf(lz("lbl_hud_progress"), 0, screenHeight - 50, screenWidth, "center")
+            if self.levelName ~= "endless" then
+                love.graphics.setFont(assets.font("Roboto-Bold", 32))
+                love.graphics.printf(progress, 0, screenHeight - 90, screenWidth, "center")
+                love.graphics.setFont(assets.font("Roboto-Bold", 14))
+                love.graphics.printf(lz("lbl_hud_progress"), 0, screenHeight - 50, screenWidth, "center")
+            end
 
             local score = tostring(math.ceil(self.playerScore))
             love.graphics.setFont(assets.font("Roboto-Bold", 14))
@@ -136,11 +149,18 @@ function GameScreen:draw()
         love.graphics.setColor(0.75, 0.75, 0.75, math.min(1, stateTime * 2))
         labelY = labelY + labelHeight + screenHeight * 0.04
         labelHeight = screenHeight * 0.025
-        widgets.label(lz("lbl_game_stats_progress", progress), labelX, labelY, labelWidth, labelHeight, false, "center")
+        if self.levelName ~= "endless" then
+            widgets.label(lz("lbl_game_stats_progress", progress), labelX, labelY, labelWidth, labelHeight, false, "center")
+        end
 
         labelY = labelY + labelHeight + screenHeight * 0.04
         local score = tostring(math.ceil(self.playerScore))
         widgets.label(lz("lbl_game_stats_score", score), labelX, labelY, labelWidth, labelHeight, false, "center")
+
+        if self.globalRank and self.globalRank > 0 then
+            labelY = labelY + labelHeight + screenHeight * 0.04
+            widgets.label(lz("lbl_endless_dead_rank", tostring(self.globalRank)), labelX, labelY, labelWidth, labelHeight, false, "center")
+        end
 
         -- Buttons
         love.graphics.setColor(1, 1, 1, math.min(1, stateTime * 2))
@@ -151,7 +171,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
-            self.screenManager:transition("LevelSelectionScreen")
+            self:exitToMenu()
         end
     elseif self.state == "pause" then
         love.graphics.setColor(0, 0, 0, 0.6)
@@ -183,7 +203,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, self.settingsOverlay, "center") then
-            self.screenManager:transition("LevelSelectionScreen")
+            self:exitToMenu()
         end
 
         if self.settingsOverlay then
@@ -250,7 +270,7 @@ function GameScreen:draw()
         end
         buttonY = buttonY + buttonHeight * 1.5
         if widgets.button(lz("btn_game_exit_to_menu"), buttonX, buttonY, buttonWidth, buttonHeight, false, "center") then
-            self.screenManager:transition("LevelSelectionScreen")
+            self:exitToMenu()
         end
     end
 end
@@ -269,6 +289,19 @@ end
 
 function GameScreen:showDeathScreen()
     self:setState("dead")
+    self.globalRank = 0
+    if self.levelName == "endless" and GameEnv.endlessForceSeed then
+        local score = tostring(math.ceil(self.playerScore))
+
+        Steam.userStats.findOrCreateLeaderboard("daily_"..GameEnv.endlessForceSeed, "Descending", "Numeric", function (data)
+            Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "KeepBest", score, "hihi", function (data)
+                print("Uploaded new score", score, data.globalRankNew)
+                if data.success then
+                    self.globalRank = data.globalRankNew
+                end
+            end)
+        end)
+    end
 end
 
 function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, isNewBestTime)
@@ -288,6 +321,15 @@ function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, is
 
     self.isNewHighscore = isNewHighscore
     self.isNewBestTime = isNewBestTime
+
+    local levelName = self.levelName
+    Steam.userStats.findOrCreateLeaderboard(levelName, "Descending", "Numeric", function (data)
+        Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "KeepBest", highscore, "hihi", function (data)
+            if data.success then
+                print("Uploaded new score for level", levelName, highscore, data.globalRankNew)
+            end
+        end)
+    end)
 end
 
 function GameScreen:showText(text, duration)
