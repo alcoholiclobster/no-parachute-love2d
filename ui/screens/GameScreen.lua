@@ -10,7 +10,6 @@ local mathUtils = require("utils.math")
 local lz = require("utils.language").localize
 local SettingsOverlay = require("ui.SettingsOverlay")
 local rating = require("utils.rating")
-local Steam = require("luasteam")
 
 local GameScreen = class("GameScreen", Screen)
 
@@ -292,15 +291,6 @@ function GameScreen:showDeathScreen()
     self.globalRank = 0
     if self.levelName == "endless" and GameEnv.endlessForceSeed then
         local score = tostring(math.ceil(self.playerScore))
-
-        Steam.userStats.findOrCreateLeaderboard("daily_"..GameEnv.endlessForceSeed, "Descending", "Numeric", function (data)
-            Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "KeepBest", score, "hihi", function (data)
-                print("Uploaded new score", score, data.globalRankNew)
-                if data.success then
-                    self.globalRank = data.globalRankNew
-                end
-            end)
-        end)
     end
 end
 
@@ -323,13 +313,6 @@ function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, is
     self.isNewBestTime = isNewBestTime
 
     local levelName = self.levelName
-    Steam.userStats.findOrCreateLeaderboard(levelName, "Descending", "Numeric", function (data)
-        Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "KeepBest", highscore, "hihi", function (data)
-            if data.success then
-                print("Uploaded new score for level", levelName, highscore, data.globalRankNew)
-            end
-        end)
-    end)
 end
 
 function GameScreen:showText(text, duration)

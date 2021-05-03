@@ -8,15 +8,12 @@ local musicManager = require("utils.musicManager")
 local scheduler = require("utils.scheduler")
 local settings = require("utils.settings")
 local languageUtils = require("utils.language")
-local Steam = require("luasteam")
 local storage = require("utils.storage")
 local achievements = require("utils.achievements")
 
 local isInitialized = false
 
 local debugUpdateDelay = 0
-local steamUpdateInterval = 0.1
-local steamLastUpdatedAt = love.timer.getTime()
 
 local screenManager
 
@@ -29,46 +26,11 @@ local function completeInitialization()
         return
     end
 
-    local steamUserId = "local"
-
-    -- Initialize Steam
-    local success = pcall(function ()
-        if GameEnv.disableSteam then
-            error("Steam disabled")
-        end
-
-        local steamInitStartAt = love.timer.getTime()
-        if Steam.init() then
-            steamUserId = tostring(Steam.user.getSteamID())
-        elseif not GameEnv.disableSteam then
-            error("Steam must be running")
-        end
-
-        print("Steam initalization completed in", math.floor((love.timer.getTime() - steamInitStartAt) * 1000) / 1000, "s")
-    end)
-
-    if not success then
-        if GameEnv.disableSteam then
-            print("Failed to connect to steam")
-        else
-            love.window.showMessageBox("Steam initialization error", "Failed to connect to Steam. Make sure that Steam client is running.", "error")
-            -- love.event.quit()
-        end
-    end
-
-    GameEnv.isSteamInitialized = success
-
+    local user = "local"
     -- Load game saves
-    love.filesystem.createDirectory(steamUserId)
-    storage.load(steamUserId.."/user_progress.bin")
-
-    -- Init achievements
-    if success then
-        Steam.userStats.requestCurrentStats()
-        achievements.init()
-    end
-
-    screenManager:emit("handleInitializationFinish")
+    love.filesystem.createDirectory(user)
+    storage.load(user.."/user_progress.bin")
+    GameEnv.disableSteam = true
     isInitialized = true
 end
 
@@ -115,7 +77,8 @@ function love.load(arg)
         completeInitialization()
         screenManager:transition("MainMenuScreen")
     else
-        screenManager:transition("SplashScreen")
+        completeInitialization()
+        screenManager:transition("MainMenuScreen")
     end
 end
 
@@ -124,20 +87,11 @@ function love.quit()
     settings.set("window_x", math.max(1, x))
     settings.set("window_y", math.max(1, y))
     settings.set("window_display", display)
-
-    Steam.shutdown()
 end
 
 function love.update(deltaTime)
     if not isInitialized and screenManager.fadeProgress < 0.01 then
         completeInitialization()
-    end
-
-    -- Update Steam integration
-    if isInitialized and love.timer.getTime() - steamLastUpdatedAt > steamUpdateInterval then
-        steamLastUpdatedAt = love.timer.getTime()
-        Steam.runCallbacks()
-        achievements.update()
     end
 
     -- Don't update game if it's frozen
@@ -178,8 +132,6 @@ function love.keypressed(key, ...)
     elseif GameEnv.enableDebugMode and key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
         love.event.quit("restart")
     elseif GameEnv.enableDebugMode and key == "k" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
-        Steam.userStats.resetAllStats(true)
-        Steam.userStats.storeStats()
         print("Achievements reset")
     end
 end
@@ -210,18 +162,6 @@ function love.resize(width, height)
         settings.set("window_height", height)
     end
     screenManager:emit("handleWindowResize", width, height)
-end
-
----------------------
--- Steam callbacks --
----------------------
-
-function Steam.friends.onGameOverlayActivated(data)
-    screenManager:emit("handleWindowFocus", not data.active)
-end
-
-function Steam.userStats.onUserStatsReceived(data)
-    print("Steam achievements loaded")
 end
 
 -----------------------

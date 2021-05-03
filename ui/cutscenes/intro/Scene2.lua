@@ -29,7 +29,7 @@ function Scene2:process()
     self.cutscene:setText(lz("lbl_intro_press_to_jump", "F"))
     scheduler.wait(0.2)
     while true do
-        if not self.isJumping and love.keyboard.isDown("f") then
+        if not self.isJumping and (love.keyboard.isDown("f") or love.mouse.isDown(1)) then
             self.isJumping = true
             self.line = 0
             self.gravity = 250

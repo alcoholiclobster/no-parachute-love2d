@@ -1,5 +1,4 @@
 local class = require("lib.middleclass")
-local Steam = require("luasteam")
 local widgets = require("ui.widgets")
 local lz = require("utils.language").localize
 
@@ -33,53 +32,7 @@ function LeaderboardView:initialize(options)
 
     self.entries = {}
 
-    -- for i = 1, self.limitCount do
-    --     table.insert(self.entries, {
-    --         rank = i,
-    --         name = "VeryLongUsername1337",
-    --         score = 999999999,
-    --     })
-    -- end
-
-    local function handleEntriesDownload(items)
-        self.isLoadingCompleted = true
-        for _, item in ipairs(items) do
-            table.insert(self.entries, {
-                rank = item.globalRank,
-                name = Steam.friends.getFriendPersonaName(item.steamIDUser),
-                score = item.score,
-            })
-        end
-    end
-
     self.localEntry = nil
-
-    local function handleLocalEntryDownload(items)
-        if #items > 0 then
-            self.localEntry = {
-                rank = items[1].globalRank,
-                name = Steam.friends.getFriendPersonaName(items[1].steamIDUser),
-                score = items[1].score,
-            }
-        end
-    end
-
-    Steam.userStats.findOrCreateLeaderboard(self.leaderboardName, "Descending", "Numeric", function (data, err)
-        if err then
-            print("Failed to find leaderboard "..tostring(self.leaderboardName)..": "..tostring(err))
-            self.isLoadingCompleted = true
-            return
-        end
-        self.leaderboardId = data.steamLeaderboard
-
-        -- Download entries
-        if self.leaderboardType == "Global" then
-            Steam.userStats.downloadLeaderboardEntries(self.leaderboardId,  self.leaderboardType, 1, self.limitCount, handleEntriesDownload)
-            Steam.userStats.downloadLeaderboardEntries(self.leaderboardId,  "GlobalAroundUser", 0, 0, handleLocalEntryDownload)
-        elseif self.leaderboardType == "Friends" then
-            Steam.userStats.downloadLeaderboardEntries(self.leaderboardId,  self.leaderboardType, handleEntriesDownload)
-        end
-    end)
 end
 
 function LeaderboardView:draw()
