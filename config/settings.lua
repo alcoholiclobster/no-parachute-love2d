@@ -19,31 +19,15 @@ return {
     {
         name = "master_volume",
         values = {
-            { name = "0", value = 0 },
-            { name = "1", value = 0.025 },
-            { name = "2", value = 0.01 },
-            { name = "3", value = 0.1 },
-            { name = "4", value = 0.3 },
-            { name = "5", value = 0.5 },
-            { name = "6", value = 0.7 },
-            { name = "7", value = 0.8 },
-            { name = "8", value = 0.9 },
-            { name = "9", value = 1, default = true },
+            { name = "lbl_settings_disabled", value = 0 },
+            { name = "lbl_settings_enabled", value = 1, default = true },
         },
     },
     {
         name = "music_volume",
         values = {
-            { name = "0", value = 0 },
-            { name = "1", value = 0.025 },
-            { name = "2", value = 0.01 },
-            { name = "3", value = 0.1 },
-            { name = "4", value = 0.3 },
-            { name = "5", value = 0.5 },
-            { name = "6", value = 0.7 },
-            { name = "7", value = 0.8 },
-            { name = "8", value = 0.9 },
-            { name = "9", value = 1, default = true },
+            { name = "lbl_settings_disabled", value = 0 },
+            { name = "lbl_settings_enabled", value = 1, default = true },
         },
     },
 
@@ -71,21 +55,6 @@ return {
     },
 
     -- Graphics
-    {
-        name = "window_mode",
-        values = {
-            { name = "lbl_settings_windowed", value = "windowed"},
-            { name = "lbl_settings_borderless", value = "borderless", default = true},
-            { name = "lbl_settings_fullscreen", value = "fullscreen"},
-        }
-    },
-    {
-        name = "vsync",
-        values = {
-            { name = "lbl_settings_disabled", value = false, default = true },
-            { name = "lbl_settings_enabled", value = true}
-        }
-    },
     {
         name = "world_quality",
         values = {

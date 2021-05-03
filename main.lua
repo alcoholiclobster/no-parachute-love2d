@@ -168,36 +168,6 @@ end
 -- Settings handlers --
 -----------------------
 
-settings.addHandler("window_mode", function (value)
-    if not isInitialized then
-        return
-    end
-
-    if value == "windowed" then
-        love.window.updateMode(settings.get("window_width"), settings.get("window_height"), {
-            fullscreen = false,
-        })
-    elseif value == "borderless" then
-        love.window.updateMode(0, 0, {
-            fullscreen = true,
-            fullscreentype = "desktop",
-        })
-    else
-        love.window.updateMode(0, 0, {
-            fullscreen = true,
-            fullscreentype = "exclusive",
-        })
-    end
-end)
-
-settings.addHandler("vsync", function (value)
-    if value then
-        love.window.setVSync(-1)
-    else
-        love.window.setVSync(0)
-    end
-end)
-
 settings.addHandler("master_volume", function (value)
     love.audio.setVolume(value)
 end)
