@@ -60,6 +60,12 @@ vec3 = {
 
         add = function(v, u, out)
             out = out or v
+            if type(u) == "number" then
+                out.x = out.x + u
+                out.y = out.y + u
+                out.z = out.z + u
+                return
+            end
             out.x = v.x + u.x
             out.y = v.y + u.y
             out.z = v.z + u.z
@@ -68,6 +74,12 @@ vec3 = {
 
         sub = function(v, u, out)
             out = out or v
+            if type(u) == "number" then
+                out.x = out.x + u
+                out.y = out.y + u
+                out.z = out.z + u
+                return
+            end
             out.x = v.x - u.x
             out.y = v.y - u.y
             out.z = v.z - u.z

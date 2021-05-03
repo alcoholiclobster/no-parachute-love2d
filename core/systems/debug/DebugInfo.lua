@@ -7,7 +7,7 @@ local DebugInfo = Concord.system({
 })
 
 local startTime = love.timer.getTime()
-local isBasicInfoVisible = false
+local isBasicInfoVisible = true
 local isECSInfoVisible = false
 
 function DebugInfo:draw()
@@ -19,16 +19,16 @@ function DebugInfo:draw()
         local fps = tostring(love.timer.getFPS())
         love.graphics.print("FPS: "..fps, 10, y)
 
-        y = y + 18
-        love.graphics.print("Side planes: "..tostring(#self.sidePlanePool), 10, y)
-        y = y + 18
-        love.graphics.print("Obstacle planes: "..tostring(#self.obstaclePool), 10, y)
-        y = y + 18
-        if self.playerPool[1] then
-            love.graphics.print("Player Z: "..tostring(math.floor(self.playerPool[1].position.value.z)), 10, y)
-            y = y + 18
-        end
-        love.graphics.print("Game time: "..tostring(math.floor(love.timer.getTime() - startTime)).."s", 10, y)
+        -- y = y + 18
+        -- love.graphics.print("Side planes: "..tostring(#self.sidePlanePool), 10, y)
+        -- y = y + 18
+        -- love.graphics.print("Obstacle planes: "..tostring(#self.obstaclePool), 10, y)
+        -- y = y + 18
+        -- if self.playerPool[1] then
+        --     love.graphics.print("Player Z: "..tostring(math.floor(self.playerPool[1].position.value.z)), 10, y)
+        --     y = y + 18
+        -- end
+        -- love.graphics.print("Game time: "..tostring(math.floor(love.timer.getTime() - startTime)).."s", 10, y)
     end
 
     if isECSInfoVisible then
