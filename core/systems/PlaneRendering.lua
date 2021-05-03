@@ -20,24 +20,24 @@ local lastFrameCameraZ = 0
 local clearColor = nil
 local fogDistance = 100
 local planeShader = love.graphics.newShader[[
-uniform vec4 fogcolor = vec4(1, 0, 0, 1);
-uniform float depth = 0.0;
-uniform float border = 1.0;
-uniform vec4 bgcolor = vec4(98.0/255.0, 73.0/255.0, 69.0/255.0, 1.0);
+uniform vec4 fogcolor;
+uniform float depth;
+uniform float border;
+uniform vec4 bgcolor;
 
 vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 {
     vec2 coord = texcoord * (1.0+border)-border * 0.5;
 
-    vec2 borderStep = step(vec2(0, 0), coord) - step(vec2(1, 1), coord);
-    float borderMul = 1 - borderStep.x * borderStep.y;
+    vec2 borderStep = step(vec2(0.0, 0.0), coord) - step(vec2(1.0, 1.0), coord);
+    float borderMul = 1.0 - borderStep.x * borderStep.y;
 
     vec4 texcolor = Texel(texture, coord);
     texcolor.a = texcolor.a * vcolor.a;
 
-    if (borderMul > 0) {
-        texcolor.rgb = mix(texcolor.rgb, bgcolor.rgb, (1 - texcolor.a) * bgcolor.a);
-        texcolor.a += 1;
+    if (borderMul > 0.0) {
+        texcolor.rgb = mix(texcolor.rgb, bgcolor.rgb, (1.0 - texcolor.a) * bgcolor.a);
+        texcolor.a += 1.0;
     }
 
     texcolor.rgb = mix(texcolor.rgb * vcolor.rgb, fogcolor.rgb, depth);
@@ -46,8 +46,8 @@ vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
 ]]
 
 local blurShader = love.graphics.newShader[[
-uniform float aspect_ratio = 0.0;
-uniform float blur_level = 0.0;
+uniform float aspect_ratio;
+uniform float blur_level;
 float blur_radius = 1.0;
 int blur_steps = 12;
 
@@ -65,7 +65,8 @@ vec4 effect(vec4 vcolor, Image texture, vec2 texcoord, vec2 pixcoord)
     float count = 0.0;
     for (int i = 0; i < blur_steps; i++)
     {
-        color += Texel(texture, texcoord - i * dir);
+        float i_float = float(i);
+        color += Texel(texture, texcoord - i_float * dir);
         count += 1.0;
     }
     return color / count;
