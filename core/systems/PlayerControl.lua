@@ -9,6 +9,9 @@ local PlayerControl = Concord.system({
 
 local joystickDeadZone = 0.15
 
+local touchStartX, touchStartY = nil, nil
+local touchLength = 0.2
+
 function PlayerControl:update(deltaTime)
     for _, e in ipairs(self.pool) do
         local joystick = joystickManager.get()
@@ -36,6 +39,21 @@ function PlayerControl:update(deltaTime)
                 local yAxis = joystick:getGamepadAxis("lefty")
                 direction.x = direction.x + mathUtils.clamp01((math.abs(xAxis) - joystickDeadZone) / (1 - joystickDeadZone)) * mathUtils.sign(xAxis)
                 direction.y = direction.y + mathUtils.clamp01((math.abs(yAxis) - joystickDeadZone) / (1 - joystickDeadZone)) * mathUtils.sign(yAxis)
+            end
+
+            -- Touch input
+            local isTouching = love.mouse.isDown(1)
+            if isTouching and not touchStartX then
+                touchStartX, touchStartY = love.mouse.getPosition()
+            elseif not isTouching and touchStartX then
+                touchStartX, touchStartY = nil, nil
+            end
+
+            if touchStartX and isTouching then
+                local touchX, touchY = love.mouse.getPosition()
+                local touchLengthAbsolute = love.graphics.getWidth() * touchLength
+                direction.x = -(touchStartX - touchX) / touchLengthAbsolute
+                direction.y = -(touchStartY - touchY) / touchLengthAbsolute
             end
         end
 

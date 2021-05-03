@@ -52,7 +52,6 @@ end
 
 function GameScreen:onHide()
     self.gameManager:destroy()
-    love.mouse.setVisible(true)
 end
 
 function GameScreen:setSpeedEffectAmount(amount)
@@ -74,12 +73,6 @@ end
 function GameScreen:setState(newState)
     self.state = newState
     self.stateChangedAt = love.timer.getTime()
-
-    if self.state == "game" then
-        love.mouse.setVisible(false)
-    else
-        love.mouse.setVisible(true)
-    end
 
     self.gameManager:handlePause(self.state == "pause")
 end
