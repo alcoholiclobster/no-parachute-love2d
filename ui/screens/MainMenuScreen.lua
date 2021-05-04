@@ -14,11 +14,13 @@ function MainMenuScreen:initialize()
     self.gameManager = GameManager:new(require("config.levels.deep_forest1"), self, true)
 
     self.buttons = {
-        { label = "main_menu_btn_play_story", handler = "buttonHandlerPlayStory" },
+        { label = "main_menu_btn_play_story", handler = "LevelSelectionScreen" },
         { label = "main_menu_btn_play_endless_mode", handler = "buttonHandlerPlayEndlessMode" },
-        { label = "main_menu_btn_play_daily_challenge", handler = GameEnv.isSteamInitialized and "buttonHandlerPlayDailyChallenge" or false },
+        { label = "main_menu_btn_play_daily_challenge", handler = GameEnv.isSteamInitialized and "DailyChallengeScreen" or false },
+        { label = "MODS", handler = GameEnv.isSteamInitialized and "WorkshopScreen" or false },
+        {},
         { label = "btn_settings", handler = "buttonHandlerSettings" },
-        { label = "main_menu_btn_credits", handler = "buttonHandlerCredits"},
+        { label = "main_menu_btn_credits", handler = "CreditsScreen"},
         {},
         { label = "btn_exit_game", handler = "buttonHandlerExit" },
     }
@@ -40,14 +42,18 @@ function MainMenuScreen:draw()
     self.gameManager:draw()
 
     local btnX, btnY = screenWidth * 0.08, screenHeight * 0.5
-    local btnWidth, btnHeight = screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.05
-    local btnSpace = screenHeight * 0.01
+    local btnWidth, btnHeight = screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.04
+    local btnSpace = screenHeight * 0.007
     for _, buttonData in ipairs(self.buttons) do
         if buttonData.label then
             local isPressed = widgets.button(lz(buttonData.label), btnX, btnY, btnWidth, btnHeight, not buttonData.handler or self.settingsOverlay)
 
-            if isPressed and buttonData.handler and self[buttonData.handler] then
-                self[buttonData.handler](self)
+            if isPressed and buttonData.handler then
+                if self[buttonData.handler] then
+                    self[buttonData.handler](self)
+                else
+                    self.screenManager:transition(buttonData.handler)
+                end
             end
         end
 
@@ -68,17 +74,9 @@ function MainMenuScreen:draw()
     end
 end
 
-function MainMenuScreen:buttonHandlerPlayStory()
-    self.screenManager:transition("LevelSelectionScreen")
-end
-
 function MainMenuScreen:buttonHandlerPlayEndlessMode()
     GameEnv.endlessForceSeed = nil
     self.screenManager:transition("GameScreen", "endless")
-end
-
-function MainMenuScreen:buttonHandlerPlayDailyChallenge()
-    self.screenManager:transition("DailyChallengeScreen")
 end
 
 function MainMenuScreen:buttonHandlerExit()
@@ -89,10 +87,6 @@ function MainMenuScreen:buttonHandlerSettings()
     if not self.settingsOverlay then
         self.settingsOverlay = SettingsOverlay:new()
     end
-end
-
-function MainMenuScreen:buttonHandlerCredits()
-    self.screenManager:transition("CreditsScreen")
 end
 
 function MainMenuScreen:handleWindowResize(...)
