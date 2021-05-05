@@ -32,20 +32,11 @@ function LeaderboardView:initialize(options)
     end
 
     self.entries = {}
-
-    -- for i = 1, self.limitCount do
-    --     table.insert(self.entries, {
-    --         rank = i,
-    --         name = "VeryLongUsername1337",
-    --         score = 999999999,
-    --     })
-    -- end
-
     local function handleEntriesDownload(items)
         self.isLoadingCompleted = true
-        for _, item in ipairs(items) do
+        for i, item in ipairs(items) do
             table.insert(self.entries, {
-                rank = item.globalRank,
+                rank = self.leaderboardType == "Friends" and i or item.globalRank,
                 name = Steam.friends.getFriendPersonaName(item.steamIDUser),
                 score = item.score,
             })
