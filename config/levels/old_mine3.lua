@@ -134,7 +134,7 @@ return {
         { name = "side_wood1", distance = 20, rotation = 0 },
         { name = "middle_bridge", distance = 10, rotation = 0 },
         { name = "minecart", distance = 20, rotation = 90 },
-        { name = "middle_hole", distance = 15, rotation = 0 },
+        { name = "middle_hole", distance = 22, rotation = 0 },
 
         { distance = 20, tunnelShape = { direction = {6, 6}, rotationSpeed = 0 } },
         { distance = 40, tunnelShape = { direction = {9, 0} }, name = "side_wood2" },

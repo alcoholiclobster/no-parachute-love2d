@@ -174,13 +174,21 @@ function love.keypressed(key, ...)
     if key == "`" and GameEnv.enableGameConsole then
         console.toggle()
     elseif key == "f11" then
-        love.window.setFullscreen(not love.window.getFullscreen(), "exclusive")
-    elseif GameEnv.enableDebugMode and key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
-        love.event.quit("restart")
-    elseif GameEnv.enableDebugMode and key == "k" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
-        Steam.userStats.resetAllStats(true)
-        Steam.userStats.storeStats()
-        print("Achievements reset")
+        if settings.get("window_mode") == "windowed" then
+            settings.set("window_mode", "fullscreen")
+        else
+            settings.set("window_mode", "windowed")
+        end
+    end
+
+    if GameEnv.enableDebugMode then
+        if key == "r" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
+            love.event.quit("restart")
+        elseif key == "k" and love.keyboard.isDown("lctrl") and love.keyboard.isDown("lshift") then
+            Steam.userStats.resetAllStats(true)
+            Steam.userStats.storeStats()
+            print("Achievements reset")
+        end
     end
 end
 
@@ -248,6 +256,8 @@ settings.addHandler("window_mode", function (value)
             fullscreentype = "exclusive",
         })
     end
+
+    screenManager:emit("handleWindowResize", love.graphics.getWidth(), love.graphics.getHeight())
 end)
 
 settings.addHandler("vsync", function (value)
