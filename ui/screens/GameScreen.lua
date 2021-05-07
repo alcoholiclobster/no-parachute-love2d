@@ -11,21 +11,16 @@ local lz = require("utils.language").localize
 local SettingsOverlay = require("ui.SettingsOverlay")
 local rating = require("utils.rating")
 local Steam = require("luasteam")
+local levelLoader = require("core.levelLoader")
 
 local GameScreen = class("GameScreen", Screen)
 
 local playedCutscenes = {}
 
-function GameScreen:initialize(levelNameOrConfig)
-    if type(levelNameOrConfig) == "string" then
-        assert(type(levelNameOrConfig) == "string", "Level not specified")
-        self.levelConfig = require("config.levels."..levelNameOrConfig)
+function GameScreen:initialize(levelName)
+    self.levelName = levelName
+    self.levelConfig = levelLoader.load(levelName)
 
-        self.levelName = levelNameOrConfig
-    elseif type(levelNameOrConfig) == "table" then
-        self.levelConfig = levelNameOrConfig
-        self.levelName = levelNameOrConfig.name
-    end
     self.gameManager = GameManager:new(self.levelConfig, self)
 
     self.levelProgress = 0

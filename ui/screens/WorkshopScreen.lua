@@ -1,7 +1,6 @@
 local class = require("lib.middleclass")
 local Screen = require("ui.Screen")
 local widgets = require("ui.widgets")
-local json = require("lib.json")
 local lz = require("utils.language").localize
 local Steam = require("luasteam")
 
@@ -33,6 +32,14 @@ end
 function WorkshopScreen:initialize()
     self.subscribedCheckDelay = 0
     self.subscribedCount = -1
+
+    self.localLevels = {}
+    for _, name in ipairs(love.filesystem.getDirectoryItems("/mods")) do
+        local itemInfo = love.filesystem.getInfo("/mods/"..name)
+        if itemInfo and itemInfo.type == "directory" then
+            table.insert(self.localLevels, name)
+        end
+    end
 end
 
 function WorkshopScreen:update(deltaTime)
@@ -48,16 +55,8 @@ function WorkshopScreen:update(deltaTime)
     end
 end
 
-function WorkshopScreen:loadLevel(path)
-    print("load level at", path)
-
-    local levelConfigFile = assert(io.open(path .. "/levelConfig.json", "rb"))
-    local levelConfigJSON = levelConfigFile:read("*all")
-    levelConfigFile:close()
-
-    local levelConfig = json.decode(levelConfigJSON)
-    self.screenManager:transition("GameScreen", levelConfig)
-    print("level.name", levelConfig.name)
+function WorkshopScreen:loadLocalLevel(name)
+    self.screenManager:transition("GameScreen", "mods/"..name)
 end
 
 function WorkshopScreen:draw()
@@ -65,7 +64,7 @@ function WorkshopScreen:draw()
 
     if updateHandle then
         local status = Steam.UGC.getItemUpdateProgress(updateHandle)
-        widgets.label("update status: "..tostring(status), screenWidth * 0.1, screenHeight * 0.5, screenWidth * 0.5, screenHeight * 0.05)
+        widgets.label("update status: "..tostring(status), screenWidth * 0.1, screenHeight * 0.05, screenWidth * 0.5, screenHeight * 0.05)
     end
 
     -- Back to menu screen button
@@ -79,7 +78,7 @@ function WorkshopScreen:draw()
     end
 
     if widgets.button("[play test level]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.3, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
-        self:loadLevel(love.filesystem.getSaveDirectory().."/mods/test")
+        self:loadLocalLevel("test")
     end
 
     if widgets.button("[test upload]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
@@ -99,6 +98,39 @@ function WorkshopScreen:draw()
                 end
             end)
         end
+    end
+
+    local x = screenWidth * 0.05
+    local y = screenHeight * 0.1
+    local w = screenWidth * 0.4
+    local h = screenHeight * 0.04
+    for _, itemId in ipairs(Steam.UGC.getSubscribedItems()) do
+        local id = tostring(itemId)
+        local flag = Steam.UGC.getItemState(itemId)
+        local text = ""
+        if flag.installed then
+            local success, sizeOnDisk, folder = Steam.UGC.getItemInstallInfo(itemId)
+            text = id.." [installed] "..sizeOnDisk
+        elseif flag.downloading then
+            text = id.." [downloading]"
+        else
+            text = id.." [???]"
+        end
+        if widgets.button(text, x, y, w, h) then
+            self.screenManager:transition("GameScreen", "workshop/"..id)
+        end
+        y = y + h * 1.5
+    end
+
+    x = screenWidth * 0.5
+    y = screenHeight * 0.1
+    w = screenWidth * 0.4
+    h = screenHeight * 0.04
+    for i, name in ipairs(self.localLevels) do
+        if widgets.button(name, x, y, w, h) then
+            self.screenManager:transition("GameScreen", "mods/"..name)
+        end
+        y = y + h * 1.5
     end
 end
 
