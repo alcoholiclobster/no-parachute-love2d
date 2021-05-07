@@ -16,10 +16,16 @@ local GameScreen = class("GameScreen", Screen)
 
 local playedCutscenes = {}
 
-function GameScreen:initialize(levelName)
-    assert(type(levelName) == "string", "Level not specified")
-    self.levelConfig = require("config.levels."..levelName)
-    self.levelName = levelName
+function GameScreen:initialize(levelNameOrConfig)
+    if type(levelNameOrConfig) == "string" then
+        assert(type(levelNameOrConfig) == "string", "Level not specified")
+        self.levelConfig = require("config.levels."..levelNameOrConfig)
+
+        self.levelName = levelNameOrConfig
+    elseif type(levelNameOrConfig) == "table" then
+        self.levelConfig = levelNameOrConfig
+        self.levelName = levelNameOrConfig.name
+    end
     self.gameManager = GameManager:new(self.levelConfig, self)
 
     self.levelProgress = 0

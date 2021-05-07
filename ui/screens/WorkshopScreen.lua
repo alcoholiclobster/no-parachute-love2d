@@ -1,7 +1,7 @@
 local class = require("lib.middleclass")
 local Screen = require("ui.Screen")
 local widgets = require("ui.widgets")
-local GameManager = require("core.GameManager")
+local json = require("lib.json")
 local lz = require("utils.language").localize
 local Steam = require("luasteam")
 
@@ -48,6 +48,18 @@ function WorkshopScreen:update(deltaTime)
     end
 end
 
+function WorkshopScreen:loadLevel(path)
+    print("load level at", path)
+
+    local levelConfigFile = assert(io.open(path .. "/levelConfig.json", "rb"))
+    local levelConfigJSON = levelConfigFile:read("*all")
+    levelConfigFile:close()
+
+    local levelConfig = json.decode(levelConfigJSON)
+    self.screenManager:transition("GameScreen", levelConfig)
+    print("level.name", levelConfig.name)
+end
+
 function WorkshopScreen:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
@@ -64,6 +76,10 @@ function WorkshopScreen:draw()
     if widgets.button("[open mods folder]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.2, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
         love.filesystem.createDirectory("mods")
         love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
+    end
+
+    if widgets.button("[play test level]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.3, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
+        self:loadLevel(love.filesystem.getSaveDirectory().."/mods/test")
     end
 
     if widgets.button("[test upload]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
