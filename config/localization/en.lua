@@ -86,6 +86,7 @@ return {
 
     lbl_leaderboard_friends = "Friends Rating",
     lbl_leaderboard_loading = "Loading...",
+    lbl_leaderboard_global = "Global rating",
 
     lbl_credis = [["No Parachute"
 

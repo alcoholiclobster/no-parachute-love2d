@@ -40,7 +40,7 @@ function levelLoader.load(levelName)
         end
     end
 
-    return levelLoader.loadFromPath(path)
+    return levelLoader.loadFromPath(path), path
 end
 
 return levelLoader

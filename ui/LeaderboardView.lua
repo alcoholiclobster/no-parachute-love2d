@@ -92,7 +92,8 @@ function LeaderboardView:draw()
     love.graphics.line(itemX, itemY + itemHeight * 1.4, itemX + itemWidth, itemY + itemHeight * 1.4)
 
     itemY = itemY + itemHeight * 1.4 + height * 0.025
-    itemHeight = (height - itemY) / (self.limitCount + 1)
+    local itemsHeight = height - itemHeight * 1.4 - height * 0.025
+    itemHeight = itemsHeight / (self.limitCount + 1)
 
     if not self.isLoadingCompleted then
         love.graphics.setColor(0.7, 0.7, 0.7)
@@ -101,8 +102,9 @@ function LeaderboardView:draw()
     end
 
     for i = 1, self.limitCount do
+        local height = itemHeight * 0.6
         local row = self.entries[i]
-            if row then
+        if row then
             if i == 1 then
                 love.graphics.setColor(255/255, 204/255, 18/255)
             elseif i == 2 then
@@ -112,23 +114,23 @@ function LeaderboardView:draw()
             else
                 love.graphics.setColor(0.6, 0.6, 0.6)
             end
-            widgets.label(row.rank..".", itemX, itemY, itemWidth, itemHeight, false, "left")
-            widgets.label(row.name, itemX + itemWidth * 0.07, itemY, itemWidth, itemHeight, false, "left")
+            widgets.label(row.rank..".", itemX, itemY, itemWidth, height, false, "left")
+            widgets.label(row.name, itemX + itemWidth * 0.07, itemY, itemWidth, height, false, "left")
             love.graphics.setColor(1, 1, 1)
-            widgets.label(tostring(row.score), itemX, itemY, itemWidth, itemHeight, true, "right")
+            widgets.label(tostring(row.score), itemX, itemY, itemWidth, height, true, "right")
         else
-            widgets.label("-", itemX, itemY, itemWidth, itemHeight, true, "right")
+            widgets.label("-", itemX, itemY, itemWidth, height, true, "right")
         end
-        itemY = itemY + itemHeight * 1.4
+        itemY = itemY + itemHeight
     end
 
     if self.localEntry then
         local row = self.localEntry
         love.graphics.setColor(71/255, 175/255, 255/255)
-        widgets.label(row.rank..".", itemX, itemY, itemWidth, itemHeight, false, "left")
-        widgets.label(row.name, itemX + itemWidth * 0.07, itemY, itemWidth, itemHeight, false, "left")
+        widgets.label(row.rank..".", itemX, itemY, itemWidth, itemHeight * 0.6, false, "left")
+        widgets.label(row.name, itemX + itemWidth * 0.07, itemY, itemWidth, itemHeight * 0.6, false, "left")
         love.graphics.setColor(1, 1, 1)
-        widgets.label(tostring(row.score), itemX, itemY, itemWidth, itemHeight, true, "right")
+        widgets.label(tostring(row.score), itemX, itemY, itemWidth, itemHeight * 0.6, true, "right")
     end
 end
 

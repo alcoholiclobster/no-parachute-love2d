@@ -6,6 +6,8 @@ local lz = require("utils.language").localize
 local Steam = require("luasteam")
 local levelLoader = require("core.levelLoader")
 local mathUtils = require("utils.math")
+local renderingUtils = require("utils.rendering")
+local LeaderboardView = require("ui.LeaderboardView")
 
 local WorkshopScreen = class("WorkshopScreen", Screen)
 
@@ -43,6 +45,9 @@ function WorkshopScreen:initialize()
     self.localLevelsList = {}
     self.installedLevelsList = {}
 
+    self.selectedLevelId = nil
+    self.selectedLevelData = nil
+
     self:refreshLevelsLists()
 end
 
@@ -69,7 +74,10 @@ function WorkshopScreen:refreshLevelsLists()
     for _, name in ipairs(love.filesystem.getDirectoryItems("/mods")) do
         local itemInfo = love.filesystem.getInfo("/mods/"..name)
         if itemInfo and itemInfo.type == "directory" then
-            table.insert(self.localLevelsList, { label = name, level = "mods/"..name })
+            local config = levelLoader.load("mods/"..name)
+            if config then
+                table.insert(self.localLevelsList, { label = name, level = "mods/"..name })
+            end
         end
     end
 
@@ -86,6 +94,9 @@ function WorkshopScreen:refreshLevelsLists()
 end
 
 function WorkshopScreen:drawLevelsList(x, y, width, height)
+    love.graphics.setColor(0, 0, 0, 0.4)
+    love.graphics.rectangle("fill", x - width * 0.01, y, width + width * 0.02, height)
+
     love.graphics.setColor(1, 1, 1)
 
     if widgets.button("Installed levels", x, y, width * 0.5, height * 0.05, self.levelsListTab == "installed", "center") then
@@ -105,14 +116,11 @@ function WorkshopScreen:drawLevelsList(x, y, width, height)
     local itemHeight = itemsHeight * 0.06
     local itemY = y
     local scroll = math.max(0, self.levelsListScroll * #list * itemHeight - itemsHeight * 0.5 * self.levelsListScroll)
-    love.graphics.setColor(0, 0, 0, 0.8)
-    love.graphics.rectangle("fill", x - width * 0.02, y - width * 0.01, width * 1.04, itemsHeight + width * 0.02)
     love.graphics.setScissor(x, y, width, itemsHeight)
     for _, item in ipairs(list) do
         local drawY = itemY - scroll
         if drawY > y - 5 and drawY < y + itemsHeight and widgets.button(item.label, x, drawY, width, itemHeight * 0.8, not item.level, "left") then
-            self.screenManager:transition("GameScreen", item.level)
-            -- TODO: Select
+            self:selectLevel(item.level)
         end
 
         itemY = itemY + itemHeight
@@ -122,11 +130,6 @@ function WorkshopScreen:drawLevelsList(x, y, width, height)
         widgets.label("No items", x, y + itemsHeight * 0.5, width, itemHeight * 0.8, false, "center")
     end
     love.graphics.setScissor()
-
-    y = y + itemsHeight + height * 0.01
-    if widgets.button("Refresh", x, y, width, height * 0.05, false, "center") then
-        self:refreshLevelsLists()
-    end
 end
 
 function WorkshopScreen:handleMouseScroll(scroll)
@@ -139,6 +142,80 @@ function WorkshopScreen:handleMouseScroll(scroll)
     self.levelsListScroll = mathUtils.clamp01(self.levelsListScroll)
 end
 
+function WorkshopScreen:selectLevel(id)
+    self.selectedLevelId = id
+    local config, path = levelLoader.load(id)
+    self.selectedLevelData = {}
+    self.selectedLevelData.name = config.name
+
+    pcall(function ()
+        local imageFile = assert(io.open(path .. "/preview.png", "rb"))
+        local imageFileData = imageFile:read("*all")
+        imageFile:close()
+        local fileData = love.filesystem.newFileData(imageFileData, "preview.png")
+        self.selectedLevelData.image = love.graphics.newImage(love.image.newImageData(fileData))
+    end)
+
+    self.leaderboardView = LeaderboardView:new({
+        name = id,
+        type = "Global",
+        title = lz("lbl_leaderboard_global"),
+        limit = 10,
+    })
+
+    self.leaderboardView.waitingToSetPos = true
+end
+
+function WorkshopScreen:drawLevelInfo(x, y, width, height)
+    love.graphics.setColor(0, 0, 0, 0.4)
+    love.graphics.rectangle("fill", x, y, width, height)
+
+    if not self.selectedLevelId then
+        love.graphics.setColor(0.5, 0.5, 0.5)
+        widgets.label("Select level", x, y + height * 0.48, width, height * 0.04, true, "center")
+        return
+    end
+
+    love.graphics.setColor(1, 1, 1, 1)
+    local imageSize = width * 0.4
+    local imageX = x + width - imageSize
+    local imageY = y
+
+    if self.selectedLevelData.image then
+        local sx, sy = renderingUtils.getImageScaleForNewDimensions(self.selectedLevelData.image, imageSize, imageSize)
+        love.graphics.draw(self.selectedLevelData.image, imageX, imageY, 0, sx, sy)
+    else
+        love.graphics.setColor(0.5, 0.5, 0.5)
+        love.graphics.rectangle("line", imageX, imageY, imageSize, imageSize)
+        widgets.label("No preview image", imageX, imageY + imageSize * 0.5, imageSize, imageSize * 0.1, true, "center")
+    end
+
+    if self.leaderboardView then
+        if self.leaderboardView.waitingToSetPos then
+            self.leaderboardView.waitingToSetPos = false
+            local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
+
+            self.leaderboardView.x = imageX / screenWidth
+            self.leaderboardView.y = (imageY + imageSize) / screenHeight
+            self.leaderboardView.width = imageSize / screenWidth
+            self.leaderboardView.height = (height - imageSize) / screenHeight - 0.01
+        else
+            self.leaderboardView:draw()
+        end
+    end
+
+    -- Fields
+    local fieldX = x + width * 0.02
+    local fieldY = y + width * 0.02
+    local fieldWidth = (width - imageSize) - width * 0.04
+    local fieldHeight = height * 0.05
+    love.graphics.setColor(1, 1, 1)
+    widgets.label(self.selectedLevelData.name, fieldX, fieldY, fieldWidth, fieldHeight, true, "center")
+    fieldY = fieldY + fieldHeight * 3
+    fieldHeight = height * 0.03
+    widgets.label("Author: NONAME", fieldX, fieldY, fieldWidth, fieldHeight, true, "center")
+end
+
 function WorkshopScreen:draw()
     self.gameManager:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
@@ -147,20 +224,33 @@ function WorkshopScreen:draw()
     love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
     -- Back to menu screen button
-    if widgets.button(lz("btn_back"), screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.05) then
+    local btnX, btnY, btnWidth, btnHeight = screenWidth * 0.08, screenHeight - screenHeight * 0.12, screenWidth * 0.1, screenHeight * 0.05
+    if widgets.button(lz("btn_back"), btnX, btnY, btnWidth, btnHeight) then
         self.screenManager:transition("MainMenuScreen")
+    end
+    btnX = btnX + btnWidth
+    btnWidth = screenWidth * 0.15
+    if widgets.button("REFRESH MODS", btnX, btnY, btnWidth, btnHeight, false, "center") then
+        self:refreshLevelsLists()
+    end
+    btnX = btnX + btnWidth + screenWidth * 0.02
+    btnWidth = screenWidth * 0.2
+    if widgets.button("OPEN MODS FOLDER", btnX, btnY, btnWidth, btnHeight, false, "center") then
+        love.filesystem.createDirectory("mods")
+        love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
+        love.window.minimize()
     end
 
     self:drawLevelsList(screenWidth * 0.08, screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.77)
-
+    self:drawLevelInfo(screenWidth * 0.08 + screenWidth * 0.3 + screenWidth * 0.08, screenHeight * 0.1, screenWidth - (screenWidth * 0.08 + screenWidth * 0.3 + screenWidth * 0.08) - screenWidth * 0.08, screenHeight * 0.77)
     -- if updateHandle then
     --     local status = Steam.UGC.getItemUpdateProgress(updateHandle)
     --     widgets.label("update status: "..tostring(status), screenWidth * 0.1, screenHeight * 0.05, screenWidth * 0.5, screenHeight * 0.05)
     -- end
 
     -- if widgets.button("[open mods folder]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.2, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
-    --     love.filesystem.createDirectory("mods")
-    --     love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
+        -- love.filesystem.createDirectory("mods")
+        -- love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
     -- end
 
     -- if widgets.button("[play test level]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.3, screenWidth * 0.3, screenHeight * 0.05, false, "right") then

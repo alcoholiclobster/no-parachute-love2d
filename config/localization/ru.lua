@@ -86,6 +86,7 @@ return {
 
     lbl_leaderboard_friends = "Рекорды друзей",
     lbl_leaderboard_loading = "Загрузка...",
+    lbl_leaderboard_global = "Глобальный рейтинг",
 
     lbl_credis = [["No Parachute"
 
