@@ -3,6 +3,16 @@ local Steam = require("luasteam")
 
 local levelLoader = {}
 
+function levelLoader.loadFromPath(path)
+    local levelConfigFile = assert(io.open(path .. "/levelConfig.json", "rb"))
+    local levelConfigJSON = levelConfigFile:read("*all")
+    levelConfigFile:close()
+
+    local levelConfig = json.decode(levelConfigJSON)
+
+    return levelConfig
+end
+
 function levelLoader.load(levelName)
     assert(type(levelName) == "string", "Level not specified")
     local levelType = "builtin"
@@ -30,13 +40,7 @@ function levelLoader.load(levelName)
         end
     end
 
-    local levelConfigFile = assert(io.open(path .. "/levelConfig.json", "rb"))
-    local levelConfigJSON = levelConfigFile:read("*all")
-    levelConfigFile:close()
-
-    local levelConfig = json.decode(levelConfigJSON)
-
-    return levelConfig
+    return levelLoader.loadFromPath(path)
 end
 
 return levelLoader

@@ -204,6 +204,10 @@ function love.focus(isFocused)
     screenManager:emit("handleWindowFocus", isFocused)
 end
 
+function love.wheelmoved(_, scroll)
+    screenManager:emit("handleMouseScroll", scroll)
+end
+
 function love.joystickadded(joystick)
     joystickManager.add(joystick)
 end

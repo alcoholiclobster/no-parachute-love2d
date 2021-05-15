@@ -1,8 +1,11 @@
 local class = require("lib.middleclass")
 local Screen = require("ui.Screen")
+local GameManager = require("core.GameManager")
 local widgets = require("ui.widgets")
 local lz = require("utils.language").localize
 local Steam = require("luasteam")
+local levelLoader = require("core.levelLoader")
+local mathUtils = require("utils.math")
 
 local WorkshopScreen = class("WorkshopScreen", Screen)
 
@@ -30,19 +33,22 @@ local function populateItem(id)
 end
 
 function WorkshopScreen:initialize()
+    self.gameManager = GameManager:new(require("config.levels.tutorial"), self, true)
+
     self.subscribedCheckDelay = 0
     self.subscribedCount = -1
 
-    self.localLevels = {}
-    for _, name in ipairs(love.filesystem.getDirectoryItems("/mods")) do
-        local itemInfo = love.filesystem.getInfo("/mods/"..name)
-        if itemInfo and itemInfo.type == "directory" then
-            table.insert(self.localLevels, name)
-        end
-    end
+    self.levelsListScroll = 0
+    self.levelsListTab = "installed"
+    self.localLevelsList = {}
+    self.installedLevelsList = {}
+
+    self:refreshLevelsLists()
 end
 
 function WorkshopScreen:update(deltaTime)
+    self.gameManager:update(deltaTime)
+
     if self.subscribedCheckDelay < 0 then
         if Steam.UGC.getNumSubscribedItems() ~= self.subscribedCount then
             self.subscribedCount = Steam.UGC.getNumSubscribedItems()
@@ -55,83 +61,163 @@ function WorkshopScreen:update(deltaTime)
     end
 end
 
-function WorkshopScreen:loadLocalLevel(name)
-    self.screenManager:transition("GameScreen", "mods/"..name)
+function WorkshopScreen:refreshLevelsLists()
+    self.localLevelsList = {}
+    self.installedLevelsList = {}
+
+    -- Local
+    for _, name in ipairs(love.filesystem.getDirectoryItems("/mods")) do
+        local itemInfo = love.filesystem.getInfo("/mods/"..name)
+        if itemInfo and itemInfo.type == "directory" then
+            table.insert(self.localLevelsList, { label = name, level = "mods/"..name })
+        end
+    end
+
+    -- Installed
+    for _, itemId in ipairs(Steam.UGC.getSubscribedItems()) do
+        local flag = Steam.UGC.getItemState(itemId)
+        if flag.installed then
+            local config = levelLoader.load("workshop/"..tostring(itemId))
+            table.insert(self.installedLevelsList, { label = config.name, level = "workshop/"..tostring(itemId) })
+        elseif flag.downloading then
+            table.insert(self.installedLevelsList, { label = "downloading..." })
+        end
+    end
+end
+
+function WorkshopScreen:drawLevelsList(x, y, width, height)
+    love.graphics.setColor(1, 1, 1)
+
+    if widgets.button("Installed levels", x, y, width * 0.5, height * 0.05, self.levelsListTab == "installed", "center") then
+        self.levelsListTab = "installed"
+        self.levelsListScroll = 0
+    end
+    if widgets.button("My levels", x + width * 0.5, y, width * 0.5, height * 0.05, self.levelsListTab == "local", "center") then
+        self.levelsListTab = "local"
+        self.levelsListScroll = 0
+    end
+
+    y = y + height * 0.06
+
+    local list = self.levelsListTab == "installed" and self.installedLevelsList or self.localLevelsList
+
+    local itemsHeight = height - height * 0.06 - height * 0.06
+    local itemHeight = itemsHeight * 0.06
+    local itemY = y
+    local scroll = math.max(0, self.levelsListScroll * #list * itemHeight - itemsHeight * 0.5 * self.levelsListScroll)
+    love.graphics.setColor(0, 0, 0, 0.8)
+    love.graphics.rectangle("fill", x - width * 0.02, y - width * 0.01, width * 1.04, itemsHeight + width * 0.02)
+    love.graphics.setScissor(x, y, width, itemsHeight)
+    for _, item in ipairs(list) do
+        local drawY = itemY - scroll
+        if drawY > y - 5 and drawY < y + itemsHeight and widgets.button(item.label, x, drawY, width, itemHeight * 0.8, not item.level, "left") then
+            self.screenManager:transition("GameScreen", item.level)
+            -- TODO: Select
+        end
+
+        itemY = itemY + itemHeight
+    end
+    if #list == 0 then
+        love.graphics.setColor(0.5, 0.5, 0.5, 1)
+        widgets.label("No items", x, y + itemsHeight * 0.5, width, itemHeight * 0.8, false, "center")
+    end
+    love.graphics.setScissor()
+
+    y = y + itemsHeight + height * 0.01
+    if widgets.button("Refresh", x, y, width, height * 0.05, false, "center") then
+        self:refreshLevelsLists()
+    end
+end
+
+function WorkshopScreen:handleMouseScroll(scroll)
+    local list = self.levelsListTab == "installed" and self.installedLevelsList or self.localLevelsList
+    if scroll > 0 then
+        self.levelsListScroll = self.levelsListScroll - 1/#list*5
+    elseif scroll < 0 then
+        self.levelsListScroll = self.levelsListScroll + 1/#list*5
+    end
+    self.levelsListScroll = mathUtils.clamp01(self.levelsListScroll)
 end
 
 function WorkshopScreen:draw()
+    self.gameManager:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
-    if updateHandle then
-        local status = Steam.UGC.getItemUpdateProgress(updateHandle)
-        widgets.label("update status: "..tostring(status), screenWidth * 0.1, screenHeight * 0.05, screenWidth * 0.5, screenHeight * 0.05)
-    end
+    love.graphics.setColor(0, 0, 0, 0.6)
+    love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
     -- Back to menu screen button
     if widgets.button(lz("btn_back"), screenWidth * 0.08, screenHeight - screenHeight * 0.1, screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.05) then
         self.screenManager:transition("MainMenuScreen")
     end
 
-    if widgets.button("[open mods folder]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.2, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
-        love.filesystem.createDirectory("mods")
-        love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
-    end
+    self:drawLevelsList(screenWidth * 0.08, screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.77)
 
-    if widgets.button("[play test level]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.3, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
-        self:loadLocalLevel("test")
-    end
+    -- if updateHandle then
+    --     local status = Steam.UGC.getItemUpdateProgress(updateHandle)
+    --     widgets.label("update status: "..tostring(status), screenWidth * 0.1, screenHeight * 0.05, screenWidth * 0.5, screenHeight * 0.05)
+    -- end
 
-    if widgets.button("[test upload]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
-        local modRoot = "mods/"..localModName
-        local id = love.filesystem.read(modRoot.."/id.txt")
+    -- if widgets.button("[open mods folder]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.2, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
+    --     love.filesystem.createDirectory("mods")
+    --     love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
+    -- end
 
-        if id and tonumber(id) then
-            print("found id", id)
-            populateItem(Steam.extra.parseUint64(id))
-        else
-            Steam.UGC.createItem(Steam.utils.getAppID(), "Community", function (data, err)
-                if err or data.result ~= 1 then
-                    print("Error when creating item")
-                else
-                    love.filesystem.write(modRoot.."/id.txt", tostring(data.publishedFileId))
-                    populateItem(data.publishedFileId)
-                end
-            end)
-        end
-    end
+    -- if widgets.button("[play test level]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.3, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
+    --     self:loadLocalLevel("test")
+    -- end
 
-    local x = screenWidth * 0.05
-    local y = screenHeight * 0.1
-    local w = screenWidth * 0.4
-    local h = screenHeight * 0.04
-    for _, itemId in ipairs(Steam.UGC.getSubscribedItems()) do
-        local id = tostring(itemId)
-        local flag = Steam.UGC.getItemState(itemId)
-        local text = ""
-        if flag.installed then
-            local success, sizeOnDisk, folder = Steam.UGC.getItemInstallInfo(itemId)
-            text = id.." [installed] "..sizeOnDisk
-        elseif flag.downloading then
-            text = id.." [downloading]"
-        else
-            text = id.." [???]"
-        end
-        if widgets.button(text, x, y, w, h) then
-            self.screenManager:transition("GameScreen", "workshop/"..id)
-        end
-        y = y + h * 1.5
-    end
+    -- if widgets.button("[test upload]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
+    --     local modRoot = "mods/"..localModName
+    --     local id = love.filesystem.read(modRoot.."/id.txt")
 
-    x = screenWidth * 0.5
-    y = screenHeight * 0.1
-    w = screenWidth * 0.4
-    h = screenHeight * 0.04
-    for i, name in ipairs(self.localLevels) do
-        if widgets.button(name, x, y, w, h) then
-            self.screenManager:transition("GameScreen", "mods/"..name)
-        end
-        y = y + h * 1.5
-    end
+    --     if id and tonumber(id) then
+    --         print("found id", id)
+    --         populateItem(Steam.extra.parseUint64(id))
+    --     else
+    --         Steam.UGC.createItem(Steam.utils.getAppID(), "Community", function (data, err)
+    --             if err or data.result ~= 1 then
+    --                 print("Error when creating item")
+    --             else
+    --                 love.filesystem.write(modRoot.."/id.txt", tostring(data.publishedFileId))
+    --                 populateItem(data.publishedFileId)
+    --             end
+    --         end)
+    --     end
+    -- end
+
+    -- local x = screenWidth * 0.05
+    -- local y = screenHeight * 0.1
+    -- local w = screenWidth * 0.4
+    -- local h = screenHeight * 0.04
+    -- for _, itemId in ipairs(Steam.UGC.getSubscribedItems()) do
+    --     local id = tostring(itemId)
+    --     local flag = Steam.UGC.getItemState(itemId)
+    --     local text = ""
+    --     if flag.installed then
+    --         local success, sizeOnDisk, folder = Steam.UGC.getItemInstallInfo(itemId)
+    --         text = id.." [installed] "..sizeOnDisk
+    --     elseif flag.downloading then
+    --         text = id.." [downloading]"
+    --     else
+    --         text = id.." [???]"
+    --     end
+    --     if widgets.button(text, x, y, w, h) then
+    --         self.screenManager:transition("GameScreen", "workshop/"..id)
+    --     end
+    --     y = y + h * 1.5
+    -- end
+
+    -- x = screenWidth * 0.5
+    -- y = screenHeight * 0.1
+    -- w = screenWidth * 0.4
+    -- h = screenHeight * 0.04
+    -- for i, name in ipairs(self.localLevels) do
+    --     if widgets.button(name, x, y, w, h) then
+    --         self.screenManager:transition("GameScreen", "mods/"..name)
+    --     end
+    --     y = y + h * 1.5
+    -- end
 end
 
 return WorkshopScreen
