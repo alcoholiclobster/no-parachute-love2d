@@ -58,25 +58,20 @@ end
 function widgets.button(text, x, y, width, height, isDisabled, align)
     local mx, my = love.mouse.getPosition()
     local isHighlighted = isPointWithinRect(mx, my, x, y, width, height) and not isDisabled
-    -- if isHighlighted and lastHighlightedButton ~= text then
-    --     hoverSound:stop()
-    --     hoverSound:play()
-    --     lastHighlightedButton = text
-    -- elseif not isHighlighted and lastHighlightedButton == text then
-    --     lastHighlightedButton = false
-    -- end
 
+    local r, g, b, a = love.graphics.getColor()
     if isHighlighted then
         love.graphics.setColor(130/255, 90/255, 150/255, 1)
     else
         if isDisabled then
             love.graphics.setColor(0.5, 0.5, 0.5, 1)
         else
-            love.graphics.setColor(1, 1, 1, 1)
+            -- love.graphics.setColor(1, 1, 1, 1)
         end
     end
     love.graphics.setFont(assets.font("Roboto-Bold", math.floor(height * 0.75)))
     drawShadowText(text, x, y + height * 0.1, width, align or "left")
+    love.graphics.setColor(r, g, b, a)
 
     if isHighlighted and mouseUtils.isMouseJustPressed() then
         mouseUtils.cancelClickEvent()

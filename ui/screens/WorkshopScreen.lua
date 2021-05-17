@@ -37,38 +37,41 @@ end
 function WorkshopScreen:initialize()
     self.gameManager = GameManager:new(require("config.levels.tutorial"), self, true)
 
-    self.subscribedCheckDelay = 0
+    self.levelsListUpdateDelay = 1
     self.subscribedCount = -1
+    self.modsCount = -1
 
     self.levelsListScroll = 0
-    self.levelsListTab = "installed"
-    self.localLevelsList = {}
-    self.installedLevelsList = {}
+    self.levelsList = {}
 
     self.selectedLevelId = nil
     self.selectedLevelData = nil
-
-    self:refreshLevelsLists()
+    -- self:refreshLevelsList()
 end
 
 function WorkshopScreen:update(deltaTime)
     self.gameManager:update(deltaTime)
 
-    if self.subscribedCheckDelay < 0 then
-        if Steam.UGC.getNumSubscribedItems() ~= self.subscribedCount then
-            self.subscribedCount = Steam.UGC.getNumSubscribedItems()
-            print("You are subscribed to " .. self.subscribedCount .. " items")
+    if self.levelsListUpdateDelay < 0 then
+        -- Count local mods
+        local modsCount = 0
+        for _, _ in ipairs(love.filesystem.getDirectoryItems("/mods")) do
+            modsCount = modsCount + 1
         end
 
-        self.subscribedCheckDelay = 1
+        if Steam.UGC.getNumSubscribedItems() ~= self.subscribedCount or modsCount ~= self.modsCount then
+            self:refreshLevelsList()
+        end
+        self.subscribedCount = Steam.UGC.getNumSubscribedItems()
+        self.modsCount = modsCount
+        self.levelsListUpdateDelay = 1
     else
-        self.subscribedCheckDelay = self.subscribedCheckDelay - deltaTime
+        self.levelsListUpdateDelay = self.levelsListUpdateDelay - deltaTime
     end
 end
 
-function WorkshopScreen:refreshLevelsLists()
-    self.localLevelsList = {}
-    self.installedLevelsList = {}
+function WorkshopScreen:refreshLevelsList()
+    self.levelsList = {}
 
     -- Local
     for _, name in ipairs(love.filesystem.getDirectoryItems("/mods")) do
@@ -76,7 +79,7 @@ function WorkshopScreen:refreshLevelsLists()
         if itemInfo and itemInfo.type == "directory" then
             local config = levelLoader.load("mods/"..name)
             if config then
-                table.insert(self.localLevelsList, { label = name, level = "mods/"..name })
+                table.insert(self.levelsList, { label = name, level = "mods/"..name, isLocal = true })
             end
         end
     end
@@ -86,31 +89,22 @@ function WorkshopScreen:refreshLevelsLists()
         local flag = Steam.UGC.getItemState(itemId)
         if flag.installed then
             local config = levelLoader.load("workshop/"..tostring(itemId))
-            table.insert(self.installedLevelsList, { label = config.name, level = "workshop/"..tostring(itemId) })
+            table.insert(self.levelsList, { label = config.name, level = "workshop/"..tostring(itemId) })
         elseif flag.downloading then
-            table.insert(self.installedLevelsList, { label = "downloading..." })
+            table.insert(self.levelsList, { label = "downloading..." })
         end
     end
 end
 
 function WorkshopScreen:drawLevelsList(x, y, width, height)
-    love.graphics.setColor(0, 0, 0, 0.4)
-    love.graphics.rectangle("fill", x - width * 0.01, y, width + width * 0.02, height)
-
     love.graphics.setColor(1, 1, 1)
-
-    if widgets.button("Installed levels", x, y, width * 0.5, height * 0.05, self.levelsListTab == "installed", "center") then
+    if widgets.label("LEVELS LIST", x, y, width, height * 0.04, false, "left") then
         self.levelsListTab = "installed"
         self.levelsListScroll = 0
     end
-    if widgets.button("My levels", x + width * 0.5, y, width * 0.5, height * 0.05, self.levelsListTab == "local", "center") then
-        self.levelsListTab = "local"
-        self.levelsListScroll = 0
-    end
-
     y = y + height * 0.06
 
-    local list = self.levelsListTab == "installed" and self.installedLevelsList or self.localLevelsList
+    local list = self.levelsList
 
     local itemsHeight = height - height * 0.06 - height * 0.06
     local itemHeight = itemsHeight * 0.06
@@ -119,6 +113,11 @@ function WorkshopScreen:drawLevelsList(x, y, width, height)
     love.graphics.setScissor(x, y, width, itemsHeight)
     for _, item in ipairs(list) do
         local drawY = itemY - scroll
+        if item.isLocal then
+            love.graphics.setColor(0, 1, 0)
+        else
+            love.graphics.setColor(1, 1, 1)
+        end
         if drawY > y - 5 and drawY < y + itemsHeight and widgets.button(item.label, x, drawY, width, itemHeight * 0.8, not item.level, "left") then
             self:selectLevel(item.level)
         end
@@ -133,7 +132,7 @@ function WorkshopScreen:drawLevelsList(x, y, width, height)
 end
 
 function WorkshopScreen:handleMouseScroll(scroll)
-    local list = self.levelsListTab == "installed" and self.installedLevelsList or self.localLevelsList
+    local list = self.levelsListTab == "installed" and self.installedLevelsList or self.levelsList
     if scroll > 0 then
         self.levelsListScroll = self.levelsListScroll - 1/#list*5
     elseif scroll < 0 then
@@ -167,53 +166,45 @@ function WorkshopScreen:selectLevel(id)
 end
 
 function WorkshopScreen:drawLevelInfo(x, y, width, height)
-    love.graphics.setColor(0, 0, 0, 0.4)
-    love.graphics.rectangle("fill", x, y, width, height)
+    -- love.graphics.setColor(0, 0, 0, 0.4)
+    -- love.graphics.rectangle("fill", x, y, width, height)
 
     if not self.selectedLevelId then
-        love.graphics.setColor(0.5, 0.5, 0.5)
-        widgets.label("Select level", x, y + height * 0.48, width, height * 0.04, true, "center")
         return
     end
 
     love.graphics.setColor(1, 1, 1, 1)
-    local imageSize = width * 0.4
-    local imageX = x + width - imageSize
+    local imageWidth = width
+    local imageHeight = width / 16 * 9
+    local imageX = x
     local imageY = y
 
     if self.selectedLevelData.image then
-        local sx, sy = renderingUtils.getImageScaleForNewDimensions(self.selectedLevelData.image, imageSize, imageSize)
+        local sx, sy = renderingUtils.getImageScaleForNewDimensions(self.selectedLevelData.image, imageWidth, imageHeight)
         love.graphics.draw(self.selectedLevelData.image, imageX, imageY, 0, sx, sy)
     else
         love.graphics.setColor(0.5, 0.5, 0.5)
-        love.graphics.rectangle("line", imageX, imageY, imageSize, imageSize)
-        widgets.label("No preview image", imageX, imageY + imageSize * 0.5, imageSize, imageSize * 0.1, true, "center")
+        love.graphics.rectangle("line", imageX, imageY, imageWidth, imageHeight)
+        widgets.label("No preview image", imageX, imageY + imageHeight * 0.5, imageWidth, imageHeight * 0.1, true, "center")
+    end
+
+    local btnHeight = height * 0.1
+    if widgets.button(lz("btn_level_selection_start_game"), x, y + height - btnHeight, width, btnHeight, false, "center") then
+        self.screenManager:transition("GameScreen", self.selectedLevelId)
     end
 
     if self.leaderboardView then
-        if self.leaderboardView.waitingToSetPos then
-            self.leaderboardView.waitingToSetPos = false
-            local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
-
-            self.leaderboardView.x = imageX / screenWidth
-            self.leaderboardView.y = (imageY + imageSize) / screenHeight
-            self.leaderboardView.width = imageSize / screenWidth
-            self.leaderboardView.height = (height - imageSize) / screenHeight - 0.01
-        else
-            self.leaderboardView:draw()
-        end
+        local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
+        self.leaderboardView.x = imageX / screenWidth
+        self.leaderboardView.y = (imageY + imageHeight) / screenHeight
+        self.leaderboardView.width = width / screenWidth
+        self.leaderboardView.height = (height - imageHeight - btnHeight) / screenHeight
+        self.leaderboardView:draw()
     end
 
     -- Fields
-    local fieldX = x + width * 0.02
-    local fieldY = y + width * 0.02
-    local fieldWidth = (width - imageSize) - width * 0.04
-    local fieldHeight = height * 0.05
     love.graphics.setColor(1, 1, 1)
-    widgets.label(self.selectedLevelData.name, fieldX, fieldY, fieldWidth, fieldHeight, true, "center")
-    fieldY = fieldY + fieldHeight * 3
-    fieldHeight = height * 0.03
-    widgets.label("Author: NONAME", fieldX, fieldY, fieldWidth, fieldHeight, true, "center")
+    widgets.label(self.selectedLevelData.name, x + width * 0.03, y + width * 0.03, width * 0.94, imageHeight * 0.1, true, "center")
 end
 
 function WorkshopScreen:draw()
@@ -223,15 +214,11 @@ function WorkshopScreen:draw()
     love.graphics.setColor(0, 0, 0, 0.6)
     love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 
-    -- Back to menu screen button
+    -- Buttons
+    love.graphics.setColor(1, 1, 1, 1)
     local btnX, btnY, btnWidth, btnHeight = screenWidth * 0.08, screenHeight - screenHeight * 0.12, screenWidth * 0.1, screenHeight * 0.05
     if widgets.button(lz("btn_back"), btnX, btnY, btnWidth, btnHeight) then
         self.screenManager:transition("MainMenuScreen")
-    end
-    btnX = btnX + btnWidth
-    btnWidth = screenWidth * 0.15
-    if widgets.button("REFRESH MODS", btnX, btnY, btnWidth, btnHeight, false, "center") then
-        self:refreshLevelsLists()
     end
     btnX = btnX + btnWidth + screenWidth * 0.02
     btnWidth = screenWidth * 0.2
@@ -240,9 +227,14 @@ function WorkshopScreen:draw()
         love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
         love.window.minimize()
     end
+    btnX = btnX + btnWidth + screenWidth * 0.02
+    btnWidth = screenWidth * 0.2
+    if widgets.button("OPEN WORKSHOP", btnX, btnY, btnWidth, btnHeight, false, "center") then
+        Steam.friends.activateGameOverlayToWebPage("https://steamcommunity.com/app/"..tostring(Steam.utils.getAppID()).."/workshop/")
+    end
 
-    self:drawLevelsList(screenWidth * 0.08, screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.77)
-    self:drawLevelInfo(screenWidth * 0.08 + screenWidth * 0.3 + screenWidth * 0.08, screenHeight * 0.1, screenWidth - (screenWidth * 0.08 + screenWidth * 0.3 + screenWidth * 0.08) - screenWidth * 0.08, screenHeight * 0.77)
+    self:drawLevelsList(screenWidth * 0.08, screenHeight * 0.1, screenWidth * 0.4, screenHeight * 0.77)
+    self:drawLevelInfo(screenWidth - screenWidth * 0.08 - screenWidth * 0.25, screenHeight * 0.1, screenWidth * 0.25, screenHeight * 0.77)
     -- if updateHandle then
     --     local status = Steam.UGC.getItemUpdateProgress(updateHandle)
     --     widgets.label("update status: "..tostring(status), screenWidth * 0.1, screenHeight * 0.05, screenWidth * 0.5, screenHeight * 0.05)

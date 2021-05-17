@@ -46,6 +46,7 @@ function SettingsOverlay:draw()
             end
             love.graphics.setColor(0.5, 0.5, 0.5)
             love.graphics.rectangle("line", x+5, y, w-screenWidth*0.004, h)
+            love.graphics.setColor(1, 1, 1, 1)
             if widgets.button(lz(valueItem.name), x, y + h * 0.15, w, h * 0.6, false, "center") then
                 settings.set(item.name, valueItem.value)
             end

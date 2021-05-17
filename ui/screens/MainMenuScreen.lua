@@ -41,6 +41,8 @@ function MainMenuScreen:draw()
     local screenWidth, screenHeight = love.graphics.getWidth(), love.graphics.getHeight()
     self.gameManager:draw()
 
+
+    love.graphics.setColor(1, 1, 1, 1)
     local btnX, btnY = screenWidth * 0.08, screenHeight * 0.5
     local btnWidth, btnHeight = screenWidth * (0.5 - 0.08 * 2), screenHeight * 0.04
     local btnSpace = screenHeight * 0.007
