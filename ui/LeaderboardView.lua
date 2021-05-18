@@ -101,6 +101,8 @@ function LeaderboardView:draw()
         return
     end
 
+    itemX = x + width * 0.05
+    itemWidth = width * 0.9
     for i = 1, self.limitCount do
         local height = itemHeight * 0.6
         local row = self.entries[i]

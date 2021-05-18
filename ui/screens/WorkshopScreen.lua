@@ -11,33 +11,38 @@ local LeaderboardView = require("ui.LeaderboardView")
 
 local WorkshopScreen = class("WorkshopScreen", Screen)
 
-local localModName = "test"
-local updateHandle = nil
+local isUploadInProgress = false
 
-local function populateItem(id)
-    local rootFolder = love.filesystem.getSaveDirectory().."/mods/"..localModName
-    local handle = Steam.UGC.startItemUpdate(Steam.utils.getAppID(), id)
-    print(handle)
-    Steam.UGC.setItemContent(handle, rootFolder)
-    Steam.UGC.setItemTitle(handle, "My Item")
-    Steam.UGC.setItemDescription(handle, "A Workshop item")
-    Steam.UGC.setItemPreview(handle, rootFolder .. "/preview.png")
-    Steam.UGC.submitItemUpdate(handle, "Just testing", function(data, err)
+local function uploadLevel(ugcId, levelId)
+    local config, path = levelLoader.load(levelId)
+    if not config then
+        error("level does not exist")
+    end
+    local handle = Steam.UGC.startItemUpdate(Steam.utils.getAppID(), ugcId)
+    Steam.UGC.setItemContent(handle, path)
+    Steam.UGC.setItemTitle(handle, config.name)
+    Steam.UGC.setItemDescription(handle, "Please add some description")
+    Steam.UGC.setItemPreview(handle, path .. "/preview.png")
+    Steam.UGC.submitItemUpdate(handle, nil, function(data, err)
         if err or data.result ~= 1 then
-            print("Update failed", err, data.result)
+            error("Update failed", err, data.result)
         else
-            print("Update successfull")
-            updateHandle = nil
+            isUploadInProgress = false
+            if data.userNeedsToAcceptWorkshopLegalAgreement then
+                Steam.friends.activateGameOverlayToWebPage("https://steamcommunity.com/sharedfiles/workshoplegalagreement")
+            else
+                Steam.friends.activateGameOverlayToWebPage("steam://url/CommunityFilePage/"..tostring(ugcId))
+            end
         end
     end)
 
-    updateHandle = handle
+    isUploadInProgress = true
 end
 
 function WorkshopScreen:initialize()
     self.gameManager = GameManager:new(require("config.levels.tutorial"), self, true)
 
-    self.levelsListUpdateDelay = 1
+    self.levelsListUpdateDelay = 0
     self.subscribedCount = -1
     self.modsCount = -1
 
@@ -79,7 +84,7 @@ function WorkshopScreen:refreshLevelsList()
         if itemInfo and itemInfo.type == "directory" then
             local config = levelLoader.load("mods/"..name)
             if config then
-                table.insert(self.levelsList, { label = name, level = "mods/"..name, isLocal = true })
+                table.insert(self.levelsList, { label = config.name or name, level = "mods/"..name, isLocal = true })
             end
         end
     end
@@ -146,6 +151,9 @@ function WorkshopScreen:selectLevel(id)
     local config, path = levelLoader.load(id)
     self.selectedLevelData = {}
     self.selectedLevelData.name = config.name
+    self.selectedLevelData.isLocal = id:sub(1, 5) == "mods/"
+    self.selectedLevelData.path = path
+    self.selectedLevelData.errors = {}
 
     pcall(function ()
         local imageFile = assert(io.open(path .. "/preview.png", "rb"))
@@ -155,23 +163,56 @@ function WorkshopScreen:selectLevel(id)
         self.selectedLevelData.image = love.graphics.newImage(love.image.newImageData(fileData))
     end)
 
-    self.leaderboardView = LeaderboardView:new({
-        name = id,
-        type = "Global",
-        title = lz("lbl_leaderboard_global"),
-        limit = 10,
-    })
+    if self.selectedLevelData.isLocal then
+        if not self.selectedLevelData.image then
+            table.insert(self.selectedLevelData.errors, "Missing 640x360 preview.png image")
+        elseif self.selectedLevelData.image:getWidth() ~= 640 or self.selectedLevelData.image:getHeight() ~= 360 then
+            table.insert(self.selectedLevelData.errors, "Preview should be 640x360 pixels")
+        end
+    end
 
-    self.leaderboardView.waitingToSetPos = true
+    if not self.selectedLevelData.isLocal then
+        self.leaderboardView = LeaderboardView:new({
+            name = id,
+            type = "Global",
+            title = lz("lbl_leaderboard_global"),
+            limit = 10,
+        })
+    else
+        self.leaderboardView = nil
+    end
+
+    self.selectedLevelData.errorsString = table.concat(self.selectedLevelData.errors, "\n")
+end
+
+function WorkshopScreen:uploadSelectedLevel()
+    if not self.selectedLevelId or not self.selectedLevelData.isLocal then
+        return
+    end
+
+    isUploadInProgress = true
+    local publishedFileId = love.filesystem.read(self.selectedLevelData.path.."/id.txt")
+
+    if publishedFileId and tonumber(publishedFileId) then
+        uploadLevel(Steam.extra.parseUint64(publishedFileId), self.selectedLevelId)
+    else
+        Steam.UGC.createItem(Steam.utils.getAppID(), "Community", function (data, err)
+            if err or data.result ~= 1 then
+                print("Error when creating item")
+            else
+                love.filesystem.write(self.selectedLevelData.path.."/id.txt", tostring(data.publishedFileId))
+                uploadLevel(data.publishedFileId, self.selectedLevelId)
+            end
+        end)
+    end
 end
 
 function WorkshopScreen:drawLevelInfo(x, y, width, height)
-    -- love.graphics.setColor(0, 0, 0, 0.4)
-    -- love.graphics.rectangle("fill", x, y, width, height)
-
     if not self.selectedLevelId then
         return
     end
+    love.graphics.setColor(0, 0, 0, 0.8)
+    love.graphics.rectangle("fill", x-1, y-1, width+2, height+2)
 
     love.graphics.setColor(1, 1, 1, 1)
     local imageWidth = width
@@ -189,8 +230,8 @@ function WorkshopScreen:drawLevelInfo(x, y, width, height)
     end
 
     local btnHeight = height * 0.1
-    if widgets.button(lz("btn_level_selection_start_game"), x, y + height - btnHeight, width, btnHeight, false, "center") then
-        self.screenManager:transition("GameScreen", self.selectedLevelId)
+    if widgets.button(lz("btn_level_selection_start_game"), x, y + height - btnHeight * 1.1, width, btnHeight, false, "center") then
+        self.screenManager:transition("GameScreen", self.selectedLevelId, "WorkshopScreen")
     end
 
     if self.leaderboardView then
@@ -200,6 +241,24 @@ function WorkshopScreen:drawLevelInfo(x, y, width, height)
         self.leaderboardView.width = width / screenWidth
         self.leaderboardView.height = (height - imageHeight - btnHeight) / screenHeight
         self.leaderboardView:draw()
+    end
+
+    if self.selectedLevelData.isLocal then
+        love.graphics.setColor(0.5, 0.5, 0.5)
+        widgets.label("This is a local level. You can edit and publish it.", imageX, imageY + imageHeight * 1.1, imageWidth, height * 0.03, true, "center")
+        love.graphics.setColor(1, 0, 0)
+        widgets.label(self.selectedLevelData.errorsString, imageX, imageY + imageHeight * 1.1 + height * 0.12, imageWidth, height * 0.03, true, "center")
+
+        local btnHeight = height * 0.1
+        love.graphics.setColor(1, 1, 1)
+        local btnUploadLabel = isUploadInProgress and "UPLOADING..." or "UPLOAD TO WORKSHOP"
+        if widgets.button(btnUploadLabel, x, y + height - height * 0.1 - btnHeight, imageWidth, btnHeight * 0.6, #self.selectedLevelData.errors > 0 or isUploadInProgress, "center") then
+            self:uploadSelectedLevel()
+        end
+        if widgets.button("OPEN LEVEL FOLDER", x, y + height - height * 0.1 - btnHeight * 2, imageWidth, btnHeight * 0.6, false, "center") then
+            love.system.openURL("file://"..self.selectedLevelData.path)
+            love.window.minimize()
+        end
     end
 
     -- Fields
@@ -248,26 +307,6 @@ function WorkshopScreen:draw()
     -- if widgets.button("[play test level]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.3, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
     --     self:loadLocalLevel("test")
     -- end
-
-    -- if widgets.button("[test upload]", screenWidth * (0.7 - 0.04), screenHeight - screenHeight * 0.1, screenWidth * 0.3, screenHeight * 0.05, false, "right") then
-    --     local modRoot = "mods/"..localModName
-    --     local id = love.filesystem.read(modRoot.."/id.txt")
-
-    --     if id and tonumber(id) then
-    --         print("found id", id)
-    --         populateItem(Steam.extra.parseUint64(id))
-    --     else
-    --         Steam.UGC.createItem(Steam.utils.getAppID(), "Community", function (data, err)
-    --             if err or data.result ~= 1 then
-    --                 print("Error when creating item")
-    --             else
-    --                 love.filesystem.write(modRoot.."/id.txt", tostring(data.publishedFileId))
-    --                 populateItem(data.publishedFileId)
-    --             end
-    --         end)
-    --     end
-    -- end
-
     -- local x = screenWidth * 0.05
     -- local y = screenHeight * 0.1
     -- local w = screenWidth * 0.4

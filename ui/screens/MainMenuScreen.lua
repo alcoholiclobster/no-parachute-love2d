@@ -78,7 +78,7 @@ end
 
 function MainMenuScreen:buttonHandlerPlayEndlessMode()
     GameEnv.endlessForceSeed = nil
-    self.screenManager:transition("GameScreen", "endless")
+    self.screenManager:transition("GameScreen", "endless", "MainMenuScreen")
 end
 
 function MainMenuScreen:buttonHandlerExit()

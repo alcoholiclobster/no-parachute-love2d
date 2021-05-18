@@ -17,9 +17,11 @@ local GameScreen = class("GameScreen", Screen)
 
 local playedCutscenes = {}
 
-function GameScreen:initialize(levelName)
+function GameScreen:initialize(levelName, exitToScreen)
     self.levelName = levelName
+    self.exitToScreen = exitToScreen or "MainMenuScreen"
     self.levelConfig = levelLoader.load(levelName)
+    self.isLeaderboardUploadDisabled = levelName:sub(1, 5) == "mods/"
 
     self.gameManager = GameManager:new(self.levelConfig, self)
 
@@ -66,11 +68,7 @@ function GameScreen:restartLevel()
 end
 
 function GameScreen:exitToMenu()
-    if self.levelName == "endless" then
-        self.screenManager:transition("MainMenuScreen")
-    else
-        self.screenManager:transition("LevelSelectionScreen")
-    end
+    self.screenManager:transition(self.exitToScreen or "MainMenuScreen")
 end
 
 function GameScreen:setState(newState)
@@ -291,7 +289,7 @@ end
 function GameScreen:showDeathScreen()
     self:setState("dead")
     self.globalRank = 0
-    if self.levelName == "endless" and GameEnv.endlessForceSeed then
+    if self.levelName == "endless" and GameEnv.endlessForceSeed and not self.isLeaderboardUploadDisabled then
         local score = tostring(math.ceil(self.playerScore))
 
         Steam.userStats.findOrCreateLeaderboard("daily_"..GameEnv.endlessForceSeed, "Descending", "Numeric", function (data)
@@ -323,14 +321,16 @@ function GameScreen:showFinishedScreen(timePassed, highscore, isNewHighscore, is
     self.isNewHighscore = isNewHighscore
     self.isNewBestTime = isNewBestTime
 
-    local levelName = self.levelName
-    Steam.userStats.findOrCreateLeaderboard(levelName, "Descending", "Numeric", function (data)
-        Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "KeepBest", highscore, "hihi", function (data)
-            if data.success then
-                print("Uploaded new score for level", levelName, highscore, data.globalRankNew)
-            end
+    if not self.isLeaderboardUploadDisabled then
+        local levelName = self.levelName
+        Steam.userStats.findOrCreateLeaderboard(levelName, "Descending", "Numeric", function (data)
+            Steam.userStats.uploadLeaderboardScore(data.steamLeaderboard, "KeepBest", highscore, "hihi", function (data)
+                if data.success then
+                    print("Uploaded new score for level", levelName, highscore, data.globalRankNew)
+                end
+            end)
         end)
-    end)
+    end
 end
 
 function GameScreen:showText(text, duration)
