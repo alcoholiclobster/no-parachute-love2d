@@ -8,10 +8,34 @@ local levelLoader = require("core.levelLoader")
 local mathUtils = require("utils.math")
 local renderingUtils = require("utils.rendering")
 local LeaderboardView = require("ui.LeaderboardView")
+local utf8 = require("utf8")
+local exampleLevelConfig = require("config.exampleLevel")
+local nativefs = require("lib.nativefs")
 
 local WorkshopScreen = class("WorkshopScreen", Screen)
 
 local isUploadInProgress = false
+
+local function validateLevel(config)
+    local errors = {}
+    local isValid = true
+
+    if type(config) ~= "table" then
+        isValid = false
+        table.insert(errors, "Failed to load level config")
+        return
+    end
+    if type(config.name) ~= "string" or utf8.len(config.name) < 5 or utf8.len(config.name) > 40 then
+        table.insert(errors, "Level name length must be between 5 and 40 characters")
+        isValid = false
+    end
+    if type(config.planes) ~= "table" or #config.planes < 1 then
+        table.insert(errors, "Level must contain at least one obstacle")
+        isValid = false
+    end
+
+    return isValid, errors
+end
 
 local function uploadLevel(ugcId, levelId)
     local config, path = levelLoader.load(levelId)
@@ -51,7 +75,13 @@ function WorkshopScreen:initialize()
 
     self.selectedLevelId = nil
     self.selectedLevelData = nil
-    -- self:refreshLevelsList()
+
+    -- Create example level
+    if not love.filesystem.getInfo("mods/example") then
+        love.filesystem.createDirectory("mods/example")
+        love.filesystem.write("mods/example/levelConfig.json", exampleLevelConfig.levelConfigJSON)
+        love.filesystem.write("mods/example/preview.png", love.data.decode("data", "base64", exampleLevelConfig.previewImageBase64))
+    end
 end
 
 function WorkshopScreen:update(deltaTime)
@@ -83,7 +113,7 @@ function WorkshopScreen:refreshLevelsList()
         local itemInfo = love.filesystem.getInfo("/mods/"..name)
         if itemInfo and itemInfo.type == "directory" then
             local config = levelLoader.load("mods/"..name)
-            if config then
+            if config and name ~= "example" then
                 table.insert(self.levelsList, { label = config.name or name, level = "mods/"..name, isLocal = true })
             end
         end
@@ -118,7 +148,9 @@ function WorkshopScreen:drawLevelsList(x, y, width, height)
     love.graphics.setScissor(x, y, width, itemsHeight)
     for _, item in ipairs(list) do
         local drawY = itemY - scroll
-        if item.isLocal then
+        if item.level == self.selectedLevelId then
+            love.graphics.setColor(130/255, 90/255, 150/255, 1)
+        elseif item.isLocal then
             love.graphics.setColor(0, 1, 0)
         else
             love.graphics.setColor(1, 1, 1)
@@ -150,15 +182,13 @@ function WorkshopScreen:selectLevel(id)
     self.selectedLevelId = id
     local config, path = levelLoader.load(id)
     self.selectedLevelData = {}
-    self.selectedLevelData.name = config.name
+    self.selectedLevelData.name = config.name or id
     self.selectedLevelData.isLocal = id:sub(1, 5) == "mods/"
     self.selectedLevelData.path = path
     self.selectedLevelData.errors = {}
 
     pcall(function ()
-        local imageFile = assert(io.open(path .. "/preview.png", "rb"))
-        local imageFileData = imageFile:read("*all")
-        imageFile:close()
+        local imageFileData = nativefs.read(path.."/preview.png")
         local fileData = love.filesystem.newFileData(imageFileData, "preview.png")
         self.selectedLevelData.image = love.graphics.newImage(love.image.newImageData(fileData))
     end)
@@ -168,6 +198,16 @@ function WorkshopScreen:selectLevel(id)
             table.insert(self.selectedLevelData.errors, "Missing 640x360 preview.png image")
         elseif self.selectedLevelData.image:getWidth() ~= 640 or self.selectedLevelData.image:getHeight() ~= 360 then
             table.insert(self.selectedLevelData.errors, "Preview should be 640x360 pixels")
+        end
+        if self.selectedLevelData.name == "Example Level" or self.selectedLevelData.name == "example" then
+            table.insert(self.selectedLevelData.errors, "Change level name in levelConfig.json")
+        end
+
+        local isValid, messages = validateLevel(config)
+        if not isValid then
+            for i, msg in ipairs(messages) do
+                table.insert(self.selectedLevelData.errors, msg)
+            end
         end
     end
 
@@ -230,6 +270,7 @@ function WorkshopScreen:drawLevelInfo(x, y, width, height)
     end
 
     local btnHeight = height * 0.1
+    love.graphics.setColor(1, 1, 1)
     if widgets.button(lz("btn_level_selection_start_game"), x, y + height - btnHeight * 1.1, width, btnHeight, false, "center") then
         self.screenManager:transition("GameScreen", self.selectedLevelId, "WorkshopScreen")
     end
@@ -244,7 +285,7 @@ function WorkshopScreen:drawLevelInfo(x, y, width, height)
     end
 
     if self.selectedLevelData.isLocal then
-        love.graphics.setColor(0.5, 0.5, 0.5)
+        love.graphics.setColor(0, 1, 0)
         widgets.label("This is a local level. You can edit and publish it.", imageX, imageY + imageHeight * 1.1, imageWidth, height * 0.03, true, "center")
         love.graphics.setColor(1, 0, 0)
         widgets.label(self.selectedLevelData.errorsString, imageX, imageY + imageHeight * 1.1 + height * 0.12, imageWidth, height * 0.03, true, "center")
