@@ -25,12 +25,20 @@ local function validateLevel(config)
         table.insert(errors, "Failed to load level config")
         return
     end
-    if type(config.name) ~= "string" or utf8.len(config.name) < 5 or utf8.len(config.name) > 40 then
-        table.insert(errors, "Level name length must be between 5 and 40 characters")
+    if type(config.name) ~= "string" or utf8.len(config.name) < 4 or utf8.len(config.name) > 40 then
+        table.insert(errors, "Level name length must be between 4 and 40 characters")
         isValid = false
     end
     if type(config.planes) ~= "table" or #config.planes < 1 then
         table.insert(errors, "Level must contain at least one obstacle")
+        isValid = false
+    end
+    if config.name == "Example Level" then
+        table.insert(errors, "Change level name in levelConfig.json")
+        isValid = false
+    end
+    if config.name:match("[^%w%s]") then
+        table.insert(errors, "Level name must contain only english letters or numbers")
         isValid = false
     end
 
@@ -114,7 +122,7 @@ function WorkshopScreen:refreshLevelsList()
         if itemInfo and itemInfo.type == "directory" then
             local config = levelLoader.load("mods/"..name)
             if config and name ~= "example" then
-                table.insert(self.levelsList, { label = config.name or name, level = "mods/"..name, isLocal = true })
+                table.insert(self.levelsList, { label = config.name .. " (mods/"..name..")" or name, level = "mods/"..name, isLocal = true })
             end
         end
     end
@@ -198,9 +206,6 @@ function WorkshopScreen:selectLevel(id)
             table.insert(self.selectedLevelData.errors, "Missing 640x360 preview.png image")
         elseif self.selectedLevelData.image:getWidth() ~= 640 or self.selectedLevelData.image:getHeight() ~= 360 then
             table.insert(self.selectedLevelData.errors, "Preview should be 640x360 pixels")
-        end
-        if self.selectedLevelData.name == "Example Level" or self.selectedLevelData.name == "example" then
-            table.insert(self.selectedLevelData.errors, "Change level name in levelConfig.json")
         end
 
         local isValid, messages = validateLevel(config)
