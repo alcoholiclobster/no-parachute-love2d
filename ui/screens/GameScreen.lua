@@ -20,7 +20,7 @@ local playedCutscenes = {}
 function GameScreen:initialize(levelName, exitToScreen)
     self.levelName = levelName
     self.exitToScreen = exitToScreen or "MainMenuScreen"
-    self.levelConfig = levelLoader.load(levelName)
+    self.levelConfig = levelLoader.load(levelName, true)
     self.isLeaderboardUploadDisabled = levelName:sub(1, 5) == "mods/"
 
     self.gameManager = GameManager:new(self.levelConfig, self)

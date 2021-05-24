@@ -6,6 +6,21 @@ local fontsCache = {
     default_14 = love.graphics.getFont()
 }
 local soundsCache = {}
+local nativefs = require("lib.nativefs")
+
+function assets.preloadModTexture(path, name)
+    local imageFileData = nativefs.read(path)
+    if not imageFileData then
+        error("Failed to load texture "..tostring(path))
+    end
+    local fileData = love.filesystem.newFileData(imageFileData, "image.png")
+
+    local imageData = love.image.newImageData(fileData)
+    local texture = love.graphics.newImage(imageData)
+
+    texturesCache[name] = texture
+    imageDataCache[texture] = imageData
+end
 
 function assets.texture(name, enableFiltering)
     if texturesCache[name] then

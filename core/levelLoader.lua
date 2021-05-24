@@ -1,6 +1,7 @@
 local json = require("lib.json")
 local Steam = require("luasteam")
 local nativefs = require("lib.nativefs")
+local assets = require("core.assets")
 
 local levelLoader = {}
 
@@ -90,7 +91,7 @@ function levelLoader.loadFromPath(path)
     return jsonToLevelConfig(levelConfig)
 end
 
-function levelLoader.load(levelName)
+function levelLoader.load(levelName, loadTextures)
     assert(type(levelName) == "string", "Level not specified")
     local levelType = "builtin"
     if levelName:sub(1, 5) == "mods/" then
@@ -117,7 +118,32 @@ function levelLoader.load(levelName)
         end
     end
 
-    return levelLoader.loadFromPath(path), path
+    local levelConfig = levelLoader.loadFromPath(path)
+    if loadTextures then
+        levelLoader.preloadTextures(path, levelConfig)
+    end
+    return levelConfig, path
+end
+
+function levelLoader.preloadTextures(path, levelConfig)
+    if type(levelConfig.sidePlanes) == "table" then
+        for _, conf in ipairs(levelConfig.sidePlanes) do
+            for _, name in ipairs(conf.textures) do
+                assets.preloadModTexture(path.."/"..name..".png", name)
+            end
+        end
+    end
+    if type(levelConfig.planeTypes) == "table" then
+        for _, conf in pairs(levelConfig.planeTypes) do
+            if type(conf.planes) == "table" then
+                for _, plane in ipairs(conf.planes) do
+                    if plane.texture then
+                        assets.preloadModTexture(path.."/"..plane.texture..".png", plane.texture)
+                    end
+                end
+            end
+        end
+    end
 end
 
 return levelLoader
