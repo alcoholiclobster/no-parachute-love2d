@@ -89,6 +89,8 @@ function WorkshopScreen:initialize()
         love.filesystem.createDirectory("mods/example")
         love.filesystem.write("mods/example/levelConfig.json", exampleLevelConfig.levelConfigJSON)
         love.filesystem.write("mods/example/preview.png", love.data.decode("data", "base64", exampleLevelConfig.previewImageBase64))
+        love.filesystem.write("mods/example/obstacle.png", love.data.decode("data", "base64", exampleLevelConfig.obstacleImageBase64))
+        love.filesystem.write("mods/example/wall.png", love.data.decode("data", "base64", exampleLevelConfig.wallImageBase64))
     end
 end
 

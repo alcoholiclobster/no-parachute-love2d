@@ -21,12 +21,23 @@ local function jsonToLevelConfig(levelConfig)
         end
     end
 
-    -- plane types as textures to full
-    if type(levelConfig.planeTypes) == "table" then
-        for name, value in pairs(levelConfig.planeTypes) do
-            if type(value) == "string" then
-                levelConfig.planeTypes[name] = { planes = { { texture = value } } }
+    if type(levelConfig.planeTypes) ~= "table" then
+        levelConfig.planeTypes = {}
+    end
+
+    -- simple plane names as textures
+    if type(levelConfig.planes) == "table" then
+        for _, plane in pairs(levelConfig.planes) do
+            if not levelConfig.planeTypes[plane.name] then
+                levelConfig.planeTypes[plane.name] = plane.name
             end
+        end
+    end
+
+    -- plane types as textures to full
+    for name, value in pairs(levelConfig.planeTypes) do
+        if type(value) == "string" then
+            levelConfig.planeTypes[name] = { planes = { { texture = value } } }
         end
     end
 
