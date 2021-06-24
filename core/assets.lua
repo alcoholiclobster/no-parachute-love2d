@@ -18,6 +18,9 @@ function assets.preloadModTexture(path, name)
     local imageData = love.image.newImageData(fileData)
     local texture = love.graphics.newImage(imageData)
 
+    texture:setFilter("nearest", "nearest")
+    texture:setWrap("repeat")
+
     texturesCache[name] = texture
     imageDataCache[texture] = imageData
 end
